@@ -5,6 +5,7 @@ class Fairymax < Formula
       tag:      "5.0b",
       revision: "f7a7847ea2d4764d9a0a211ba6559fa98e8dbee6"
   version "5.0b"
+  license :public_domain
   head "http://hgm.nubati.net/git/fairymax.git", branch: "master"
 
   bottle do
@@ -19,12 +20,7 @@ class Fairymax < Formula
   end
 
   def install
-    system "make", "all",
-                   "INI_F=#{pkgshare}/fmax.ini",
-                   "INI_Q=#{pkgshare}/qmax.ini"
-    bin.install "fairymax", "shamax", "maxqi"
-    pkgshare.install Dir["data/*.ini"]
-    man6.install "fairymax.6.gz"
+    system "make", "install", "prefix=#{prefix}"
   end
 
   test do
