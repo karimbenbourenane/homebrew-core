@@ -1,17 +1,18 @@
 class Liqoctl < Formula
   desc "Is a CLI tool to install and manage Liqo-enabled clusters"
   homepage "https://liqo.io"
-  url "https://github.com/liqotech/liqo/archive/refs/tags/v0.5.4.tar.gz"
-  sha256 "f4ed993012d2315080a758e683ebe5f36eff6f389b2e68b2857f380bf1049228"
+  url "https://github.com/liqotech/liqo/archive/refs/tags/v0.7.1.tar.gz"
+  sha256 "5b78f6ce6d868868a57e4bfa6ec825dda7aa1075be0fefec70d9b1ef2b5e201a"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "2029554bca65b3e6af4b3e1876eeb86858b6ced6b08bfc14df228068c4c852c1"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "2029554bca65b3e6af4b3e1876eeb86858b6ced6b08bfc14df228068c4c852c1"
-    sha256 cellar: :any_skip_relocation, monterey:       "1fc1bebc4b9f5f2e86227fb48406d674e7769c43f75c648dece31f8679946eac"
-    sha256 cellar: :any_skip_relocation, big_sur:        "1fc1bebc4b9f5f2e86227fb48406d674e7769c43f75c648dece31f8679946eac"
-    sha256 cellar: :any_skip_relocation, catalina:       "1fc1bebc4b9f5f2e86227fb48406d674e7769c43f75c648dece31f8679946eac"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a64309ad6fc1c7c52f82eb2437538564009bf5d197be2b84bcc69d7deafd6137"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "8be322ce7799c5d244558dc12bc6bc493831ec916e4bbe42296f310674e02f8b"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "9d3eb796f89761fe4e8cba5c5ab0a3f87784dcf3a106f0714e16bf05f174d524"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "9d3eb796f89761fe4e8cba5c5ab0a3f87784dcf3a106f0714e16bf05f174d524"
+    sha256 cellar: :any_skip_relocation, ventura:        "c75276752d356d52756d8b56209343cae0b32c49b60bd2ea179b8268e3d9537b"
+    sha256 cellar: :any_skip_relocation, monterey:       "41d53911f5df9cfcc8edf6121b7bb6ae819b67735d5030f23201d4a95989266a"
+    sha256 cellar: :any_skip_relocation, big_sur:        "c75276752d356d52756d8b56209343cae0b32c49b60bd2ea179b8268e3d9537b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9c9aeb3fbd238077b409d47de48000acf52fde26f55b0671e3fc173f9683f192"
   end
 
   depends_on "go" => :build

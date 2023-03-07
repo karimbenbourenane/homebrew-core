@@ -1,21 +1,21 @@
 class Hyperscan < Formula
   desc "High-performance regular expression matching library"
   homepage "https://www.hyperscan.io/"
-  url "https://github.com/intel/hyperscan/archive/v5.4.0.tar.gz"
-  sha256 "e51aba39af47e3901062852e5004d127fa7763b5dbbc16bcca4265243ffa106f"
+  url "https://github.com/intel/hyperscan/archive/v5.4.1.tar.gz"
+  sha256 "6798202350ecab5ebe5063fbbb6966c33d43197b39ce7ddfbca2e61ac5ecb54a"
   license "BSD-3-Clause"
 
   bottle do
-    sha256 cellar: :any,                 monterey:     "d042b40534ac02d2cc6ad57621802787340c7b76ee2bb7abfed79442b2f61d7e"
-    sha256 cellar: :any,                 big_sur:      "1e75b4699ac1040d24cbe81ddae60149be7179e09f450840bdcbe5fd0e4582dc"
-    sha256 cellar: :any,                 catalina:     "2c5afe9775aad01d1bfb577cb80218bdf241c48d5b567ad85fe6bba68241c8d3"
-    sha256 cellar: :any,                 mojave:       "0564db4adcb7022d1691f482d12fdf3a2c0ea71079a749c90f2233340aebb98e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "8e91525e2c275594bf2394e5664be60d6199784c9c2ab3b273a8531c38c2acc1"
+    sha256 cellar: :any,                 ventura:      "f0105513ef5f4258bea80ce4d66fdc58870ade37549098c5a7ef695c02e2c21a"
+    sha256 cellar: :any,                 monterey:     "38d912db872b46ddd8242f543e343b4a8a47c98d2900e6dc7b9a1e80fc8f9141"
+    sha256 cellar: :any,                 big_sur:      "4d712c27745f4c175051fc4b753b990b70f2108858ff3620f1e928aee8666753"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "01a5210d8c7b25dc9029a3f3b97fee837c22f4fdfa53d41e94d5d258d9180550"
   end
 
   depends_on "boost" => :build
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
+  depends_on "python@3.11" => :build
   depends_on "ragel" => :build
   # Only supports x86 instructions and will fail to build on ARM.
   # See https://github.com/intel/hyperscan/issues/197
@@ -23,15 +23,14 @@ class Hyperscan < Formula
   depends_on "pcre"
 
   def install
-    cmake_args = std_cmake_args + ["-DBUILD_STATIC_AND_SHARED=ON"]
+    args = ["-DBUILD_STATIC_AND_SHARED=ON"]
 
     # Linux CI cannot guarantee AVX2 support needed to build fat runtime.
-    cmake_args << "-DFAT_RUNTIME=OFF" if OS.linux?
+    args << "-DFAT_RUNTIME=OFF" if OS.linux?
 
-    mkdir "build" do
-      system "cmake", "..", *cmake_args
-      system "make", "install"
-    end
+    system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
   end
 
   test do

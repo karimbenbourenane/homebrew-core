@@ -1,8 +1,8 @@
 class BoostMpi < Formula
   desc "C++ library for C++/MPI interoperability"
   homepage "https://www.boost.org/"
-  url "https://boostorg.jfrog.io/artifactory/main/release/1.79.0/source/boost_1_79_0.tar.bz2"
-  sha256 "475d589d51a7f8b3ba2ba4eda022b170e562ca3b760ee922c146b6c65856ef39"
+  url "https://boostorg.jfrog.io/artifactory/main/release/1.81.0/source/boost_1_81_0.tar.bz2"
+  sha256 "71feeed900fbccca04a3b4f2f84a7c217186f28a940ed8b7ed4725986baf99fa"
   license "BSL-1.0"
   head "https://github.com/boostorg/boost.git", branch: "master"
 
@@ -11,12 +11,13 @@ class BoostMpi < Formula
   end
 
   bottle do
-    sha256                               arm64_monterey: "ed3d8d5cea4a54672520a1dc9beacc074119a73475c969ef70258c216bb6ceb3"
-    sha256                               arm64_big_sur:  "2d427265f242cccd7ecc9c9b360c51f176759b378e0a26bd51b6e483062096cc"
-    sha256                               monterey:       "786e0870dfb10b3dfad8a9c2b943861c926c94571382f88409c3a62397bf0f1f"
-    sha256                               big_sur:        "7d0d29c8d9029fde12bf7a990738fb098923b20a56fff772382009c630fa16e3"
-    sha256                               catalina:       "504d653c471eb7f6ca848aa3d7659f9c52789fca3cdd21955858fb429e24005e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ec093b68364ee498acd5f80d7e23b6b516a36d823f188fe554a3aeb36c704c0c"
+    sha256                               arm64_ventura:  "ac780b010068ba52bb103ac2adbd49b408cb02378c24d3f7ca5af627135085f6"
+    sha256                               arm64_monterey: "29c78834506d33bc6daf07018a89b2206a41b6837eb806c39269627b276a8cde"
+    sha256                               arm64_big_sur:  "1e0aa79477135831cf471875af7156feb6b0f88a8243b1502f4e67c722592d97"
+    sha256                               ventura:        "05ee3d29d40ab36e162caab0c41f93e0668bb0cccf8e0bd122a69b386d2db051"
+    sha256                               monterey:       "2267f5818e4faf68cddfac386bf10a7d5e64f27c4945e045da909033fc681626"
+    sha256                               big_sur:        "2a7addd646eab90da685d7115eecd927f7696da18f9f840b3bada9931c8e95de"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fe5baf414b08d992a092ac2d6cf966d992a3ad8a45b669c116573ebc70c002e4"
   end
 
   # Test with cmake to avoid issues like:

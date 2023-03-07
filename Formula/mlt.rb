@@ -1,19 +1,20 @@
 class Mlt < Formula
   desc "Author, manage, and run multitrack audio/video compositions"
   homepage "https://www.mltframework.org/"
-  url "https://github.com/mltframework/mlt/releases/download/v7.8.0/mlt-7.8.0.tar.gz"
-  sha256 "66606d79f91b400a4d9380a911a5d771a48bd6413447fa2f3713459eba70242d"
+  url "https://github.com/mltframework/mlt/releases/download/v7.12.0/mlt-7.12.0.tar.gz"
+  sha256 "48b385e83cbd5bf68bfc88631273868fbee36a41b3b7e2acd97f12b095b0083c"
   license "LGPL-2.1-only"
   revision 1
   head "https://github.com/mltframework/mlt.git", branch: "master"
 
   bottle do
-    sha256 arm64_monterey: "8bb4eba794b94fb65abfa87a053c6ff5ed62d0fa055591a5107d976ceba20759"
-    sha256 arm64_big_sur:  "c093eede0d92f63e5730e7412ce860d909734f0fd2266839c8aff299dd92d0c5"
-    sha256 monterey:       "0a82525c05654c1c0f83fc612a05e3764e108204d069d909f2ef4ed6b1a86ce5"
-    sha256 big_sur:        "bf5d2d5b61b8e9619f4b92f622d0b5861e6188580eb0004b9e0342c670757607"
-    sha256 catalina:       "f8998f3b0d01afc3ab67fbfa65ecfc1a2ea5f843d1b393c6914ef1ba32ebd6af"
-    sha256 x86_64_linux:   "d68540fe7c7ebdb3fca1d7f0f6f7f90930c0ec1301ab00810ac61e248cdf22c4"
+    sha256 arm64_ventura:  "2c4651f63550c5c19bfac52e73a2e1d7a19856cfe1fd3da9ca030175d08f9d87"
+    sha256 arm64_monterey: "1de7a585b4b194ae22c0e9cfe63138c7ea259004c5fd614db4d43827329e75f9"
+    sha256 arm64_big_sur:  "c199677b5ff1ce8d2bddb419d2e737cf73a5c5ab8acfe6ceb338a2f6482a8c37"
+    sha256 ventura:        "2fbcb49848d82667ce73e3c1eb682d4479f8ed1d0f1b45108d5bc0c197e9d8d1"
+    sha256 monterey:       "3bbb6451dd55a7f13d51a2b3cdcb202676f67c93f12c717c0b64de0b0d26e12a"
+    sha256 big_sur:        "0d28fd842a31c83afbc4c2b146f1f3e29b708f0b5a4bc405b6d021cc951bd309"
+    sha256 x86_64_linux:   "c35b40e1e63c5c1c5a88fe9db561e5693509cabc36b1629f55ed9c80f2403b88"
   end
 
   depends_on "cmake" => :build
@@ -31,10 +32,6 @@ class Mlt < Formula
   depends_on "qt@5"
   depends_on "sdl2"
   depends_on "sox"
-
-  on_linux do
-    depends_on "gcc"
-  end
 
   fails_with gcc: "5"
 

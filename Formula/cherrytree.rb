@@ -1,10 +1,9 @@
 class Cherrytree < Formula
   desc "Hierarchical note taking application featuring rich text and syntax highlighting"
   homepage "https://www.giuspen.com/cherrytree/"
-  url "https://www.giuspen.com/software/cherrytree_0.99.48.tar.xz"
-  sha256 "4bba4f19d23560e8aa59f2ab1e76f128f7f02adaebb5813e826e1753ee5d81fa"
+  url "https://www.giuspen.com/software/cherrytree_0.99.54.tar.xz"
+  sha256 "dcab96728c7329313f88cf2fb66922984f8d2c47d2fed57fae7941fc8d765f90"
   license "GPL-3.0-or-later"
-  revision 1
 
   livecheck do
     url :homepage
@@ -12,18 +11,19 @@ class Cherrytree < Formula
   end
 
   bottle do
-    sha256                               arm64_monterey: "08349d32832cfc2e7ab6ad8acbc03246896510e096ad21941690b933038f0877"
-    sha256                               arm64_big_sur:  "6a21616e1b15d01a520333aee04798a8ed62088be22e403371713cf627ab22f2"
-    sha256                               monterey:       "13b9f930542b2b4d169169a20e456871b36650d0b9d9d6cc2c911e3b3359698c"
-    sha256                               big_sur:        "b5baa4dde747d908e200a9732301368a807324c59ff30bdd68d6bce1a6bf4209"
-    sha256                               catalina:       "72393e799894d5a4deb65f8c266bce3793277fed38469ed2defb5558ed284708"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8527fd655991a7d487ee94001563f9566cad5f32cc4a808bbe8ebbccf76a5315"
+    sha256 arm64_ventura:  "c3e2cf5b7decd42ad730baf5e5aaeb2f9e11b37ab4fda6ca17e598ca3a8ee82d"
+    sha256 arm64_monterey: "2fe00a9acd27abfad2e5ea408f251dc430f0e3a4ea4f58e190a93abaa2f0c1ab"
+    sha256 arm64_big_sur:  "16cf9c46ee40a870c38ddd75126948272f75eef4a0928d8df9a0f8b4e844144b"
+    sha256 ventura:        "ab047e618cf7c483e3fa06b6d344087c939a6cc67b0aafc34e8129e23f990711"
+    sha256 monterey:       "c9f7cf3d812730ef6a818e70ce7ac20592b6893433ce379f3a34fb54a584d8c8"
+    sha256 big_sur:        "0683b96e0447b2ea461f65cdb02944bb52bc22be14467ba122e7a1755ad0042d"
+    sha256 x86_64_linux:   "63ba5c18d25cdf1df1a01b7757f15a29c940c5f0bf1e78f9fbf88de992aaa7f7"
   end
 
   depends_on "cmake" => :build
   depends_on "ninja" => :build
   depends_on "pkg-config" => :build
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => :build
   depends_on "adwaita-icon-theme"
   depends_on "fmt"
   depends_on "gspell"
@@ -32,12 +32,9 @@ class Cherrytree < Formula
   depends_on "spdlog"
   depends_on "sqlite" # try to change to uses_from_macos after python is not a dependency
   depends_on "uchardet"
+  depends_on "vte3"
 
   uses_from_macos "curl"
-
-  on_linux do
-    depends_on "gcc"
-  end
 
   fails_with gcc: "5" # Needs std::optional
 

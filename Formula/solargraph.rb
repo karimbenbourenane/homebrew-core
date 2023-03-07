@@ -3,20 +3,23 @@ class Solargraph < Formula
   homepage "https://solargraph.org"
   # Must be git, because solargraph.gemspec uses git ls-files
   url "https://github.com/castwide/solargraph.git",
-      tag:      "v0.46.0",
-      revision: "8c03e57437ff3b61850a9b2b577309775b4fc37e"
+      tag:      "v0.48.0",
+      revision: "d498612c3335457464c20480b3b22bfb687e9a42"
   license "MIT"
+  revision 1
 
   bottle do
-    sha256                               arm64_monterey: "b62e75f50d70715eff11165225b9bb586275e44ebef301757c7cfa4f0d44e48a"
-    sha256                               arm64_big_sur:  "a26c960c5346fcd60a170c4ddc2366c6c6dae488c59681efa2fc4e434abe4e4d"
-    sha256                               monterey:       "102afc448910acd5510b8ec99951ae79bef581a8f5fb1fe94859c63d4c78cb36"
-    sha256                               big_sur:        "92385aecc8e181730af066092ed6cdd4564ae73296b10e19a0cdd9f1eaddf7a8"
-    sha256                               catalina:       "67b3191a77818c55cdc713c96c085c299ed0c6f97f5f5494b020c07b1d30f731"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "866fa03f6b364320e3999ea18ffc9b1ca98cd2661cbf23750bfcb24a16653944"
+    sha256                               arm64_ventura:  "19aae494ddcd40f80c72a4ec3c98fab4ff5831c4c6a500e035e1b648e3968d06"
+    sha256                               arm64_monterey: "17a8947c8f83f193f3e8ee70902b647f5d63bc342902d0b5bd130ed9367652c6"
+    sha256                               arm64_big_sur:  "747fb16e3f3aa4a772322349521af539c9378f38a5e5d517b4dc405a93226b43"
+    sha256                               ventura:        "480a88b17aa102d20b5cbfe6130a0b740328217e3205e68599bfa6c0ea58dddd"
+    sha256                               monterey:       "8ffe7bd88c07052c8a0646e6d03658f9ddfa298013203ca06f44ca1e116463c2"
+    sha256                               big_sur:        "28768ad1041ad18df04c85a81754226911ac79e4a48be26dba4ba05808a80f5e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8e554c13221a7ad25a8c07291573956c12a9203aebb754f754d6afc2666d177e"
   end
 
   uses_from_macos "ruby", since: :catalina
+  uses_from_macos "xz"
 
   def install
     ENV["GEM_HOME"] = libexec

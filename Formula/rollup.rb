@@ -3,17 +3,18 @@ require "language/node"
 class Rollup < Formula
   desc "Next-generation ES module bundler"
   homepage "https://rollupjs.org/"
-  url "https://registry.npmjs.org/rollup/-/rollup-2.79.0.tgz"
-  sha256 "79a1776877676c87bddd7b8fe1f35214707164974f013889719bbe7f7f613740"
+  url "https://registry.npmjs.org/rollup/-/rollup-3.18.0.tgz"
+  sha256 "f370190d3ce6ee3d8c8899330bdfedb7d3ec2a3158f71998c5e4e5fcdeed0624"
   license all_of: ["ISC", "MIT"]
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "081ecbdbe083cd7b2501f0089db83ad7c80502c4542a025b949d17da1f3860cb"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "081ecbdbe083cd7b2501f0089db83ad7c80502c4542a025b949d17da1f3860cb"
-    sha256 cellar: :any_skip_relocation, monterey:       "c5ed3b7c6fec7eb44567dd4dc047fc9e8619796caa0ac7261b4b4482059e9076"
-    sha256 cellar: :any_skip_relocation, big_sur:        "c5ed3b7c6fec7eb44567dd4dc047fc9e8619796caa0ac7261b4b4482059e9076"
-    sha256 cellar: :any_skip_relocation, catalina:       "c5ed3b7c6fec7eb44567dd4dc047fc9e8619796caa0ac7261b4b4482059e9076"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "01fc8f6c8b6d038d6ef299c54c4fc3e021cd47e028669eb17f739e126243538f"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "c063cc1476eeb6d204e0f7a7ccb124f591e666c09ab861b0ce98afc439bd3d57"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "c063cc1476eeb6d204e0f7a7ccb124f591e666c09ab861b0ce98afc439bd3d57"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "c063cc1476eeb6d204e0f7a7ccb124f591e666c09ab861b0ce98afc439bd3d57"
+    sha256 cellar: :any_skip_relocation, ventura:        "3b27d8ce82d99aee71ac6c117d68bcb9ec90174f91fbb9accd735503addb97d7"
+    sha256 cellar: :any_skip_relocation, monterey:       "3b27d8ce82d99aee71ac6c117d68bcb9ec90174f91fbb9accd735503addb97d7"
+    sha256 cellar: :any_skip_relocation, big_sur:        "3b27d8ce82d99aee71ac6c117d68bcb9ec90174f91fbb9accd735503addb97d7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c97424bd24de3ee754e5718ae8f1b9d062c207f6586b87f8878b52b5d3eb6903"
   end
 
   depends_on "node"

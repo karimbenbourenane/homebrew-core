@@ -1,8 +1,8 @@
 class WaylandProtocols < Formula
   desc "Additional Wayland protocols"
   homepage "https://wayland.freedesktop.org"
-  url "https://wayland.freedesktop.org/releases/wayland-protocols-1.26.tar.xz"
-  sha256 "c553384c1c68afd762fa537a2569cc9074fe7600da12d3472761e77a2ba56f13"
+  url "https://gitlab.freedesktop.org/wayland/wayland-protocols/-/releases/1.31/downloads/wayland-protocols-1.31.tar.xz"
+  sha256 "a07fa722ed87676ec020d867714bc9a2f24c464da73912f39706eeef5219e238"
   license "MIT"
 
   livecheck do
@@ -11,13 +11,13 @@ class WaylandProtocols < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "5afcaa3b93991d228ab1a1f34ca51029218fdd19a125f6f291667282fe32d1d1"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "1d30825fae12dbe4a0db88898c303d7758b9bc81c5e81cbf1529794ec37eb96b"
   end
 
   depends_on "meson" => :build
   depends_on "ninja" => :build
   depends_on "pkg-config" => [:build, :test]
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => :build
   depends_on "wayland" => :build
   depends_on :linux
 

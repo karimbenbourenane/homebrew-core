@@ -3,20 +3,19 @@ require "language/node"
 class Postgraphile < Formula
   desc "GraphQL schema created by reflection over a PostgreSQL schema 🐘"
   homepage "https://www.graphile.org/postgraphile/"
-  url "https://registry.npmjs.org/postgraphile/-/postgraphile-4.12.11.tgz"
-  sha256 "553191171d304b35846d8fc8c40beace5649f85982d4363da13b992fd2aad3d3"
+  url "https://registry.npmjs.org/postgraphile/-/postgraphile-4.13.0.tgz"
+  sha256 "bdf6c3047b16fd7bddc2eabd74939b986bc2fa0f56383f409fa3d7d95418cf77"
   license "MIT"
-  revision 1
   head "https://github.com/graphile/postgraphile.git", branch: "main"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "e6b0955cb25afd5de00af7cdf76795cc05e59c6e5400a4d77549d34dd491fe37"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "e6b0955cb25afd5de00af7cdf76795cc05e59c6e5400a4d77549d34dd491fe37"
-    sha256 cellar: :any_skip_relocation, monterey:       "691b74c540b3b2011c1717f84a1b3c15b7a875365b37e42fb71b7821e228fc89"
-    sha256 cellar: :any_skip_relocation, big_sur:        "691b74c540b3b2011c1717f84a1b3c15b7a875365b37e42fb71b7821e228fc89"
-    sha256 cellar: :any_skip_relocation, catalina:       "691b74c540b3b2011c1717f84a1b3c15b7a875365b37e42fb71b7821e228fc89"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e6b0955cb25afd5de00af7cdf76795cc05e59c6e5400a4d77549d34dd491fe37"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "89fe3ed5c28e49b954f36201b2c1b641a38ec737216ff48ca04aa63256156334"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "89fe3ed5c28e49b954f36201b2c1b641a38ec737216ff48ca04aa63256156334"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "89fe3ed5c28e49b954f36201b2c1b641a38ec737216ff48ca04aa63256156334"
+    sha256 cellar: :any_skip_relocation, ventura:        "f4eba09e6051328f2d1ece4bb1c5539cb78112912afe17034a72d922e07f0814"
+    sha256 cellar: :any_skip_relocation, monterey:       "f4eba09e6051328f2d1ece4bb1c5539cb78112912afe17034a72d922e07f0814"
+    sha256 cellar: :any_skip_relocation, big_sur:        "f4eba09e6051328f2d1ece4bb1c5539cb78112912afe17034a72d922e07f0814"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "89fe3ed5c28e49b954f36201b2c1b641a38ec737216ff48ca04aa63256156334"
   end
 
   depends_on "postgresql@14" => :test

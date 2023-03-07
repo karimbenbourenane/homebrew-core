@@ -1,17 +1,18 @@
 class Advancecomp < Formula
   desc "Recompression utilities for .PNG, .MNG, .ZIP, and .GZ files"
   homepage "https://www.advancemame.it/comp-readme.html"
-  url "https://github.com/amadvance/advancecomp/releases/download/v2.3/advancecomp-2.3.tar.gz"
-  sha256 "811f661dfbbdddefdcb5eaf133e403ca2af99328b850b22c1249f7bebe657578"
-  license "GPL-3.0"
+  url "https://github.com/amadvance/advancecomp/releases/download/v2.5/advancecomp-2.5.tar.gz"
+  sha256 "90b8ecad387b4770658e85be850b22318ee9e375cbad85ad25c8519d93317c07"
+  license "GPL-3.0-only"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "a5b487926943d347aa3cdc87e602bcad83d22762d525a1cdf87beb1b9426537c"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "a7e799efa5b2d75d1be52435b8bfd2e1299e4603f3a0253ad85209997b0d3920"
-    sha256 cellar: :any_skip_relocation, monterey:       "2902fd231ffd1a2f074a82e759fb56597926cf11909aaacedbbea1316813dba7"
-    sha256 cellar: :any_skip_relocation, big_sur:        "3015ac210486e65470e94fd9265cc275ba3a5bc1680cc554d9d3a3c59962bb63"
-    sha256 cellar: :any_skip_relocation, catalina:       "7a68d4c277ffb224d694bd6a41db6824c0253acea729068ed3accf086f99b7bb"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5489c25165ab09c33ca21ed0ffcb5a3cb708a9a98773f9f1260d69f25e85b383"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "0b9598446b49c1a66e9b6105bc4028093f67a80365a31ee3e64406e4d44d3050"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "40e3ba62c044d1b9d60f3e6088b66e99077370dd59b856871f71d8d6574142c8"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "20dce664facfa87a65d6b89e508bcc74163ea837cb0d6f2c5fc77b8377ff500b"
+    sha256 cellar: :any_skip_relocation, ventura:        "f402ba3f6adf5d5583c64f5fd36dad1e782e1239f506695d77a632b9ac47c213"
+    sha256 cellar: :any_skip_relocation, monterey:       "77f6f5c169b3868047e1b6beba37db560439a47726c47ad9135e56b7e55230cd"
+    sha256 cellar: :any_skip_relocation, big_sur:        "1caf8f0abc594c118349f94d81e2bc736b9d89a0bcfdd00aa7504f178bceb974"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "1d5786528998017c36abae0d3297e726bac1aae45ce008a4de522fe335feb52a"
   end
 
   depends_on "autoconf" => :build

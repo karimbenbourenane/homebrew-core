@@ -1,29 +1,26 @@
 class Spot < Formula
   desc "Platform for LTL and ω-automata manipulation"
-  homepage "https://spot.lrde.epita.fr/"
-  url "https://www.lrde.epita.fr/dload/spot/spot-2.10.6.tar.gz"
-  sha256 "c588d1cb53ccea3e592f99402b14c2f4367b349ecef8e17b6d391df146bc8ba4"
+  homepage "https://spot.lre.epita.fr"
+  url "http://www.lrde.epita.fr/dload/spot/spot-2.11.4.tar.gz"
+  sha256 "91ecac6202819ea1de4534902ce457ec6eec0573d730584d6494d06b0bcaa0b4"
   license "GPL-3.0-or-later"
 
   livecheck do
-    url "https://spot.lrde.epita.fr/install.html"
+    url "https://www.lrde.epita.fr/dload/spot/"
     regex(/href=.*?spot[._-]v?(\d+(?:\.\d+)+)\.t/i)
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "b1430858b8bb86bf381ce7ce6bdf2ad6353eca969ff76967e5f307ad9e21032c"
-    sha256 cellar: :any,                 arm64_big_sur:  "3446679a5ef8e565deff8aa7cb25b3da156056cd0e96f084e64a920cef428fce"
-    sha256 cellar: :any,                 monterey:       "bedb932f538883e9fad2d64dc00b5185ecc49d44ef99b88ab65d6d0951c76827"
-    sha256 cellar: :any,                 big_sur:        "62b1883615299ed12f9bda54f0b381ce5ffcc4badbc0ba0d8a59301f97d5e60d"
-    sha256 cellar: :any,                 catalina:       "06eefd56dca1c57ddaa883ec4f0985db4b48ee119befa0e18ef7fe67221040e9"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ea1d2f111bd18c6b35d808273777d5b3f1c58adb29e5c9d943114f50e67e5440"
+    sha256 cellar: :any,                 arm64_ventura:  "d8e7729a50e467a4c379559bf26c79285b4be2f0b8f885735e460f490c6932fa"
+    sha256 cellar: :any,                 arm64_monterey: "355ea35625911e1515e0f8e4f9ea7e66d949890872bc299fab1198fc0faacc71"
+    sha256 cellar: :any,                 arm64_big_sur:  "5f43e08315fc87fc34a609d0f9d8f795612e459ffce3a2e0d31c4b6ef755eb02"
+    sha256 cellar: :any,                 ventura:        "5b30a903b76a0ddba0281bb79d0665ccd61ea79b29f0ab6103c7913bc40de383"
+    sha256 cellar: :any,                 monterey:       "fb48502928d10ee2403435ec1e6b1c1f96c4617c01c8da8b98968bed66feb6e8"
+    sha256 cellar: :any,                 big_sur:        "cf3f09c8e7e9458aa91bf8aba8f73a526d7fd2790277658141cf1faea46f519b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f8f9c83e87be05182580eeb0855d6b47cae6f3c7ae617d3209f49204729bc15a"
   end
 
-  depends_on "python@3.10" => :build
-
-  on_linux do
-    depends_on "gcc"
-  end
+  depends_on "python@3.11" => :build
 
   fails_with gcc: "5" # C++17
 

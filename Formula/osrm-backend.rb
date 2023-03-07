@@ -1,11 +1,18 @@
 class OsrmBackend < Formula
   desc "High performance routing engine"
   homepage "http://project-osrm.org/"
-  url "https://github.com/Project-OSRM/osrm-backend/archive/v5.26.0.tar.gz"
-  sha256 "45e986db540324bd0fc881b746e96477b054186698e8d14610ff7c095e906dcd"
   license "BSD-2-Clause"
-  revision 2
+  revision 1
   head "https://github.com/Project-OSRM/osrm-backend.git", branch: "master"
+
+  stable do
+    url "https://github.com/Project-OSRM/osrm-backend/archive/v5.27.1.tar.gz"
+    sha256 "52391580e0f92663dd7b21cbcc7b9064d6704470e2601bf3ec5c5170b471629a"
+
+    # Backport fix for missing include. Remove in the next release.
+    # Ref: https://github.com/Project-OSRM/osrm-backend/commit/565959b3896945a0eb437cc799b697be023121ef
+    patch :DATA
+  end
 
   livecheck do
     url :stable
@@ -13,12 +20,13 @@ class OsrmBackend < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "30e473b97a8b623eec3d602e45e7e21c4e44b761ca4e2c4ef724c87614498b75"
-    sha256 cellar: :any,                 arm64_big_sur:  "4d13b51a5e03c17cb60de48d738ab1ec08946114baa298a24482f76f784ec226"
-    sha256 cellar: :any,                 monterey:       "b98e83beb4c841c9289b6efb8d1b058ea97c5b6411c6132903001d0fe84ba834"
-    sha256 cellar: :any,                 big_sur:        "f0943390ad90826d2def7a9c7fc27f214a20cc9dc6886d47ec309b852916c4d8"
-    sha256 cellar: :any,                 catalina:       "74825bed2c07fd6e5a5862c4dd66e9eff13818ae83ab3d8f62034db38bd9fb20"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "1e78299d0601d9aefce6ba8d0597e256ae57dfc7890b88a9f03701e10155d08a"
+    sha256 cellar: :any,                 arm64_ventura:  "0ee5c319363134a31b6bc308703c01f3bbdf10faa73f051a1cf912607bbded28"
+    sha256 cellar: :any,                 arm64_monterey: "6cdee9eefaa025a83f0030093efcf51e1ecc5af3ee1b489cc303c05383b11bde"
+    sha256 cellar: :any,                 arm64_big_sur:  "3ee16292f8073c0d40d03ec3adb397b6e323d4933d357c82bba2693241177c3e"
+    sha256 cellar: :any,                 ventura:        "b490dc9cb2e0d46a25bce611214491dc2fea0ea88fbf944fd86ada818001d54a"
+    sha256 cellar: :any,                 monterey:       "a87802cb4adbf41c6dfc801e69f1e0b15b460eace40849ef5edece245df684e4"
+    sha256 cellar: :any,                 big_sur:        "de9bbf77048dc64759bacfb903ad4baae0e5344f29981e8b5580362cd0a92ea4"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "2ed8be2ef8a7ef9eceb6dc584ab590ef4846760c9d094b889542a8123ebe7d51"
   end
 
   depends_on "cmake" => :build
@@ -27,21 +35,32 @@ class OsrmBackend < Formula
   depends_on "libxml2"
   depends_on "libzip"
   depends_on "lua"
-  depends_on "tbb@2020"
+  depends_on "tbb"
+
+  uses_from_macos "expat"
 
   conflicts_with "flatbuffers", because: "both install flatbuffers headers"
 
   def install
+    # Work around build failure: duplicate symbol 'boost::phoenix::placeholders::uarg9'
+    # Issue ref: https://github.com/boostorg/phoenix/issues/111
+    ENV.append_to_cflags "-DBOOST_PHOENIX_STL_TUPLE_H_"
+    # Work around build failure on Linux:
+    # /tmp/osrm-backend-20221105-7617-1itecwd/osrm-backend-5.27.1/src/osrm/osrm.cpp:83:1:
+    # /usr/include/c++/11/ext/new_allocator.h:145:26: error: 'void operator delete(void*, std::size_t)'
+    # called on unallocated object 'result' [-Werror=free-nonheap-object]
+    ENV.append_to_cflags "-Wno-free-nonheap-object" if OS.linux?
+
     lua = Formula["lua"]
     luaversion = lua.version.major_minor
-    mkdir "build" do
-      system "cmake", "..", "-DENABLE_CCACHE:BOOL=OFF",
-                            "-DLUA_INCLUDE_DIR=#{lua.opt_include}/lua#{luaversion}",
-                            "-DLUA_LIBRARY=#{lua.opt_lib}/#{shared_library("liblua", luaversion)}",
-                            *std_cmake_args
-      system "make"
-      system "make", "install"
-    end
+    system "cmake", "-S", ".", "-B", "build",
+                    "-DENABLE_CCACHE:BOOL=OFF",
+                    "-DLUA_INCLUDE_DIR=#{lua.opt_include}/lua#{luaversion}",
+                    "-DLUA_LIBRARY=#{lua.opt_lib/shared_library("liblua", luaversion)}",
+                    "-DENABLE_GOLD_LINKER=OFF",
+                    *std_cmake_args
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
     pkgshare.install "profiles"
   end
 
@@ -73,6 +92,20 @@ class OsrmBackend < Formula
     EOS
     safe_system "#{bin}/osrm-extract", "test.osm", "--profile", "tiny-profile.lua"
     safe_system "#{bin}/osrm-contract", "test.osrm"
-    assert_predicate testpath/"test.osrm", :exist?, "osrm-extract generated no output!"
+    assert_predicate testpath/"test.osrm.names", :exist?, "osrm-extract generated no output!"
   end
 end
+
+__END__
+diff --git a/include/extractor/suffix_table.hpp b/include/extractor/suffix_table.hpp
+index 5d16fe6..2c378bf 100644
+--- a/include/extractor/suffix_table.hpp
++++ b/include/extractor/suffix_table.hpp
+@@ -3,6 +3,7 @@
+
+ #include <string>
+ #include <unordered_set>
++#include <vector>
+
+ #include "util/string_view.hpp"
+

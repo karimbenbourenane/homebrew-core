@@ -1,18 +1,19 @@
 class Autorestic < Formula
   desc "High level CLI utility for restic"
   homepage "https://autorestic.vercel.app/"
-  url "https://github.com/cupcakearmy/autorestic/archive/v1.7.2.tar.gz"
-  sha256 "a04317c81f3dfafc28cb72c96b1b6ae8d90f2a5e5fab8d571b1b1a846b574dba"
+  url "https://github.com/cupcakearmy/autorestic/archive/v1.7.7.tar.gz"
+  sha256 "f2c38729882e7d0529347ab115e7ce068f6062677a63c92eb4bd0efc1ae67cbb"
   license "Apache-2.0"
   head "https://github.com/cupcakearmy/autorestic.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "d47f81f636baf69ba9931d713f8c6bb84ec44f2b881a3f28155ddcd8c6ade94c"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "0731a66c87db47cf155e08da423a46fa3c6b019aad96b84b2191cfd90aed49ff"
-    sha256 cellar: :any_skip_relocation, monterey:       "8d65f2f071c8f13691a7163ba59a279dea8fc6a5c5ccda4c72526772621f5d0d"
-    sha256 cellar: :any_skip_relocation, big_sur:        "080755d384ecf39f7e76318eaca2928b65536d1f9b806d587e2d8baf483ba794"
-    sha256 cellar: :any_skip_relocation, catalina:       "f4e825513f90e980789b2e6f9b06881c3c850cebb51f847c0fa384be9928f3a7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f6dddcdd2fbbe6bef9f918380e4f4f64ec207a9b7a92c85b1d366aea2d46776a"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "038a4cc1f761cdb7487b3f23344229c8ded9cf9fdb40a2e9aaa4b5854b76962b"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "038a4cc1f761cdb7487b3f23344229c8ded9cf9fdb40a2e9aaa4b5854b76962b"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "038a4cc1f761cdb7487b3f23344229c8ded9cf9fdb40a2e9aaa4b5854b76962b"
+    sha256 cellar: :any_skip_relocation, ventura:        "00491c3ed12f5f38a3622879a06d3d754a5b666967b0fc96955cc014ba9afd8f"
+    sha256 cellar: :any_skip_relocation, monterey:       "00491c3ed12f5f38a3622879a06d3d754a5b666967b0fc96955cc014ba9afd8f"
+    sha256 cellar: :any_skip_relocation, big_sur:        "00491c3ed12f5f38a3622879a06d3d754a5b666967b0fc96955cc014ba9afd8f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6c7e82dbdcbb94061ec566cfea21785bfeec10c4ae3fbb096bba12b407cecbaf"
   end
 
   depends_on "go" => :build

@@ -2,17 +2,18 @@ class Argocd < Formula
   desc "GitOps Continuous Delivery for Kubernetes"
   homepage "https://argoproj.github.io/cd"
   url "https://github.com/argoproj/argo-cd.git",
-      tag:      "v2.4.11",
-      revision: "3d9e9f2f95b7801b90377ecfc4073e5f0f07205b"
+      tag:      "v2.6.3",
+      revision: "e05298b9c6ab8610104271fa8491f019fee3c587"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "dfb16bd186e36bd835a95f6eadc66dde33283a3ae59776805b4364290ee0bd47"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "d608714599637ec0f7b0b796dcf2b3ab59addc0012ed4ad9e81204024724d59f"
-    sha256 cellar: :any_skip_relocation, monterey:       "3727fb3137e86424d91e4c37df2f6880e3ffd9b1c3eace6c2f96a98427d807d4"
-    sha256 cellar: :any_skip_relocation, big_sur:        "cfcc427053a580f9e91644fc9f9338adc9fd7d535bad943b23978d64bd4d6716"
-    sha256 cellar: :any_skip_relocation, catalina:       "51cb01fd0888dcf37074b531493df2a156ffd6d08ee080767060b9d467b93f06"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d7f35d8ee05124d6f353556678da45c0dc8ee8ab49f2c213c7d531a3d88b162d"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "02f52d0ca0b61eb9e1c508e08e1d82bc40705e1305161dcecf71493db6e0ddb4"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "24e6e0cca45db8fe1079c38ce1b6ef4f2b37025776a6bd4180e6c6f89ef98fb7"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "9a5013706bbc98a75536b295a696cb7b28c5748b08a3ea80a4543c9b3bc3ed1e"
+    sha256 cellar: :any_skip_relocation, ventura:        "99ae3c33f4f624b145c3e53a341b948b05d7309eff44b5c3a7763e5b5b388561"
+    sha256 cellar: :any_skip_relocation, monterey:       "c68faa2d6202254d29ff76a5afe3fc787ca599bfbe89c0a31643addee0c95405"
+    sha256 cellar: :any_skip_relocation, big_sur:        "4fcf258642125e51225cfb8f8730f89cdcfd86ee6e78c43f1fb6510ec96549e9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "414c41aca9cfe28b750ff94717ea76662dcd00b1a3ad7f32925bca7cf1401462"
   end
 
   depends_on "go" => :build

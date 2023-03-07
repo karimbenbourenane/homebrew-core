@@ -1,8 +1,8 @@
 class Wapm < Formula
   desc "WebAssembly Package Manager (CLI)"
   homepage "https://wapm.io/"
-  url "https://github.com/wasmerio/wapm-cli/archive/v0.5.6.tar.gz"
-  sha256 "8230a49ca2d610f55b9104bb292d11a4ebcf09d6118dbf8615a06126352f117b"
+  url "https://github.com/wasmerio/wapm-cli/archive/v0.5.9.tar.gz"
+  sha256 "67f98e7e584ee05b53a70e19624ca73538aef28f46e1bb31c49262ba0e00a2ec"
   license "MIT"
   head "https://github.com/wasmerio/wapm-cli.git", branch: "master"
 
@@ -12,12 +12,14 @@ class Wapm < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "0ae9f17921580b58bd21ddb03fa55d5727c76d414b3625577eb175fd645c6925"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "d266172783b37eaef3b379894acbcefd806fa242bb225483001491c37bbce4bb"
-    sha256 cellar: :any_skip_relocation, monterey:       "b500295f120bfb4c77920e76a22914c3a067bf9840a4cbd81ffaf9f1b38b496e"
-    sha256 cellar: :any_skip_relocation, big_sur:        "77042210be915f81ea9faf9bcd2816d62e6ce21bce8abd6ae7be22d247d4023a"
-    sha256 cellar: :any_skip_relocation, catalina:       "7fdd3ae7c6b9a6f1733abc0dd6f553c57f2b4012ea72c39cfef3f42e617718d5"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "3a0136e23de57e9f78f0d8fe29bc1e8c6421a09ab6aece1f02056ec29f4652e1"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "8b08738bc1b9beda9d2a865bff6cafe3fa4216bf96c9252c35646718f5f1607d"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "ff4e64b42f0dc537ce9ff5dfc463af0adda2fe75526eee5d42da45484747646c"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "572c1d1a4ad8b4a56affef4ef40085b875f9f655f439fecd249f620b1b632caf"
+    sha256 cellar: :any_skip_relocation, ventura:        "5478c5f66e9b93bc517fbd617131457369af4db06a3adacd5154fe1f4866c07f"
+    sha256 cellar: :any_skip_relocation, monterey:       "d8ac65e18e12300294d391210f8944fdf3a21a2580c1e633f4399085f6c98780"
+    sha256 cellar: :any_skip_relocation, big_sur:        "429a76f2db523702a2c6ce40c0f0e4562f0756e22882680b2e7e6e94e2f2a675"
+    sha256 cellar: :any_skip_relocation, catalina:       "d164b8af6b8a005697c6795e9c53df98200fb1b6cdc103ecce68dd69b135525c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f7ee08cb75bf71add9b45bd1df5b65b605ac8d667349e745948cc8dcb089721e"
   end
 
   depends_on "rust" => :build

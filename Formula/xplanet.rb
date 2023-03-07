@@ -7,8 +7,10 @@ class Xplanet < Formula
   revision 5
 
   bottle do
+    sha256 arm64_ventura:  "2bb0c0e4ea64c49788e5f0dae512f51d8574ee234bb5e4e60937a4b1be21166f"
     sha256 arm64_monterey: "c51846493f9bf53180929d9804e7e8f0a594e67334785a2f3ea3bbc3bec23a22"
     sha256 arm64_big_sur:  "7591ff1eca02603587c82b10f0713aab3aab0a4815416751f0ac4fa6ae8298ad"
+    sha256 ventura:        "2ab47c1f1e3d489f7c9ee6245c83450a15fa9a0da53ab6cc589d4fe0976e7b06"
     sha256 monterey:       "6266d230063d3ca5436c8865b1908053f96b940020c6290e8d9ff567760568e9"
     sha256 big_sur:        "d4a167f0b64440612f50fee22412c899fd33790722e21e4045ce283836c0183d"
     sha256 catalina:       "ccc97cd8a1b948e97d9eecb3c614eeb13bef1c80e4c643b83002878a7adef964"
@@ -40,6 +42,14 @@ class Xplanet < Formula
   patch do
     url "https://raw.githubusercontent.com/Homebrew/formula-patches/6b8519a9391b96477c38e1b1c865892f7bf093ca/xplanet/xplanet-1.3.1-giflib5.patch"
     sha256 "0a88a9c984462659da37db58d003da18a4c21c0f4cd8c5c52f5da2b118576d6e"
+  end
+
+  # Fix build with C++11 using Arch Linux patch. Remove in the next release.
+  # There is an upstream commit but SourceForge doesn't provide a way to get raw patch.
+  # Commit ref: https://sourceforge.net/p/xplanet/code/207/
+  patch do
+    url "https://raw.githubusercontent.com/archlinux/svntogit-community/040965e32860345ca2d744239b6e257da33460a2/trunk/xplanet-c%2B%2B11.patch"
+    sha256 "e651c7081c43ea48090186580b5a2a5d5039ab3ffbf34f7dd970037a16081454"
   end
 
   def install

@@ -1,9 +1,9 @@
 class Gpsd < Formula
   desc "Global Positioning System (GPS) daemon"
   homepage "https://gpsd.gitlab.io/gpsd/"
-  url "https://download.savannah.gnu.org/releases/gpsd/gpsd-3.24.tar.xz"
-  mirror "https://download-mirror.savannah.gnu.org/releases/gpsd/gpsd-3.24.tar.xz"
-  sha256 "dab45874c6da0ac604e3553b79fc228c25d6e71a32310a3467fb3bd9974e3755"
+  url "https://download.savannah.gnu.org/releases/gpsd/gpsd-3.25.tar.xz"
+  mirror "https://download-mirror.savannah.gnu.org/releases/gpsd/gpsd-3.25.tar.xz"
+  sha256 "7e5e53e5ab157dce560a2f22e20322ef1136d3ebde99162def833a3306de01e5"
   license "BSD-2-Clause"
 
   livecheck do
@@ -12,16 +12,17 @@ class Gpsd < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "9ee32da6d1a4cebc72344070d1f446a95e62446253453426a227a784a9986a2a"
-    sha256 cellar: :any,                 arm64_big_sur:  "538fd1fc7101ca412dea133b318cabe4111708bb8b64d6fc14e74e92ec334d79"
-    sha256 cellar: :any,                 monterey:       "fb3def1aeef8ecbc9e771bdcce032a808bcdaeaa72f48511c3a3d61baa6b5a72"
-    sha256 cellar: :any,                 big_sur:        "771bb0164955c209ec3bfd4cc1801da5a4ca44feffdc493192906b39d245e833"
-    sha256 cellar: :any,                 catalina:       "dfeda18cdf0234e2d2b3d8cc4146f3a1ba5f923b26cfdd8f4e97f6a1d72e3492"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "1b8f2870eb113ea890064d3011f1508869211a0dc2679cf41c02aff5fe7e9022"
+    sha256 cellar: :any,                 arm64_ventura:  "e9acbc066222d5eeeef6cd072b65d7c394d8b54943d80f40426f69c2cd6e8c7f"
+    sha256 cellar: :any,                 arm64_monterey: "7d8b72dd69fee140654975b7f932ebd4bf527356e9256f76a39c958cccaf8cd1"
+    sha256 cellar: :any,                 arm64_big_sur:  "5e563d468cecd7415ed0c064187a3083b4df611c502b24dff8b3314767c41adb"
+    sha256 cellar: :any,                 ventura:        "6ddffba6867de189fc5b54a92c4a256ee5aa4e71a5690c30169d18efcbc3d63b"
+    sha256 cellar: :any,                 monterey:       "d88a2ce7d9438b7c3402d7a55d8e7c09dac34609db903f47a0601be6cb093ab7"
+    sha256 cellar: :any,                 big_sur:        "bb51fd5c72e41d1e35bc8338df4de04584bcdb095ab890f0d28ce7ed5867dace"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "dbd26352543b06b8e06d964348137643dc43c51219f0bf56cbeac38f58e4c6b8"
   end
 
   depends_on "asciidoctor" => :build
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => :build
   depends_on "scons" => :build
 
   uses_from_macos "ncurses"

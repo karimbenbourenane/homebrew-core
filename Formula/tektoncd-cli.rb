@@ -1,8 +1,8 @@
 class TektoncdCli < Formula
   desc "CLI for interacting with TektonCD"
   homepage "https://github.com/tektoncd/cli"
-  url "https://github.com/tektoncd/cli/archive/v0.26.0.tar.gz"
-  sha256 "6be12ab8e741bdaebfb1f8095ece38f117f884566be8ac9397eeb105d0c4906a"
+  url "https://github.com/tektoncd/cli/archive/v0.29.1.tar.gz"
+  sha256 "87ae43221a3d8adcd32791a71867e27622b7ef672b8bdb463244b9bf80fd3e22"
   license "Apache-2.0"
 
   livecheck do
@@ -11,12 +11,13 @@ class TektoncdCli < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "d1e957261fab70713f7ee24080865a7fd8b5b77a6c7f2a400186b82bc809d40c"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "911bf4af0ac77c81b97c6220d85da151d8cd4adb9f5fda7a2299e0c66a455574"
-    sha256 cellar: :any_skip_relocation, monterey:       "69dfce4e130d0a776cebda96fe9b8b6eebce4151ec0f958c41f8dc4cb5e024f2"
-    sha256 cellar: :any_skip_relocation, big_sur:        "1ef91383ee4deb09adc7eaa3530dac0a8a6cc08c8d8e20ef64e8aa0b3fbecb61"
-    sha256 cellar: :any_skip_relocation, catalina:       "7eeedbb88b6a0cd7192421626325148b702a15e12cfaa2e6617f9c91d208cd11"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f02028301f67c8e4fae2c335c92f46ab72bd318b411548b61eda30985ac1fa29"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "ea184de41ff07c894bf5e6c519af414f012800164d744a4985a73b48c990a735"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "283c1773f6151a20caa19ef700e174a6d44152db80a7dca5d4d06b58d70f6989"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "baf842cc8c6d992cbd05c0874cb157df6acaf08b97cb7f903c3342e818e9fada"
+    sha256 cellar: :any_skip_relocation, ventura:        "e06ebcd0e59d78ef4481ff0b86d46b512c59493bacd17355865c7d215161e7e1"
+    sha256 cellar: :any_skip_relocation, monterey:       "b596347a4c50ecff98bcce10ed55a455170782dd82d5b55e013568e4c813fa84"
+    sha256 cellar: :any_skip_relocation, big_sur:        "df88e19c6be6194e99fc23b35d4ca5907776c89f4ab2e3fed432327496ee1ec0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b4b05aac6ae50db51b434ade5ab1718b018e66c09f83d2a285021093c8a219c3"
   end
 
   depends_on "go" => :build

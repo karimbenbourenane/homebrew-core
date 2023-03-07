@@ -2,18 +2,19 @@ class Etcd < Formula
   desc "Key value store for shared configuration and service discovery"
   homepage "https://github.com/etcd-io/etcd"
   url "https://github.com/etcd-io/etcd.git",
-      tag:      "v3.5.4",
-      revision: "08407ff7600eb16c4445d5f21c4fafaf19412e24"
+      tag:      "v3.5.7",
+      revision: "215b53cf3b48ee761f4c40908b3874b2e5e95e9f"
   license "Apache-2.0"
   head "https://github.com/etcd-io/etcd.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "4daf47ff317a297fe7e508ab74799ed4d9a133aafc30cd1ed510f7007abbc958"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "be55356384e60a8a9096ac91129a185acee1b98d04a3c21faa4310f22fcc4cfe"
-    sha256 cellar: :any_skip_relocation, monterey:       "4813890404b36cb64f1c09d843a69b8938602bda2a323b1d55c70c3ea8dc987c"
-    sha256 cellar: :any_skip_relocation, big_sur:        "cd8b99b2ae658229c22f0adf9a6c2a8f0fbabfbe07d9c8418d660c329d71a560"
-    sha256 cellar: :any_skip_relocation, catalina:       "63855b1fefa7f1f64e43e1ffd7b74c79b4a04ca58973a7ed67e3d54277e3887e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ea276191c22789dd1e2590bef8ced3dbf1d00432550ef4fe0a4451b7ca349862"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "1fe729530dc6c4c3b3769c131b231718b0a211d9d423dbdc74400401c541c037"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "1fe729530dc6c4c3b3769c131b231718b0a211d9d423dbdc74400401c541c037"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "1fe729530dc6c4c3b3769c131b231718b0a211d9d423dbdc74400401c541c037"
+    sha256 cellar: :any_skip_relocation, ventura:        "5bccd38618d5a65fc3ad05fe99447dfa968c22a3d27a98acaabc92c9fb44e994"
+    sha256 cellar: :any_skip_relocation, monterey:       "5bccd38618d5a65fc3ad05fe99447dfa968c22a3d27a98acaabc92c9fb44e994"
+    sha256 cellar: :any_skip_relocation, big_sur:        "5bccd38618d5a65fc3ad05fe99447dfa968c22a3d27a98acaabc92c9fb44e994"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "02a267f2c3db4e1063e703e1243daca054cad510c99039d3f17b0bca39089c6b"
   end
 
   depends_on "go" => :build
@@ -22,8 +23,6 @@ class Etcd < Formula
     system "make", "build"
     bin.install Dir[buildpath/"bin/*"]
   end
-
-  plist_options manual: "etcd"
 
   service do
     environment_variables ETCD_UNSUPPORTED_ARCH: "arm64" if Hardware::CPU.arm?

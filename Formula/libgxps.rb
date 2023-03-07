@@ -13,12 +13,15 @@ class Libgxps < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_monterey: "ef4bbc6216124d5e51c73cca76d1c4a4bed7747931b7a519e6e829d20cd7021c"
-    sha256 cellar: :any, arm64_big_sur:  "e45ca333cf831e269ac4ed11864da0f09524c87780e9c7f194415505753b6f2a"
-    sha256 cellar: :any, monterey:       "7956a71251563f6589ffd7a061a0e53cdfadcf90893220c94b004231640e3860"
-    sha256 cellar: :any, big_sur:        "19265edef8bb260d7a1adca6f6044f5ba94558b06d54d751c5f1144deb5b820e"
-    sha256 cellar: :any, catalina:       "1b25899eda944421ff3e97ecd872afc97b15f31cd7e651e1eb1ef05959327fa0"
-    sha256               x86_64_linux:   "49e69a37f4fd97632211101d926390e1eae26c8a215b73ed22b86b7caebae3c5"
+    rebuild 1
+    sha256 cellar: :any, arm64_ventura:  "0f524e3a24c4939c08d93f3f66af34994bd9ec0a5a2c54323baaba2cfbdd8048"
+    sha256 cellar: :any, arm64_monterey: "1ace22f9a74c47c9c4a80c6d0f489e3200a3987257641440e14bb0974a6fd89c"
+    sha256 cellar: :any, arm64_big_sur:  "56e4ad2dad8df91707bdb77445b2e0c4b020b9f02aaebd6a667e639546ad91eb"
+    sha256 cellar: :any, ventura:        "938519d7611202c22f11ed787bda5055ae7420db034caf2c76e27d19943b99e4"
+    sha256 cellar: :any, monterey:       "9806279d50f73693dbad71dd0b4c185196584a9187ee5daaae66882d4f9b7682"
+    sha256 cellar: :any, big_sur:        "772f8f4ba58385b382de4e88e2f68e706f3a8fd20e1c5a64a33b154bd1112227"
+    sha256 cellar: :any, catalina:       "81189357b4d118895c1994c005bb9265a2a77a71e7fd3d386f3f06113abd541b"
+    sha256               x86_64_linux:   "c79ca4a9d50d6447a84b532636d8f9e758667e8284bfb485f6384e146bb4d2f0"
   end
 
   keg_only "it conflicts with `ghostscript`"
@@ -27,8 +30,8 @@ class Libgxps < Formula
   depends_on "meson" => :build
   depends_on "ninja" => :build
   depends_on "pkg-config" => :build
+  depends_on "cairo"
   depends_on "glib"
-  depends_on "gtk+3"
   depends_on "jpeg-turbo"
   depends_on "libarchive"
   depends_on "libtiff"
@@ -42,8 +45,8 @@ class Libgxps < Formula
     # This is not the same variable as setting LD_LIBRARY_PATH!
     ENV.append "LIBRARY_PATH", Formula["zlib"].opt_lib unless OS.mac?
 
-    system "meson", *std_meson_args, "build"
-    system "meson", "compile", "-C", "build", "-v"
+    system "meson", *std_meson_args, "build", "-Denable-test=false"
+    system "meson", "compile", "-C", "build", "--verbose"
     system "meson", "install", "-C", "build"
   end
 

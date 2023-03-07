@@ -1,18 +1,19 @@
 class Dbdeployer < Formula
   desc "Tool to deploy sandboxed MySQL database servers"
   homepage "https://github.com/datacharmer/dbdeployer"
-  url "https://github.com/datacharmer/dbdeployer/archive/v1.69.1.tar.gz"
-  sha256 "165950a32760a5e0f32f951eaa0c67a6956cb2cea75ac0381c65f39b7e9789c7"
+  url "https://github.com/datacharmer/dbdeployer/archive/v1.72.0.tar.gz"
+  sha256 "fa49bdcfc35cca74f01166c031bbd7448950ae29aaad6b20b131b37cf27e4b1f"
   license "Apache-2.0"
   head "https://github.com/datacharmer/dbdeployer.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "4f78f872f16e5b79b69ece7ff73eccd7394e1a2cf234a242fa3f753b0028c798"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "781895af0c3ae9e496073f0a69e7d461a9ffffe75a395e8ef99c053315bf17e0"
-    sha256 cellar: :any_skip_relocation, monterey:       "5bba9dc7589acd9c6fce3a95537c79cd335a334e763a4ea8a111ad8d424ed313"
-    sha256 cellar: :any_skip_relocation, big_sur:        "e0a55f65f4ee4bc4b62d525f933845c9794d4124a974eb0db7df3b0f6c4b9aa8"
-    sha256 cellar: :any_skip_relocation, catalina:       "fbde301245fe963d7ef5b9daef6518e4e6fa9e93b17b5ff01135382d66634d17"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f8db6ff5fbad2a4c6bbab877970ed81ea7ed86ade8eed5ec57b3a56ce6b01840"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "b44c0a4f45f13abbd049aaa9eacff93703382590d940feb03cf10436d0a0bd90"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "7223f68287192fe1cdf4b7edd884ad7945cc607ad054c229aa651d35d7d18de9"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "59bdfdaa50188f807dcdc506146057f2cf379f6a977fef1318161693d5388548"
+    sha256 cellar: :any_skip_relocation, ventura:        "c055072a66800755330f7d2cf733b3f8286ec33c40132cabc7277140e570bd14"
+    sha256 cellar: :any_skip_relocation, monterey:       "709595c649541ea27a703f0a64cac204d772f46e34507f8522b57b4b5e6c25fc"
+    sha256 cellar: :any_skip_relocation, big_sur:        "8abff78757b0307c98fc6696e8c06aeade4065f66332ef1e277768d3c66bd83f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b3ffad512104e0336d4268da8e32ebc2df6e989d125c1b6e84c7d1eeeab2222b"
   end
 
   depends_on "go" => :build
@@ -23,7 +24,7 @@ class Dbdeployer < Formula
   end
 
   test do
-    shell_output("dbdeployer init --skip-shell-completion --skip-tarball-download")
+    shell_output("#{bin}/dbdeployer init --skip-shell-completion --skip-tarball-download")
     assert_predicate testpath/"opt/mysql", :exist?
     assert_predicate testpath/"sandboxes", :exist?
   end

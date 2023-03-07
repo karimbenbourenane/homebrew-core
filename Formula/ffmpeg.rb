@@ -1,11 +1,12 @@
 class Ffmpeg < Formula
   desc "Play, record, convert, and stream audio and video"
   homepage "https://ffmpeg.org/"
-  url "https://ffmpeg.org/releases/ffmpeg-5.1.1.tar.xz"
-  sha256 "95bf3ff8c496511e71e958fb249e663c8c9c3de583c5bebc0f5a9745abbc0435"
+  url "https://ffmpeg.org/releases/ffmpeg-5.1.2.tar.xz"
+  sha256 "619e706d662c8420859832ddc259cd4d4096a48a2ce1eefd052db9e440eef3dc"
   # None of these parts are used by default, you have to explicitly pass `--enable-gpl`
   # to configure to activate them. In this case, FFmpeg's license changes to GPL v2+.
   license "GPL-2.0-or-later"
+  revision 5
   head "https://github.com/FFmpeg/FFmpeg.git", branch: "master"
 
   livecheck do
@@ -14,17 +15,18 @@ class Ffmpeg < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "ab401c96929674d90003b3b75eee7280806ba913648c4ddd648d3f07b323dc66"
-    sha256 arm64_big_sur:  "967a8ac417964bdad509749a039d12d06461f2b8e52102b7c118f52fc634645e"
-    sha256 monterey:       "c3ad7a1c3da583707efd72553952a07ab3ba5cfb9383ad44119868517fba8401"
-    sha256 big_sur:        "b97a869d8da126cfa974266f4e62f095b50805f805f9c697186a16c750de8ee2"
-    sha256 catalina:       "fe4afaf2707d8483cd873c2eb5fdf713d31721693cbc3087d753c0449137d49b"
-    sha256 x86_64_linux:   "cc2a9eaf4c7dd8399f2b0fef593858a8ac290c1139328dd35fb55a7e862c7b09"
+    sha256 arm64_ventura:  "db3af0538b50603b756a603ae58f9dbbcfc39ed46098942dec811f7de07e97ee"
+    sha256 arm64_monterey: "75791347c901a770e1f68025c7dcb86cb072de62a0e1e398c79231b358eb3fa4"
+    sha256 arm64_big_sur:  "77263b07cf948f7b06bbe27bc8948632d570b6f368ed90c6a8df132617020cf5"
+    sha256 ventura:        "bfb42173452b3984cc490cdbc362bd4612a455aa5072cb5b8bd662523ccaa083"
+    sha256 monterey:       "8892c40116e59aa46c1a5ed0540e8d0a434b0e1f6aab74d7ca879f5bd25f0da0"
+    sha256 big_sur:        "b723f702701ec05b25e82e21340a6fdc7aa280918494b2b1a5b1295d8b76aa14"
+    sha256 x86_64_linux:   "3738250fe83dac52ec52da6c5a8f521510a69ef6a0b61c570de173c7c1201077"
   end
 
-  depends_on "nasm" => :build
   depends_on "pkg-config" => :build
   depends_on "aom"
+  depends_on "aribb24"
   depends_on "dav1d"
   depends_on "fontconfig"
   depends_on "freetype"
@@ -48,6 +50,7 @@ class Ffmpeg < Formula
   depends_on "snappy"
   depends_on "speex"
   depends_on "srt"
+  depends_on "svt-av1"
   depends_on "tesseract"
   depends_on "theora"
   depends_on "webp"
@@ -64,8 +67,11 @@ class Ffmpeg < Formula
 
   on_linux do
     depends_on "alsa-lib"
-    depends_on "gcc" # because rubberband is compiled with gcc
     depends_on "libxv"
+  end
+
+  on_intel do
+    depends_on "nasm" => :build
   end
 
   fails_with gcc: "5"
@@ -83,6 +89,7 @@ class Ffmpeg < Formula
       --enable-gnutls
       --enable-gpl
       --enable-libaom
+      --enable-libaribb24
       --enable-libbluray
       --enable-libdav1d
       --enable-libmp3lame
@@ -92,6 +99,7 @@ class Ffmpeg < Formula
       --enable-librubberband
       --enable-libsnappy
       --enable-libsrt
+      --enable-libsvtav1
       --enable-libtesseract
       --enable-libtheora
       --enable-libvidstab

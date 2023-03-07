@@ -1,25 +1,26 @@
 class TrzszGo < Formula
   desc "Simple file transfer tools, similar to lrzsz (rz/sz), and compatible with tmux"
   homepage "https://trzsz.github.io"
-  url "https://github.com/trzsz/trzsz-go/archive/refs/tags/v0.1.9.tar.gz"
-  sha256 "f39c930360a36788f13f26da6792fcce09674e45beb539f0b4b4a747d17576ab"
+  url "https://github.com/trzsz/trzsz-go/archive/refs/tags/v1.0.0.tar.gz"
+  sha256 "28714b3c0715796935cec8bb20e98a3ae06e91c5817fdc735bdc4d1f55dee78c"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "236473aa975543af390aaa4f8e65c49ecd8a407e2d867a09a02998156c37062c"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "81851185ec81d689eaf3bb5319165bb586dc628e059eb7d877951614fd0bc205"
-    sha256 cellar: :any_skip_relocation, monterey:       "53f380167227a17956a13dc6973144dba444227247f6e2589ad647d84341a12a"
-    sha256 cellar: :any_skip_relocation, big_sur:        "965c0db925939162bd15554a8a8896999484056616e6181c389e3afec473abc9"
-    sha256 cellar: :any_skip_relocation, catalina:       "2e6d4df459d51b4d512a510d5c30c57a1cb2d00927d0419b2433f2f056f4c257"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c9c1b44166630f0fa88c2e45af3e660fb9a35ffa4457d062f6f3aa04a2afedcb"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "24918d6a5d1d736baa4f465e1ee46ad38e50ca0fb2dd4566821e3952732560bb"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "160e3e935dd35f53d29ac8da911d8e3c3cc50338a722becd9ae22f442fe0a429"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "68466d29ab1a193545f0e3b55108d2bdd51921e4293feb38dff71cf114f2d624"
+    sha256 cellar: :any_skip_relocation, ventura:        "5d1cefe99e950a6a85e17dc68b4fb918a80a6b35005833041a940e3f64feb6c5"
+    sha256 cellar: :any_skip_relocation, monterey:       "47f4abde1eae9aa0f8b92c9bdfc4fbcdcd2bb8c23795b2d6723b0a82028fc693"
+    sha256 cellar: :any_skip_relocation, big_sur:        "71ec72570caa68a61ead80c167f5d56bbf10532d7a3bbcb4c98875a363c85074"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "20695b59fa9b52f9fa16f0c56a04a9e1897b77ed1411ffa87544baddf8e14895"
   end
 
   depends_on "go" => :build
 
   def install
-    system "go", "build", "-o", bin/"trz", "./cmd/trz"
-    system "go", "build", "-o", bin/"tsz", "./cmd/tsz"
-    system "go", "build", "-o", bin/"trzsz", "./cmd/trzsz"
+    system "go", "build", *std_go_args(ldflags: "-s -w", output: bin/"trz"), "./cmd/trz"
+    system "go", "build", *std_go_args(ldflags: "-s -w", output: bin/"tsz"), "./cmd/tsz"
+    system "go", "build", *std_go_args(ldflags: "-s -w", output: bin/"trzsz"), "./cmd/trzsz"
   end
 
   test do

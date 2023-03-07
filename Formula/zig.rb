@@ -1,36 +1,44 @@
 class Zig < Formula
   desc "Programming language designed for robustness, optimality, and clarity"
   homepage "https://ziglang.org/"
+  url "https://ziglang.org/download/0.10.1/zig-0.10.1.tar.xz"
+  sha256 "69459bc804333df077d441ef052ffa143d53012b655a51f04cfef1414c04168c"
   license "MIT"
-  revision 1
-
-  stable do
-    url "https://ziglang.org/download/0.9.1/zig-0.9.1.tar.xz"
-    sha256 "38cf4e84481f5facc766ba72783e7462e08d6d29a5d47e3b75c8ee3142485210"
-    depends_on "llvm@13"
-  end
+  head "https://github.com/ziglang/zig.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "68753cc80a085df9c1a37c33b9ce0dc1a52a54ee4d30b08ceb34adcd38c4187e"
-    sha256 cellar: :any,                 arm64_big_sur:  "cb634dd3f4056a6af9fb473bb4df0ef9d43f72d87770013c90d1cfed917a3d65"
-    sha256 cellar: :any,                 monterey:       "fb571c678a0b09b8121bf22beb0b5b7590c570126d996bd2453d0dc63556a79a"
-    sha256 cellar: :any,                 big_sur:        "a68db737a48c93265857facdf97584eaa2db5557ddfddfa193f753ad8cf33bfd"
-    sha256 cellar: :any,                 catalina:       "57ac5fe27bf9390bee7631c0b72e7f219bb07ef30a77ecbc45e38b7d1cbb5134"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "16147ff8975e5e77003c1c933d1bbcd5cc57b4250eb838503a6dfea96d68206f"
-  end
-
-  head do
-    url "https://github.com/ziglang/zig.git", branch: "master"
-    depends_on "llvm"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_ventura:  "8a4d9ff9954cc5653d7ee911bdb1763d391782ec9a238045ff56ba5f86bf2e1a"
+    sha256 cellar: :any,                 arm64_monterey: "39edbad109f049325e58dbc101a748c02c175be1f0a40174b2e896e4bef3ccdc"
+    sha256 cellar: :any,                 arm64_big_sur:  "0b51293590c234eeb6719160a14e4b613bf72881485e5d0e232cf780db76d3b9"
+    sha256 cellar: :any,                 ventura:        "b4ae05a9335758b47c4d9bb9c71ce455aff7449bb975f4996f4d92c32e407701"
+    sha256 cellar: :any,                 monterey:       "03372943e1f2b037452fef537f19114af3953f945eb30c5f8cb04b9335fe34c1"
+    sha256 cellar: :any,                 big_sur:        "237021c926ad9b3ae44112d1e34d7ba615d940ff28c29170915cd68af84b2b87"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f17973e872f1ea8de838d540cb1b8092a6a4091e41f2d08822a0431bbd970080"
   end
 
   depends_on "cmake" => :build
+  depends_on "llvm" => :build
+  depends_on macos: :big_sur # https://github.com/ziglang/zig/issues/13313
+  depends_on "z3"
+  depends_on "zstd"
+  uses_from_macos "ncurses"
+  uses_from_macos "zlib"
 
   fails_with gcc: "5" # LLVM is built with GCC
 
   def install
-    system "cmake", ".", *std_cmake_args, "-DZIG_STATIC_LLVM=ON"
-    system "make", "install"
+    cpu = case Hardware.oldest_cpu
+    when :arm_vortex_tempest then "apple_m1" # See `zig targets`.
+    else Hardware.oldest_cpu
+    end
+
+    args = ["-DZIG_STATIC_LLVM=ON"]
+    args << "-DZIG_TARGET_MCPU=#{cpu}" if build.bottle?
+
+    system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
   end
 
   test do

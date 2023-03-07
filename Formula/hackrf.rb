@@ -1,8 +1,8 @@
 class Hackrf < Formula
   desc "Low cost software radio platform"
   homepage "https://github.com/greatscottgadgets/hackrf"
-  url "https://github.com/greatscottgadgets/hackrf/archive/v2021.03.1.tar.gz"
-  sha256 "84a9aef6fe2666744dc1a17ba5adb1d039f8038ffab30e9018dcfae312eab5be"
+  url "https://github.com/greatscottgadgets/hackrf/releases/download/v2023.01.1/hackrf-2023.01.1.tar.xz"
+  sha256 "32a03f943a30be4ba478e94bf69f14a5b7d55be6761007f4a4f5453418206a11"
   license "GPL-2.0-or-later"
   head "https://github.com/greatscottgadgets/hackrf.git", branch: "master"
 
@@ -12,13 +12,13 @@ class Hackrf < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "37d8ca63d8dc49eaf98deb62b44f2ff0b938dbbd61d8596d1db24513b4f6dbe0"
-    sha256 cellar: :any,                 arm64_big_sur:  "233c56f5a051ad74e30f3a18741a39c750b4973e20d580388c11606488e61fc0"
-    sha256 cellar: :any,                 monterey:       "4bea22297877adcbe79dbf29ba2afed9b44d74362003153c516a8d2360b95121"
-    sha256 cellar: :any,                 big_sur:        "54e9e6ad6edbac05a150b07cab7e23ff6053e2c64c927fdbc63bea7007c7ec9e"
-    sha256 cellar: :any,                 catalina:       "903c9d309035f261f336a5c3d456a7947eb14390be917f43f40dbaf2ff0146b6"
-    sha256 cellar: :any,                 mojave:         "68d1ffb38ef62af28483d702189ea4019cf81764767d91dd0fa113f39bcbdc0c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "54be32eb59c488a5ad63e06f4957fae5fabe673e1bbdec19708d5cca96434092"
+    sha256 cellar: :any,                 arm64_ventura:  "5e3a08883caa11b3efc07014bb53cac7f5de322b2eb2a6e3e27bade295b1e6f7"
+    sha256 cellar: :any,                 arm64_monterey: "ec83b7be635e119651ee1715f6efa57c72d4d98f560e27fbfd4456598ab805e7"
+    sha256 cellar: :any,                 arm64_big_sur:  "60831932de8d4499a1f1c54f1810d001ab3b7e3af0732735dd5e3df5a93ab935"
+    sha256 cellar: :any,                 ventura:        "99bd5f158dbb6d6ceeafa5eb0c53b7bf91cdad7ace7bdd2c3102022b130c6cd5"
+    sha256 cellar: :any,                 monterey:       "b21f730ddf1a1a8b117585bbf9beb271c73767fe3c69d0a7bd84812cb0256bfd"
+    sha256 cellar: :any,                 big_sur:        "0c8b55d2e955787afeccdbee0ce02e168d35c3d72be0b7c627f9e9dc693c0f4e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fb0ddaecf5f1a3b3422c029113568f8fc5f04a5a3b72a0dae20b47da8e210a2b"
   end
 
   depends_on "cmake" => :build
@@ -38,6 +38,7 @@ class Hackrf < Formula
       system "cmake", ".", *args
       system "make", "install"
     end
+    pkgshare.install "firmware-bin/"
   end
 
   test do

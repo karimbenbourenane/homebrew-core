@@ -1,10 +1,9 @@
 class Cdo < Formula
   desc "Climate Data Operators"
   homepage "https://code.mpimet.mpg.de/projects/cdo"
-  url "https://code.mpimet.mpg.de/attachments/download/26823/cdo-2.0.5.tar.gz"
-  sha256 "edeebbf1c3b1a1f0c642dae6bc8c7624e0c54babe461064dc5c7daca4a5b0dce"
+  url "https://code.mpimet.mpg.de/attachments/download/27654/cdo-2.1.1.tar.gz"
+  sha256 "c29d084ccbda931d71198409fb2d14f99930db6e7a3654b3c0243ceb304755d9"
   license "GPL-2.0-only"
-  revision 1
 
   livecheck do
     url "https://code.mpimet.mpg.de/projects/cdo/files"
@@ -12,12 +11,13 @@ class Cdo < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "6263a211f02fdafd51bbfa3a0773a9fa81979b4c29b9d4e33da4417ab6dc6d51"
-    sha256 cellar: :any,                 arm64_big_sur:  "2656dc32acb71d11f5288aba8571de98a4411ee58e426437971759edfd38f1c3"
-    sha256 cellar: :any,                 monterey:       "043bece96c7875b42f3f5315a4beea11f2eeda4947199c206b01b29173c22e9f"
-    sha256 cellar: :any,                 big_sur:        "dd422128a9b8b836e849abcec45448435d3c2b21c33f9374cada7d98eed057e7"
-    sha256 cellar: :any,                 catalina:       "95c9af1513fe44f93dea7e59677c57d165588febe490b02b322701517e6e823b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "bd9ff737755e92c5a1a21d5a9aa8f30ef8f66eab9c8e3e1f62c0e4b0d4e5dd01"
+    sha256 cellar: :any,                 arm64_ventura:  "d89b12fc78dff63d66f0bf87310d76216a149116d4cd006698c991a576f04cad"
+    sha256 cellar: :any,                 arm64_monterey: "83eac588cd73706edfef31b63cb85e2966f762a4f0a02ca366da2f5edce38851"
+    sha256 cellar: :any,                 arm64_big_sur:  "0494b5787eae90ea304241a55cef9228a03af0dc51d2c58a19b9ce0fcc282205"
+    sha256 cellar: :any,                 ventura:        "fcd1c9fb8575d852d2e27d0ceb136c3fe376e0ae391ba9d009f3a0b8b501ba13"
+    sha256 cellar: :any,                 monterey:       "080c0418533dc364d20b1016fd4787185dc157400a24eb25fe8392ec296765f5"
+    sha256 cellar: :any,                 big_sur:        "db7e6646f014c87d67c6b6a6c61c58a951c31aeb4879c13b1833157cc8627bf3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8a527a90f90a6539f701eb1dec2887f85155fd87351316b09a0d5b9bc7665360"
   end
 
   depends_on "eccodes"
@@ -25,6 +25,7 @@ class Cdo < Formula
   depends_on "libaec"
   depends_on "netcdf"
   depends_on "proj"
+  uses_from_macos "python" => :build
 
   def install
     args = %W[

@@ -3,7 +3,7 @@ class Standardese < Formula
   homepage "https://standardese.github.io"
   # TODO: use resource blocks for vendored deps
   license "MIT"
-  revision 7
+  revision 11
   head "https://github.com/standardese/standardese.git", branch: "master"
 
   # Remove stable block when patch is no longer needed.
@@ -21,12 +21,13 @@ class Standardese < Formula
   end
 
   bottle do
-    sha256                               arm64_monterey: "eb35dc236f03017dabb9679a13485bd32f247a7ff58e71240bf7eb45834ceff5"
-    sha256                               arm64_big_sur:  "6e6d22daa0f20410d0679b461c4928bac05b35c79b9fc3c437c837c195fbd7be"
-    sha256                               monterey:       "137975f243104d72cf08d5c878c3ff7618291e1fc34a5d8ef8a68380013c6bca"
-    sha256                               big_sur:        "14fd1669fa05d8b427f5702437e9565cfeb3452ed8ec9c224da5413f42525217"
-    sha256                               catalina:       "147508387e3205345b95cb2d7be9fdb2f67272da5ce3dd19946bf3864cfe598c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "eecadf81535d6a600339b1303f1491528770ace473bb4d7e693e67a821d0c7bd"
+    sha256                               arm64_ventura:  "a2308582350d4749a86fa522853149c0ba390448648474f1d50e327dc20c17e7"
+    sha256                               arm64_monterey: "33e5a19cf23a5194ed3aa586db6ef844dd3029d51c13031e0817e4bcc21ff528"
+    sha256                               arm64_big_sur:  "b714fb554c342b17688af3a60851dc5684a1bbdd9bef46e422c10e8c733bf49d"
+    sha256                               ventura:        "d4b3f22846934bbdca43d18596e4a1e931c8f70a937867917565443a81af5017"
+    sha256                               monterey:       "27bc5a09300ca56d02a0f0b576fad1784123fdced84801ba5592a930220e9a54"
+    sha256                               big_sur:        "4ebb3338033391933e6a4d79469bb16c7d0474c36bbe8f68a9b18841324e717b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5acd5b2967da6029f48db8551f389dd6988633a4b3468749eb2f6a26385cc316"
   end
 
   depends_on "cmake" => :build
@@ -40,10 +41,12 @@ class Standardese < Formula
     # Don't build shared libraries to avoid having to manually install and relocate
     # libstandardese, libtiny-process-library, and libcppast. These libraries belong
     # to no install targets and are not used elsewhere.
+    # Disable building test objects because they use an outdated vendored version of catch2.
     system "cmake", "-S", ".", "-B", "build",
                     "-DBUILD_SHARED_LIBS=OFF",
                     "-DCMARK_LIBRARY=#{Formula["cmark-gfm"].opt_lib/shared_library("libcmark-gfm")}",
                     "-DCMARK_INCLUDE_DIR=#{Formula["cmark-gfm"].opt_include}",
+                    "-DSTANDARDESE_BUILD_TEST=OFF",
                     *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
@@ -80,10 +83,9 @@ class Standardese < Formula
           using Baz = Test;
       };
     EOS
-    system "standardese",
-           "--compilation.standard", "c++17",
-           "--output.format", "xml",
-           testpath/"test.hpp"
+    system bin/"standardese", "--compilation.standard", "c++17",
+                              "--output.format", "xml",
+                              testpath/"test.hpp"
     assert_includes (testpath/"doc_test.xml").read, "<subdocument output-name=\"doc_test\" title=\"test.hpp\">"
   end
 end

@@ -2,8 +2,8 @@ class Flux < Formula
   desc "Lightweight scripting language for querying databases"
   homepage "https://www.influxdata.com/products/flux/"
   url "https://github.com/influxdata/flux.git",
-      tag:      "v0.181.0",
-      revision: "d6a97eff2123bf75323bad1319ff10751177c445"
+      tag:      "v0.193.0",
+      revision: "726bf0653f99083a7486fc00a2be6abc3f859050"
   license "MIT"
   head "https://github.com/influxdata/flux.git", branch: "master"
 
@@ -13,12 +13,13 @@ class Flux < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "4830ccc5c5e9dce89328a456b12f88149a623f6e6311abb8ec8c167efee25dc6"
-    sha256 cellar: :any,                 arm64_big_sur:  "0e3c7d50514bacd65c515de2d0a2187edebc4998bf56ccd89fda35be91c430d2"
-    sha256 cellar: :any,                 monterey:       "bfc639d71851a9e3f54236b8af95aa76ad0597ca73c7b6db2cc4309b347dd72b"
-    sha256 cellar: :any,                 big_sur:        "36030b5417a47151f34e49ca560a4c83b25804483a3c0bb61e62d330229c7444"
-    sha256 cellar: :any,                 catalina:       "1dc3a6cf82bcdd7a25c07cdc7deb7427d7312c5c44a9bc4377b5c8d5a09bac12"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5130a9971e9b1c0b2a072c5b7428a0b1079d3c42eafa2d49ae0b55a905f39307"
+    sha256 cellar: :any,                 arm64_ventura:  "ab5d5f36b151e5e9d855d93702e5dd85ba1614ed0168e6230c430d17f6c66802"
+    sha256 cellar: :any,                 arm64_monterey: "59cc0f2e8e41bc70f4466f27cc3b000579bf51caeec63ad6ccaf2e5113029e3b"
+    sha256 cellar: :any,                 arm64_big_sur:  "76f8a0a3e974e24b3e38c9567f108920e85ba7a31972f22e366ac4f1ac4bfe4a"
+    sha256 cellar: :any,                 ventura:        "5b7bfcb200c2f27cf18fe987c1ec3a198df4e3c9cd1c77970b29b9fe3611ac76"
+    sha256 cellar: :any,                 monterey:       "ae7ed966bfb92e22ab0c21c6e3e82e3e9a901172b39168efb389ddd8bda62fb6"
+    sha256 cellar: :any,                 big_sur:        "e7f0e8ae3025febf381ae614d99ce71d6ebc07dd44df4a1dc683f1c2a1f9d002"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6cf54299f67f454a9b25cbc656dabcf502868292d7418b78f0c59d82e4cbc4bf"
   end
 
   depends_on "go" => :build
@@ -33,6 +34,11 @@ class Flux < Formula
   resource "pkg-config-wrapper" do
     url "https://github.com/influxdata/pkg-config/archive/v0.2.12.tar.gz"
     sha256 "23b2ed6a2f04d42906f5a8c28c8d681d03d47a1c32435b5df008adac5b935f1a"
+
+    livecheck do
+      url "https://raw.githubusercontent.com/influxdata/flux/v#{LATEST_VERSION}/go.mod"
+      regex(/pkg-config\s+v?(\d+(?:\.\d+)+)/i)
+    end
   end
 
   def install

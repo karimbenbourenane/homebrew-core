@@ -1,19 +1,20 @@
 class Bear < Formula
   desc "Generate compilation database for clang tooling"
   homepage "https://github.com/rizsotto/Bear"
-  url "https://github.com/rizsotto/Bear/archive/3.0.20.tar.gz"
-  sha256 "45cfcdab07f824f6c06c9776701156f7a04b23eadd25ecbc88c188789a447cc7"
+  url "https://github.com/rizsotto/Bear/archive/3.1.1.tar.gz"
+  sha256 "52f8ee68ee490e5f2714eebad9e1288e89c82b9fd7bf756f600cff03de63a119"
   license "GPL-3.0-or-later"
-  revision 2
+  revision 1
   head "https://github.com/rizsotto/Bear.git", branch: "master"
 
   bottle do
-    sha256 arm64_monterey: "fd7cebdc653cf89784ccb7ac0d63a66eaad730f8b8a65dc1d021b5d3707273e6"
-    sha256 arm64_big_sur:  "8a97aeee7a913e1a588fe09f2b25379dd910ab75884beef74fcdeb1540837428"
-    sha256 monterey:       "2383e160d2d48400d5b6b8ae219280bafd33aee576333abc5a4d3114b5d5f134"
-    sha256 big_sur:        "f2ddf39c0032e194ab275abcfa6b7b8da3ee4dd9476a05775284f8839f840051"
-    sha256 catalina:       "e6970ad002595c6c55ac8efc49a50f24ced66471888dfc7c18059648f89e5442"
-    sha256 x86_64_linux:   "48046a4591aa44a377c4ee78f100a9baaa78efd402e99f59b60c2b807fe35253"
+    sha256 arm64_ventura:  "0ce5a926327fb07e48533deac8d46bf715631090b0ff2019eaf3ecc26b617d36"
+    sha256 arm64_monterey: "1f93e7b42fc1de65b2783b97d610bb1f746537da322f53bc34ea28a85297e4ff"
+    sha256 arm64_big_sur:  "10db9c8ddd3d958e442c03b582b6b8c9538da0c7584254dda8ef5febb0c446ee"
+    sha256 ventura:        "0e247e8e1e83a43ae251e107d474ed9ff22d103bd4f1692bcaf88d68f001b909"
+    sha256 monterey:       "b2b439eeeabb2ae7efb6449de0c8ec6e488706e8fd233bc01e94333993bed859"
+    sha256 big_sur:        "1af8d201342e2ff72d6980287ca07d6224b22902e215a60b505c737a9e879df7"
+    sha256 x86_64_linux:   "45376b1a30f8bcba3f632715ab381cd18ac4be9ec9878453581ae4415b6dca72"
   end
 
   depends_on "cmake" => :build
@@ -27,10 +28,6 @@ class Bear < Formula
 
   on_macos do
     depends_on "llvm" if DevelopmentTools.clang_build_version <= 1100
-  end
-
-  on_linux do
-    depends_on "gcc"
   end
 
   fails_with gcc: "5" # needs C++17

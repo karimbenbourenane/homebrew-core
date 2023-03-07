@@ -1,18 +1,19 @@
 class Jaq < Formula
   desc "JQ clone focussed on correctness, speed, and simplicity"
   homepage "https://github.com/01mf02/jaq"
-  url "https://github.com/01mf02/jaq/archive/refs/tags/v0.8.0.tar.gz"
-  sha256 "f78ee650c7058419d0dba37360ba0e9930b88f1432234b48f25dc89dbaaf665f"
+  url "https://github.com/01mf02/jaq/archive/refs/tags/v0.10.0.tar.gz"
+  sha256 "ea54e2675ccd7ea9fe900343cea9263582a519f157fba6cf1d54f1e4e6718b99"
   license "MIT"
   head "https://github.com/01mf02/jaq.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "86e862291cb785d1734d6ea5e2e63586eed717657ac25c1446a6343c590c4f77"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "c4f79be6d0840f5fc0ec2344345f0ca502e647ba2c3f9d78b8f8071f855dfcd9"
-    sha256 cellar: :any_skip_relocation, monterey:       "86bf4241e63b449e4093f65848d30b5dfe413ee5785ea7072bcb16d6b9f11094"
-    sha256 cellar: :any_skip_relocation, big_sur:        "48d247267935c637b6a4859a72207188041e214ae39f879534bd833c8e1fdba6"
-    sha256 cellar: :any_skip_relocation, catalina:       "91ae6cfeeefe2144280df1bb7d52f005bbc73503a20cc0341e546e1ece990a44"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "94a70fbeee2b338cc9444655060ca8c1a5186ee116c65b33f1648e9a73f206ed"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "b4ad544e0c905a377a2ec2077b896b735c7c49183d546752b9524bbd16549d49"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "a70af3f51d4f74926a2839bcfe62c53814f828529607828a1e65ded358c5bfc1"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "135c403478d36c99e896feb36d7f83254c10911dd8ccaef1b7d629e137ba0607"
+    sha256 cellar: :any_skip_relocation, ventura:        "eda0466ba98f8640b00b0caad49c234853044019c1f7610b90e21c8db52f62e9"
+    sha256 cellar: :any_skip_relocation, monterey:       "f7a3ca957befaf21b401955955ef4ad0d2b61596a2fffef74f48b75fef5c955b"
+    sha256 cellar: :any_skip_relocation, big_sur:        "0387f0421d669ebf5d0c17ca00bbac31553882b7d88dbf82dc481373f36d40c7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d4ad6f31601473dc845517d1f145002ef77c741ffe8c2fb46656000136d7de71"
   end
 
   depends_on "rust" => :build

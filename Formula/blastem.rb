@@ -13,6 +13,7 @@ class Blastem < Formula
   end
 
   bottle do
+    sha256 cellar: :any,                 ventura:      "e596f3a0411f92741ccfcd5e9f5112e48d586c6c7445c477e0954ef62d91a711"
     sha256 cellar: :any,                 monterey:     "a05456feadfedff7fc89b7e018b801121e92d27cf280dce0bb5edcbb18fcb488"
     sha256 cellar: :any,                 big_sur:      "5a1d5caf1b0fc3f0f7887432c80c6cb49f1b3dc336a9873558d5f6b7c94ae099"
     sha256 cellar: :any,                 catalina:     "684ac27d7251db585b84112c9721fbafab44e24bb4dbee60a161f1b772ccb82d"
@@ -22,7 +23,7 @@ class Blastem < Formula
   depends_on "imagemagick" => :build
   depends_on "pillow" => :build
   depends_on "pkg-config" => :build
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => :build
   depends_on arch: :x86_64
   depends_on "glew"
   depends_on "sdl2"
@@ -40,6 +41,14 @@ class Blastem < Formula
     sha256 "e332764bfa08e08e0f9cbbebefe73b88adb99a1e96a77a16a0aeeae827ac72ff"
   end
 
+  # Fix build with -fno-common which is default in GCC 10+. Remove with next release.
+  patch do
+    on_linux do
+      url "https://www.retrodev.com/repos/blastem/raw-rev/e45a317802bd"
+      sha256 "8f869909df6eb66375eea09dde806422aa007aee073d557b774666f51c2e40dd"
+    end
+  end
+
   def install
     resource("vasm").stage do
       system "make", "CPU=m68k", "SYNTAX=mot"
@@ -49,7 +58,7 @@ class Blastem < Formula
 
     # Use imagemagick to convert XCF files instead of xcftools, which is unmaintained and broken.
     # Fix was sent to upstream developer.
-    inreplace "Makefile", "xcf2png \$< > \$@", "convert $< $@"
+    inreplace "Makefile", "xcf2png $< > $@", "convert $< $@"
 
     system "make", "all", "menu.bin", "HOST_ZLIB=1"
     libexec.install %w[blastem default.cfg menu.bin rom.db shaders]

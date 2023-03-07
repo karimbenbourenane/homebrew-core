@@ -1,10 +1,9 @@
 class Vapoursynth < Formula
   desc "Video processing framework with simplicity in mind"
   homepage "https://www.vapoursynth.com"
-  url "https://github.com/vapoursynth/vapoursynth/archive/R59.tar.gz"
-  sha256 "d713f767195cb3a9a7ccb97b1e61e0cf5a9332eed86c6362badfff6857792a86"
+  url "https://github.com/vapoursynth/vapoursynth/archive/R61.tar.gz"
+  sha256 "a5d4feeb056679dd1204153250d7c1d38e5a639e995d3c4e3a8e2e8fe1425b75"
   license "LGPL-2.1-or-later"
-  revision 1
   head "https://github.com/vapoursynth/vapoursynth.git", branch: "master"
 
   livecheck do
@@ -13,12 +12,14 @@ class Vapoursynth < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "8559b899be40688892a57aadfd4da4626048034cc4a11de8d63172d68c0bebff"
-    sha256 cellar: :any,                 arm64_big_sur:  "640e82eaf761570b464d966b5fdfe3568c13404d06431653a6f27530b099200d"
-    sha256 cellar: :any,                 monterey:       "be0fa0c82118b584b22ff7a55cd57f8a9984c7275dca8f922fbbbfbc8792ba05"
-    sha256 cellar: :any,                 big_sur:        "b47f129bbc6475aeca840f688a3f948d19d74db278e4db182a2f5e5be5189d08"
-    sha256 cellar: :any,                 catalina:       "8d372167dc396acf90c667b8c5250d7967ddb057558ecb17867b8d20293e3305"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a156dfffc5b2d4dce4432691c3e71f52a1508234583960164d1c7112b026e384"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_ventura:  "168b8535fa080eaf1f31ab7f9067d4a9d2da34ec71f5ba6edef5b6915d3cd605"
+    sha256 cellar: :any,                 arm64_monterey: "ea994ffe530d5ca8dfa7346c7e72c0d7d641c484ec097ec3ac4cebee22163a53"
+    sha256 cellar: :any,                 arm64_big_sur:  "ed111308a209ef8a1c9579d7a3e0ce80aed70c03966356f1d4340165ba1d9776"
+    sha256 cellar: :any,                 ventura:        "c0771cfc95ce712bfd36b40ff3c49181256074ecdc6d7cfe1a899c95113c1b42"
+    sha256 cellar: :any,                 monterey:       "6ebbd237599d0efcad2a0d928f6b35dad8e5d079a98a254e2d0f4dcbe3ac2e07"
+    sha256 cellar: :any,                 big_sur:        "12680cc137631e3a5e785b3350c3129b8ece6bb8b17530242aba5e0097abf4cd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5b5a702042cf9f7d3161f67b7b4a7beb48589fba1cd9bdfe9ca6bbe5ac99762b"
   end
 
   depends_on "autoconf" => :build
@@ -27,12 +28,8 @@ class Vapoursynth < Formula
   depends_on "libtool" => :build
   depends_on "nasm" => :build
   depends_on "pkg-config" => :build
-  depends_on "python@3.10"
+  depends_on "python@3.11"
   depends_on "zimg"
-
-  on_linux do
-    depends_on "gcc"
-  end
 
   fails_with gcc: "5"
 
@@ -52,22 +49,22 @@ class Vapoursynth < Formula
   def caveats
     <<~EOS
       This formula does not contain optional filters that require extra dependencies.
-      To use \x1B[3m\x1B[1mvapoursynth.core.sub\x1B[0m, execute:
+      To use vapoursynth.core.sub, execute:
         brew install vapoursynth-sub
-      To use \x1B[3m\x1B[1mvapoursynth.core.ocr\x1B[0m, execute:
+      To use vapoursynth.core.ocr, execute:
         brew install vapoursynth-ocr
-      To use \x1B[3m\x1B[1mvapoursynth.core.imwri\x1B[0m, execute:
+      To use vapoursynth.core.imwri, execute:
         brew install vapoursynth-imwri
-      To use \x1B[3m\x1B[1mvapoursynth.core.ffms2\x1B[0m, execute the following:
+      To use vapoursynth.core.ffms2, execute the following:
         brew install ffms2
         ln -s "../libffms2.dylib" "#{HOMEBREW_PREFIX}/lib/vapoursynth/#{shared_library("libffms2")}"
       For more information regarding plugins, please visit:
-        \x1B[4mhttp://www.vapoursynth.com/doc/plugins.html\x1B[0m
+        http://www.vapoursynth.com/doc/plugins.html
     EOS
   end
 
   test do
-    system Formula["python@3.10"].opt_bin/"python3", "-c", "import vapoursynth"
+    system Formula["python@3.11"].opt_bin/"python3.11", "-c", "import vapoursynth"
     system bin/"vspipe", "--version"
   end
 end

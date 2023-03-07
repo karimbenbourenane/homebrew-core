@@ -8,8 +8,10 @@ class Luvit < Formula
   head "https://github.com/luvit/luvit.git", branch: "master"
 
   bottle do
+    sha256 cellar: :any,                 arm64_ventura:  "8c740c010179ed241543f88bbaa0351b791c743f0f13aa939235294e58b8fa6c"
     sha256 cellar: :any,                 arm64_monterey: "870e32250c1e502f4af201dd534178853870ac4e744f6cdbe95786df342ef7a5"
     sha256 cellar: :any,                 arm64_big_sur:  "9cab1d21104df8d528f3676ecc7532bd7fa80ccc3c4f22f8bfd4163a7af631af"
+    sha256 cellar: :any,                 ventura:        "21414207c42a1ceb1b237a19273be8781932d9e3f5a188a500e2eab27ccb0f34"
     sha256 cellar: :any,                 monterey:       "0ae11cba548d16601d56fffb8c5842f4d3a483175fc834724f725fdebf7503e8"
     sha256 cellar: :any,                 big_sur:        "f524e2547b180fa05f30a04b95814038bf8f8542e07df0b4f7e4270dad35772a"
     sha256 cellar: :any,                 catalina:       "1dc7d1b8eccc46e0de469047016b3cb2af260e7539b8d07197392c39053a8261"
@@ -30,6 +32,11 @@ class Luvit < Formula
     url "https://github.com/luvit/lit.git",
         tag:      "3.8.5",
         revision: "84fc5d729f1088b3b93bc9a55d1f7a245bca861d"
+
+    livecheck do
+      url "https://raw.githubusercontent.com/luvit/luvit/#{LATEST_VERSION}/Makefile"
+      regex(/LIT_VERSION=["']?(\d+(?:\.\d+)+)["']?$/i)
+    end
   end
 
   # To update this resource, check LUVI_VERSION in
@@ -44,6 +51,22 @@ class Luvit < Formula
     patch do
       url "https://github.com/luvit/luvi/commit/b2e501deb407c44a9a3e7f4d8e4b5dc500e7a196.patch?full_index=1"
       sha256 "be3315f7cf8a9e43f1db39d0ef55698f09e871bea0f508774d0135c6375f4291"
+    end
+
+    livecheck do
+      url "https://raw.githubusercontent.com/luvit/luvit/#{LATEST_VERSION}/Makefile"
+      regex(/LIT_VERSION=["']?(\d+(?:\.\d+)+)["']?$/i)
+      strategy :page_match do |page, regex|
+        lit_version = page[regex, 1]
+        next if lit_version.blank?
+
+        get_lit_page = Homebrew::Livecheck::Strategy.page_content(
+          "https://raw.githubusercontent.com/luvit/lit/#{lit_version}/get-lit.sh",
+        )
+        next if get_lit_page[:content].blank?
+
+        get_lit_page[:content][/LUVI_VERSION:-v?(\d+(?:\.\d+)+)/i, 1]
+      end
     end
   end
 

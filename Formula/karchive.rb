@@ -1,8 +1,8 @@
 class Karchive < Formula
   desc "Reading, creating, and manipulating file archives"
   homepage "https://api.kde.org/frameworks/karchive/html/index.html"
-  url "https://download.kde.org/stable/frameworks/5.97/karchive-5.97.0.tar.xz"
-  sha256 "1bff8249ddbb5a38916c9e145e5027de3f18a14772e7a8bdd4a954fae7ca8d92"
+  url "https://download.kde.org/stable/frameworks/5.103/karchive-5.103.0.tar.xz"
+  sha256 "372bdf691ddc43e663b5c6ca88b2c73fa0fac9ee8e3600b469f9b026c8dd1353"
   license all_of: [
     "BSD-2-Clause",
     "LGPL-2.0-only",
@@ -19,12 +19,13 @@ class Karchive < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "b8ea0d068ccb226233cfba1cddbde1fbb0094812bf9fba5baf8e089776da4072"
-    sha256 cellar: :any,                 arm64_big_sur:  "482a553a7e8928dc62d6ab13204139349ccaceb1916351396abae67bfadcf77f"
-    sha256 cellar: :any,                 monterey:       "0b1a5d0e5df84fd9fac3967a1d302c936ddc947193887cff012e40ef5190540b"
-    sha256 cellar: :any,                 big_sur:        "f8fbcf8d3a8dcc008eee5349395a8847b4a6c2a345d88d38b4b03351179d7159"
-    sha256 cellar: :any,                 catalina:       "e62a95e48c84b902c781ebcea4a50486138fd10b9b4da6e7bf0ce91235e874b6"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8175110177ddecdccde56888bfb35e2292494782f784141f4441a9365c9c83dd"
+    sha256 cellar: :any,                 arm64_ventura:  "b0ea5397f2f3b9f063c84ba16d5ac4573280a22a18e44322c0ddf80d5b6eae06"
+    sha256 cellar: :any,                 arm64_monterey: "f674c11ab0f741ff4119ca12e0905ff5bc9e4436747cc9c91e1c1f62dcebaf13"
+    sha256 cellar: :any,                 arm64_big_sur:  "bd796bcb86f59545a2260e157ae1dc15c54a40d2464ea42e25e59ed8a60bdfc5"
+    sha256 cellar: :any,                 ventura:        "4517c1733091e3b83ee7a55956b0ad337ae1a0a2beccfabd1a9997717be72fbe"
+    sha256 cellar: :any,                 monterey:       "e673842aa495406e97140926b3f1a4141931075c9808ddcb3e1a3421aceb4431"
+    sha256 cellar: :any,                 big_sur:        "1ee0174b0912f763e9249fff50567f4ca42278e20a1ee7e0e2fdf14b7640011c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8b93f591164856c843e66692377fc7cd3e5e4dee40240b02380fbf2673b2f5fc"
   end
 
   depends_on "cmake" => [:build, :test]
@@ -38,10 +39,6 @@ class Karchive < Formula
 
   uses_from_macos "bzip2"
   uses_from_macos "zlib"
-
-  on_linux do
-    depends_on "gcc"
-  end
 
   fails_with gcc: "5"
 
@@ -65,6 +62,7 @@ class Karchive < Formula
       -DQt5Core_DIR=#{Formula["qt@5"].opt_lib}/cmake/Qt5Core
       -DQT_MAJOR_VERSION=5
     ]
+    args << "-DCMAKE_BUILD_RPATH=#{lib}" if OS.linux?
 
     %w[bzip2gzip
        helloworld

@@ -1,8 +1,8 @@
 class Tracker < Formula
   desc "Library and daemon that is an efficient search engine and triplestore"
   homepage "https://gnome.pages.gitlab.gnome.org/tracker/"
-  url "https://download.gnome.org/sources/tracker/3.3/tracker-3.3.3.tar.xz"
-  sha256 "4094f704e338f2247fa6b94633279cfd07f7e952bb24627128fab78edb242464"
+  url "https://download.gnome.org/sources/tracker/3.4/tracker-3.4.2.tar.xz"
+  sha256 "4e6df142a4f704878fca98ebb5a224750e5ea546aa2aaabaa726a73540bd1731"
   license all_of: ["LGPL-2.1-or-later", "GPL-2.0-or-later"]
   revision 1
 
@@ -13,12 +13,13 @@ class Tracker < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "fa292ce5ea663a2b22fe7754528afbc1064cf9478c59647c8c709ffaed97a9f9"
-    sha256 arm64_big_sur:  "696b5885e4d6521fcbe595c06d4f8504aed04969beec74fa29f44eaf019c62fe"
-    sha256 monterey:       "94a40857320c11adea0abfb0c86f5098bf20003e5dded988886837f43aea60a0"
-    sha256 big_sur:        "ca8592edacf810ee016119cbc3bb60c6879e8fd2f2b0e2a5f29fa54daa8dd043"
-    sha256 catalina:       "1ecf230ec1758bde96ea6569a9dc39e656199061cbe36fdc90fc0b77052f84f4"
-    sha256 x86_64_linux:   "064ef519438d1a4e668d5540d1fe85ae7bd8c21874e86cf8b290ffb70f690d22"
+    sha256 arm64_ventura:  "e342d63c43edfa31a3b8a50cb911b6997ab397f13284d1000df7ed9907fc195a"
+    sha256 arm64_monterey: "37836c628dbe2454bf45f25cff7ca2d04b0bbc898fb2b2816fce0b8d10e10b9e"
+    sha256 arm64_big_sur:  "70da64159075343b79ac5b79d2b08813cd4433aff0a9fd4e6160b9ab027009ad"
+    sha256 ventura:        "83418c8ceec2f3f6e44401b968f1f56666c1c29d460674a9a13e05eab0660a4b"
+    sha256 monterey:       "96b41d7fbcbf5666283e6253264b2400f97528fd4d712deb3eb1d5225e05aa52"
+    sha256 big_sur:        "9dff729210dd10853993448f7fb5373af65b5fa5aae3b8b3a4d974fc445965da"
+    sha256 x86_64_linux:   "0fc8435e75ae39d0d617349f6ab4aaa24fe98fc7b65bd4090e4d9ee7f87a8433"
   end
 
   depends_on "gobject-introspection" => :build

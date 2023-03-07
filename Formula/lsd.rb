@@ -1,19 +1,22 @@
 class Lsd < Formula
   desc "Clone of ls with colorful output, file type icons, and more"
   homepage "https://github.com/Peltoche/lsd"
-  url "https://github.com/Peltoche/lsd/archive/0.23.0.tar.gz"
-  sha256 "0ce6582745b5364fdb4052954d24f6a211af616061d1454583e68f3366f6496e"
+  url "https://github.com/Peltoche/lsd/archive/0.23.1.tar.gz"
+  sha256 "9698919689178cc095f39dcb6a8a41ce32d5a1283e6fe62755e9a861232c307d"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "6d9118a00072f09bfbe0389b32f10e744dcd4265f7a73c51a2d7baa163ed86dc"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "955c94b02d2e099be742ea7d1b84e95a6334b73d2ef57b7e4fd297d33062c64e"
-    sha256 cellar: :any_skip_relocation, monterey:       "316f690ace642dafe8d44930f852a222dc6c9bd412d76799ade1e5425c66feec"
-    sha256 cellar: :any_skip_relocation, big_sur:        "512dac8d55eaaec38b23d065c22e2074feaa6a70a615d2b62c62aae261287d20"
-    sha256 cellar: :any_skip_relocation, catalina:       "ad682aeca688bebb04be12db707d1518fab8bdf594578b64fdea3056d1f0ed81"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "06cd54abd64cfb81ea5c48f91274535aa915cadce2dafedae7990a2e4f7dc767"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "2eefb530b176b9a06c00660d21d0c451f7c85be4b921050b47cff041a8766fb1"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "47a64747a179d32a3b25a60fd5983bb521f206f0a9e1ed822f74384026676be6"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "2ece545c19380ba3c26bf5db30b25a9d5f77dc695d3a61887bf656267d7e7a72"
+    sha256 cellar: :any_skip_relocation, ventura:        "38bde1557a174ab1b066f1265798fdc86e598fef2e54e238a01254428c185817"
+    sha256 cellar: :any_skip_relocation, monterey:       "5872d5bba0ad3f1a2b0587542e2d4ccfb48a11f3f49371e01127fe6cce1cc7a7"
+    sha256 cellar: :any_skip_relocation, big_sur:        "03d625c493b30d412310289ce07ca803a67cdb872335bc9f8f3150e98a5c88f2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a848acf2b41f07b816dae92b3262697e88ef20fb910268c6c7c36f32b4c3fcf9"
   end
 
+  depends_on "pandoc" => :build
   depends_on "rust" => :build
 
   def install
@@ -22,6 +25,9 @@ class Lsd < Formula
     bash_completion.install "lsd.bash"
     fish_completion.install "lsd.fish"
     zsh_completion.install "_lsd"
+
+    system "pandoc", "doc/lsd.md", "--standalone", "--to=man", "-o", "doc/lsd.1"
+    man1.install "doc/lsd.1"
   end
 
   test do

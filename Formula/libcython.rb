@@ -1,8 +1,8 @@
 class Libcython < Formula
   desc "Compiler for writing C extensions for the Python language"
   homepage "https://cython.org/"
-  url "https://files.pythonhosted.org/packages/4c/76/1e41fbb365ad20b6efab2e61b0f4751518444c953b390f9b2d36cf97eea0/Cython-0.29.32.tar.gz"
-  sha256 "8733cf4758b79304f2a4e39ebfac5e92341bce47bcceb26c1254398b2f8c1af7"
+  url "https://files.pythonhosted.org/packages/dc/f6/e8e302f9942cbebede88b1a0c33d0be3a738c3ac37abae87254d58ffc51c/Cython-0.29.33.tar.gz"
+  sha256 "5040764c4a4d2ce964a395da24f0d1ae58144995dab92c6b96f44c3f4d72286a"
   license "Apache-2.0"
 
   livecheck do
@@ -10,12 +10,13 @@ class Libcython < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "03da2421a3ee299de5c0faa2830aa98025e235a8992a3ee2a8705387b4c63de2"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "78b4e2d714c1b787bd695dab44825f0115ed0f1982b946185c8c6ac9893c455e"
-    sha256 cellar: :any_skip_relocation, monterey:       "1ec609eb60279d5200fbdc69034ab2511450395fd19d729e0bed5ed154df0516"
-    sha256 cellar: :any_skip_relocation, big_sur:        "c01a590c2e9bf5d3d486c75a041d0c7d7f44b1cf7e3a4a8ae4f30eb7f5438be0"
-    sha256 cellar: :any_skip_relocation, catalina:       "0e6e09e0c66544ebd68a7144ffd894c9587bbbbc09a963317f50090da5fc37de"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "87756c4a74bf13790e32c17aea4626e808d2fe214602761d4f7d8e9e2073e18d"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "be0c691d6cd5a6d4fddb451f4ca631ff5db6eeb66c34125af92b575b4f66689c"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "e2d764c9f97a1a9e306af3da2f1487f1655349cea1552bd2abbf7fb2c353fcdb"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "7d95464d268e883e91cb65b07511cd4df4dc3a3223daafd16f8ece26ad7dff46"
+    sha256 cellar: :any_skip_relocation, ventura:        "3cec41e6f556b916d01168c7c483825ab5e27ad24660d4610340879a62233975"
+    sha256 cellar: :any_skip_relocation, monterey:       "6c4a2f6075f5cbfdcc8e4e467afd66f845cd03137155c085538e64e4ee9a23ac"
+    sha256 cellar: :any_skip_relocation, big_sur:        "32c0df922d0067357241e2d26f71a374d8e64dae909deb11cd7cfe040323c59d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ec834f549c15e8330359e23b01a63f3240e5cd6ae607ad53d3f0005b2e504cfd"
   end
 
   keg_only <<~EOS
@@ -24,17 +25,17 @@ class Libcython < Formula
   EOS
 
   depends_on "python@3.10" => [:build, :test]
-  depends_on "python@3.9" => [:build, :test]
+  depends_on "python@3.11" => [:build, :test]
 
   def pythons
     deps.map(&:to_formula)
         .select { |f| f.name.match?(/^python@\d\.\d+$/) }
+        .sort_by(&:version)
         .map { |f| f.opt_libexec/"bin/python" }
   end
 
   def install
     pythons.each do |python|
-      ENV.prepend_create_path "PYTHONPATH", libexec/Language::Python.site_packages(python)
       system python, *Language::Python.setup_install_args(libexec, python)
     end
   end
@@ -51,9 +52,10 @@ class Libcython < Formula
       )
     EOS
     pythons.each do |python|
-      ENV.prepend_path "PYTHONPATH", libexec/Language::Python.site_packages(python)
-      system python, "setup.py", "build_ext", "--inplace"
-      assert_match phrase, shell_output("#{python} -c 'import package_manager'")
+      with_env(PYTHONPATH: libexec/Language::Python.site_packages(python)) do
+        system python, "setup.py", "build_ext", "--inplace"
+        assert_match phrase, shell_output("#{python} -c 'import package_manager'")
+      end
     end
   end
 end

@@ -3,23 +3,25 @@ class ColladaDom < Formula
   homepage "https://www.khronos.org/collada/wiki/Portal:COLLADA_DOM"
   url "https://github.com/rdiankov/collada-dom/archive/v2.5.0.tar.gz"
   sha256 "3be672407a7aef60b64ce4b39704b32816b0b28f61ebffd4fbd02c8012901e0d"
-  revision 3
+  revision 5
   head "https://github.com/rdiankov/collada-dom.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "2c5fc66501eb69de970b7669e4aabb118bc677bb3864ccb5bdc0088c4912ffeb"
-    sha256 cellar: :any,                 arm64_big_sur:  "393c48aed410113fd631b7f3fb986532f0a9312b06c91e17a52195e3a6bcf537"
-    sha256 cellar: :any,                 monterey:       "26c7075d19926064efdb4d1f20857c755791d0f5a6039a573f6fdfc66e0e41f9"
-    sha256 cellar: :any,                 big_sur:        "c0da851d193374fc5facfcc9c2bd7ddc5de7c92f224d4e7a1d921017ec9e4508"
-    sha256 cellar: :any,                 catalina:       "383e160c3c84dce95e7a819a7333b822ecc9395dcb41c008f966e266a2ebb34b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7beae8c38b33043b5fbc1661d80a0855eef1c2025b7ab2f505190eb121ac569b"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_ventura:  "3ae338e6a182aa4ef5162f236dd1eaaae5af7a6bda9b2371b55e90ad1b14b775"
+    sha256 cellar: :any,                 arm64_monterey: "27cb70edcab5aabbc09e3e49b4d4096b7940437f5ee70ccf7cbc37dcc27428c0"
+    sha256 cellar: :any,                 arm64_big_sur:  "56e8736323a26b1aaea44616640bfb571e149365f51768ffbd29b1dd10f5a7dd"
+    sha256 cellar: :any,                 ventura:        "70573c30ce81d80a2adc1fadeaec07f50346f1e1091b8bdbffd426a722f98b88"
+    sha256 cellar: :any,                 monterey:       "a445d8dab60d0b4558650632ad26d5bcc2472679f775222a17b8824cb50d4d3d"
+    sha256 cellar: :any,                 big_sur:        "33265c5810adff137167e86a0db1bb89fbde13c8809f74e857acb173a6a7adf8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "2e7b2b02132feee5ee2de9b5787a7fc224d71e1cb5e8e5b727cbe5fc02cf815f"
   end
 
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
   depends_on "boost"
   depends_on "minizip"
-  depends_on "pcre"
+  depends_on "uriparser"
 
   uses_from_macos "libxml2"
 

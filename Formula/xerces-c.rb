@@ -1,20 +1,21 @@
 class XercesC < Formula
   desc "Validating XML parser"
   homepage "https://xerces.apache.org/xerces-c/"
-  url "https://www.apache.org/dyn/closer.lua?path=xerces/c/3/sources/xerces-c-3.2.3.tar.gz"
-  mirror "https://archive.apache.org/dist/xerces/c/3/sources/xerces-c-3.2.3.tar.gz"
-  sha256 "fb96fc49b1fb892d1e64e53a6ada8accf6f0e6d30ce0937956ec68d39bd72c7e"
+  url "https://www.apache.org/dyn/closer.lua?path=xerces/c/3/sources/xerces-c-3.2.4.tar.gz"
+  mirror "https://archive.apache.org/dist/xerces/c/3/sources/xerces-c-3.2.4.tar.gz"
+  sha256 "3d8ec1c7f94e38fee0e4ca5ad1e1d9db23cbf3a10bba626f6b4afa2dedafe5ab"
   license "Apache-2.0"
+  revision 1
 
   bottle do
-    rebuild 2
-    sha256 cellar: :any,                 arm64_monterey: "c71f69f6824b64a6bbd0b685fe9b77ee579c52c5cf93236997c3ecaa81244141"
-    sha256 cellar: :any,                 arm64_big_sur:  "ad9251257543aee28e08fbc5f433a5ad72c0065511c09d19c888bf28b5bbf21f"
-    sha256 cellar: :any,                 monterey:       "60a660d35a1ae9bb8b7b51413deb0defcf4247e5718c8128949d952f6fdb0662"
-    sha256 cellar: :any,                 big_sur:        "6a561a0f4175e7da6790b2beaedf185516a118116402a674a6b936d5c3236575"
-    sha256 cellar: :any,                 catalina:       "743af0adcd563f604bf3f057d1144b9e11bc1b5a9e842f82d430301d2b5fc185"
-    sha256 cellar: :any,                 mojave:         "cf22a3e57f6e6e279e9eb476bb80c08d18979938f54d19347fd103ccdc7cf78e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9a5d21760453dc1ddc1ed3e9971a1304801f50b402bfc5461fe88df04915c3a5"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_ventura:  "99006e9ad984212dc5016d5aa9f6ae8021d50f56fec9e13947d9779d9decc1de"
+    sha256 cellar: :any,                 arm64_monterey: "55c380d3cda733199a22d294208fb6b552ae53373ebba6d1ca91737c99ea52eb"
+    sha256 cellar: :any,                 arm64_big_sur:  "a932e185d8ddde919516e0c7cc24f6a98ed760369df9a1edf96db3969d929934"
+    sha256 cellar: :any,                 ventura:        "529a48ca044cff1006c56e0ba471591d625c4f0efd7a117f98e0d928c3c2cbfc"
+    sha256 cellar: :any,                 monterey:       "17f2a1e797058706fe947034ab4c912f196bf12195736e719c6953d3c418f0c3"
+    sha256 cellar: :any,                 big_sur:        "c61f70bacc917fb00e378878265bc575d427d879148b320cabc14dc71bdca56c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b7f4e544f614d90c303c47caa8630c6b8ac1a6e2f7f30cdd41137710a0a27f36"
   end
 
   depends_on "cmake" => :build
@@ -22,18 +23,21 @@ class XercesC < Formula
   uses_from_macos "curl"
 
   def install
-    ENV.cxx11
+    # Prevent opportunistic linkage to `icu4c`
+    args = std_cmake_args + %W[
+      -DCMAKE_DISABLE_FIND_PACKAGE_ICU=ON
+      -DCMAKE_INSTALL_RPATH=#{rpath}
+    ]
 
-    mkdir "build" do
-      system "cmake", "..", *std_cmake_args, "-DCMAKE_INSTALL_RPATH=#{rpath}"
-      system "make"
-      system "ctest", "-V"
-      system "make", "install"
-      system "make", "clean"
-      system "cmake", "..", "-DBUILD_SHARED_LIBS=OFF", *std_cmake_args, "-DCMAKE_INSTALL_RPATH=#{rpath}"
-      system "make"
-      lib.install Dir["src/*.a"]
-    end
+    system "cmake", "-S", ".", "-B", "build_shared", "-DBUILD_SHARED_LIBS=ON", *args
+    system "cmake", "--build", "build_shared"
+    system "ctest", "--test-dir", "build_shared", "--verbose"
+    system "cmake", "--install", "build_shared"
+
+    system "cmake", "-S", ".", "-B", "build_static", "-DBUILD_SHARED_LIBS=OFF", *args
+    system "cmake", "--build", "build_static"
+    lib.install Dir["build_static/src/*.a"]
+
     # Remove a sample program that conflicts with libmemcached
     # on case-insensitive file systems
     (bin/"MemParse").unlink

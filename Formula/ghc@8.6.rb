@@ -12,6 +12,7 @@ class GhcAT86 < Formula
 
   bottle do
     rebuild 1
+    sha256                               ventura:      "5b70e3709e04b715d5e9d1948d14b77d0417290dac3c9c99897cf6b36807c612"
     sha256                               monterey:     "5449cd08c2d622390a65332c3c817e6866c2a9f4fab45d56c5159231ba99a4df"
     sha256                               big_sur:      "ff771fbe5b187198b2a49df9db019468b77b01205b6fd26a275fb04bba9ea30b"
     sha256                               catalina:     "d3ddfea33754da6f983910a29b93e59c2419e2fef672fe3b850faf88d1da279e"
@@ -19,6 +20,8 @@ class GhcAT86 < Formula
   end
 
   keg_only :versioned_formula
+
+  deprecate! date: "2022-12-10", because: :unmaintained
 
   depends_on "python@3.10" => :build
   depends_on arch: :x86_64
@@ -48,8 +51,8 @@ class GhcAT86 < Formula
     end
 
     on_linux do
-      url "https://downloads.haskell.org/~ghc/8.6.5/ghc-8.6.5-x86_64-deb8-linux.tar.xz"
-      sha256 "c419fd0aa9065fe4d2eb9a248e323860c696ddf3859749ca96a84938aee49107"
+      url "https://downloads.haskell.org/~ghc/8.6.5/ghc-8.6.5-x86_64-fedora27-linux.tar.xz"
+      sha256 "cf78b53eaf336083e7a05f4a3000afbae4abe5bbc77ef80cc40e09d04ac5b4a1"
     end
   end
 
@@ -59,7 +62,7 @@ class GhcAT86 < Formula
   def install
     ENV["CC"] = ENV.cc
     ENV["LD"] = "ld"
-    ENV["PYTHON"] = Formula["python@3.10"].opt_bin/"python3"
+    ENV["PYTHON"] = which("python3.10")
 
     args = %w[--enable-numa=no]
     if OS.mac?

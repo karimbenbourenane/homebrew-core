@@ -4,15 +4,16 @@ class Pokerstove < Formula
   url "https://github.com/andrewprock/pokerstove/archive/v1.0.tar.gz"
   sha256 "68503e7fc5a5b2bac451c0591309eacecba738d787874d5421c81f59fde2bc74"
   license "BSD-3-Clause"
-  revision 2
+  revision 4
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "c78e5eb529a94f590e98a44a17be462f7c989216c720a11ce8de7119094a24e8"
-    sha256 cellar: :any,                 arm64_big_sur:  "b23ac65c6f043988225c18293c845bfb4bd31484472b3709dc3e129cbafa27d4"
-    sha256 cellar: :any,                 monterey:       "332eb0edc19fa1fceec6d91c732a10feac45a8f8dfb834bb82e377ce1da1d374"
-    sha256 cellar: :any,                 big_sur:        "a017e6fe5e0dc3db899492c608fcfd8a80d3cbc326dc054085d60b285cf720fa"
-    sha256 cellar: :any,                 catalina:       "b2ca35fe130a95db31220b8dc45df8e5182d9247745bd71cc05e874e7c5ee74d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e5480687b29f1209c60df592fe55d412ac3e04631cf3539de6e3fe0f30ac959d"
+    sha256 cellar: :any,                 arm64_ventura:  "4a777f6a3af03539d0c4f88b758cf177734f28642b98d82ce897c9a900be9bc8"
+    sha256 cellar: :any,                 arm64_monterey: "f177335d352d77b1c3c0ad2d7046ee93906546f656b8c50a8e58aa24f2db8f1f"
+    sha256 cellar: :any,                 arm64_big_sur:  "77574d7d911ebcb48df548d18f03922b55c4bc0e611f989f8f99dc0199d8484b"
+    sha256 cellar: :any,                 ventura:        "678cfd3a639e608319a6b5081d866a0f333869e0da68cf8a2e0eb6ef87d2f40c"
+    sha256 cellar: :any,                 monterey:       "a0f35cfe921cae6e212acb2102487cd11e616e91c44761e47ae8acca61f5957c"
+    sha256 cellar: :any,                 big_sur:        "b3d8a72766c49448c9a13d3ae3a306c646d32ee983dd7d2db0e455e4313622dd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "533085f2aa512489b7e94729f5b8f46c476d7da591b55f768dd29f3c2ff93728"
   end
 
   depends_on "cmake" => :build
@@ -49,7 +50,7 @@ __END__
 --- pokerstove-1.0/CMakeLists.txt.ORIG	2021-02-14 19:26:14.000000000 +0000
 +++ pokerstove-1.0/CMakeLists.txt	2021-02-14 19:26:29.000000000 +0000
 @@ -14,8 +14,8 @@
- 
+
  # Set up gtest. This must be set up before any subdirectories are
  # added which will use gtest.
 -add_subdirectory(src/ext/googletest)

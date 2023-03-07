@@ -1,17 +1,18 @@
 class Fastnetmon < Formula
   desc "DDoS detection tool with sFlow, Netflow, IPFIX and port mirror support"
   homepage "https://github.com/pavel-odintsov/fastnetmon/"
-  url "https://github.com/pavel-odintsov/fastnetmon/archive/refs/tags/v1.2.2.tar.gz"
-  sha256 "4de0fe9390673f7e2fc8f3f1e3696a1455ea659049430c4870fcf82600c2ea2d"
+  url "https://github.com/pavel-odintsov/fastnetmon/archive/refs/tags/v1.2.4.tar.gz"
+  sha256 "84cd5db0e270f6c268923592eabd5cb0d1689293d9d9f6f0634af548b29f9bb4"
   license "GPL-2.0-only"
-  revision 4
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "841a62fb46aa93d424eb53283d9ffe607758dcfa21dba9cb18c0b433b529e60e"
-    sha256 cellar: :any,                 arm64_big_sur:  "06fc4fa7013ca41cf106aaca06c7b37cd8f6aa9581dcb30b4f7ec26df2ad62e5"
-    sha256 cellar: :any,                 monterey:       "cdde34c4125f565e133b6de78bc512488dda480f446fc370f831d1a44dcd4503"
-    sha256 cellar: :any,                 big_sur:        "bb44cf7082a2979a697965a89f21ea781c3d1cbe13c3e5d83b8544e3cdd9ae16"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "016090d4c1339b1f70fc933410558020963363e7273ecd29cfcce2c8ae3b3218"
+    sha256 cellar: :any,                 arm64_ventura:  "dec1a78e6dde2bbd9f86db7c71af6bc20204344a73309600dad02a19a9c04e27"
+    sha256 cellar: :any,                 arm64_monterey: "369bc03e7536620d462c81dbcd252ee59868d4fac3d1c9e0756ce51d9c5ddf28"
+    sha256 cellar: :any,                 arm64_big_sur:  "f6e47615be89812ef189e10c90e775e3702d7f0b8392fa50e5e08f868e99de6c"
+    sha256 cellar: :any,                 ventura:        "2a6d299ed92a78eae6f4cfa010ccd1d5c0f1a179f9036bae3d724e6ce60e1eb3"
+    sha256 cellar: :any,                 monterey:       "4f1986994bd9c1c950cb3b04e41c6a94cd7f6ff7abe5db2bdf7751c0ec591aad"
+    sha256 cellar: :any,                 big_sur:        "631635075f6ae2fcfdc9cccd5ad73bda5ed22616fe1f2d412bb0cd9410add200"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "4eecbde2f55c9e3df9f834cd4c75d50768c46d2d18a28e69e5216da178a80267"
   end
 
   depends_on "cmake" => :build
@@ -20,7 +21,6 @@ class Fastnetmon < Formula
   depends_on "capnp"
   depends_on "grpc"
   depends_on "hiredis"
-  depends_on "json-c"
   depends_on "log4cpp"
   depends_on macos: :big_sur # We need C++ 20 available for build which is available from Big Sur
   depends_on "mongo-c-driver"
@@ -28,7 +28,8 @@ class Fastnetmon < Formula
   uses_from_macos "ncurses"
 
   on_linux do
-    depends_on "gcc"
+    depends_on "elfutils"
+    depends_on "libbpf"
     depends_on "libpcap"
   end
 

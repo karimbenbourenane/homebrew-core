@@ -1,37 +1,23 @@
 class Watchman < Formula
   desc "Watch files and take action when they change"
   homepage "https://github.com/facebook/watchman"
+  url "https://github.com/facebook/watchman/archive/v2023.03.06.00.tar.gz"
+  sha256 "5e9fcb2d8293e89d66ef0585a20bd20d786bb79abba61ebced260d5f4168d223"
   license "MIT"
-
-  stable do
-    url "https://github.com/facebook/watchman/archive/v2022.09.05.00.tar.gz"
-    sha256 "12f6665528acdd4bf6b544ffe80ecdc769eb70d4e107379c0216dab8f0272f20"
-
-    resource "edencommon" do
-      url "https://github.com/facebookexperimental/edencommon/archive/refs/tags/v2022.09.05.00.tar.gz"
-      sha256 "d7c856ec21b0630ed48c6714c5b8e692f10d8d027554b11aa0c3117d84a2c318"
-    end
-  end
+  head "https://github.com/facebook/watchman.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any, arm64_monterey: "4ef5b7605ceccfbca38c0c2323cd008878722e7708dbfc2121eea711b38d4b6b"
-    sha256 cellar: :any, arm64_big_sur:  "b817a0f257cdb4898da97901b871c22ee5132519c2b9374afe126e82afac0527"
-    sha256 cellar: :any, monterey:       "2591666d3d5d874383aa9da0c211aa5f94d46cb8d24248bc8da036e970781de9"
-    sha256 cellar: :any, big_sur:        "ad0b28081391ce7ab62f27b4af8a0b4f011affa3db90f96ba25a50e5be819345"
-    sha256 cellar: :any, catalina:       "786eef06713661bae57933a6d8ad3c1d45e6d7ea94f2a4f926ffd9b0c0acf97c"
-    sha256               x86_64_linux:   "11a0e482405ed8ebc78ba17681a0f806ded764e5d9e2c2c66ba10f79577b431b"
+    sha256 cellar: :any,                 arm64_ventura:  "2151710e3128b7e48145cd7845a87a16caa230a9040062a836ec86869b40c518"
+    sha256 cellar: :any,                 arm64_monterey: "e31956430ad35495b63e49d6c49e9885ef685f3509c28deadd091bbd376f43c3"
+    sha256 cellar: :any,                 arm64_big_sur:  "a54bc5b28d827e87f73f01f84a55de57708edfb27a856c1e2252c243b821f183"
+    sha256 cellar: :any,                 ventura:        "4a68e3b667c8278d3cfabd2b50677b3617b5b48110c4777a87e89f724264997b"
+    sha256 cellar: :any,                 monterey:       "56d3b73d26045ae8b07313e35bdeaa46c2a34a560fb8736f7ce739a16bf102d3"
+    sha256 cellar: :any,                 big_sur:        "004e59e27f6c523d30f4b95ef5bc2742157c39c11147e498778201504d1e773f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "4b4cdf0f184ebefda0853a07c137afd0e9786d33fef1656e04c2cbd190ac87e3"
   end
 
   # https://github.com/facebook/watchman/issues/963
   pour_bottle? only_if: :default_prefix
-
-  head do
-    url "https://github.com/facebook/watchman.git", branch: "main"
-
-    resource "edencommon" do
-      url "https://github.com/facebookexperimental/edencommon.git", branch: "main"
-    end
-  end
 
   depends_on "cmake" => :build
   depends_on "cpptoml" => :build
@@ -39,6 +25,7 @@ class Watchman < Formula
   depends_on "pkg-config" => :build
   depends_on "rust" => :build
   depends_on "boost"
+  depends_on "edencommon"
   depends_on "fb303"
   depends_on "fmt"
   depends_on "folly"
@@ -47,25 +34,15 @@ class Watchman < Formula
   depends_on "libevent"
   depends_on "openssl@1.1"
   depends_on "pcre2"
-  depends_on "python@3.10"
-
-  on_linux do
-    depends_on "gcc"
-  end
+  depends_on "python@3.11"
 
   fails_with gcc: "5"
 
   def install
-    resource("edencommon").stage do
-      system "cmake", "-S", ".", "-B", "_build",
-                      *std_cmake_args(install_prefix: buildpath/"edencommon")
-      system "cmake", "--build", "_build"
-      system "cmake", "--install", "_build"
-    end
-
-    # Fix build failure on Linux. Borrowed from Fedora:
-    # https://src.fedoraproject.org/rpms/watchman/blob/rawhide/f/watchman.spec#_70
-    inreplace "CMakeLists.txt", /^t_test/, "#t_test" if OS.linux?
+    # Fix "Process terminated due to timeout" by allowing a longer timeout.
+    inreplace "CMakeLists.txt",
+              /gtest_discover_tests\((.*)\)/,
+              "gtest_discover_tests(\\1 DISCOVERY_TIMEOUT 30)"
 
     # NOTE: Setting `BUILD_SHARED_LIBS=ON` will generate DSOs for Eden libraries.
     #       These libraries are not part of any install targets and have the wrong
@@ -73,15 +50,12 @@ class Watchman < Formula
     #       if they are built as shared libraries. They're not used by any other
     #       formulae, so let's link them statically instead. This is done by default.
     system "cmake", "-S", ".", "-B", "build",
-                    "-Dedencommon_DIR=#{buildpath}/edencommon/lib/cmake/edencommon",
                     "-DENABLE_EDEN_SUPPORT=ON",
                     "-DWATCHMAN_VERSION_OVERRIDE=#{version}",
                     "-DWATCHMAN_BUILDINFO_OVERRIDE=#{tap.user}",
                     "-DWATCHMAN_STATE_DIR=#{var}/run/watchman",
                     *std_cmake_args
-
-    # Workaround for `Process terminated due to timeout`
-    ENV.deparallelize { system "cmake", "--build", "build" }
+    system "cmake", "--build", "build"
     system "cmake", "--install", "build"
 
     path = Pathname.new(File.join(prefix, HOMEBREW_PREFIX))

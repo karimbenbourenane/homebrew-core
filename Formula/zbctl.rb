@@ -2,18 +2,19 @@ class Zbctl < Formula
   desc "Zeebe CLI client"
   homepage "https://docs.camunda.io/docs/apis-clients/cli-client/index/"
   url "https://github.com/camunda/zeebe.git",
-      tag:      "8.0.5",
-      revision: "1df153a7995e28bcfc2358199adb1f8f19d31def"
+      tag:      "8.1.8",
+      revision: "e491a2a024dba1f4e992dc1e4ef3bbdb5cf6b87c"
   license "Apache-2.0"
   head "https://github.com/camunda/zeebe.git", branch: "develop"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "bf3604f57bd03943e578d9456af2c0658c2f0f820326e320440c58ac7bd166f3"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "bf3604f57bd03943e578d9456af2c0658c2f0f820326e320440c58ac7bd166f3"
-    sha256 cellar: :any_skip_relocation, monterey:       "1a5e1f409d2fccc5200798dac8cbbb4e35bd3a8fa96ed4beb486d68cbe299f72"
-    sha256 cellar: :any_skip_relocation, big_sur:        "1a5e1f409d2fccc5200798dac8cbbb4e35bd3a8fa96ed4beb486d68cbe299f72"
-    sha256 cellar: :any_skip_relocation, catalina:       "1a5e1f409d2fccc5200798dac8cbbb4e35bd3a8fa96ed4beb486d68cbe299f72"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c830ceaeda00872eef8730fdd2e5beed4c8e703bc516b2d80c6743850c42aac1"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "96ca56e1662d1820abea31a1cb6a0f529a7b504524c7fc58e3b021eb835e17b6"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "96ca56e1662d1820abea31a1cb6a0f529a7b504524c7fc58e3b021eb835e17b6"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "96ca56e1662d1820abea31a1cb6a0f529a7b504524c7fc58e3b021eb835e17b6"
+    sha256 cellar: :any_skip_relocation, ventura:        "4fe1b1cb13ebe411616f5f5755105848baab15e33d2698d2390cb3f8fb877790"
+    sha256 cellar: :any_skip_relocation, monterey:       "4fe1b1cb13ebe411616f5f5755105848baab15e33d2698d2390cb3f8fb877790"
+    sha256 cellar: :any_skip_relocation, big_sur:        "4fe1b1cb13ebe411616f5f5755105848baab15e33d2698d2390cb3f8fb877790"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b25fc0956067821b43b5a188e6639646cc891bde8658c8061f80d678df959990"
   end
 
   depends_on "go" => :build
@@ -28,6 +29,8 @@ class Zbctl < Formula
         -X #{project}.Commit=#{commit}
       ]
       system "go", "build", "-tags", "netgo", *std_go_args(ldflags: ldflags)
+
+      generate_completions_from_executable(bin/"zbctl", "completion")
     end
   end
 

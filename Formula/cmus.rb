@@ -4,21 +4,25 @@ class Cmus < Formula
   url "https://github.com/cmus/cmus/archive/v2.10.0.tar.gz"
   sha256 "ff40068574810a7de3990f4f69c9c47ef49e37bd31d298d372e8bcdafb973fff"
   license "GPL-2.0-or-later"
+  revision 1
   head "https://github.com/cmus/cmus.git", branch: "master"
 
   bottle do
-    sha256 arm64_monterey: "db4d3a8fc7365aebb2d04c00fab660995e17fd33e1e858d227320f0132c5f750"
-    sha256 arm64_big_sur:  "c5b09c75e7b2dba15327fd4d9e44558bc0e6349a38c812329930e5f699361f5b"
-    sha256 monterey:       "33b6f93095d734ad3b94662251373c97ffd089da3487cb63bd8aa25c68feb326"
-    sha256 big_sur:        "e45b48a6d19b61633897b73389c8c1648026543072735330018e85960f2b85cd"
-    sha256 catalina:       "3b5595c657158e338d4ee9665afbc7ba4691e0eb228637eb42fb147b7cc33aee"
-    sha256 x86_64_linux:   "7ee4112ba4f7a8c80b20a5edbee93bf01fae4c333bd24398023bc8d3c1e71f68"
+    rebuild 1
+    sha256 arm64_ventura:  "f64d0cd2170f0a0953e7e47f882db6e34fb1cdf5f36fa82cd5e07d28ba1b62fb"
+    sha256 arm64_monterey: "707780a141ed9c245531081c8bfc40d5141813fffe2c93bc3ae04761824c9f08"
+    sha256 arm64_big_sur:  "d1ffc2a28ff4bffeca29b95aca1cf4352d71c80274bf1c20e91c0310cddd9acc"
+    sha256 ventura:        "e5fd6fb6ddddeb87c0d8bfc5fd5bccb616a6bda6cfb39e10b46d291a31a124af"
+    sha256 monterey:       "96e863fc2effe0a810baeb9998b1fc56b44a4e9835d45b90285c51548ff198bd"
+    sha256 big_sur:        "4ae91d46ab7aefb2458df0e17926f522c650709c105aa8d3a2ae91983c571328"
+    sha256 x86_64_linux:   "879a206bb63d944f8aaeb8b5f854e31e808b95cfaca53c0dbe13bada8a6b2b90"
   end
 
   depends_on "pkg-config" => :build
   depends_on "faad2"
   depends_on "ffmpeg"
   depends_on "flac"
+  depends_on "libao" # See https://github.com/cmus/cmus/issues/1130
   depends_on "libcue"
   depends_on "libogg"
   depends_on "libvorbis"
@@ -30,15 +34,20 @@ class Cmus < Formula
     depends_on "alsa-lib"
   end
 
-  fails_with gcc: "5" # ffmpeg is compiled with GCC
-
   def install
-    system "./configure", "prefix=#{prefix}", "mandir=#{man}",
-                          "CONFIG_WAVPACK=n", "CONFIG_MPC=n"
+    args = [
+      "prefix=#{prefix}",
+      "mandir=#{man}",
+      "CONFIG_WAVPACK=n",
+      "CONFIG_MPC=n",
+      "CONFIG_AO=y",
+    ]
+    system "./configure", *args
     system "make", "install"
   end
 
   test do
-    system "#{bin}/cmus", "--plugins"
+    plugins = shell_output("#{bin}/cmus --plugins")
+    assert_match "ao", plugins
   end
 end

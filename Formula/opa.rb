@@ -1,25 +1,29 @@
 class Opa < Formula
   desc "Open source, general-purpose policy engine"
   homepage "https://www.openpolicyagent.org"
-  url "https://github.com/open-policy-agent/opa/archive/v0.43.0.tar.gz"
-  sha256 "c5ac0f4a2c50e347cbcdf97f711ef70f9d7bd8594f8d92036fdea78d34c8400e"
+  url "https://github.com/open-policy-agent/opa/archive/v0.49.2.tar.gz"
+  sha256 "7c3d328cdf788a93fd51a756087f88560b154bd80ae4fba268fdebbd22df4fd2"
   license "Apache-2.0"
   head "https://github.com/open-policy-agent/opa.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "c68155af2f6afc87b61a98838d2fab8284c78e3f41a0f616d4a15e11aa240832"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "ba66295f566128c5838324efae88af81be43c526b9f14c37b8ba69aef2ec7ee1"
-    sha256 cellar: :any_skip_relocation, monterey:       "10842bf307e0d6f84d57ec5fec49784cecb4b6862e6ff4fc3c718c65b1807d32"
-    sha256 cellar: :any_skip_relocation, big_sur:        "9b0f9b195a78e02b798ea9764d7169d215e1330af3fd387c83174ab9731c36a6"
-    sha256 cellar: :any_skip_relocation, catalina:       "ed9dcf67936893a51152fa54384c035e8929cb4e04f029684835cb1ccafe2041"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b54128e385823fa8cfef681abc2dcc1abe076b9b44d24e6eb69c3a252f3d4064"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "0c9a6d03b73feb4f102b24484e8cc54737a57bf0131958682d9c858343e296cd"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "cd8f47a4a7b573579573a43432ffa019b2c9f986aa3ddc3e1323071c105f45b0"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "feb03bfd7e34accc89dd83bf95b07119156c1c383dc63c096723fc28286980e2"
+    sha256 cellar: :any_skip_relocation, ventura:        "b3fa95d0fb37d89fad4acbdd3a9d83d84f98ee76b40eec07d47ccbcc897e895b"
+    sha256 cellar: :any_skip_relocation, monterey:       "776778e2355cf961ad812e91fc10a2276c5bc3cfd4475ee10b2cc52db85aa67e"
+    sha256 cellar: :any_skip_relocation, big_sur:        "a8a115fcba54a1cbb96f8945429563ff454aa5fe2537eea438c15657012dc576"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e38cdeb8f6dff3c3a867965164355ceea90615779a7237e9c7e04a2c797fe18a"
   end
 
   depends_on "go" => :build
 
   def install
-    system "go", "build", *std_go_args,
-              "-ldflags", "-X github.com/open-policy-agent/opa/version.Version=#{version}"
+    ldflags = %W[
+      -s -w
+      -X github.com/open-policy-agent/opa/version.Version=#{version}
+    ]
+    system "go", "build", *std_go_args(ldflags: ldflags)
     system "./build/gen-man.sh", "man1"
     man.install "man1"
 

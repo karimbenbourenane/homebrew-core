@@ -1,25 +1,22 @@
 class Jinx < Formula
   desc "Embeddable scripting language for real-time applications"
   homepage "https://github.com/JamesBoer/Jinx"
-  url "https://github.com/JamesBoer/Jinx/archive/v1.3.9.tar.gz"
-  sha256 "ea724319c902405eb16db3acdf6a31813c2bfd20e8312c1ade3d751ad8adc2ea"
+  url "https://github.com/JamesBoer/Jinx/archive/v1.3.10.tar.gz"
+  sha256 "5b3a3e6c2c4b976dfdb16519aee7299c98dbf417b8179099a5509a5fd4d513ac"
   license "MIT"
   head "https://github.com/JamesBoer/Jinx.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "fa958ceb295710e0aabf7ddd0d8aa420f86d9c9cd372a37fa0603cf3fd9c2fd3"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "f50d2c1d7fa7d03e33af0d5097d0635d3e7c04908a611ba201b5f3ffe7322b65"
-    sha256 cellar: :any_skip_relocation, monterey:       "5eb1cf1d04dce70ebb4d8210f8db913c7706fb211d4b238109d4400f00e78ddc"
-    sha256 cellar: :any_skip_relocation, big_sur:        "2d5b18b26a2f879770dfdaaca8da4f81e6a2d0cfbdcb900dd540d3f731f69382"
-    sha256 cellar: :any_skip_relocation, catalina:       "9137f44de3bb8fa31baf1e27a7f2eef193434dfb1dfe8cfaf0c6baccc497d257"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "82d9efcb7f4b4d22ff447c507d26deb3474cf9fed049461712d76690bd9b05bc"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "76c5986afd50a5bbe9ee092ab25dfe8633ae63e1895b5ee90107f508a6297673"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "362834274bbb963b081203c47ece5ccbae44ab6959177d293f2d6af86b2063bf"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "2cc147cfcb7b0769a0570f011806266e8762eea26cc751fc49df4749f5e73de8"
+    sha256 cellar: :any_skip_relocation, ventura:        "6f9d56b84c16029fbec98ffe69d6fcf84e83effbeabde98cd2c3a553cbb366ff"
+    sha256 cellar: :any_skip_relocation, monterey:       "cafc3ac794c99f4e0a74380927681bd35eb465eb22d940a99cee23aae2f8ea61"
+    sha256 cellar: :any_skip_relocation, big_sur:        "eb75b3db57ce5a1349190419c5e1f7e880c74c0d0f8ae5485a708739358592ff"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ca7c15cf146241f441cf37fd695dbae391da90bdb5cf6b3fcf7d3c1f05be2270"
   end
 
   depends_on "cmake" => :build
-
-  on_linux do
-    depends_on "gcc"
-  end
 
   fails_with gcc: "5"
 

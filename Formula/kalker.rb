@@ -1,17 +1,18 @@
 class Kalker < Formula
   desc "Full-featured calculator with math syntax"
   homepage "https://kalker.strct.net"
-  url "https://github.com/PaddiM8/kalker/archive/v2.0.0.tar.gz"
-  sha256 "092ab13726515125ec3664c15e61fa7b8eec09ad590f0c5ef00df6e33b3b3da7"
+  url "https://github.com/PaddiM8/kalker/archive/v2.0.3.tar.gz"
+  sha256 "d2904b5b537a2ec31570f83ac36da0fcf95b0b2957594edf8f07881a067bf8c2"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "281638cc7dc299a1d172a71a1987c83b8a607c768a5079c9eabf7c18b8651068"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "d356a52f4501a02f564c7960d9b35155dab33eabf2b6923c5bca9eb4aba0df6c"
-    sha256 cellar: :any_skip_relocation, monterey:       "f0859b24ffdd063be5371f29105437ba0152669e64ec7f5bfb37aaa856b17418"
-    sha256 cellar: :any_skip_relocation, big_sur:        "3fc0fddcc274b68cc81b08eda7ef348939bf9804fec4d8c1726221c933f5949f"
-    sha256 cellar: :any_skip_relocation, catalina:       "4be457caaed473e8150d5c77791008e6850f138ff3e846cfe495f5d19249d960"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b7eba326a767e9355f75ab55b835d565eebbf59e748a4d5a2663163e0e910a2f"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "d342da2b8076cc114c72febbd3dd74df3de208776d71ed2825331f87faf2db9f"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "3c1b870e929e71dd17dc21ea8fcb50e696048ad73b3a1a0af15ac3d77f497ce9"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "46f1e6d7298380a52adb938edc323bcc9b769d911e959e54907e70e19c95dbfd"
+    sha256 cellar: :any_skip_relocation, ventura:        "cf1791824b8379c031787f6607b312b5e64ff661f484f989e19ab23e5f6d18b5"
+    sha256 cellar: :any_skip_relocation, monterey:       "00e7ccd66833dcdc873f8ba1e541f0046dca54880e953c5127ecb4f4c6e8d9ea"
+    sha256 cellar: :any_skip_relocation, big_sur:        "cadaef2ed7a99fee80c7477ddad17fbeda0438231a6a71a412bf3beeca451173"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b1a2bf4f7f4ac84ee2bff41f7bf89bdb1ca759f62194d306412253582e6d5f7d"
   end
 
   depends_on "rust" => :build

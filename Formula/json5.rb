@@ -3,12 +3,12 @@ require "language/node"
 class Json5 < Formula
   desc "JSON enhanced with usability features"
   homepage "https://json5.org/"
-  url "https://github.com/json5/json5/archive/v2.2.1.tar.gz"
-  sha256 "2ad1be22d6138825a712411fac53086a8710b7d987e9aa81c59ee370b5a57030"
+  url "https://github.com/json5/json5/archive/v2.2.3.tar.gz"
+  sha256 "a98d1dd7c6b101fd99ae692102dc05a65f072b3e6f8077d3658819440bf76637"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "b78db2e75223abf02b70379e741be320cc35f26190b7907035d694735b44253c"
+    sha256 cellar: :any_skip_relocation, all: "e56197088965d111aad8994191dfe4a8f180581f0c1ba66fb2b2fbf894ccf4ac"
   end
 
   depends_on "node"

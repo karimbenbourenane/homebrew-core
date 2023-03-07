@@ -1,10 +1,10 @@
 class R < Formula
   desc "Software environment for statistical computing"
   homepage "https://www.r-project.org/"
-  url "https://cran.r-project.org/src/base/R-4/R-4.2.1.tar.gz"
-  sha256 "4d52db486d27848e54613d4ee977ad952ec08ce17807e1b525b10cd4436c643f"
+  url "https://cran.r-project.org/src/base/R-4/R-4.2.2.tar.gz"
+  sha256 "0ff62b42ec51afa5713caee7c4fde7a0c45940ba39bef8c5c9487fef0c953df5"
   license "GPL-2.0-or-later"
-  revision 3
+  revision 1
 
   livecheck do
     url "https://cran.rstudio.com/banner.shtml"
@@ -12,12 +12,13 @@ class R < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "7d90e7cbd5a955e347c0fc16410227cec47ed6af91c61f8b6dd2d90e9bf847a4"
-    sha256 arm64_big_sur:  "7d5efc990ccfb505c65485da128d291f0892f5a3e84035090694d62e211593cb"
-    sha256 monterey:       "1194f600e6a48c48b4aaaa3f8cf1521f6f5619a2d8536c52df807e1236d1fe22"
-    sha256 big_sur:        "ebbc3a32a6c4820397036ad4eb72dce880f17d9d8c6d7691f1c071692fe4a68c"
-    sha256 catalina:       "b52ed1a424220a750954876a2740030324c377375da59f54dc4ed08ca16c99d3"
-    sha256 x86_64_linux:   "013c967a31390c789f25006d6cf0f6463a9a858f00fe5b0bc08a103f2ed795e5"
+    sha256 arm64_ventura:  "fc5834a3ae121615ddd4d37b9c9ead1eaa8a49ddb62924db85783e89eaca7523"
+    sha256 arm64_monterey: "da8a9d616ad6378683b2c053a1eb21979de6fb87f0b2a167dc817e3621efabd4"
+    sha256 arm64_big_sur:  "27dfc85cb338bd47ab2c4d2056084c0c0c2b7b2e7274487da1d33c5b6e02f5b3"
+    sha256 ventura:        "10efb9286514143cb2a29ed3722122434a844c70c211b9b6b1ae6aa6ac6efcc4"
+    sha256 monterey:       "f7198e01cae195c5b91a8a2105fb1bfd5a76376f97b30c84f4e76fe3dff9c42a"
+    sha256 big_sur:        "c30d89edffe0b4e6b56fea24ddf0b594e08b96d372d45767f052363647ba985c"
+    sha256 x86_64_linux:   "7662bb5a6d42fdf07da6b41b2a47df8c8f9dc36f6e4438912826041c65c11b65"
   end
 
   depends_on "pkg-config" => :build
@@ -46,6 +47,20 @@ class R < Formula
 
   # needed to preserve executable permissions on files without shebangs
   skip_clean "lib/R/bin", "lib/R/doc"
+
+  fails_with :gcc do
+    version "11"
+    cause "Unknown. FIXME."
+  end
+
+  # Patch to fix build on macOS Ventura, remove in next release
+  # https://bugs.r-project.org/show_bug.cgi?id=18426
+  patch do
+    on_ventura :or_newer do
+      url "https://raw.githubusercontent.com/Homebrew/formula-patches/d647f4e1d61c8dba5f15edf7a0fc567f681641fb/r/ventura.diff"
+      sha256 "0b3c230432ef6a9231eaf48f39fd22155d3e1c7cd4f2a497e96ff4bdc7d91b84"
+    end
+  end
 
   def install
     # BLAS detection fails with Xcode 12 due to missing prototype

@@ -3,21 +3,21 @@ class Txt2tags < Formula
 
   desc "Conversion tool to generating several file formats"
   homepage "https://txt2tags.org/"
-  url "https://files.pythonhosted.org/packages/0e/80/dc4215b549ddbe1d1251bc4cd47ad6f4a65e1f9803815997817ff297d22e/txt2tags-3.7.tar.gz"
-  sha256 "27969387206d12b4e4a0eb13d0d5dd957d71dbb932451b0dceeab5e3dbb6178a"
-  revision 3
+  url "https://files.pythonhosted.org/packages/a3/91/3522a1fbefcc02d3d496854aea81b2b01a6e388bdb27ca0be39a91a43711/txt2tags-3.8.tar.gz"
+  sha256 "379869e866ed85225181ac65583827781a166c907de8bb40a9f3daf7b16c3483"
+  license "GPL-2.0-or-later"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "5dfd365914bcf32df61972239ce4e158aa04282f05aefe898b648842b4c37ab0"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "5dfd365914bcf32df61972239ce4e158aa04282f05aefe898b648842b4c37ab0"
-    sha256 cellar: :any_skip_relocation, monterey:       "2d19d074b099ee8318e3d55f291d6b02de4130a5d643120e03e0dd438c9a6311"
-    sha256 cellar: :any_skip_relocation, big_sur:        "2d19d074b099ee8318e3d55f291d6b02de4130a5d643120e03e0dd438c9a6311"
-    sha256 cellar: :any_skip_relocation, catalina:       "2d19d074b099ee8318e3d55f291d6b02de4130a5d643120e03e0dd438c9a6311"
-    sha256 cellar: :any_skip_relocation, mojave:         "2d19d074b099ee8318e3d55f291d6b02de4130a5d643120e03e0dd438c9a6311"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f9b5979bbd085fa0318c11540cf422e3587a9fca6cd51a4eeb4ef2da98d3b27e"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "c733dd69bfebdbd7eaebcc27c4d80e2ed080cbcef5a71d22aa1965f6e4164bdb"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "c733dd69bfebdbd7eaebcc27c4d80e2ed080cbcef5a71d22aa1965f6e4164bdb"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "c733dd69bfebdbd7eaebcc27c4d80e2ed080cbcef5a71d22aa1965f6e4164bdb"
+    sha256 cellar: :any_skip_relocation, ventura:        "337725d77060c6e7f0ddd638ff0d904b98aca4b78748327b0494b7ab02584c8c"
+    sha256 cellar: :any_skip_relocation, monterey:       "337725d77060c6e7f0ddd638ff0d904b98aca4b78748327b0494b7ab02584c8c"
+    sha256 cellar: :any_skip_relocation, big_sur:        "337725d77060c6e7f0ddd638ff0d904b98aca4b78748327b0494b7ab02584c8c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "cbe92bcad887b8e2d4f32d1b2afe040e2577852d6d1eb4ec327ef62f05c4a826"
   end
 
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   def install
     virtualenv_install_with_resources

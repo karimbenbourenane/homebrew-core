@@ -1,17 +1,18 @@
 class Virtuoso < Formula
   desc "High-performance object-relational SQL database"
   homepage "https://virtuoso.openlinksw.com/wiki/main/"
-  url "https://github.com/openlink/virtuoso-opensource/releases/download/v7.2.7/virtuoso-opensource-7.2.7.tar.gz"
-  sha256 "02480b930d5fb414cb328f10cfd200faa658adc10f9c68ef7034c6aa81a5a3a0"
-  license "GPL-2.0-only"
+  url "https://github.com/openlink/virtuoso-opensource/releases/download/v7.2.9/virtuoso-opensource-7.2.9.tar.gz"
+  sha256 "be838c623aa6f8a2e2ab90005e63f0ff1363d6fa8fa64b811caab71e3125ba90"
+  license "GPL-2.0-only" => { with: "openvpn-openssl-exception" }
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "c30c0e74ff6eabda834e2df9c46df1b201f759b94969c811a893a78549500383"
-    sha256 cellar: :any,                 arm64_big_sur:  "4dca442e00b50e886d6fb23d6d58824a4d215611b9396c5816e30e335ef046ad"
-    sha256 cellar: :any,                 monterey:       "b64f134ad74f950684c3ecc47ad1aaf7a29f2a9e8b93c32f662c809ffc16e86c"
-    sha256 cellar: :any,                 big_sur:        "1dfdebfe41f249a57d48db33ba0a5f96a1c11671f720f0f33dbb20eb641f0a31"
-    sha256 cellar: :any,                 catalina:       "7259a7caa010744dc03e8945fd05e6f96066206a5ff54f3471a67d31b5c4357f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "383edea95dbe7e7343f9ecea389d73f864ef13d978dd05dc1f9f9db06d485f7b"
+    sha256 cellar: :any,                 arm64_ventura:  "3a75a905b4b13f3b24cfe575d0734a63c04647b03ba7e1688694f586ac3ea24a"
+    sha256 cellar: :any,                 arm64_monterey: "f89bee2260392c6ae90fae32eaa6766682e0a82736a3af4d9afd6a6c846f9090"
+    sha256 cellar: :any,                 arm64_big_sur:  "36f3e085d9425c3fb75d9472c8325abc0c127da0b370c61349caf966fef26137"
+    sha256 cellar: :any,                 ventura:        "ecdc405773408b67d4cbc8fe37db34980801648ac12fcf0915a95f3acf026c28"
+    sha256 cellar: :any,                 monterey:       "b18bc3c59f8b7af966fb7d59598e63c69dc7c650a2481b7d97e9ac38351751d5"
+    sha256 cellar: :any,                 big_sur:        "b419fda92e6c0a9c1c12ae76c19b89be56d3161c73a632cd1c902ad74f00d6ed"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "3e3934550d620fa88613ab3592891dfd4277f7dee120fa6f0bfaa6eee49e7a55"
   end
 
   head do
@@ -24,11 +25,12 @@ class Virtuoso < Formula
 
   # If gawk isn't found, make fails deep into the process.
   depends_on "gawk" => :build
-  depends_on "openssl@1.1"
+  depends_on "openssl@3"
 
   uses_from_macos "bison" => :build
   uses_from_macos "flex" => :build
   uses_from_macos "gperf" => :build
+  uses_from_macos "zlib"
 
   on_linux do
     depends_on "net-tools" => :build
@@ -40,8 +42,9 @@ class Virtuoso < Formula
 
   def install
     system "./autogen.sh" if build.head?
-    system "./configure", "--disable-dependency-tracking",
-                          "--prefix=#{prefix}"
+    system "./configure", *std_configure_args,
+                          "--disable-silent-rules",
+                          "--without-internal-zlib"
     system "make", "install"
   end
 

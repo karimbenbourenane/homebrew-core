@@ -1,10 +1,9 @@
 class PostgresqlAT12 < Formula
   desc "Object-relational database system"
   homepage "https://www.postgresql.org/"
-  url "https://ftp.postgresql.org/pub/source/v12.12/postgresql-12.12.tar.bz2"
-  sha256 "34b3f1c69408e22068c0c71b1827691f1c89153b0ad576c1a44f8920a858039c"
+  url "https://ftp.postgresql.org/pub/source/v12.14/postgresql-12.14.tar.bz2"
+  sha256 "785610237d382c842d356e347138e58c06ffeae240e6cc0b52ac5ebcc30d043e"
   license "PostgreSQL"
-  revision 2
 
   livecheck do
     url "https://ftp.postgresql.org/pub/source/"
@@ -12,12 +11,13 @@ class PostgresqlAT12 < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "b2f64ad1054e7959d0cde1550f30f7447b9c3b4792e6b71a21f2793fbf06f4cb"
-    sha256 arm64_big_sur:  "1e4c631d8e9516abcf0121d3b4a04238c75909d84ee784955ba6ceebc4e4e514"
-    sha256 monterey:       "4f493161a0fdd5a600a89c94246df83ff02e10636f7d74fca83f8f5b644f3569"
-    sha256 big_sur:        "d445d2850da21b707b93dc3a5f3103120c5fad07a1b6e52a7716c18e5d694b77"
-    sha256 catalina:       "b9442abebcc581205593c651365c59a184077e201f413df3fb8610bd5b9a0b29"
-    sha256 x86_64_linux:   "981dbeb4638d2f858938cca9cc463e745a5e0111820c580e53cfefc346682e5e"
+    sha256 arm64_ventura:  "abcc9fe2764a2714683adfdb3fc8152491f4839ef7aae3981708dde9acc67497"
+    sha256 arm64_monterey: "8cbb7bd7eda466fc85c3b9aec0054d92f3e6846c534a02d16a3e5717c80a7bbf"
+    sha256 arm64_big_sur:  "ae0c1d21aae5aaee4d15bbbf9edf0cf17f4b8a0ae96648f449614a01731fdca7"
+    sha256 ventura:        "dcabf894ca0b708ec46f0a6500f410cb8b55fc8f2fca76f9544a06e06af9be59"
+    sha256 monterey:       "e0ec86f93c582926ae4dc737a29b78aaed9bcdf818f8ef8be40de3d0db20c8c2"
+    sha256 big_sur:        "51ebc1be739185ba129a045ec4915f7de63f8f1d36b4e564cd394165a7255a48"
+    sha256 x86_64_linux:   "51e0b48f29ac2f270eb0cd7b74ca9475c9f89109ba49f17363bab0f15ad0dc14"
   end
 
   keg_only :versioned_formula
@@ -86,7 +86,9 @@ class PostgresqlAT12 < Formula
     # in ./configure, but needs to be set here otherwise install prefixes containing
     # the string "postgres" will get an incorrect pkglibdir.
     # See https://github.com/Homebrew/homebrew-core/issues/62930#issuecomment-709411789
-    system "make", "pkglibdir=#{lib}/postgresql"
+    system "make", "pkglibdir=#{opt_lib}/postgresql",
+                   "pkgincludedir=#{opt_include}/postgresql",
+                   "includedir_server=#{opt_include}/postgresql/server"
     system "make", "install-world", "datadir=#{pkgshare}",
                                     "libdir=#{lib}",
                                     "pkglibdir=#{lib}/postgresql",
@@ -176,6 +178,8 @@ class PostgresqlAT12 < Formula
     system "#{bin}/initdb", testpath/"test" unless ENV["HOMEBREW_GITHUB_ACTIONS"]
     assert_equal opt_pkgshare.to_s, shell_output("#{bin}/pg_config --sharedir").chomp
     assert_equal opt_lib.to_s, shell_output("#{bin}/pg_config --libdir").chomp
-    assert_equal "#{lib}/postgresql", shell_output("#{bin}/pg_config --pkglibdir").chomp
+    assert_equal (opt_lib/"postgresql").to_s, shell_output("#{bin}/pg_config --pkglibdir").chomp
+    assert_equal (opt_include/"postgresql").to_s, shell_output("#{bin}/pg_config --pkgincludedir").chomp
+    assert_equal (opt_include/"postgresql/server").to_s, shell_output("#{bin}/pg_config --includedir-server").chomp
   end
 end

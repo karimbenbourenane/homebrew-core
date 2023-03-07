@@ -1,18 +1,19 @@
 class Gostatic < Formula
   desc "Fast static site generator"
   homepage "https://github.com/piranha/gostatic"
-  url "https://github.com/piranha/gostatic/archive/2.34.tar.gz"
-  sha256 "fc61c77e76e81b17b9955d18341da3f62e2f8def6a8f33156681e046ab1e80c5"
+  url "https://github.com/piranha/gostatic/archive/2.36.tar.gz"
+  sha256 "a66e306c0289bac541af10cb88acc9b9576153de5d4acec566c3f927acefd778"
   license "ISC"
   head "https://github.com/piranha/gostatic.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "4daa04700da1032af0a162412f3c9c853ba1c2044daef8169fbbd55eae60fe46"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "5ea61a4050fccf533069aefa065611beedf2d43438fcf6d5eacb0df0789271a4"
-    sha256 cellar: :any_skip_relocation, monterey:       "716362ef77b40110d1ae1613613b67d51a985c84c567fefd0e759ac5c7d168bb"
-    sha256 cellar: :any_skip_relocation, big_sur:        "8493519376ae8512fb5e2d4c83481c27e964bb63c854c1aa14f15d0494311fa3"
-    sha256 cellar: :any_skip_relocation, catalina:       "01d319962c9ad1c3f5955ceaeadf4286944d33e82d90b44d36a0f4bec37089d1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ce5a780002a737100f543ff761ae7c8bdff06de65e0f0931ceb931061d740f61"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "fee49b6f3e2a28ea13f71e318c63fdccfbfeea301290623c741602b4ba7efa42"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "fee49b6f3e2a28ea13f71e318c63fdccfbfeea301290623c741602b4ba7efa42"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "fee49b6f3e2a28ea13f71e318c63fdccfbfeea301290623c741602b4ba7efa42"
+    sha256 cellar: :any_skip_relocation, ventura:        "702b45e745c213901ee9bac69898a39fca340055bea4257ed12967563990d842"
+    sha256 cellar: :any_skip_relocation, monterey:       "702b45e745c213901ee9bac69898a39fca340055bea4257ed12967563990d842"
+    sha256 cellar: :any_skip_relocation, big_sur:        "702b45e745c213901ee9bac69898a39fca340055bea4257ed12967563990d842"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "3fc806119828adc0ed8433ff0dfdb9573f76bac686ffa19d368726d978d7aacb"
   end
 
   depends_on "go" => :build

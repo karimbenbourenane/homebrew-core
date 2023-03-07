@@ -1,8 +1,8 @@
 class FfmpegAT28 < Formula
   desc "Play, record, convert, and stream audio and video"
   homepage "https://ffmpeg.org/"
-  url "https://ffmpeg.org/releases/ffmpeg-2.8.20.tar.xz"
-  sha256 "8566e326c3f4e47c67a176c9d14c1efe0852d025be378183ad7f5ceb2a7676c7"
+  url "https://ffmpeg.org/releases/ffmpeg-2.8.21.tar.xz"
+  sha256 "e5d956c19bff2aa5bdd60744509c9d8eb01330713d52674a7f650d54b570c82d"
   # None of these parts are used by default, you have to explicitly pass `--enable-gpl`
   # to configure to activate them. In this case, FFmpeg's license changes to GPL v2+.
   license "GPL-2.0-or-later"
@@ -14,12 +14,13 @@ class FfmpegAT28 < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "6502ce2cc2cc1177957eeace83265254b063bac9bfd4ba92e048324456514592"
-    sha256 arm64_big_sur:  "aec6ec031f02fdcc7551142225d35e8b01f6852b89b07e13c3965ec869ddac7c"
-    sha256 monterey:       "8a5fe7f96f3a68ad134d1b0f07a2336e3a134ef1f61dd86d34266707b1e4e976"
-    sha256 big_sur:        "eb22288ea2eb879dbded818fbf9850da0f8c9b0b5338e390b52f7975e61acc65"
-    sha256 catalina:       "70c26b5cc479f01d315b5a4c1c1856bedf407e61b66898e2baff3fbfe7c043a4"
-    sha256 x86_64_linux:   "fb79180e038db7152fcbe6f8015e12782dfa1cbb17bc1c776e35ff02b5451394"
+    sha256 arm64_ventura:  "0ea61e5a2d2812d443e8552f3d3721284182e0d4234a01adfe868f2339ea1330"
+    sha256 arm64_monterey: "f14c72891e2a0b7167d9395831f3c7dbaf226c2980c18e064e8a6a3941a6bb44"
+    sha256 arm64_big_sur:  "1131eed2d3149398fdc1af730c862b037d33d255a59a195e536a888ff06bb425"
+    sha256 ventura:        "d0983a82a9bb93dd82cad0180874312303585d9fed9938ec9746cc3b7a2233d6"
+    sha256 monterey:       "be0bc07da4ebb821b7e45034cff947d0cc400cb182e2e4a9d3a64d4c8f9735b6"
+    sha256 big_sur:        "b3e9e8382afe01cabdaf5e6a0ca5656af36c09ccfcaf451ea3bec954f68a1f98"
+    sha256 x86_64_linux:   "b986a5aad77930e060bda5cfe76899e8fdd7f992292bb8742d840ae51f4ecea4"
   end
 
   keg_only :versioned_formula
@@ -39,7 +40,7 @@ class FfmpegAT28 < Formula
   depends_on "opencore-amr"
   depends_on "opus"
   depends_on "rtmpdump"
-  depends_on "sdl"
+  depends_on "sdl12-compat"
   depends_on "snappy"
   depends_on "speex"
   depends_on "theora"

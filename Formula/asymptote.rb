@@ -2,8 +2,8 @@ class Asymptote < Formula
   desc "Powerful descriptive vector graphics language"
   homepage "https://asymptote.sourceforge.io"
   # Keep version in sync with manual below
-  url "https://downloads.sourceforge.net/project/asymptote/2.82/asymptote-2.82.src.tgz"
-  sha256 "4f6fbc5aa058c8d38513546be5b233bb5d7fa50e39486f3d8624aa7595ae748d"
+  url "https://downloads.sourceforge.net/project/asymptote/2.85/asymptote-2.85.src.tgz"
+  sha256 "4c0559b62c41f947b5fbf044b4d091bd3cf0abe599c85138087069809875ec87"
   license "LGPL-3.0-only"
 
   livecheck do
@@ -12,12 +12,13 @@ class Asymptote < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "4784ec0590b2dd8af194008fc9c33d89035762f579d0d44d60ddc16f2c4cc75c"
-    sha256 arm64_big_sur:  "ab9f9655049e0e406046cccfa56425226d64c5ae76329f46ca39529f5d117428"
-    sha256 monterey:       "fb203e04b75e5c1034f7afece17ec41b601143ecf2d3d3d336b512b63b0a53d6"
-    sha256 big_sur:        "ed81192f92d5c258a5ca1a6d2d4dde3bac89f42f0c8f592c276b5cf976f357bf"
-    sha256 catalina:       "603b162fc137b2014bbc10aeffa0dd80bfafa51fb45bdc030dfcaa877f907224"
-    sha256 x86_64_linux:   "a7ac112a23b63fb687619a714c2a72baa070c4f72e8c512e5647daaefdedc2a0"
+    sha256 arm64_ventura:  "4c6ed796d51ad30c269d64e62ba8154365420ad2e833eec0422a365d17946a39"
+    sha256 arm64_monterey: "907d5066c8bf3c9eff2cf6c18b9516387a611f22f78629072a44a448b9655c9b"
+    sha256 arm64_big_sur:  "c54e0cb0006e56aa4f9d061112cbcf3ca7da9b8eb2a86bfcd226abfae6592fca"
+    sha256 ventura:        "8660647d677ade7c8005a97413a2308cfae40644fc515a4cd7a2409ab5aecefb"
+    sha256 monterey:       "37852200460bf4eeba74782b831531a5857a9fa74442b34a97ef05b2a3675599"
+    sha256 big_sur:        "10381108e5b5f8d84243c9061d76044e179af9476d51d88458409ddda7b64746"
+    sha256 x86_64_linux:   "a442cc9eca515335e9376e7b51a87ba53a9ea25dda713e1676f0d877844c89fa"
   end
 
   depends_on "glm" => :build
@@ -26,6 +27,8 @@ class Asymptote < Formula
   depends_on "gsl"
   depends_on "readline"
 
+  uses_from_macos "bison" => :build
+  uses_from_macos "flex" => :build
   uses_from_macos "ncurses"
 
   on_linux do
@@ -33,8 +36,8 @@ class Asymptote < Formula
   end
 
   resource "manual" do
-    url "https://downloads.sourceforge.net/project/asymptote/2.81/asymptote.pdf"
-    sha256 "543c3a9a87292c76083953688db28e20eb33d7f2e67e7808454f7e3d136de930"
+    url "https://downloads.sourceforge.net/project/asymptote/2.85/asymptote.pdf"
+    sha256 "fcc4fd1adbb73347bd731f0bcf8c206a55acc65cdeb8e2aee74611230778cfef"
   end
 
   def install

@@ -1,28 +1,30 @@
 class Hcl2json < Formula
   desc "Convert HCL2 to JSON"
   homepage "https://github.com/tmccombs/hcl2json"
-  url "https://github.com/tmccombs/hcl2json/archive/v0.3.4.tar.gz"
-  sha256 "41c63b892e9a1488c5380faee83d341482352199175588fb46fa838f3b75e6a3"
+  url "https://github.com/tmccombs/hcl2json/archive/refs/tags/v0.5.0.tar.gz"
+  sha256 "fa112b96c7cb11afc60624e0cdbd2f80157b09c7f0dbec1ec3ba1f92ea7b8f26"
   license "Apache-2.0"
   head "https://github.com/tmccombs/hcl2json.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "cc74090b0abcd15cdcc1f2a23450ad6dcd7255ad4826932d613f53409a9b96ae"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "cc74090b0abcd15cdcc1f2a23450ad6dcd7255ad4826932d613f53409a9b96ae"
-    sha256 cellar: :any_skip_relocation, monterey:       "9d4ba59c2ac8d5f10dc848f68704647f8fb6e67fd447efd1a2c81762c40f7d64"
-    sha256 cellar: :any_skip_relocation, big_sur:        "9d4ba59c2ac8d5f10dc848f68704647f8fb6e67fd447efd1a2c81762c40f7d64"
-    sha256 cellar: :any_skip_relocation, catalina:       "9d4ba59c2ac8d5f10dc848f68704647f8fb6e67fd447efd1a2c81762c40f7d64"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "13d812e1296de5f1ccc26bbafe8a79fd42f7fc19f0b8e34da06c626a692440e4"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "85658f12f74c26d39c28d48e07b64dc28ddb5ce89f146bb39fcbff1ff6a7e40d"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "85658f12f74c26d39c28d48e07b64dc28ddb5ce89f146bb39fcbff1ff6a7e40d"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "85658f12f74c26d39c28d48e07b64dc28ddb5ce89f146bb39fcbff1ff6a7e40d"
+    sha256 cellar: :any_skip_relocation, ventura:        "ab6b00974a29370cf1641ec7db718868d28014b823b430217d8e9dbc7eb2b5b9"
+    sha256 cellar: :any_skip_relocation, monterey:       "ab6b00974a29370cf1641ec7db718868d28014b823b430217d8e9dbc7eb2b5b9"
+    sha256 cellar: :any_skip_relocation, big_sur:        "ab6b00974a29370cf1641ec7db718868d28014b823b430217d8e9dbc7eb2b5b9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8b4243695c8418fd596cf35f59efef7068a3d6f2aff2158f1a4f8e6dc1d7d8e1"
   end
 
   depends_on "go" => :build
 
   def install
-    system "go", "build", *std_go_args
+    system "go", "build", *std_go_args(ldflags: "-s -w")
   end
 
   test do
-    test_hcl = <<~HCL
+    test_hcl = testpath/"test.hcl"
+    test_hcl.write <<~HCL
       resource "my_resource_type" "test_resource" {
         input = "magic_test_value"
       }
@@ -40,7 +42,7 @@ class Hcl2json < Formula
       },
     }.to_json
 
-    assert_equal test_json, pipe_output("#{bin}/hcl2json", test_hcl).gsub(/\s+/, "")
-    assert_match "Failed to convert", pipe_output("#{bin}/hcl2json 2>&1", "Hello, Homebrew!", 1)
+    assert_equal test_json, shell_output("#{bin}/hcl2json #{test_hcl}").gsub(/\s+/, "")
+    assert_match "Failed to open brewtest", shell_output("#{bin}/hcl2json brewtest 2>&1", 1)
   end
 end

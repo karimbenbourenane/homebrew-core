@@ -2,18 +2,19 @@ class Revive < Formula
   desc "Fast, configurable, extensible, flexible, and beautiful linter for Go"
   homepage "https://revive.run"
   url "https://github.com/mgechev/revive.git",
-      tag:      "v1.2.3",
-      revision: "556d4852f934a726fae0e8cb3d1dcdaef8bf2440"
+      tag:      "v1.2.5",
+      revision: "a4f4632a3f934868012008d36eecafb912282d45"
   license "MIT"
   head "https://github.com/mgechev/revive.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "caacf9e69acea46d988fd29f773641bc2e3847876fd8a4666721e617e483c4b3"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "caacf9e69acea46d988fd29f773641bc2e3847876fd8a4666721e617e483c4b3"
-    sha256 cellar: :any_skip_relocation, monterey:       "ec4ef29a5177ac62a9352db0694c901cf46795f3aa90ca1eed2080ba717a3c90"
-    sha256 cellar: :any_skip_relocation, big_sur:        "ec4ef29a5177ac62a9352db0694c901cf46795f3aa90ca1eed2080ba717a3c90"
-    sha256 cellar: :any_skip_relocation, catalina:       "ec4ef29a5177ac62a9352db0694c901cf46795f3aa90ca1eed2080ba717a3c90"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "913db30ec17b1f25668d3577978f998b320a6be9541931b72b16eb9b2d2f5b14"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "330be52bc1318bed0487581d880237613710cda3856a3baa033ff671dfd6806f"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "330be52bc1318bed0487581d880237613710cda3856a3baa033ff671dfd6806f"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "330be52bc1318bed0487581d880237613710cda3856a3baa033ff671dfd6806f"
+    sha256 cellar: :any_skip_relocation, ventura:        "d9f552820ad1b8fa688bd2973baef194ec105c33cfa4bde3ff90a3172f83eedb"
+    sha256 cellar: :any_skip_relocation, monterey:       "d9f552820ad1b8fa688bd2973baef194ec105c33cfa4bde3ff90a3172f83eedb"
+    sha256 cellar: :any_skip_relocation, big_sur:        "d9f552820ad1b8fa688bd2973baef194ec105c33cfa4bde3ff90a3172f83eedb"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "1ea5593ac6f1d2fc7633bda6c50504040e02e0f9924bbce181e7a741f8715533"
   end
 
   depends_on "go" => :build

@@ -1,8 +1,8 @@
 class VulkanLoader < Formula
   desc "Vulkan ICD Loader"
   homepage "https://github.com/KhronosGroup/Vulkan-Loader"
-  url "https://github.com/KhronosGroup/Vulkan-Loader/archive/refs/tags/v1.3.226.tar.gz"
-  sha256 "992d8c7c9f85ac9e8a261a448a50f0ae602ac17964c1b2550894fc128c037226"
+  url "https://github.com/KhronosGroup/Vulkan-Loader/archive/refs/tags/v1.3.242.tar.gz"
+  sha256 "b148796d2aa5c8e655072ba985c968eed65d91f8d4fb8146919c3577bf725bee"
   license "Apache-2.0"
   head "https://github.com/KhronosGroup/Vulkan-Loader.git", branch: "master"
 
@@ -12,17 +12,18 @@ class VulkanLoader < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "2495c7b375bbbe98dda27d80b022967fddae77e2fb559155299bad3a08d67c9f"
-    sha256 arm64_big_sur:  "ffdf53bb38059fd4058320daa51a19217cb7c81277f2b2cde363ed1fb1851579"
-    sha256 monterey:       "e20afcfb83b14f4033e8a83277943aadf749c7a794a449907211bca034b83bd3"
-    sha256 big_sur:        "b4a224629f66366c12543a73c36d5514276b79cf63c4c8d05a78efac997f0c69"
-    sha256 catalina:       "f75726c21daa43d0df63a5db628611e6092500c4bbbc0c1926ec4d3f727dabaf"
-    sha256 x86_64_linux:   "a5bfe6db8dd123e932f226bace356899bc8cf747fe689848ce53f82d464cb796"
+    sha256 arm64_ventura:  "5cae080e450c7bef4784be5bdfee8016590c7a6dd369c9e931b04a8f92088a17"
+    sha256 arm64_monterey: "e9a636c79d2699631e36bf6747804fb6090042f6f96a2624645ee7c7123512cc"
+    sha256 arm64_big_sur:  "cec577d1d879a9af4e762e65e318a780700a844873c3a9ae8f4f8b8316cb0f7b"
+    sha256 ventura:        "f3a8ad6c163ff4d34258c79dffb4c563443345db719db9003bd0155e1ba32b89"
+    sha256 monterey:       "272d5194d417e28044aee02926ddfac9b19674437c4a1f4cd65696147553799d"
+    sha256 big_sur:        "f40afcf6959655f00889e339ff6d8a743da82e68bf5cbcf9d39a4f609a200140"
+    sha256 x86_64_linux:   "0fa3750e340045d8dac7d0d0890f14b689e435ae5289ea39610ec901db1a5ff4"
   end
 
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => :build
   depends_on "vulkan-headers"
 
   on_linux do

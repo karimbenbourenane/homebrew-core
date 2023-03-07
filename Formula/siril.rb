@@ -1,18 +1,20 @@
 class Siril < Formula
   desc "Astronomical image processing tool"
   homepage "https://www.siril.org"
-  url "https://free-astro.org/download/siril-1.0.4.tar.bz2"
-  sha256 "11aa4e491e42f606301d214ffec35741ac6522b5a94feab04fb701e829fd5aee"
+  url "https://free-astro.org/download/siril-1.0.6.tar.bz2"
+  sha256 "f89604697ffcd43f009f8b4474daafdef220a4f786636545833be1236f38b561"
   license "GPL-3.0-or-later"
+  revision 3
   head "https://gitlab.com/free-astro/siril.git", branch: "master"
 
   bottle do
-    sha256 arm64_monterey: "2adf77bb80332c5e4f388bf94ce699b5831e6c17877a312195314a87d07e46ee"
-    sha256 arm64_big_sur:  "247b5fbfd58643fba2a2b0e8ef134938e839eb012078109e01e471525bda0257"
-    sha256 monterey:       "08b19160e6f93bb017906dfc0fece16b539b8d7368b3245f37864f4757bb4be4"
-    sha256 big_sur:        "d3adf4ef6a302d0cf9a9048ca9481fdc0cb2432b29efbf11d57e62711ce83285"
-    sha256 catalina:       "90b154dd0892855d1e49199e49800cc4486348f225608d122e342d9603fef8e5"
-    sha256 x86_64_linux:   "cfec1221e14be7e9cb268f4e8459f1084ff49e81d18a1e6172338e8c58a321c5"
+    sha256 arm64_ventura:  "0bb50849eca23e336fa214632abe2df5da04407be6c91a6eb38e09d19e8e0d14"
+    sha256 arm64_monterey: "55e5c2bdaf0256935ec6e9ccfb88a4e7394736290be1364535ef64c6b3c16cfe"
+    sha256 arm64_big_sur:  "dab8720f082eb04250f29c79f7de88ddca32fec5bea9378bd8e1292f496030ff"
+    sha256 ventura:        "5afeefe2f7ffd6ee19fd072e8b2047fc0abdda26482ebcd4ee23f316dc484aa9"
+    sha256 monterey:       "85390fc80b31f80a6e8487f2f7d242a79f38006df3acdaff586d13b5379c73b9"
+    sha256 big_sur:        "e8c49673d2f5ae1bc53565683a1402c2a954229833c46d185e9f51577cd23903"
+    sha256 x86_64_linux:   "86d4982ced6094220c409005d53e702951a08d6d2194f537427e9a295d692acc"
   end
 
   depends_on "autoconf" => :build
@@ -37,16 +39,13 @@ class Siril < Formula
   depends_on "netpbm"
   depends_on "opencv"
   depends_on "openjpeg"
+  depends_on "wcslib"
 
   uses_from_macos "perl" => :build
 
   on_macos do
     depends_on "gtk-mac-integration"
     depends_on "libomp"
-  end
-
-  on_linux do
-    depends_on "gcc"
   end
 
   fails_with gcc: "5" # ffmpeg is compiled with GCC

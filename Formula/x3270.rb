@@ -1,8 +1,8 @@
 class X3270 < Formula
   desc "IBM 3270 terminal emulator for the X Window System and Windows"
   homepage "http://x3270.bgp.nu/"
-  url "http://x3270.bgp.nu/download/04.02/suite3270-4.2ga5-src.tgz"
-  sha256 "bed21cc51572f0248c9a11436d0f8b79ab971a65dae6b5a857625b173798bf9e"
+  url "http://x3270.bgp.nu/download/04.02/suite3270-4.2ga8-src.tgz"
+  sha256 "8d25c6977091560a41cc1d411d08371eb3eb446597384b7fd463d33675e2a052"
   license "BSD-3-Clause"
 
   livecheck do
@@ -11,12 +11,13 @@ class X3270 < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "e3977b6ea2a5db8988c1d78cba44a02a1e705db27cadaa58404e323a02803985"
-    sha256 arm64_big_sur:  "b15fbaa76fea0ff3f5be128fb9c5cfe4223744e10012f461ceb184d9e6ad2104"
-    sha256 monterey:       "4f66fdf0642cb1b4427bacc890c55851e24e09bf7c73478011586f5dc5b32407"
-    sha256 big_sur:        "0bd89ade1161e3e3680f64bd256e61f37d261cbfc0abd8327d13c4fee94b33fd"
-    sha256 catalina:       "01cc5f9b06fab6ec4e24854684bec3313586a0ff8c6417717fc1e12b7b196a5e"
-    sha256 x86_64_linux:   "50ae82d5efd4877fb79359580443538d07f8b1b5a7c76cabda82ef2d5a000804"
+    sha256 arm64_ventura:  "394d9e6f1f4bbd30481e5e22b5c4712d24135ca5ff2df4fbf46b76e05b868636"
+    sha256 arm64_monterey: "c35243d8b763ce6591d8bf2168c75c177ebd0d0795c9ec3bee2bb1ef1b0620d7"
+    sha256 arm64_big_sur:  "2f32ed029223aebc05df44445f80255e02acf8bcd2084b94b4396190224b9496"
+    sha256 ventura:        "4a1b6d0a16fdf5de63453631fff443e5c33869dbd8ddc5c4b2712e062ae95b0c"
+    sha256 monterey:       "e23ce68213ca0d2e18535e56eb5701d74969abf3c69a6d485c36b87afd791ee7"
+    sha256 big_sur:        "11bb43fe01f0d3f08b5567e62a963fc68ad7e1519be5b88f6cbfa139d26ed77e"
+    sha256 x86_64_linux:   "fefd64e18d19454c3083ce77e2ea9d9d515914c3121f814c3ac6abfd341412fd"
   end
 
   depends_on "readline"
@@ -24,14 +25,13 @@ class X3270 < Formula
   uses_from_macos "tcl-tk"
 
   def install
-    args = %W[
-      --prefix=#{prefix}
+    args = %w[
       --enable-c3270
       --enable-pr3287
       --enable-s3270
       --enable-tcl3270
     ]
-    system "./configure", *args
+    system "./configure", *std_configure_args, *args
     system "make", "install"
     system "make", "install.man"
   end

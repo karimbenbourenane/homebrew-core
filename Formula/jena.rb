@@ -1,16 +1,18 @@
 class Jena < Formula
   desc "Framework for building semantic web and linked data apps"
   homepage "https://jena.apache.org/"
-  url "https://www.apache.org/dyn/closer.lua?path=jena/binaries/apache-jena-4.6.0.tar.gz"
-  mirror "https://archive.apache.org/dist/jena/binaries/apache-jena-4.6.0.tar.gz"
-  sha256 "d5f365e8ef4554bcc1c7853ee04ef6198eb450631244574a37122b3dd71bfda0"
+  url "https://www.apache.org/dyn/closer.lua?path=jena/binaries/apache-jena-4.7.0.tar.gz"
+  mirror "https://archive.apache.org/dist/jena/binaries/apache-jena-4.7.0.tar.gz"
+  sha256 "ded25127d507b0e61f5afc0f647a7e864459c5bd1138372126340c019de592e6"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "097eefc19c380a9217a6b158ad12ef52eea3cb0e9931660f90228887c81cb949"
+    sha256 cellar: :any_skip_relocation, all: "0f93f85cc3630bdd4b6217af161f4cf29a4013c57ee7efc260cbf9b854928319"
   end
 
   depends_on "openjdk"
+
+  conflicts_with "samba", because: "both install `tdbbackup` binaries"
 
   def install
     env = {

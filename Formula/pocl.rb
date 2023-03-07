@@ -1,18 +1,20 @@
 class Pocl < Formula
   desc "Portable Computing Language"
   homepage "http://portablecl.org"
-  url "http://portablecl.org/downloads/pocl-3.0.tar.gz"
-  sha256 "a3fd3889ef7854b90b8e4c7899c5de48b7494bf770e39fba5ad268a5cbcc719d"
+  url "http://portablecl.org/downloads/pocl-3.1.tar.gz"
+  sha256 "82314362552e050aff417318dd623b18cf0f1d0f84f92d10a7e3750dd12d3a9a"
   license "MIT"
+  revision 1
   head "https://github.com/pocl/pocl.git", branch: "master"
 
   bottle do
-    sha256 arm64_monterey: "395e9e22eb5bd6cad1249365e9bdca3cf3624bdaf5d38d68b65170689c2b3812"
-    sha256 arm64_big_sur:  "a90b4daf3ceddb1303a2edaf9c591664cdca5ae3675bab990819bac31634c7cb"
-    sha256 monterey:       "1ed373e8a3a339b256f7342a8aa9b0553ea10d5a554c64f378d0fe5b8d7bd6b7"
-    sha256 big_sur:        "845865a2883222703e17ab3e4a8df75da21c835e42251eae8800f1dd37e7ee5d"
-    sha256 catalina:       "7f3f21085539e521ec9630a006bcd21c32dae5c119d1e910e6326856c1b23bc2"
-    sha256 x86_64_linux:   "79b71049a56f46d3d00b3d3cb66c51ea1ade450c465ea8d0cfccf38a23a80e2d"
+    sha256 arm64_ventura:  "4b2eb686484b8f44b0f14ed8ff3126d100ecca595e931f6cf7848f79af01ce0b"
+    sha256 arm64_monterey: "a585cf0ab10943ba6b1371fe91411dd6d6f60e9972495f8befff33b5689a8323"
+    sha256 arm64_big_sur:  "7f8ccb845709dd1df204500e14770b0a2debc30ea6d81a982fd0a2ea661d5667"
+    sha256 ventura:        "758084ccac11c736aa33b832cf95edd170117334468dfabc34d354bce79b959c"
+    sha256 monterey:       "da53b30483848934bb6be33405e7c41b515c404d798ccecf3ec40ea86a45facd"
+    sha256 big_sur:        "e64b4bbd980a70107064ad17f4f05a4a2236d224a54503c87674ba2dad310635"
+    sha256 x86_64_linux:   "20a9e232705a2ea7315135c6bcc111d767128916ad2904de559f08eb580753d5"
   end
 
   depends_on "cmake" => :build
@@ -20,15 +22,22 @@ class Pocl < Formula
   depends_on "pkg-config" => :build
   depends_on "hwloc"
   depends_on "llvm"
-  depends_on "ocl-icd"
+  depends_on "opencl-icd-loader"
 
-  on_linux do
-    depends_on "gcc"
+  fails_with :clang do
+    cause <<-EOS
+      .../pocl-3.1/lib/CL/devices/builtin_kernels.cc:24:10: error: expected expression
+               {BIArg("char*", "input", READ_BUF),
+               ^
+    EOS
   end
 
   fails_with gcc: "5" # LLVM is built with GCC
 
   def install
+    ENV.llvm_clang if OS.mac?
+    llvm = deps.map(&:to_formula).find { |f| f.name.match?(/^llvm(@\d+(\.\d+)*)?$/) }
+
     # Install the ICD into #{prefix}/etc rather than #{etc} as it contains the realpath
     # to the shared library and needs to be kept up-to-date to work with an ICD loader.
     # This relies on `brew link` automatically creating and updating #{etc} symlinks.
@@ -37,7 +46,7 @@ class Pocl < Formula
       -DCMAKE_INSTALL_RPATH=#{lib};#{lib}/pocl
       -DENABLE_EXAMPLES=OFF
       -DENABLE_TESTS=OFF
-      -DLLVM_BINDIR=#{Formula["llvm"].opt_bin}
+      -DLLVM_BINDIR=#{llvm.opt_bin}
     ]
     # Avoid installing another copy of OpenCL headers on macOS
     args << "-DOPENCL_H=#{Formula["opencl-headers"].opt_include}/CL/opencl.h" if OS.mac?
@@ -51,7 +60,7 @@ class Pocl < Formula
   end
 
   test do
-    ENV["OCL_ICD_VENDORS"] = "pocl.icd" # Ignore any other ICD that may be installed
+    ENV["OCL_ICD_VENDORS"] = "#{opt_prefix}/etc/OpenCL/vendors" # Ignore any other ICD that may be installed
     cp pkgshare/"examples/poclcc/poclcc.cl", testpath
     system bin/"poclcc", "-o", "poclcc.cl.pocl", "poclcc.cl"
     assert_predicate testpath/"poclcc.cl.pocl", :exist?

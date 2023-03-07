@@ -1,19 +1,19 @@
 class CargoOutdated < Formula
   desc "Cargo subcommand for displaying when Rust dependencies are out of date"
   homepage "https://github.com/kbknapp/cargo-outdated"
-  url "https://github.com/kbknapp/cargo-outdated/archive/v0.11.1.tar.gz"
-  sha256 "2d80f0243d70a3563c48644dd3567519c32a733fb5d20f1161fd5d9f8e6e9146"
+  url "https://github.com/kbknapp/cargo-outdated/archive/v0.11.2.tar.gz"
+  sha256 "7e82d1507594d86cb1c2007d58e329a9780a22bdb0f38d5e71d2692a7f1727d9"
   license "MIT"
-  revision 1
   head "https://github.com/kbknapp/cargo-outdated.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "a7200baa0f4f7d6cf7c070cb5534b9b1b006705c58182a063d54d896a8866fca"
-    sha256 cellar: :any,                 arm64_big_sur:  "f0dc694fe1acfea814020900dfffb14f8d2e303047b6a822922791447c541f48"
-    sha256 cellar: :any,                 monterey:       "875fce52ee9f0046a7019fda286baaf41514c4ad9c203703b752d2506da46937"
-    sha256 cellar: :any,                 big_sur:        "f65f250655560261e038b002d0844b9012cb769fb2fcde3cf9d72e0d7a9ce9c9"
-    sha256 cellar: :any,                 catalina:       "ea093812c8421f5feba5b7af9b7abc9cd821d0aae6bcb376d7277ceed76ff051"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ac2a43a2c023f9c8734e7a8f7bd7de266b39d83e17b6baa5a8ff715f5f67806b"
+    sha256 cellar: :any,                 arm64_ventura:  "d8cd073522412b7093a64aef27d8dbedca7af67025655fc6c13122e2efe89692"
+    sha256 cellar: :any,                 arm64_monterey: "35c884f6280d69902679c19070e36adba44cb71c0925669be9f1ad7259dc0a9c"
+    sha256 cellar: :any,                 arm64_big_sur:  "98ca6511edf4be09b0a6a9784445448798914fd45b5dd3e3583f95a87e61d01a"
+    sha256 cellar: :any,                 ventura:        "68c1827cdf769517cf6d5256bf7ee8bf77a64678a31d337d0810223562a1dd5c"
+    sha256 cellar: :any,                 monterey:       "572b7ce4f05e9d30a86716bd8cae8ed2e97698c0930d9abf3f577ba66b646b0f"
+    sha256 cellar: :any,                 big_sur:        "79420cde5823ccd0714e309c9aa3561f028daa4e7ab87a0fa5df48df57aee0f9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "30bc7667a6e1bf3e04835e0db2426b25d2bbbc0290140d75ec7200b85f3e002e"
   end
 
   depends_on "libgit2"

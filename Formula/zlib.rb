@@ -1,11 +1,11 @@
 class Zlib < Formula
   desc "General-purpose lossless data-compression library"
   homepage "https://zlib.net/"
-  url "https://zlib.net/zlib-1.2.12.tar.gz"
-  mirror "https://downloads.sourceforge.net/project/libpng/zlib/1.2.12/zlib-1.2.12.tar.gz"
-  mirror "http://fresh-center.net/linux/misc/zlib-1.2.12.tar.gz"
-  mirror "http://fresh-center.net/linux/misc/legacy/zlib-1.2.12.tar.gz"
-  sha256 "91844808532e5ce316b3c010929493c0244f3d37593afd6de04f71821d5136d9"
+  url "https://zlib.net/zlib-1.2.13.tar.gz"
+  mirror "https://downloads.sourceforge.net/project/libpng/zlib/1.2.13/zlib-1.2.13.tar.gz"
+  mirror "http://fresh-center.net/linux/misc/zlib-1.2.13.tar.gz"
+  mirror "http://fresh-center.net/linux/misc/legacy/zlib-1.2.13.tar.gz"
+  sha256 "b3a24de97a8fdbc835b9833169501030b8977031bcb54b3b3ac13740f846ab30"
   license "Zlib"
   head "https://github.com/madler/zlib.git", branch: "develop"
 
@@ -15,12 +15,14 @@ class Zlib < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "b3c956cfb722564f26a8c50a89293971089a7017f363c823d432e1c90c16b87c"
-    sha256 cellar: :any,                 arm64_big_sur:  "0cb865dc3adb641c0f4f7301d7ad66ab5b23ac76afe61e21d865c12f0ab5d03a"
-    sha256 cellar: :any,                 monterey:       "5072d7b94690a52220f7a9f6cc566f87998a380e3f2fcd8a386caf7dbd5f19c4"
-    sha256 cellar: :any,                 big_sur:        "3db997820d0f7cbd3de13fda10f731949f44cb19f3923be18686ae5d65ec2e7f"
-    sha256 cellar: :any,                 catalina:       "71657247458cf1aa4f1b548aff059e65b182ef5fdf86740071f7f60c5520b370"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "23b1d8f0500bbccdf5cc466e7acbd7eddc40cd1465687239af423389abe4f46e"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_ventura:  "565286ede6cc691fb781b96a76235d714159bf47c7af2cadbca01bffa92bd785"
+    sha256 cellar: :any,                 arm64_monterey: "71825106a1d3cc348f145e58a0f2580f7394c6e747455041551517bb0958b9a6"
+    sha256 cellar: :any,                 arm64_big_sur:  "5dfa4fd7fb89f0aff96b98965da0af7e01ef6c3b8f4a90f7b2b135e2f757783f"
+    sha256 cellar: :any,                 ventura:        "39899e784ac736887dd6b5a08740c0a625bcb5da06fa473dede99c67b7fcbccc"
+    sha256 cellar: :any,                 monterey:       "ceee8b2e24b0c8e7fbb72d63f7844a0cdf4677771e94c46153190ba11be0f48c"
+    sha256 cellar: :any,                 big_sur:        "c7e4e0fed83c7515f658f802604e2b6a0be47f1020d4ddfd2025aa748641fe00"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "087e022c50655b9a7cdfd980bcff0764ce0f53f02724d4a9cbb7ba3b68b863a9"
   end
 
   keg_only :provided_by_macos
@@ -32,23 +34,12 @@ class Zlib < Formula
     sha256 "68140a82582ede938159630bca0fb13a93b4bf1cb2e85b08943c26242cf8f3a6"
   end
 
-  # Patch for configure issue
-  # Remove with the next release
-  patch do
-    url "https://github.com/madler/zlib/commit/05796d3d8d5546cf1b4dfe2cd72ab746afae505d.patch?full_index=1"
-    sha256 "68573842f1619bb8de1fa92071e38e6e51b8df71371e139e4e96be19dd7e9694"
-  end
-
-  # Patch for CRC compatibility issue
-  # Remove with the next release
-  patch do
-    url "https://github.com/madler/zlib/commit/ec3df00224d4b396e2ac6586ab5d25f673caa4c2.patch?full_index=1"
-    sha256 "c7d1cbb58b144c48b7fa8b52c57531e9fd80ab7d87c5d58ba76a9d33c12cb047"
-  end
-
   def install
     system "./configure", "--prefix=#{prefix}"
     system "make", "install"
+
+    # Avoid rebuilds of dependants that hardcode this path.
+    inreplace lib/"pkgconfig/zlib.pc", prefix, opt_prefix
   end
 
   test do

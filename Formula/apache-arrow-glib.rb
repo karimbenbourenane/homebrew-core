@@ -1,9 +1,9 @@
 class ApacheArrowGlib < Formula
   desc "GLib bindings for Apache Arrow"
   homepage "https://arrow.apache.org/"
-  url "https://www.apache.org/dyn/closer.lua?path=arrow/arrow-9.0.0/apache-arrow-9.0.0.tar.gz"
-  mirror "https://archive.apache.org/dist/arrow/arrow-9.0.0/apache-arrow-9.0.0.tar.gz"
-  sha256 "a9a033f0a3490289998f458680d19579cf07911717ba65afde6cb80070f7a9b5"
+  url "https://www.apache.org/dyn/closer.lua?path=arrow/arrow-11.0.0/apache-arrow-11.0.0.tar.gz"
+  mirror "https://archive.apache.org/dist/arrow/arrow-11.0.0/apache-arrow-11.0.0.tar.gz"
+  sha256 "2dd8f0ea0848a58785628ee3a57675548d509e17213a2f5d72b0d900b43f5430"
   license "Apache-2.0"
   head "https://github.com/apache/arrow.git", branch: "master"
 
@@ -12,12 +12,13 @@ class ApacheArrowGlib < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_monterey: "78ec02f03f475726bd1458a4e3d417f8b83013f6188257c984a3fb9233d2b3d4"
-    sha256 cellar: :any, arm64_big_sur:  "e4b50a47ce255e90b02edc94dd933ea7e9df3311266b9bc68d6c5b09ef28f6c1"
-    sha256 cellar: :any, monterey:       "d8e6b958b5e6a59b6a0197a5d68381227787693b4a12e858c5bdcb8ea7bc67af"
-    sha256 cellar: :any, big_sur:        "dcb4f474faedf9602169413f71b221cc7d09214401c3be0b733eb2bc6b5f007b"
-    sha256 cellar: :any, catalina:       "9527e1b179e602bc219cce2efe8efcccbd8c23b6947bd86da7d5a86ba610b3b8"
-    sha256               x86_64_linux:   "026467ba89eec611a67fee7d92292c69caf9d3cb8eadf85ca40c0c92e8b588fc"
+    sha256 cellar: :any, arm64_ventura:  "fb4ec3ff6a2ea86d200f1ff613be7821fa3c8966ed17612b72157df449d47a77"
+    sha256 cellar: :any, arm64_monterey: "33261051fcbbff940d45b06708f899ca5d94c533fa6d4ad54bde7fade00af9f1"
+    sha256 cellar: :any, arm64_big_sur:  "fcd2b68793c79288e456e5f0f592da83aa4d7974d9716a3d5ebfa0fbf5597f08"
+    sha256 cellar: :any, ventura:        "07f07b19f4b670a6245f89a88056d472c3a6ca95fbb05a865922a784df6548f8"
+    sha256 cellar: :any, monterey:       "93a3e8d9b21702e9fc791fcbd439fb53c27465b101d26f81e0b738c1212c65f7"
+    sha256 cellar: :any, big_sur:        "32b900abd74d3dcfa31e799c6b0f97fdffb153e4e685e89ecfa249708c81d478"
+    sha256               x86_64_linux:   "59251a6755275ad633ace46f4e32c84bc93c8c335a2cd34476ee1a2544f9c954"
   end
 
   depends_on "gobject-introspection" => :build
@@ -27,18 +28,12 @@ class ApacheArrowGlib < Formula
   depends_on "apache-arrow"
   depends_on "glib"
 
-  on_linux do
-    depends_on "gcc"
-  end
-
   fails_with gcc: "5"
 
   def install
-    mkdir "build" do
-      system "meson", *std_meson_args, "../c_glib"
-      system "ninja", "-v"
-      system "ninja", "install", "-v"
-    end
+    system "meson", "setup", "build", "c_glib", *std_meson_args
+    system "meson", "compile", "-C", "build", "--verbose"
+    system "meson", "install", "-C", "build"
   end
 
   test do

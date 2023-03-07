@@ -1,17 +1,18 @@
 class GitSync < Formula
   desc "Clones a git repository and keeps it synchronized with the upstream"
   homepage "https://github.com/kubernetes/git-sync#readme"
-  url "https://github.com/kubernetes/git-sync/archive/refs/tags/v3.6.1.tar.gz"
-  sha256 "f0ed5255d409d3cd7a56686831532669ac8034e2e9212c91e993c2aa81a33fe0"
+  url "https://github.com/kubernetes/git-sync/archive/refs/tags/v3.6.4.tar.gz"
+  sha256 "998626c5ab46e72c29837e42a88afbc6d65ee6ea058fe027ae783ff39bb82b78"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "f4369f95f913ec86ae318071ae936409897f78678395eef2ae15c2b3fbc86a7c"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "f4369f95f913ec86ae318071ae936409897f78678395eef2ae15c2b3fbc86a7c"
-    sha256 cellar: :any_skip_relocation, monterey:       "5482f3a84920d3bb05977c9c379fb32bcdb37028977ea29996a70be8bfade501"
-    sha256 cellar: :any_skip_relocation, big_sur:        "5482f3a84920d3bb05977c9c379fb32bcdb37028977ea29996a70be8bfade501"
-    sha256 cellar: :any_skip_relocation, catalina:       "5482f3a84920d3bb05977c9c379fb32bcdb37028977ea29996a70be8bfade501"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7632ec6f0092e4805ea96e1f8782c00825f4baff68acd0bd07fa089a73a78f55"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "d58a6b9e5618970b1dd372c9b9e6a0b0e73ca1907c6f2128401cef2b46b6525f"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "b94df27a1ffcd98ec30d7b468f89b8122859be0b1e4102e11c5f265b9360b891"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "88706c64be147318ba9974083b8762231738ec6ae0314bdcf39d7b37b9c567e2"
+    sha256 cellar: :any_skip_relocation, ventura:        "a316f105613544b098331b0184ee29b29ffb6fcf83c2402912279fc5a3a8fa40"
+    sha256 cellar: :any_skip_relocation, monterey:       "033a0b3a34ff3c0928ffbe27f1cf678e123ad36c5179fe9ecd79fdaecefaadb4"
+    sha256 cellar: :any_skip_relocation, big_sur:        "07db0d12d3be5b615ea6971c04aa9daafc0b7e9e60288c0bb47cead0ec7f3731"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fb5781268308f09a99f2a5e66f754049b7324a919d96050ad51a9c9d34bc81d5"
   end
 
   head do

@@ -1,19 +1,19 @@
 class Zk < Formula
   desc "Plain text note-taking assistant"
   homepage "https://github.com/mickael-menu/zk"
-  url "https://github.com/mickael-menu/zk/archive/refs/tags/v0.11.1.tar.gz"
-  sha256 "c38e88cbf8a6b1a00df51e1d87d6dbff4d13279c18bfef6ed275e7dc28dce0d8"
+  url "https://github.com/mickael-menu/zk/archive/refs/tags/v0.13.0.tar.gz"
+  sha256 "8f3d9957652583fae7045392091ee53be1afe3fcf9aed1a911d0cf5e0691a021"
   license "GPL-3.0-only"
-  revision 1
   head "https://github.com/mickael-menu/zk.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "7583df1a2bc12b3c70dcfdd02484a057d659a7aed167241af27457d3f9a6f2c6"
-    sha256 cellar: :any,                 arm64_big_sur:  "cdc7eb09c7a77ba562d146b72e215f4bb4f0386bc91c56881e5b6c3cefa7d757"
-    sha256 cellar: :any,                 monterey:       "410df6600a4bbbbcef8e61a9c15c0f620988325826a296250fea5c4ba6cf16f3"
-    sha256 cellar: :any,                 big_sur:        "21f5fca1009f3e9239f0109992332b7ba534d00a08dc83913a891f1c4597e2ac"
-    sha256 cellar: :any,                 catalina:       "c6107720d53ce13225f3909ce9c2a47d79539f542e86fa6895f04300fe1214e6"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "30d712376cba92622014448e341294205410000341838ce5618092f5d5b6cb9f"
+    sha256 cellar: :any,                 arm64_ventura:  "8ff6ac839af8f09ede3db7f9517cd4a4b255e0c8807b758dc7b4e8c9f62d91ff"
+    sha256 cellar: :any,                 arm64_monterey: "44d7ce7d40393f8de0cea3cffb0bbd3f9c184e87e2e50cd9ee35d6f51f930d43"
+    sha256 cellar: :any,                 arm64_big_sur:  "fd21bc8178875b1df99339ad31b60973181583d49fe81e86b6ba9826d1f5323a"
+    sha256 cellar: :any,                 ventura:        "475eac02a56fa55fd1ed1941d45b6c4d9f5c90a998978b4a6b1b36597761bbd2"
+    sha256 cellar: :any,                 monterey:       "d9a7b4c9c63437479f7ecef729d1807b563aa85cf70b13d14cc67e0d2554cf5b"
+    sha256 cellar: :any,                 big_sur:        "04fa882b52d47700465fe21689ad2d1ecb2dc1836dd7b0de87d71ec5b8c800b0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "936943183e29e3ee48211734566c0add16c1a48a2e8f593f4d3d7c1830d274bc"
   end
 
   depends_on "go" => :build

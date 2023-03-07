@@ -2,8 +2,8 @@ class FaasCli < Formula
   desc "CLI for templating and/or deploying FaaS functions"
   homepage "https://www.openfaas.com/"
   url "https://github.com/openfaas/faas-cli.git",
-      tag:      "0.14.6",
-      revision: "fcf50cef7b3510d93dd109606fb300705bb509f2"
+      tag:      "0.16.0",
+      revision: "5c6e347e88fb1e9fa46d7906ae8d6dcc33b1c79b"
   license "MIT"
   head "https://github.com/openfaas/faas-cli.git", branch: "master"
 
@@ -13,12 +13,13 @@ class FaasCli < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "6db2adb2048a2a2bb7ef3c7433f2f6c8ada3482822337055209e828f25c7c0a6"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "0c756ca4160e058c6e27156ab9e563bd9b0037fc7d2f954bba8212488dc233ce"
-    sha256 cellar: :any_skip_relocation, monterey:       "dbb76f9f0289ddbfdc2c2953343f9b6bd30ba66de8a514268c0df8c803db405e"
-    sha256 cellar: :any_skip_relocation, big_sur:        "2c44cc610b915672084dba58968f0afe2bdff51c57818bb5d838d5ba8f91adc5"
-    sha256 cellar: :any_skip_relocation, catalina:       "c04ea99c3afd94a0844b37a4fc5de18264d1198225aa98fb3f1a866736c25297"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "91468bf98e040b6fb0008d98e7c645ff594ed79c0d4c040512dd29dd1e654d09"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "1bf9b057d22c92dcc52e8436323074f38c65a8fe8d9e812dae8b290c629e9eee"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "1bf9b057d22c92dcc52e8436323074f38c65a8fe8d9e812dae8b290c629e9eee"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "1bf9b057d22c92dcc52e8436323074f38c65a8fe8d9e812dae8b290c629e9eee"
+    sha256 cellar: :any_skip_relocation, ventura:        "8d831772a74733c5d5cbb193795cb4a581eb1602a45938cca4edb4ba3448d6f3"
+    sha256 cellar: :any_skip_relocation, monterey:       "8d831772a74733c5d5cbb193795cb4a581eb1602a45938cca4edb4ba3448d6f3"
+    sha256 cellar: :any_skip_relocation, big_sur:        "8d831772a74733c5d5cbb193795cb4a581eb1602a45938cca4edb4ba3448d6f3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b9ee2d601546a5218dc2a5c3f1564b9014ef94d4cbc38bec613f27fb848049ff"
   end
 
   depends_on "go" => :build

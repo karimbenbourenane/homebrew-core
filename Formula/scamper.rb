@@ -1,8 +1,8 @@
 class Scamper < Formula
   desc "Advanced traceroute and network measurement utility"
   homepage "https://www.caida.org/catalog/software/scamper/"
-  url "https://www.caida.org/catalog/software/scamper/code/scamper-cvs-20211212a.tar.gz"
-  sha256 "d986b429655dce36629d1821ea6f32d65cc418f7d22b1ea4330621bffb35c18c"
+  url "https://www.caida.org/catalog/software/scamper/code/scamper-cvs-20230224.tar.gz"
+  sha256 "396c9297c56fc5aab37d345dad386929d2072053e77f2c6a01e79c0cafd1b5f9"
   license "GPL-2.0-only"
 
   livecheck do
@@ -11,22 +11,19 @@ class Scamper < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "32c28e7e8bb6c2e4c9b9b9c8f8d7093fa247c13f07059a33a5ff450fcd694c6c"
-    sha256 cellar: :any,                 arm64_big_sur:  "e378f92c02320c68abb66805d10ecf7b88759027d9e24d8d6c2a9e992ff9ae40"
-    sha256 cellar: :any,                 monterey:       "2bf7ff29e584306c98894e00d15aacdc1336fa6e733c78361b6578a37f1a6660"
-    sha256 cellar: :any,                 big_sur:        "be6722020b6c359406e1620d82f13e11f41498e732730dadae5f350f4fdda5ab"
-    sha256 cellar: :any,                 catalina:       "3b3e6cdfc534058ef687ba289cd7361c295de65e027de92dff6613df0a24556a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6d5fbafb8d6a6603f7245842a4cdba8969536f764588ac6a8a092087ebf2b533"
+    sha256 cellar: :any,                 arm64_ventura:  "b0d58bb4e76139ef8283b31a635034619268cfef926c137567f7504ce1250009"
+    sha256 cellar: :any,                 arm64_monterey: "92774f0227d5cb21d5199b8d30bc863dc47cbf9bfffa60219c8b133b3d347967"
+    sha256 cellar: :any,                 arm64_big_sur:  "9918e6ff9657ef243c2e7ae48ba658dda02666ff34e41967b16364811a4c37c3"
+    sha256 cellar: :any,                 ventura:        "334658c4d66c14d573cda58f83a8061809da8f611d8d735f7d0f107da8151527"
+    sha256 cellar: :any,                 monterey:       "c34d1a4c4d0d20499964cc3dde933b30b22ad42e1c5a8655eaca7fadcabb30ed"
+    sha256 cellar: :any,                 big_sur:        "f25b549b9ef2246ba6735b735c07737b6850d9d83d1a84b51e5884947e029dfd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "27184660b4159cdd166040a20f6d1121cf7b400a3ecbfbef890d4c95c6e15950"
   end
 
   depends_on "pkg-config" => :build
-  depends_on "openssl@1.1"
+  depends_on "openssl@3"
 
-  # Fix -flat_namespace being used on Big Sur and later.
-  patch do
-    url "https://raw.githubusercontent.com/Homebrew/formula-patches/03cf8088210822aa2c1ab544ed58ea04c897d9c4/libtool/configure-big_sur.diff"
-    sha256 "35acd6aebc19843f1a2b3a63e880baceb0f5278ab1ace661e57a502d9d78c93c"
-  end
+  uses_from_macos "zlib"
 
   def install
     system "./configure", *std_configure_args

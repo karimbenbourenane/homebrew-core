@@ -1,22 +1,24 @@
 class GitAbsorb < Formula
   desc "Automatic git commit --fixup"
   homepage "https://github.com/tummychow/git-absorb"
-  url "https://github.com/tummychow/git-absorb/archive/0.6.7.tar.gz"
-  sha256 "f562dbcf68c5f687197e8a594cb58cf102cc17a2e9fcf66dbacb83b49e053bd7"
+  url "https://github.com/tummychow/git-absorb/archive/0.6.9.tar.gz"
+  sha256 "feaee35e6771d66d6d895a69d59d812cfbcabbecaa70ece64f87528a8c3c2fb5"
   license "BSD-3-Clause"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "2bfa39873cfb6e80a361cada4bfd415f0b86c007860c0b5f3c976f40bb032337"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "4b42c97a5cd6838adf1757e981e8d3687a0f044f790b8dd3a8da6533f7819b0d"
-    sha256 cellar: :any_skip_relocation, monterey:       "9eaf884c1391d3407d6df867c8bf23587205b9b35d219f4fe20e7c9a035429eb"
-    sha256 cellar: :any_skip_relocation, big_sur:        "8a3a2219b257d4d24d6fd72fa8dc3176071e8808c0172c6f7d8e2b1fb381917e"
-    sha256 cellar: :any_skip_relocation, catalina:       "0c4e29e127af8c32a65575f788ef9d4d6adc7a1a2077801c093344f082e9563e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "dc3b9646158eea26aed4d2a2b8054a2276d6f02c03b584837c9cc006e4095df7"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_ventura:  "f678d1bc4450f8c028afedde10949fd35b44ac7bd591fb5b4e5d0b1239183fcf"
+    sha256 cellar: :any,                 arm64_monterey: "6e03cfe030c55dcbf0511102585a15b35215c09cb7772126caf85a1b02163c15"
+    sha256 cellar: :any,                 arm64_big_sur:  "80462448e675d5204cd6d689b6148a5cc9887a8cd906eb6fe303734e571aaaf9"
+    sha256 cellar: :any,                 ventura:        "ce2e708695292d3b8e917e8a5dc0193d8477391f6ad1eb014858ea3554e00332"
+    sha256 cellar: :any,                 monterey:       "58e08d227361fb9ba3673db8d24fc7ab938be1d23273522eb21bb123a733c2e0"
+    sha256 cellar: :any,                 big_sur:        "8a78cb69ba8dd23088fcdb9cbe16482d0f6f79b35472945ae40d132b5a612d0d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9b4a50cb88696997435a845c23d5f4ece11fbaf4bcc7dbaa7de3bd8c6300a415"
   end
 
+  depends_on "pkg-config" => :build
   depends_on "rust" => :build
-
-  uses_from_macos "zlib"
+  depends_on "libgit2"
 
   def install
     system "cargo", "install", *std_cargo_args
@@ -40,5 +42,13 @@ class GitAbsorb < Formula
     (testpath/"test").write "bar"
     system "git", "add", "test"
     system "git", "absorb"
+
+    linkage_with_libgit2 = (bin/"git-absorb").dynamically_linked_libraries.any? do |dll|
+      next false unless dll.start_with?(HOMEBREW_PREFIX.to_s)
+
+      File.realpath(dll) == (Formula["libgit2"].opt_lib/shared_library("libgit2")).realpath.to_s
+    end
+
+    assert linkage_with_libgit2, "No linkage with libgit2! Cargo is likely using a vendored version."
   end
 end

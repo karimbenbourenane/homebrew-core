@@ -4,6 +4,7 @@ class Adios2 < Formula
   url "https://github.com/ornladios/ADIOS2/archive/v2.8.3.tar.gz"
   sha256 "4906ab1899721c41dd918dddb039ba2848a1fb0cf84f3a563a1179b9d6ee0d9f"
   license "Apache-2.0"
+  revision 1
   head "https://github.com/ornladios/ADIOS2.git", branch: "master"
 
   livecheck do
@@ -12,18 +13,20 @@ class Adios2 < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "f8e51067dbbe7d0fdf164d3473710a9c15c313144f14a310af11ec4034b5351d"
-    sha256 arm64_big_sur:  "ac55a454abc27cada2e3d181fa65ef05ef0aa9b957f53ce2ece8b342f216a5cb"
-    sha256 monterey:       "277ab7b038698defb5a87fe1d3c94b37563ce4d6a2e061bcc434ad268d1eb2fd"
-    sha256 big_sur:        "2cf4ca5b422c6cc35bf9cbd9cf1c06b830c8c3918c38e11269f5f70c50444a3c"
-    sha256 catalina:       "f892b81db64e9989bc091023462768463fe22424cbafed2d8147b338df0bbcb6"
-    sha256 x86_64_linux:   "d97dd1587315a90aefd34640f7c90f498a90e96686befeeaef9d2852bdb31346"
+    sha256 arm64_ventura:  "86949939af368f21ba0637540fa28395b597a7ad5f0bfc2852faa16e27ad4672"
+    sha256 arm64_monterey: "dd6c2120b4b480f41ed467eb288b7df6ad5c87a12fde5cb4d5b02c90098f2441"
+    sha256 arm64_big_sur:  "b4c89ff59b0ed1b9c0bfe323baa1125955d07bfe64fa7dfdaf7a53d077a0b22e"
+    sha256 ventura:        "3240624d9596ea6f0dc5dfcae7a2b9fff81e5bd170ead385ec25522be3434254"
+    sha256 monterey:       "5240e042cad078b840fe117bdd706f47786cbf3cc0db1eb91f9d26237de28d24"
+    sha256 big_sur:        "1bef95f698fa1d53a16c66fcfe0b60543b5257554f9fee86041f415a3b73a8f1"
+    sha256 catalina:       "dfb2ed4262187889d97bd41581c4642399d6e0544c9def52542d75e4e937e8ca"
+    sha256 x86_64_linux:   "aca7267638aaf558da97c828901c791a6698fe4c789882ac97b4f8860c53be99"
   end
 
   depends_on "cmake" => :build
-  depends_on "gcc" => :build
   depends_on "nlohmann-json" => :build
   depends_on "c-blosc"
+  depends_on "gcc" # for gfortran
   depends_on "libfabric"
   depends_on "libpng"
   depends_on "mpi4py"
@@ -31,17 +34,28 @@ class Adios2 < Formula
   depends_on "open-mpi"
   depends_on "pugixml"
   depends_on "pybind11"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
   depends_on "yaml-cpp"
   depends_on "zeromq"
 
   uses_from_macos "bzip2"
 
+  on_macos do
+    depends_on "llvm" => :build if DevelopmentTools.clang_build_version == 1400
+  end
+
+  # clang: error: unable to execute command: Segmentation fault: 11
+  # clang: error: clang frontend command failed due to signal (use -v to see invocation)
+  # Apple clang version 14.0.0 (clang-1400.0.29.202)
+  fails_with :clang if DevelopmentTools.clang_build_version == 1400
+
   def python3
-    "python3.10"
+    "python3.11"
   end
 
   def install
+    ENV.llvm_clang if DevelopmentTools.clang_build_version == 1400
+
     # Fix for newer CMake
     # https://github.com/ornladios/ADIOS2/issues/3309
     inreplace "CMakeLists.txt", "cmake_minimum_required(VERSION 3.12)",

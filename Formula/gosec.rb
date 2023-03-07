@@ -1,18 +1,19 @@
 class Gosec < Formula
   desc "Golang security checker"
   homepage "https://securego.io/"
-  url "https://github.com/securego/gosec/archive/v2.13.1.tar.gz"
-  sha256 "72e107b5c1f71df8e8dedacbd3650a9c5d931bc8e8be1c7ead51ce379a6ab5ae"
+  url "https://github.com/securego/gosec/archive/v2.15.0.tar.gz"
+  sha256 "f6502b042bf24f9748538c796c32d6f90e0d20c419a3959858b6f454d3d90b3d"
   license "Apache-2.0"
   head "https://github.com/securego/gosec.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "21904cafc7249820f25e76d3c6f3c0424dbd2aa69af5c38cee6e41c7348e70e6"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "e69596971527988f73d60a1a00de4eebd44cf8fb96b98b0d2dbb0763ea7af3b1"
-    sha256 cellar: :any_skip_relocation, monterey:       "6e6edcd49a0d7b2652551079b9a1c7a8e1e3f5d6a32dca27193db3ecd698d5a1"
-    sha256 cellar: :any_skip_relocation, big_sur:        "94b5ddb66586ddd7547bb436105aa2403e1eeb217334e7ab8886401e05b6d426"
-    sha256 cellar: :any_skip_relocation, catalina:       "93c2c1ef6fca6f65e7cc43ba767a4c9139f79ec7fc40a5e32a6522e78a2fdd88"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "3f9eb58cd6032f2db388edabb043a4f18927f3e458c751e3422d7d907963d852"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "fa9415b009670bc8bcab052823ff04ed96c1d440b7bc60111e3313b1f559920e"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "3c5768454f9a0722a18086585f7ff971632494ac93675e1f469fd72595caf615"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "c8e8372033c5209ec71b5807349f0ac45fa8cd5e02fb93357569aaf377e34813"
+    sha256 cellar: :any_skip_relocation, ventura:        "f631af7a92fd806521a53f8820c21974af9cc76ce1f8ec5acd857fe77c0c41a4"
+    sha256 cellar: :any_skip_relocation, monterey:       "fb686fe2ef919534f5f0b2b8c5622f767df02d7a71cb9729ac5d1902160b89f2"
+    sha256 cellar: :any_skip_relocation, big_sur:        "d7fa0ab370e2295b43e7a2c4c2dc6c453486f63888861c42497217e26632cc9b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "1e9739d9bb15c7936b8ba9b62bbbc7c565dd01a4027ac54aadf1e336bc98e9e4"
   end
 
   depends_on "go"

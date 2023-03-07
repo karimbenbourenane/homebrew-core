@@ -1,18 +1,19 @@
 class TomcatNative < Formula
   desc "Lets Tomcat use some native resources for performance"
   homepage "https://tomcat.apache.org/native-doc/"
-  url "https://www.apache.org/dyn/closer.lua?path=tomcat/tomcat-connectors/native/2.0.1/source/tomcat-native-2.0.1-src.tar.gz"
-  mirror "https://archive.apache.org/dist/tomcat/tomcat-connectors/native/2.0.1/source/tomcat-native-2.0.1-src.tar.gz"
-  sha256 "184679dc9e8d704003e720b87db10750982ddffb21b13eedc30b5e666748d775"
+  url "https://www.apache.org/dyn/closer.lua?path=tomcat/tomcat-connectors/native/2.0.3/source/tomcat-native-2.0.3-src.tar.gz"
+  mirror "https://archive.apache.org/dist/tomcat/tomcat-connectors/native/2.0.3/source/tomcat-native-2.0.3-src.tar.gz"
+  sha256 "63b2ae98a9077033a2da3f01afc0accb835f227d51a971e2b5be23d1b9333c5e"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "7c54a353a041d368ccad8d5f100e6447c49bb147f8faa5d3b2746490bd76133a"
-    sha256 cellar: :any,                 arm64_big_sur:  "8229fff2160636f13d15929eeadd36e5b95ad52cf2fdd9d46c9776e26f011671"
-    sha256 cellar: :any,                 monterey:       "7d031077ada537c10af2ee0f3f9ab1f91120719f357a05e671d1dc861df9b4c5"
-    sha256 cellar: :any,                 big_sur:        "ce38776754b389217ce2d83a3e103f1d236a76d6b421fb089ad781a323a31032"
-    sha256 cellar: :any,                 catalina:       "43ead589f500bc5e469edf94abf87be7d61d8670e319ea3bb6e6c4a50aad5433"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "db7d2363b27cabeec3520fffddac6c4600218dc803380b2114a15e8b8e5a84da"
+    sha256 cellar: :any,                 arm64_ventura:  "3b633bc68019c22716eed103c3236de4be793fa015ca518061ade6154859f39a"
+    sha256 cellar: :any,                 arm64_monterey: "a7dd0b58fd9f211ab8423676e1ab67ea38d65e3f25435136cfeae98d2f92251a"
+    sha256 cellar: :any,                 arm64_big_sur:  "f9a0a5cb92dd829097631bc1ce34a9a6fcc8e3162bc692224c96556235c9db79"
+    sha256 cellar: :any,                 ventura:        "d3ebf26458ba5f3f38cac50d04b13ae063b29ca84bcf641f1d6666a121d4e474"
+    sha256 cellar: :any,                 monterey:       "c93f19e6971b2abb030baa3164c68ee51b44f71a340a69781acc4a8bad136ed3"
+    sha256 cellar: :any,                 big_sur:        "66875607b4a4e0aacff1e7c11fe0a2fcc0cedbfed29a8148364dabae13a0cdd2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ec2313607fc41e59e37409dbe266c14cb7b1546fdbeec10ab6195ea3a43c1591"
   end
 
   depends_on "libtool" => :build
@@ -45,7 +46,7 @@ class TomcatNative < Formula
       need to add it to java.library.path. This can be done by adding this line
       to $CATALINA_HOME/bin/setenv.sh
 
-        CATALINA_OPTS=\"$CATALINA_OPTS -Djava.library.path=#{opt_lib}\"
+        CATALINA_OPTS="$CATALINA_OPTS -Djava.library.path=#{opt_lib}"
 
       If $CATALINA_HOME/bin/setenv.sh doesn't exist, create it and make it executable.
     EOS

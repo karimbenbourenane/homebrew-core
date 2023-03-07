@@ -1,22 +1,25 @@
 class Observerward < Formula
   desc "Cross platform community web fingerprint identification tool"
   homepage "https://0x727.github.io/ObserverWard/"
-  url "https://github.com/0x727/ObserverWard/archive/refs/tags/v2022.8.25.tar.gz"
-  sha256 "c2ccbc57c3e2ba85bc17908d4af3fc710fc619a27a16c48b8eb0e3a8e465f803"
+  url "https://github.com/0x727/ObserverWard/archive/refs/tags/v2023.2.24.tar.gz"
+  sha256 "40d3d7b2d690d15fc9625a47073a94ea44c56fc7bfa2aa7bed4c0d3f57d49778"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "4310a01bc54a2893ee99f85dcf27abfe5ad2eb3501295d62f80166f32dd0f0a5"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "574082e5bb6705ce929f2dea540104b89654f3c1ff9907b08baed87cb4463cc0"
-    sha256 cellar: :any_skip_relocation, monterey:       "8eeddd95d28a3ed6c4d3bb378c02363fe4fa7894a7ea2dd2fb4cf7be065c7ec3"
-    sha256 cellar: :any_skip_relocation, big_sur:        "2c8aff746fc6438be586bcc8352856dfc6abb95b66a2d1869589e22ad1968a65"
-    sha256 cellar: :any_skip_relocation, catalina:       "b97a4faef14b45f27218a1f4a371e7d0994f8e35e1043220abaa2487c00716a8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a902074c66b9b1f6be9b2063bf51d3e5b434659a36e16331ccfef94acb24b3fe"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "02383304dd2f73ef387db1a8dfce5eee60b1fa02cade5ca936368347909b024e"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "31a6f71b436a15a0a1c97ac41493746ea0f40b581ac66ee3fa89874e510db511"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "9a488c77b23bfd507c28b13e944102e83192e5f24cd59a1f8dcb0692ce308e35"
+    sha256 cellar: :any_skip_relocation, ventura:        "aedb3d12b9687f8ef0aea742013d98ca0e52562d44723c15489f8332f07859c7"
+    sha256 cellar: :any_skip_relocation, monterey:       "3afa800f2a50d6fd4439794a6f03da857b1d114520f1ec7cfb0c4a8efd2a476b"
+    sha256 cellar: :any_skip_relocation, big_sur:        "ee554cae3c284c1e50f2ae9cf8a74cca5e3e79983f39a067b124791b2ed94649"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "272f6280f075ffaf2992346e5a6b4fa5116c87a66f382bad65cecb6433cb8b7a"
   end
 
   depends_on "rust" => :build
 
   def install
+    system "cargo", "update", "--package", "prettytable-rs", "--precise", "0.10.0"
+
     system "cargo", "install", *std_cargo_args
   end
 

@@ -1,19 +1,18 @@
 class Libxpm < Formula
   desc "X.Org: X Pixmap (XPM) image file format library"
   homepage "https://www.x.org/"
-  url "https://www.x.org/archive/individual/lib/libXpm-3.5.13.tar.bz2"
-  sha256 "9cd1da57588b6cb71450eff2273ef6b657537a9ac4d02d0014228845b935ac25"
+  url "https://www.x.org/archive/individual/lib/libXpm-3.5.15.tar.gz"
+  sha256 "2a9bd419e31270593e59e744136ee2375ae817322447928d2abb6225560776f9"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "8b1e709e3a1c65e21f58ab2f43174c67a1528aeaabac6af88de7818c3ed46f34"
-    sha256 cellar: :any,                 arm64_big_sur:  "a776d9437e8557afeb4dd8e1e91e439ff049df1d8d256af9c34be49843ef7591"
-    sha256 cellar: :any,                 monterey:       "4e4ffef5d95c5ef0e30408c1b00aebc0455fa08fc77e5158bcf326b4a1cbcb2e"
-    sha256 cellar: :any,                 big_sur:        "484557bf3ce403fc097a70127b9db08cbed9b39372263493588e1539b60ac631"
-    sha256 cellar: :any,                 catalina:       "fbd3f2bbf058c081bd35672c0129a33efa38b7e599726be145d0b8b818549516"
-    sha256 cellar: :any,                 mojave:         "c3f788d5e8d2f0ec940af7c758acc0efce194cf526b19ab64bdeaba55e1b6793"
-    sha256 cellar: :any,                 high_sierra:    "72d7dc1306010048b85b9070287e8c9d5f5a24308b1a413080a4e129aa9bcc0f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "cd04dae0697e928535158273fb70b168c732b84d395ffd28f5a47835fc9bf536"
+    sha256 cellar: :any,                 arm64_ventura:  "96f9a9b3a26de512ff75f44900cd19c53d279793b5bb5f32818ec29b7d2444f6"
+    sha256 cellar: :any,                 arm64_monterey: "7f2b41403d7c41afa2687b8fbd1691a2161f830aad3814e7af88b7ab5b09254f"
+    sha256 cellar: :any,                 arm64_big_sur:  "78da48b65e691f64da628051b6a2b705439d3ff9d59f8bd8115f5ebd9ab13258"
+    sha256 cellar: :any,                 ventura:        "e64fe1b8af7fabfe6477a8a868ea3bb5c073412c31c4cdc8dcf9114fae511d59"
+    sha256 cellar: :any,                 monterey:       "d026c450367aa00a79d1eed754ed481d7acabc751e22d9a4728b8f90ba10494c"
+    sha256 cellar: :any,                 big_sur:        "c7f7c47e522b76dd4101c9be2309143fead96f431a64ec15eb490fb667d13d5d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "2eb74411ca5a795dc26f2e5e765bbbe33f909b796bf70b46d9391ade66cfb714"
   end
 
   depends_on "gettext" => :build
@@ -27,7 +26,9 @@ class Libxpm < Formula
       --sysconfdir=#{etc}
       --localstatedir=#{var}
       --disable-dependency-tracking
+      --disable-open-zfile
       --disable-silent-rules
+      --disable-stat-zfile
     ]
 
     system "./configure", *args

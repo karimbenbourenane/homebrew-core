@@ -1,24 +1,28 @@
 class Mockery < Formula
   desc "Mock code autogenerator for Golang"
   homepage "https://github.com/vektra/mockery"
-  url "https://github.com/vektra/mockery/archive/v2.14.0.tar.gz"
-  sha256 "1a87d16b264d21c65eb7c18b0a55a206798017bb48672ef8bc403b420dc0d5e8"
+  url "https://github.com/vektra/mockery/archive/v2.21.1.tar.gz"
+  sha256 "a58e4ac8be76f422e4d7a93ed786b32bcd3b817024b81d652493a6eedd9c6bea"
   license "BSD-3-Clause"
   head "https://github.com/vektra/mockery.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "0cc45148a85352f94baaf806c0fc3c930fcf657c3b39793d263c5518fcdb8679"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "75c1fc12f85faaafdca9835a2430c180b6727aa8b6af51ac27468d39e7edafd2"
-    sha256 cellar: :any_skip_relocation, monterey:       "e1332a2baf65967832c436b122877b7f7b2cacbc433aa7a258ac127387bebef8"
-    sha256 cellar: :any_skip_relocation, big_sur:        "b71d2051a8315f6f40576e41ce6c94cbf2fcb22bfa066990dbba961bcb446d36"
-    sha256 cellar: :any_skip_relocation, catalina:       "9608ee70ae6fccb0c4a121401bbcbf11c27b55a6bb1cb9185055efafa544187f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ba19c5c3d33a405563365b3504bb2d66b72fba2a8e0f9489f73c73d690b2d8d4"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "7ca01e2815b5cbfe186e507e91203e2cf2af7cb088ced4009621d7d310a77621"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "98952428e03f7362b595812915190200de4e82106bb4b362cb99106e7db36f25"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "82cb5200f449579536d377c683ab1ab159cb3c3e114c8596cdceafad0c361e1e"
+    sha256 cellar: :any_skip_relocation, ventura:        "baf0ab0ed95fc6cdf85e4f0b8c6f2a0435191c2e4bc08be27169e0c23a7882ee"
+    sha256 cellar: :any_skip_relocation, monterey:       "935cefba0293422bf48ca1875415819111118865d62358403b256089c787ff62"
+    sha256 cellar: :any_skip_relocation, big_sur:        "48384ea7546279281df9013b1c585a2bdfb24edcb9d148ffbb0540aa5872accd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "74ada21ccfd58cff98df5bcc55b6aa1afa95e81bffeeffcbbc242e22e35112cd"
   end
 
   depends_on "go" => :build
 
   def install
-    system "go", "build", *std_go_args(ldflags: "-s -w -X github.com/vektra/mockery/v2/pkg/config.SemVer=v#{version}")
+    ldflags = "-s -w -X github.com/vektra/mockery/v2/pkg/logging.SemVer=v#{version}"
+    system "go", "build", *std_go_args(ldflags: ldflags)
+
+    generate_completions_from_executable(bin/"mockery", "completion")
   end
 
   test do
@@ -26,6 +30,6 @@ class Mockery < Formula
     assert_match "Starting mockery dry-run=false version=v#{version}", output
 
     output = shell_output("#{bin}/mockery --all --dry-run 2>&1")
-    assert_match "INF Walking dry-run=true version=v#{version}", output
+    assert_match "INF Starting mockery dry-run=true version=v#{version}", output
   end
 end

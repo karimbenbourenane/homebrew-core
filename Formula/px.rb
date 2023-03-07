@@ -4,20 +4,21 @@ class Px < Formula
   desc "Ps and top for human beings (px / ptop)"
   homepage "https://github.com/walles/px"
   url "https://github.com/walles/px.git",
-      tag:      "3.1.0",
-      revision: "01b9e5fa0a1e378185cdc38adb52155f5c4dc1db"
+      tag:      "3.2.0",
+      revision: "8f52d01b4077714b2234675b7e7522bb42d12d08"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "6f8973f2bd0d915c160a89b2c24e11b25324a91761968b63997613b692b24798"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "e9f5b9857419dc44f2cdc30595191e550d1aa8d3eb3baa98136e6119c0f5c0a5"
-    sha256 cellar: :any_skip_relocation, monterey:       "b4aae488d5bfc13b3c8c4fdb449293de0c9244e6706dcf821fb30e7516b1dfff"
-    sha256 cellar: :any_skip_relocation, big_sur:        "5852d992cc5972c33f59c44a37f0caec1f64dfebd63e9dac6ea9ea819a8d9d93"
-    sha256 cellar: :any_skip_relocation, catalina:       "ec4633f36dbb6485be207a1f2a0064211973b7a4ce00b9fca3e66e7cbe0f5d90"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d4285d7a4d0e958b7a53cdc7ab4a7a6638acf2b9fa74d9e718eb4c9de5beb4e4"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "fc0b7a64f5288972e8314c925d63f99da21dcc1951e612f192283bea40bc98e4"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "70022f6e7caf051db9fa27b5576415fa94954554ff4d18e9b038f09c3d4ad27c"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "7871bb0a2d1dc89a19b59d62fb8af6ae7442db2277d2bc72d178f6f1d358c9ff"
+    sha256 cellar: :any_skip_relocation, ventura:        "834810cf9aa6f34d57dfffb957939324fb1cc46720b9e284165292ffd2e70057"
+    sha256 cellar: :any_skip_relocation, monterey:       "df39f38c27ebcaf0a3fb55275357c4743f6e01e5b30ab229102215c0416ea60a"
+    sha256 cellar: :any_skip_relocation, big_sur:        "a41fa8d6302b356ace6fcca3e6f5e6fa94b843fcee89bb1dd907db3f45bbed38"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "296612c6c22a933f19850944270315c3d32195b78c06b1c0b994563f678cc819"
   end
 
-  depends_on "python@3.10"
+  depends_on "python@3.11"
   depends_on "six"
 
   uses_from_macos "lsof"
@@ -30,6 +31,7 @@ class Px < Formula
 
   def install
     virtualenv_install_with_resources
+    man1.install Dir["doc/*.1"]
   end
 
   test do

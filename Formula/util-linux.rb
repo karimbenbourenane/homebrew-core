@@ -14,24 +14,23 @@ class UtilLinux < Formula
   ]
 
   bottle do
-    sha256 arm64_monterey: "b0b3c6d674a5ddc13707ac4af2ba34745b7dea8048b6b12034f3685cb017cadc"
-    sha256 arm64_big_sur:  "1b806803757b40e4ffed44f68364cb45386ff96d467fa94d6d776b1f41c1d5bc"
-    sha256 monterey:       "0c66175a5324b3a5a31bfbe2b6c2154666cbbddd1203182a661f6f6cb1095799"
-    sha256 big_sur:        "237a36c3eb5250d0b71d5cac628c364d2a753174ad8b891cdb1f548b60c182b7"
-    sha256 catalina:       "3d52e89f1e08a9d93462d2008289379784842ff8caa538eeaf653ea689500993"
-    sha256 x86_64_linux:   "27177c2a258f719de1236fc0eafa5e45021f7997e332dd9d345c28d0c4354c36"
+    rebuild 2
+    sha256 arm64_ventura:  "bae699a799d47cd4eefebfe710026caddb884c0c1b12946cf97178d69bc3e87b"
+    sha256 arm64_monterey: "d9968a649c0c89be84375cc3ec5f83173a522a6a8afa66e377bc61af7e8be83f"
+    sha256 arm64_big_sur:  "5254f2f95a81467864c46d96abaae044bfa98c13f6c386a1fd25facd67a32df8"
+    sha256 ventura:        "00275051b0a85c337ce82a7b410580b8a12947034d93b7536a5a56a4a62d18f2"
+    sha256 monterey:       "63fa7a684e7b4d4b652b54f9ba5dfe6ff1f20b974bf0509f76aaea26a97ef31d"
+    sha256 big_sur:        "f4091ecbc585f0cf9a244b5be177a5ac7bd49bf1650a0a5d79bbe28dfb7b9744"
+    sha256 x86_64_linux:   "aa2192315d8696997a44fac1681386ff0978d354a326477090cc0e940dbfa4b6"
   end
 
   keg_only :shadowed_by_macos, "macOS provides the uuid.h header"
-
-  depends_on "asciidoctor" => :build
-  depends_on "gettext"
 
   uses_from_macos "libxcrypt"
   uses_from_macos "ncurses"
   uses_from_macos "zlib"
 
-  # Everything in following macOS block is for temporary patches
+  # Everything in following macOS block is for temporary patches other than `gettext`.
   # TODO: Remove in the next release.
   on_macos do
     depends_on "autoconf" => :build
@@ -39,6 +38,7 @@ class UtilLinux < Formula
     depends_on "gtk-doc" => :build
     depends_on "libtool" => :build
     depends_on "pkg-config" => :build
+    depends_on "gettext" # for libintl
 
     # Fix lib/procfs.c:9:10: fatal error: 'sys/vfs.h' file not found
     patch do
@@ -48,7 +48,10 @@ class UtilLinux < Formula
   end
 
   on_linux do
+    depends_on "readline"
+
     conflicts_with "bash-completion", because: "both install `mount`, `rfkill`, and `rtcwake` completions"
+    conflicts_with "flock", because: "both install `flock` binaries"
     conflicts_with "rename", because: "both install `rename` binaries"
   end
 
@@ -56,7 +59,7 @@ class UtilLinux < Formula
     # Temporary work around for patches. Remove in the next release.
     system "autoreconf", "--force", "--install", "--verbose" if OS.mac?
 
-    args = %w[--disable-silent-rules]
+    args = %w[--disable-silent-rules --disable-asciidoc]
 
     if OS.mac?
       args << "--disable-ipcs" # does not build on macOS
@@ -67,7 +70,6 @@ class UtilLinux < Formula
     else
       args << "--disable-use-tty-group" # Fix chgrp: changing group of 'wall': Operation not permitted
       args << "--disable-kill" # Conflicts with coreutils.
-      args << "--disable-cal" # Conflicts with bsdmainutils
       args << "--without-systemd" # Do not install systemd files
       args << "--with-bashcompletiondir=#{bash_completion}"
       args << "--disable-chfn-chsh"

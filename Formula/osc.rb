@@ -3,23 +3,26 @@ class Osc < Formula
 
   desc "Command-line interface to work with an Open Build Service"
   homepage "https://openbuildservice.org"
-  url "https://github.com/openSUSE/osc/archive/0.181.0.tar.gz"
-  sha256 "ef97c1454a4c8416e3bbb3e378afde85e42fe381fff8a135ddb9c8c4fedd5697"
+  url "https://github.com/openSUSE/osc/archive/0.182.0.tar.gz"
+  sha256 "aafbc66f114ffcabd1c25c7f3754895a5c26608c4d8193de02382221e68403c7"
   license "GPL-2.0-or-later"
   head "https://github.com/openSUSE/osc.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "a41a38cf1fa74e77db04bba70b4eeda68d0888b078d8102506ada4bd0b4ae1fd"
-    sha256 cellar: :any,                 arm64_big_sur:  "a31848158b6ec70896eeca007df542685efa6e37e2a6791ed1698f54f9e8d5b2"
-    sha256 cellar: :any,                 monterey:       "a31f099840fc5ebeb7bf8313e4e9c3a717fc09d37b8a9edb7a71146077dcf47c"
-    sha256 cellar: :any,                 big_sur:        "cd6d6e56625416f48bf489d3cab3f97f47932aea3b628a7243db514d2b00d460"
-    sha256 cellar: :any,                 catalina:       "fa6d467c6b05dad32bca33c84c37ee5d313ad9e6ef79c01d5844ad1aff6dd74a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "bd8079f5718f1e59a182988dbe3007290fe444549d37b90d3766927b464232fd"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_ventura:  "93144cf2161710eeee9aa2b5cf676c50e318e59231514e457144c96eb41d87d0"
+    sha256 cellar: :any,                 arm64_monterey: "a83119ef9487123848841600f40ca303748c6a43362e078b874b44bbb15f3c51"
+    sha256 cellar: :any,                 arm64_big_sur:  "af95c49efddcd1b3ba387e91217142cf4c768bc643ada25367aa688d22c096dd"
+    sha256 cellar: :any,                 ventura:        "d1749b2dc0164cdfcf5b3cb87145ad9a9c1015fa87565363104c3f9db1e4428a"
+    sha256 cellar: :any,                 monterey:       "51d26b7ba92aca0563e9a89650b5e76796dc5fbec1bcbedd726d32f02ca65b14"
+    sha256 cellar: :any,                 big_sur:        "28074a56f1b8dc3d81031cbec687e95be2ca122efd7d749de4f5c179f3868a64"
+    sha256 cellar: :any,                 catalina:       "b95acc4edb4e58a810dd7767acb69ad7f97b622aed911a682b8b9728ea6313f7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "2d5d40cb379b04526e1b974bf1c727a5b74f8bdacc9e568950f249e075fcece4"
   end
 
   depends_on "swig" => :build
   depends_on "openssl@1.1"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   uses_from_macos "curl"
 

@@ -3,18 +3,20 @@ class GobjectIntrospection < Formula
 
   desc "Generate introspection data for GObject libraries"
   homepage "https://gi.readthedocs.io/en/latest/"
-  url "https://download.gnome.org/sources/gobject-introspection/1.72/gobject-introspection-1.72.0.tar.xz"
-  sha256 "02fe8e590861d88f83060dd39cda5ccaa60b2da1d21d0f95499301b186beaabc"
+  url "https://download.gnome.org/sources/gobject-introspection/1.74/gobject-introspection-1.74.0.tar.xz"
+  sha256 "347b3a719e68ba4c69ff2d57ee2689233ea8c07fc492205e573386779e42d653"
   license all_of: ["GPL-2.0-or-later", "LGPL-2.0-or-later", "MIT"]
-  revision 2
 
   bottle do
-    sha256 arm64_monterey: "976be484265bde8641d3f9f06561d22b17bc4dd060642fe8b871919a026cfb46"
-    sha256 arm64_big_sur:  "9a7893449cedf64c11871e59966b9914f54f9d55d57720df70b8d1c9d62c4e6a"
-    sha256 monterey:       "9a8e926c80de7098e14449c7f7b54c3a34945ce99c509cbf112302dab569508e"
-    sha256 big_sur:        "0d3cf02bd57ca2cd8754dd1326dcec7c559bc9bad831906b8fc510e951223763"
-    sha256 catalina:       "d416a917d6cb8aa2dfd00c5eafec6263397f51f85382f70a59b5ae13f203ef48"
-    sha256 x86_64_linux:   "027aad7e8d9c0aadfd9bfc0a2b6446a3f797df3e66077388025a34cea0ae2515"
+    rebuild 1
+    sha256 arm64_ventura:  "9342850d655d2ff1ab8d0b263a9cb9eb483fba3f3520754dea86c5db55633d7e"
+    sha256 arm64_monterey: "a2d055c6adfe61109d77d6868371a37f757ed2a0215e01e9e6b782af02d2fca8"
+    sha256 arm64_big_sur:  "8df914d538a9ee28653ae3a368830481541c13c9fc3bf6133587a86c6d2cc0e4"
+    sha256 ventura:        "56cbcedb7b5ff5edc66d039817a85d4dfc80d1861e9db9282e01853ca8a5e328"
+    sha256 monterey:       "44b03b7f51941f220e553cbf565e63c7c5e36833609cb6de248d2c62f66d5af3"
+    sha256 big_sur:        "60e0831ce9685429b4c7c11180789f225fd30d4542ed102acb912d684383271f"
+    sha256 catalina:       "71ad6ca87e733d7a25c43a6a3e5d8d3e2b983d33502e6936dfad0d77b17db6c6"
+    sha256 x86_64_linux:   "231554638d60b7702697dbd4266c0104bc2bf19de4f1f9f776e702e5f4b73690"
   end
 
   depends_on "bison" => :build
@@ -23,8 +25,8 @@ class GobjectIntrospection < Formula
   depends_on "cairo"
   depends_on "glib"
   depends_on "pkg-config"
-  # Ships a `_giscanner.cpython-310-darwin.so`, so needs a specific version.
-  depends_on "python@3.10"
+  # Ships a `_giscanner.cpython-311-darwin.so`, so needs a specific version.
+  depends_on "python@3.11"
 
   uses_from_macos "flex" => :build
   uses_from_macos "libffi", since: :catalina
@@ -43,13 +45,19 @@ class GobjectIntrospection < Formula
   end
 
   def install
+    python3 = "python3.11"
+
+    # Allow scripts to find "python3" during build if Python formula is altinstall'ed
+    pyver = Language::Python.major_minor_version python3
+    ENV.prepend_path "PATH", Formula["python@#{pyver}"].opt_libexec/"bin"
+
     ENV["GI_SCANNER_DISABLE_CACHE"] = "true"
     inreplace "giscanner/transformer.py", "/usr/share", "#{HOMEBREW_PREFIX}/share"
     inreplace "meson.build",
       "config.set_quoted('GOBJECT_INTROSPECTION_LIBDIR', join_paths(get_option('prefix'), get_option('libdir')))",
       "config.set_quoted('GOBJECT_INTROSPECTION_LIBDIR', '#{HOMEBREW_PREFIX}/lib')"
 
-    system "meson", "setup", "build", "-Dpython=#{Formula["python@3.10"].opt_bin}/python3.10",
+    system "meson", "setup", "build", "-Dpython=#{which(python3)}",
                                       "-Dextra_library_paths=#{HOMEBREW_PREFIX}/lib",
                                       *std_meson_args
     system "meson", "compile", "-C", "build", "--verbose"

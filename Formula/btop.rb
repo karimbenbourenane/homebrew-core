@@ -1,30 +1,32 @@
 class Btop < Formula
   desc "Resource monitor. C++ version and continuation of bashtop and bpytop"
   homepage "https://github.com/aristocratos/btop"
-  url "https://github.com/aristocratos/btop/archive/refs/tags/v1.2.9.tar.gz"
-  sha256 "0f8c3434a9c4c132a34415a9cc4f048595b8a4d1a94e94223ac3a795e1c16531"
+  url "https://github.com/aristocratos/btop/archive/refs/tags/v1.2.13.tar.gz"
+  sha256 "668dc4782432564c35ad0d32748f972248cc5c5448c9009faeb3445282920e02"
   license "Apache-2.0"
   head "https://github.com/aristocratos/btop.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "4f4b48b9eaba26168dd81a917d6ae1b04210cbe4cc9af2f8ecfe2a867d94c8a6"
-    sha256 cellar: :any,                 arm64_big_sur:  "23149f286020650edd9bc451e573c4eeb4977175dfa99372bd3ca5c577073a0a"
-    sha256 cellar: :any,                 monterey:       "af7e00a1ccf7f09e651f847ddc9bbd1eda8b074f03b6d6cc72361415b0ab6782"
-    sha256 cellar: :any,                 big_sur:        "ccfe0082b2f77431191d6fb3a028c288db9728c8462f019fda79bd05abce9798"
-    sha256 cellar: :any,                 catalina:       "8d51d9b61e209f0de790c7f02d3ebce9368282142cd755f6fb95a0990b1455e9"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "177872d7a8a5e136fc90a82b2d9ea796beb9343b156c9cd880e4f5eef783918e"
+    sha256 cellar: :any,                 arm64_monterey: "377bedf756891fdf81312df0de7f6698653c00bb74cbfc21859402139af71c12"
+    sha256 cellar: :any,                 arm64_big_sur:  "048387f6e5b471decca93682518d7e30f1300dbb5e22f4d0ecd771447276f512"
+    sha256 cellar: :any,                 ventura:        "6c9f5da037520e6116a04ebf6c011a54aa38ff6d61d6b778266476985312f437"
+    sha256 cellar: :any,                 monterey:       "13ff2c92dff4f98569dbcf19cd2d6d5eaa907485ce55fe3e6750eab687556ee3"
+    sha256 cellar: :any,                 big_sur:        "b5215ec41daa2216f3312738d4bb2d6e225fba7d3a760cc629d91bcdfaf87972"
+    sha256 cellar: :any,                 catalina:       "fffa1b48e2a7dec0da167a25aa411b87e28619dd72026e650239d8c3d6012df8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "af5c08bf52c9d84b54b3fe3992240a50c048ff3b897e8ee13f428fac4db76e0f"
   end
 
-  depends_on "coreutils" => :build
-  depends_on "gcc"
+  on_macos do
+    depends_on "coreutils" => :build
+    depends_on "gcc"
+  end
 
   fails_with :clang # -ftree-loop-vectorize -flto=12 -s
-  # GCC 10 at least is required
-  fails_with gcc: "5"
-  fails_with gcc: "6"
-  fails_with gcc: "7"
-  fails_with gcc: "8"
-  fails_with gcc: "9"
+
+  fails_with :gcc do
+    version "9"
+    cause "requires GCC 10+"
+  end
 
   def install
     system "make", "CXX=#{ENV.cxx}", "STRIP=true"

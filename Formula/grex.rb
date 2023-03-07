@@ -1,17 +1,19 @@
 class Grex < Formula
   desc "Command-line tool for generating regular expressions"
   homepage "https://github.com/pemistahl/grex"
-  url "https://github.com/pemistahl/grex/archive/v1.4.0.tar.gz"
-  sha256 "38610a97665a30a3b66519df41f979a39a0503d2e9ac6e1e3e3394ec305e7987"
+  url "https://github.com/pemistahl/grex/archive/v1.4.1.tar.gz"
+  sha256 "8413aae520d696969525961438d22e31cd966058ce3510e91e77da18603c96b9"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "de4fa3ab2dcccdf2ce89b0b26b6ad7c411ca52768193374e09c5a9be498b7c01"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "93faa205dcca15ad00a4a2ccbe024e14b7c9e88132bd3dde0556ebe918b235b6"
-    sha256 cellar: :any_skip_relocation, monterey:       "3fe2becef0cb4f6696080ed09016d86315308acc0e948dd7cfa9bf0aae2fcbde"
-    sha256 cellar: :any_skip_relocation, big_sur:        "e9b1d18003ad754a1791960dacd2ace005c50b10ab583b635cf8f74eb0385c1f"
-    sha256 cellar: :any_skip_relocation, catalina:       "3956929a4fdb956eca7ae44648183cb458b01b24fc765c70c551fc13a8dce9b7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d4009880a091af2ae1148a6d4234100e082d106a4b9644c8c5eb9ce171fd39b0"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "e4d764c88b4782cbef31147648255308e126c9472a2ada49df3f3de951fd6c47"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "d33f897da2827403bc9ef112a4ee875329d2360d1a3cfb4ac965eb702834f606"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "a3b81bfa0d82e9c04f0b00c81e4fd4f48ca3673896296a012fda75d5c6d87953"
+    sha256 cellar: :any_skip_relocation, ventura:        "a2c13b3f72faeba89ce1a2089184dbfce140b8ac77b68409cff4247bd29c238d"
+    sha256 cellar: :any_skip_relocation, monterey:       "e6424ebfd8737e658a9812c8aba0cb19238dd2068eaebeb726d6d67f80d93513"
+    sha256 cellar: :any_skip_relocation, big_sur:        "af44a111757bd4663e052060b960f7046854629aac5f8889aad824a14cbb78cd"
+    sha256 cellar: :any_skip_relocation, catalina:       "729a50cd4cba23602eae010095e01dcd70a21e6e525e9a108b940415722a571d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e380e5cf8f6cba9cb0fa7739b26351bee0e3bd89a9007c095ae2396e258df204"
   end
 
   depends_on "rust" => :build

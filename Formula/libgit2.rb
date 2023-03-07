@@ -1,9 +1,9 @@
 class Libgit2 < Formula
   desc "C library of Git core methods that is re-entrant and linkable"
   homepage "https://libgit2.github.com/"
-  url "https://github.com/libgit2/libgit2/archive/v1.5.0.tar.gz"
-  sha256 "8de872a0f201b33d9522b817c92e14edb4efad18dae95cf156cf240b2efff93e"
-  license "GPL-2.0-only"
+  url "https://github.com/libgit2/libgit2/archive/v1.5.2.tar.gz"
+  sha256 "57638ac0e319078f56a7e17570be754515e5b1276d3750904b4214c92e8fa196"
+  license "GPL-2.0-only" => { with: "GCC-exception-2.0" }
   head "https://github.com/libgit2/libgit2.git", branch: "main"
 
   livecheck do
@@ -12,12 +12,13 @@ class Libgit2 < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "1a3d957e46a244f78689420ad9c5d3fa0072ff08672bae7d5f2ce3ec426a82d3"
-    sha256 cellar: :any,                 arm64_big_sur:  "914aa3e7cae6be1ee2eb580859114df902a495f1169219f57225180684d401ff"
-    sha256 cellar: :any,                 monterey:       "a377a03747dbd5e8cebc9ea437bad644a41f60c24bafaf3ae239f42edb69e992"
-    sha256 cellar: :any,                 big_sur:        "81760fb5880774ed47c470aca07bdcf1945a241c7a2bc9c9727ba4c1d8f18bca"
-    sha256 cellar: :any,                 catalina:       "ecfb9a5ac0a3d99b576ea500dbde84c6370bac68a1d896b7c7deb1b2d3c5f704"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5645a27c2804fb54b79a269690d7cdba4a59f5f65859dcca866eb5f80af707b9"
+    sha256 cellar: :any,                 arm64_ventura:  "8b38c1a0bf3ea37fa8c9c4ae08fa2d88adfc1be486c10bc58e1ff194281c703b"
+    sha256 cellar: :any,                 arm64_monterey: "99d59aff461775cd6af4d771e9cf1a35631d0ab80e87848474dd9005da5325fc"
+    sha256 cellar: :any,                 arm64_big_sur:  "295f4a95636a2c67dc88124c676afac753a43a24780b7fa7d7d453b38a7150c8"
+    sha256 cellar: :any,                 ventura:        "7623ae483c5e375a19c3728fe12d2ff53c6a138ddf7151956a4a6ec67c58f92e"
+    sha256 cellar: :any,                 monterey:       "3da6ef728dbc67482868f24f6023b78aec73cb9d350cf7043ee0e57772f7d28f"
+    sha256 cellar: :any,                 big_sur:        "0820189ba200513d3855a9c49ea9236edfeb7e285f63fda267f8387da32c20b0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "016e41900dd2630bd8573c00a2fd4e268d0c9064e772c53588d45bcc7e2557b6"
   end
 
   depends_on "cmake" => :build

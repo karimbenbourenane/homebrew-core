@@ -1,18 +1,19 @@
 class Janet < Formula
   desc "Dynamic language and bytecode vm"
   homepage "https://janet-lang.org"
-  url "https://github.com/janet-lang/janet/archive/v1.24.1.tar.gz"
-  sha256 "67964e63957299fd46d9d2640443ae1b7ae3528a396c993c457c3296b1ae586e"
+  url "https://github.com/janet-lang/janet/archive/v1.27.0.tar.gz"
+  sha256 "a81c8750844323eb73aea064db9c467aa3361a03fc6f251d3e19a473b147082d"
   license "MIT"
   head "https://github.com/janet-lang/janet.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "02d83701ffecdd0a63f3a0c4e69b8aa7b077172595722d91b958066031201bcf"
-    sha256 cellar: :any,                 arm64_big_sur:  "a5477c75138b52d24f19a2456aecc038c65826df3686ce3fbc66b7d24110a149"
-    sha256 cellar: :any,                 monterey:       "8eaeb16dc792991d2bd36b1981c8af95e80fb117725d9f1de0f3a1018adc2e2c"
-    sha256 cellar: :any,                 big_sur:        "0614dfad4fc13821cfb2c7f955180ed316f936543ff10bad76c203ce23f72ca0"
-    sha256 cellar: :any,                 catalina:       "9d0132b9cf266cbddea365122a5d456dc00301287a96f402ed6c1034448ef812"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e39e559b8ccbaede77948ec8a73566e9654ec412bae9ad10184144749da10b6b"
+    sha256 cellar: :any,                 arm64_ventura:  "6051ac5748ae7cb8ac3d726d78078dd688099f2146f35cd3871e82d57e9b30da"
+    sha256 cellar: :any,                 arm64_monterey: "329a4a3a4319fc5572eb4d7bb26775b478eef7be968df9d74bd963d2c9554edc"
+    sha256 cellar: :any,                 arm64_big_sur:  "8cee310e2cfb83c03673dc33a8e7810caeb62491bb076aede2362b4378a4ccd4"
+    sha256 cellar: :any,                 ventura:        "a399e413ec85dbf86f8e5dfd7a93743a53093353ffd5873db63e083975c9bba0"
+    sha256 cellar: :any,                 monterey:       "55208cdfa086af3cb91fbed30334008de3e975657ca94723bd9584adf5c517fc"
+    sha256 cellar: :any,                 big_sur:        "95e33b6c8107652ad2e2b28d15ac48646fc8ab9bda2a0280efc3752e78695eb2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8a092b0e7fadd4031b2716118d84940d6d0621449aea0e8d91f777be411af8a2"
   end
 
   depends_on "meson" => :build

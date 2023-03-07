@@ -1,8 +1,8 @@
 class Antlr4CppRuntime < Formula
   desc "ANother Tool for Language Recognition C++ Runtime Library"
   homepage "https://www.antlr.org/"
-  url "https://www.antlr.org/download/antlr4-cpp-runtime-4.11.1-source.zip"
-  sha256 "8018c335316e61bb768e5bd4a743a9303070af4e1a8577fa902cd053c17249da"
+  url "https://www.antlr.org/download/antlr4-cpp-runtime-4.12.0-source.zip"
+  sha256 "642d59854ddc0cebb5b23b2233ad0a8723eef20e66ef78b5b898d0a67556893b"
   license "BSD-3-Clause"
 
   livecheck do
@@ -11,19 +11,19 @@ class Antlr4CppRuntime < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "c1547b153ab1d97b6a4fba9bf14a8c5acb0e751ea0da3e46a697d2529945e2e0"
-    sha256 cellar: :any,                 arm64_big_sur:  "d01919370e82df5b4b8bc8bd83f294172ec928f97551b683838faaf660d37828"
-    sha256 cellar: :any,                 monterey:       "99440f165a6980709e28ea5c92a2bd84399db2591fa04aa671743acbb96f5c67"
-    sha256 cellar: :any,                 big_sur:        "adbf3cda46f982dcb0c58641150b735a247f991f2095b71cdb3a23f9802bb1ae"
-    sha256 cellar: :any,                 catalina:       "d23d17dd6e36ecbc26eb73d7746a17e0740816eaa5d6aed93acd4ef44759f51f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a082f47b7b07956161836f4e6976933d8c7c608796840515553b512b38d11012"
+    sha256 cellar: :any,                 arm64_ventura:  "63c1572cf3f7cdac8b8600ad77019ad952126aaaec51d57556fbeedeba5c445a"
+    sha256 cellar: :any,                 arm64_monterey: "d28077a96b19ef54447d26b6ff75b116a2ad27eda2fd2fdbb36e701d5ce6db4a"
+    sha256 cellar: :any,                 arm64_big_sur:  "af4be2d849d147ebd838d7d244d117ac1e9947c444b304f522ec6f3a37371f04"
+    sha256 cellar: :any,                 ventura:        "335105d75a083880e9561ae2211f4bb83a7c347477f588e656c21b2191cebad5"
+    sha256 cellar: :any,                 monterey:       "de063ada35e592f9a6a1ec1a903cca0410da79074550cfb5192b915d8a617e1e"
+    sha256 cellar: :any,                 big_sur:        "5f40c465db117017ae8c4e21ddb9b02108a9996cab654d789e08a61b522f2a8e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "29014e67b7440a5f88b99a9e6c6af34e0930c5c7e3e9910bd8fc4b023dfd36fb"
   end
 
   depends_on "cmake" => :build
 
   on_linux do
     depends_on "pkg-config" => :build
-    depends_on "gcc"
     depends_on "util-linux"
   end
 

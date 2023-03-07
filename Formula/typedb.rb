@@ -1,20 +1,24 @@
 class Typedb < Formula
-  desc "Distributed hyper-relational database for knowledge engineering"
+  desc "Strongly-typed database with a rich and logical type system"
   homepage "https://vaticle.com/"
-  url "https://github.com/vaticle/typedb/releases/download/2.11.1/typedb-all-mac-2.11.1.zip"
-  sha256 "72f32ed4cc4a5e733fa8550d528a3c0e525312fe92df1fb9a28e5e69fc9a3d6f"
+  url "https://github.com/vaticle/typedb/releases/download/2.15.0/typedb-all-mac-2.15.0.zip"
+  sha256 "d134d9253431ee105842b34445c8e9f311308cd6e44a20e1105a769654e87539"
   license "AGPL-3.0-or-later"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "b5d64c18f2ae3074d10cca1f01039b300aae9f8132de4430a9cd4aacd7bb022d"
+    sha256 cellar: :any_skip_relocation, all: "1b0110699bb56cbd4ea88c0bd7a611998bf4127836d4590ed5d13bf5ef67a282"
   end
 
-  depends_on "openjdk@11"
+  depends_on "openjdk"
 
   def install
     libexec.install Dir["*"]
+    mkdir_p var/"typedb/data"
+    inreplace libexec/"server/conf/config.yml", "server/data", var/"typedb/data"
+    mkdir_p var/"typedb/logs"
+    inreplace libexec/"server/conf/config.yml", "server/logs", var/"typedb/logs"
     bin.install libexec/"typedb"
-    bin.env_script_all_files(libexec, Language::Java.java_home_env("11"))
+    bin.env_script_all_files(libexec, Language::Java.java_home_env)
   end
 
   test do

@@ -1,8 +1,8 @@
 class E2fsprogs < Formula
   desc "Utilities for the ext2, ext3, and ext4 file systems"
   homepage "https://e2fsprogs.sourceforge.io/"
-  url "https://downloads.sourceforge.net/project/e2fsprogs/e2fsprogs/v1.46.5/e2fsprogs-1.46.5.tar.gz"
-  sha256 "b7430d1e6b7b5817ce8e36d7c8c7c3249b3051d0808a96ffd6e5c398e4e2fbb9"
+  url "https://downloads.sourceforge.net/project/e2fsprogs/e2fsprogs/v1.47.0/e2fsprogs-1.47.0.tar.gz"
+  sha256 "6667afde56eef0c6af26684974400e4d2288ea49e9441bf5e6229195d51a3578"
   license all_of: [
     "GPL-2.0-or-later",
     "LGPL-2.0-or-later", # lib/ex2fs
@@ -18,23 +18,26 @@ class E2fsprogs < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 arm64_monterey: "8beaf96158b784312741d8cc6347c620fb5edbba4734d0b8f66bdb0fca0eb3f2"
-    sha256 arm64_big_sur:  "8555d6ccc90f4fa60d82a5437477353d0bb71cb3118f40f8780e482176ec8554"
-    sha256 monterey:       "2b72446f9b3aba610819a0d8bd26a3c3e61f6726806f9d1b02083d72731bf18c"
-    sha256 big_sur:        "22f8986cf60259c01fa044bff397fa876ab3be1c8172413b46c0b4164695545c"
-    sha256 catalina:       "6e2776279753101a6d35c0e9329a5f7dab51ebafd281558a1c61944159b5cadb"
-    sha256 x86_64_linux:   "1d2489a49365b866a54b18ae749181c1c9b61f3b23c2646e1d28fdef1c624649"
+    sha256 arm64_ventura:  "32c3579e1a33775074fb35ae5e6f499682da918d6310a653600bb3a97b3ac235"
+    sha256 arm64_monterey: "b7fe9f7b148e778ef9b4d9d6bc97d39fdc942436692b33b518ff1cc85d2b123b"
+    sha256 arm64_big_sur:  "b81365c6dafa1ddf9d37fb0ac9b748f70c832ed01c48a97ccb030bfe35ced118"
+    sha256 ventura:        "e3bb6dbd23b93bfa37ada501134be5ab997ea98b62d800f3e448cd1e627a9bcb"
+    sha256 monterey:       "bc1f1731ebae67bcfd0426e72e0dda411d0737103996344cf351f469e5c6b5f6"
+    sha256 big_sur:        "5fb3d45aa2cd60cd733f346f2433f3b203c7f06065d901efbcb28d207081186e"
+    sha256 x86_64_linux:   "fd9a98171952631479167b5777230f041b2b81cab97f68b2437e3821e472aed4"
   end
 
   keg_only "this installs several executables which shadow macOS system commands"
 
   depends_on "pkg-config" => :build
-  depends_on "gettext"
 
-  # Remove `-flat_namespace` flag and fix M1 shared library build.
-  # Sent via email to theodore.tso@gmail.com
-  patch :DATA
+  on_macos do
+    depends_on "gettext"
+  end
+
+  on_linux do
+    depends_on "util-linux"
+  end
 
   def install
     # Enforce MKDIR_P to work around a configure bug
@@ -46,10 +49,17 @@ class E2fsprogs < Formula
       "--disable-e2initrd-helper",
       "MKDIR_P=mkdir -p",
     ]
-    args << if OS.linux?
-      "--enable-elf-shlibs"
+    args += if OS.linux?
+      %w[
+        --enable-elf-shlibs
+        --disable-fsck
+        --disable-uuidd
+        --disable-libuuid
+        --disable-libblkid
+        --without-crond-dir
+      ]
     else
-      "--enable-bsd-shlibs"
+      ["--enable-bsd-shlibs"]
     end
 
     system "./configure", *args
@@ -64,23 +74,7 @@ class E2fsprogs < Formula
   end
 
   test do
-    assert_equal 36, shell_output("#{bin}/uuidgen").strip.length
+    assert_equal 36, shell_output("#{bin}/uuidgen").strip.length if OS.mac?
     system bin/"lsattr", "-al"
   end
 end
-
-__END__
-diff --git a/lib/Makefile.darwin-lib b/lib/Makefile.darwin-lib
-index 95cdd4b..95e8ee0 100644
---- a/lib/Makefile.darwin-lib
-+++ b/lib/Makefile.darwin-lib
-@@ -24,7 +24,8 @@ image:		$(BSD_LIB)
- $(BSD_LIB): $(OBJS)
- 	$(E) "	GEN_BSD_SOLIB $(BSD_LIB)"
- 	$(Q) (cd pic; $(CC) -dynamiclib -compatibility_version 1.0 -current_version $(BSDLIB_VERSION) \
--		-flat_namespace -undefined warning -o $(BSD_LIB) $(OBJS))
-+		-install_name $(BSDLIB_INSTALL_DIR)/$(BSD_LIB) \
-+		-undefined dynamic_lookup -o $(BSD_LIB) $(OBJS))
- 	$(Q) $(MV) pic/$(BSD_LIB) .
- 	$(Q) $(RM) -f ../$(BSD_LIB)
- 	$(Q) (cd ..; $(LN) $(LINK_BUILD_FLAGS) \

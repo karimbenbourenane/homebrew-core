@@ -1,17 +1,18 @@
 class PandocPlot < Formula
   desc "Render and include figures in Pandoc documents using many plotting toolkits"
   homepage "https://github.com/LaurentRDC/pandoc-plot"
-  url "https://hackage.haskell.org/package/pandoc-plot-1.5.4/pandoc-plot-1.5.4.tar.gz"
-  sha256 "481969a763903c19787054b85da10f814e96671f0880f90ecd0e62ac0afdb6ae"
+  url "https://hackage.haskell.org/package/pandoc-plot-1.6.1/pandoc-plot-1.6.1.tar.gz"
+  sha256 "2352545aaaf87dfd289a2afdcf83502000a2e6b3f3541ea94391f2c656593e0b"
   license "GPL-2.0-or-later"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "ab6de4c6432a454f63e7d9eab0cbee1d1bbf21f02285f440c0c0065676e94607"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "47215bd3b0adc7a5e563d39166129ddf854d1c10fd1c34d91577d7b9d73d3fc9"
-    sha256 cellar: :any_skip_relocation, monterey:       "31bbbb42a89b7f4965bcfa0bd83f9b51b8ea86a023c2a2c80cb680587ead0ebb"
-    sha256 cellar: :any_skip_relocation, big_sur:        "2b07d5070b5425f0f08c45d3aaab5e805c859e82bc84fa70215fea13ffffe121"
-    sha256 cellar: :any_skip_relocation, catalina:       "d93868b01fb949ab8074e988a300d7d1a5ac2853e78477ed90a9e4407b6d8205"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "34d8bfdae956f8ba9c5a042f60449eaff0c263bcafd43e44af3fdcfaf7b7453c"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "b7ebf0aa45528c91f611db8428f0f26806c76665629a1a6d479d6c44c05d48fa"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "a51d2060b0b2564f65f4d406cb20301037f9ca3700ef26dbf73804c0ccfc5975"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "ee4cf67d88a2a94bcb3e2117a3f3995006fc6b7eb6fd40b488272ba912121bec"
+    sha256 cellar: :any_skip_relocation, ventura:        "a6175fae0aea88a1c790ff1c7eed2b70c12cf1ad92cf52c011a4658d25d28073"
+    sha256 cellar: :any_skip_relocation, monterey:       "cd557b4294b7ddff7ef2a5a7910c629a303f631e4366e8f058c3bb8bfcf434fe"
+    sha256 cellar: :any_skip_relocation, big_sur:        "55543f56eedb3ab3d2a38954799505e283e7733a2c6353b785ffd9a1e298d5e7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "84515f55e58f8a4905293db2c6562fb0248f00d0e288c65b4f2def940f733a3f"
   end
 
   depends_on "cabal-install" => :build
@@ -51,7 +52,9 @@ class PandocPlot < Formula
 
     expected_html_2 = <<~EOS
       <h1 id="repeat-the-same-thing">repeat the same thing</h1>
-      <p><img src="#{filename}" /></p>
+      <figure>
+      <img src="#{filename}" />
+      </figure>
     EOS
 
     assert_equal expected_html_2, output_html_2

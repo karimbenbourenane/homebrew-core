@@ -4,15 +4,16 @@ class AzureStorageCpp < Formula
   url "https://github.com/Azure/azure-storage-cpp/archive/v7.5.0.tar.gz"
   sha256 "446a821d115949f6511b7eb01e6a0e4f014b17bfeba0f3dc33a51750a9d5eca5"
   license "Apache-2.0"
-  revision 2
+  revision 4
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "5a8a1e373496131a0128cfbccb1ae6f5e57fc91eaea968aabfe57767d3370fe0"
-    sha256 cellar: :any,                 arm64_big_sur:  "15d27a167c197bca0e649cb241bfdb7f49b2f6f8dbdc9b3ae36aa6562c15f96d"
-    sha256 cellar: :any,                 monterey:       "308598850ccde71d7f3f0b95b1f26e257eef415a9cdc140b5da34867555729cb"
-    sha256 cellar: :any,                 big_sur:        "778476a3c4cd8f88c475aff98086e9c704f19213eb46d250af145d51a3af8506"
-    sha256 cellar: :any,                 catalina:       "fe3ebcd4d1b7454738a7d76113040d6c9fbbbd16ba5265e42101f8575782af89"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "072a0ec3117267bc849068e88b6e48579e72904386ac44558e091dfa5e117ea2"
+    sha256 cellar: :any,                 arm64_ventura:  "c561c69b4cf3677a619b4177651a9901bd8c37f6e00841ee7dfa779b0d2d610d"
+    sha256 cellar: :any,                 arm64_monterey: "69077c839b19801a078f90fc5e75a51f7f8302095c6d90bdf91132e98192a94e"
+    sha256 cellar: :any,                 arm64_big_sur:  "877bad6536d1b893d2aa4c54d09abdca4c97bbae3ddfdadbcfb412e2dedec05b"
+    sha256 cellar: :any,                 ventura:        "9399d2818488907a12615aa6363cee42fb6951309feef2c9d84537368c01ecd1"
+    sha256 cellar: :any,                 monterey:       "f0a9ef4475c97ca1b250efb8bcd7ea9b16b1468abe3aceaee24051e1ea3ce213"
+    sha256 cellar: :any,                 big_sur:        "6b29bb83c1c4a15539ea3a138a9eeac481d02e9ba621868da1260b2083376a73"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f9b09b5689f380ae2ba7070ba02e59af7e370b31cc56a07ec18094e597f8af95"
   end
 
   depends_on "cmake" => :build

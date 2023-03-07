@@ -1,8 +1,8 @@
 class MysqlAT57 < Formula
   desc "Open source relational database management system"
   homepage "https://dev.mysql.com/doc/refman/5.7/en/"
-  url "https://cdn.mysql.com/Downloads/MySQL-5.7/mysql-boost-5.7.39.tar.gz"
-  sha256 "8206d24cb93c52d900ce67cd50618331a4cc071c0040b3a72bcb4b94fa45468f"
+  url "https://cdn.mysql.com/Downloads/MySQL-5.7/mysql-boost-5.7.41.tar.gz"
+  sha256 "d5735e172fbd235d22d2c7eec084c51e7a1648d9e28c78b54e0c8b8d46751cb9"
   license "GPL-2.0-only"
 
   livecheck do
@@ -11,24 +11,33 @@ class MysqlAT57 < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "177e5cb2046e5bd02fdae5a388dd435f118f6792cdf33c0f8b845bf1c552175e"
-    sha256 arm64_big_sur:  "f1a68419ac62039a7dc50c32f86f281eec52098ab74f9f2e354e81bb65dcd0b6"
-    sha256 monterey:       "616c28a28f7c8dbc2e032a05afc06096f094c22d5fe298f6234ad9b71dfb0e9a"
-    sha256 big_sur:        "848228fa2254a9e4db25ad542edab903dded764a32f60ebe1a26f0640d3df3f6"
-    sha256 catalina:       "f584639c86134d3e0e5343ea0c3d74151ca251477ad12bd5d639f01f1378c90e"
-    sha256 x86_64_linux:   "2cf4c1be1e1c17487922c7246723dd9843da55bd6f5f9cd2370ca5362dbe116d"
+    sha256 arm64_ventura:  "3999129b35f2372e7d6d8a51f6820e373a74ea9ffb2d00a7b0df2ab5f93ac1bb"
+    sha256 arm64_monterey: "c4f8c1cb641e4dfa396b212a986740a48d55c7d21d4e8dd38b0dfa6e3aa02325"
+    sha256 arm64_big_sur:  "3a2b58e6859fe0eec0c3af6c537e7901bb8047196319abff43a152d92ef756f7"
+    sha256 ventura:        "c419892976dd4eefcdf71de77cce7888b6972cffa3922e7aeb3edea149334376"
+    sha256 monterey:       "44936103dee02f65ddf940eea8ccfbf55dc3127a5e0723a64fdbc324a161a70d"
+    sha256 big_sur:        "34ce2ce6a205dc218fd9d71f1ff3b3a238b16832fcdf86527b802b706715b036"
+    sha256 x86_64_linux:   "e10995530537c3230a720ffd55e7ba4da7b84cb848f1ad2deead84babd8b85e7"
   end
 
   keg_only :versioned_formula
 
-  depends_on "cmake" => :build
-  depends_on "openssl@1.1"
+  # https://www.oracle.com/us/support/library/lifetime-support-technology-069183.pdf
+  deprecate! date: "2023-10-01", because: :unsupported
 
+  depends_on "cmake" => :build
+  depends_on "libevent"
+  depends_on "lz4"
+  depends_on "openssl@1.1"
+  depends_on "protobuf"
+
+  uses_from_macos "curl"
+  uses_from_macos "cyrus-sasl"
   uses_from_macos "libedit"
-  uses_from_macos "libxcrypt"
 
   on_linux do
     depends_on "pkg-config" => :build
+    depends_on "libtirpc"
   end
 
   def datadir
@@ -69,10 +78,13 @@ class MysqlAT57 < Formula
       -DWITH_UNIT_TESTS=OFF
       -DWITH_EMBEDDED_SERVER=ON
       -DENABLED_LOCAL_INFILE=1
-      -DWITH_INNODB_MEMCACHED=ON
     ]
 
-    args << "-DENABLE_DTRACE=0" if OS.linux?
+    args << if OS.mac?
+      "-DWITH_INNODB_MEMCACHED=ON" # InnoDB memcached plugin build fails on Linux
+    else
+      "-DENABLE_DTRACE=0"
+    end
 
     system "cmake", ".", *std_cmake_args, *args
     system "make"

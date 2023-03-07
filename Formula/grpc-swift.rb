@@ -1,8 +1,8 @@
 class GrpcSwift < Formula
   desc "Swift language implementation of gRPC"
   homepage "https://github.com/grpc/grpc-swift"
-  url "https://github.com/grpc/grpc-swift/archive/1.9.0.tar.gz"
-  sha256 "81b03f5233102df9f0adee75a79d84b798c9eb38eabe1ab5fd1c912d2c690b10"
+  url "https://github.com/grpc/grpc-swift/archive/1.14.1.tar.gz"
+  sha256 "b760dccd7a3b2f6c8fec455afc25edc33f572903bc94cc853fd4fa0ab6e95aaf"
   license "Apache-2.0"
   head "https://github.com/grpc/grpc-swift.git", branch: "main"
 
@@ -12,11 +12,13 @@ class GrpcSwift < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "f8707f495f9f3de586b757c60f922f3089b1847452735434e6f29686bffe9303"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "a43fb0a0c1d7d15b6e6f62307ebcc6d4e46fc08abdc246adc1d69b012e7fe670"
-    sha256 cellar: :any_skip_relocation, monterey:       "4f895d50b86e197acd7e75be2c1405082676b0ea8dd5d0081e8716e1a28e8c99"
-    sha256 cellar: :any_skip_relocation, big_sur:        "81c12794d2242d498830b3fdc9e6e67115d700544cb320d15e1401f02d970dff"
-    sha256                               x86_64_linux:   "73ce26fb7c594bcb688ed16dbc58485cf7c4405063b9c2c0398d2e0dc3cc95da"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "59ff880475ae40318a36eb15332523631720d57453c0b4f43164cc6b347a4873"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "c4793e839f0dfeba421943f98bf3b1a9f3f1f9c286d7ac54ea3cd1937ab6b438"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "03b090ead52590336efed9a69b3bb1288adf5ab17cf6305d700c7a2004c9a2f0"
+    sha256 cellar: :any_skip_relocation, ventura:        "9edd651c177b4c9d0b7d3276258b2e27fabc15e43603d9299516b1c38a51695a"
+    sha256 cellar: :any_skip_relocation, monterey:       "31b94a7875afa62966aa942b82a8861507e8f22251baeab893d6b1bd949c00ab"
+    sha256 cellar: :any_skip_relocation, big_sur:        "ed341e01aef4e5755ad8b59b2e4054b12e1edee41cda01f9e7b6b283923f415d"
+    sha256                               x86_64_linux:   "61d475a6657b81947c334fb9be8162b64a910e7730082df7fc64d915f2026f65"
   end
 
   depends_on xcode: ["12.5", :build]

@@ -1,8 +1,8 @@
 class Cfengine < Formula
   desc "Help manage and understand IT infrastructure"
   homepage "https://cfengine.com/"
-  url "https://cfengine-package-repos.s3.amazonaws.com/tarballs/cfengine-3.20.0.tar.gz"
-  sha256 "5a2ec814137bde6cc1ee35a81a78544bbf0a18282cd4307404c3a36ed1f7c4c8"
+  url "https://cfengine-package-repos.s3.amazonaws.com/tarballs/cfengine-community-3.21.0.tar.gz"
+  sha256 "911778ddb0a4e03a3ddfc8fc0f033136e1551849ea2dcbdb3f0f14359dfe3126"
   license all_of: ["BSD-3-Clause", "GPL-2.0-or-later", "GPL-3.0-only", "LGPL-2.0-or-later"]
 
   livecheck do
@@ -11,25 +11,29 @@ class Cfengine < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "a670b2d8d6798b60e014861d33a03ec7ffa1a92be20318c229f5f7f103a950f8"
-    sha256 arm64_big_sur:  "345dd97cead01bef152249188308372d56e81f88aad2136740ca483ff365ce9a"
-    sha256 monterey:       "0955ee45e6250716784ab57c5b57a6700d7c4c68adec81cc198eb6221cd4a638"
-    sha256 big_sur:        "76fd3b393e53ad84bc370aeb4a78eaf3c1f147ebb2f2ea7e228d3820986d67d9"
-    sha256 catalina:       "d4c88a63b0fd86dbe31389c36cb029f51ab5444833cfa410ba2ee7c0fcd2144d"
-    sha256 x86_64_linux:   "645e4be57258152d2f5b5ac9904c0ba0fddd97ee9db1386a35ac65b8be7ec8d0"
+    rebuild 1
+    sha256 arm64_ventura:  "0a56cdf797ef67920aef33f08dc9003de945bb4b8537fac05217cdde5362c448"
+    sha256 arm64_monterey: "3562db8dc457f1b10d5c8613a794d339c965fcfff16afbd18a594d7d0399ba53"
+    sha256 arm64_big_sur:  "2b31713dd96b8effed6b0ad3fd526dea82d846d37289aa086af34684b283eb0e"
+    sha256 ventura:        "bb84a9389272a98be63b3c17638eea7d7f7174691a0f2b3b23596b23564f7217"
+    sha256 monterey:       "397bfb71c7b503c06c43cd625a7c8a5fe8a91f7635eeee93283456dc153d8f1d"
+    sha256 big_sur:        "f9165e5051febf9bd586986e0b24dcad339040cafb64a059f87e6a1613718f9a"
+    sha256 x86_64_linux:   "fe883b67118f2dc184afef455214c4d32cbbe380e9b1218bce672a680c31fc4d"
   end
 
   depends_on "lmdb"
-  depends_on "openssl@1.1"
+  depends_on "openssl@3"
   depends_on "pcre"
+
+  uses_from_macos "libxml2"
 
   on_linux do
     depends_on "linux-pam"
   end
 
   resource "masterfiles" do
-    url "https://cfengine-package-repos.s3.amazonaws.com/tarballs/cfengine-masterfiles-3.20.0.tar.gz"
-    sha256 "a408cc2d3f4dcd64b698fa327b384208e7852305ebd69c8b9f2354df2d75fc76"
+    url "https://cfengine-package-repos.s3.amazonaws.com/tarballs/cfengine-masterfiles-3.21.0.tar.gz"
+    sha256 "013ebe68599915cedb4bf753b471713d91901a991623358b9a967d9a779bcc16"
   end
 
   def install
@@ -48,6 +52,19 @@ class Cfengine < Formula
     system "./configure", *args
     system "make", "install"
     (pkgshare/"CoreBase").install resource("masterfiles")
+  end
+
+  def post_install
+    workdir = var/"cfengine"
+    secure_dirs = %W[
+      #{workdir}/inputs
+      #{workdir}/outputs
+      #{workdir}/ppkeys
+      #{workdir}/plugins
+    ]
+    chmod 0700, secure_dirs
+    chmod 0750, workdir/"state"
+    chmod 0755, workdir/"modules"
   end
 
   test do

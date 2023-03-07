@@ -1,23 +1,31 @@
 class CloudflareWrangler < Formula
   desc "CLI tool for Cloudflare Workers"
-  homepage "https://github.com/cloudflare/wrangler"
-  url "https://github.com/cloudflare/wrangler/archive/v1.19.12.tar.gz"
-  sha256 "42414fe79b089251a6a0f12d63dc635e5683825449e8960f70b66b810e5a60cd"
+  homepage "https://github.com/cloudflare/wrangler-legacy"
+  url "https://github.com/cloudflare/wrangler-legacy/archive/v1.21.0.tar.gz"
+  sha256 "b3fb6b896c20657625777fee2a4199d24c9fc789f3979e950afc50c7cffb4620"
   license any_of: ["Apache-2.0", "MIT"]
-  head "https://github.com/cloudflare/wrangler.git", branch: "master"
+  head "https://github.com/cloudflare/wrangler-legacy.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "f9db0420ebd94c15f4105f256f51e86b6e2de913376c28ece96a16d49e4c2156"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "817aafe1ff5f1e6b8ef0f8621c670abdf9a2a21c53eccfefbf37e36db352d3da"
-    sha256 cellar: :any_skip_relocation, monterey:       "ef78b187116ae4b44e09d11ce6e525414bf45023cfcf4e5dac8be415218aaf7f"
-    sha256 cellar: :any_skip_relocation, big_sur:        "e5f4b128976ed4c2ade0ca0574be3262d9c1d27c85ae200f7b35a0995b924a02"
-    sha256 cellar: :any_skip_relocation, catalina:       "9e4e3bd3be4a62b34bc8564ccc922ce96c844443849671940492a521f0d56c11"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "2b7af18481d3b31af4579065fe4cfaeedb4a58b4cb7efbf58b3cfe5bde8c4b9e"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "8ce1001d2bc5c2738bc18aa1c69eeab2686c097ed0931447c58601430b243be9"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "c3ea6dd89b43cddfff5dc9ecb5abf1006b42a99b7c8c4e7c0f216da863812ba4"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "ca025f3f88d75d6476ab8fbd5462aaf731be6619736875a82d5db7fbc210c651"
+    sha256 cellar: :any_skip_relocation, ventura:        "94d19e4c9aa48d2241e4d325b5b4ea617924c63bb70290af85a6fa9ddaa54e98"
+    sha256 cellar: :any_skip_relocation, monterey:       "fd8c6c5933719bb6041d7d74ca722105a8b04d83d402c0db264d63bcfa80c5eb"
+    sha256 cellar: :any_skip_relocation, big_sur:        "defa377444dfe24d83dd9afb000b8d554a32a63a5d167a0e203ed52d25caa243"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d09cc5e446ec78108aff2189b23d06bdcc2e6edcad7a1537dbbd1d793faacefe"
   end
+
+  # Wrangler v1 is deprecated as of 2023-02-16 but will receive support for
+  # critical updates until 2023-08-01, at which point all support for v1 will
+  # be sunsetted.
+  disable! date: "2023-08-01", because: :unsupported
 
   depends_on "rust" => :build
 
   uses_from_macos "zlib"
+
+  conflicts_with "cloudflare-wrangler2", because: "both install `wrangler` binaries"
 
   def install
     system "cargo", "install", *std_cargo_args

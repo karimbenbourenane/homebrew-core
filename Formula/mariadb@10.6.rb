@@ -1,10 +1,9 @@
 class MariadbAT106 < Formula
   desc "Drop-in replacement for MySQL"
   homepage "https://mariadb.org/"
-  url "https://downloads.mariadb.com/MariaDB/mariadb-10.6.8/source/mariadb-10.6.8.tar.gz"
-  sha256 "57a9488559ccbdfb8506b781089a7a08d8e0e1b647cffb8f2706af06f69ed438"
+  url "https://downloads.mariadb.com/MariaDB/mariadb-10.6.12/source/mariadb-10.6.12.tar.gz"
+  sha256 "3ed2eb7429c2fae5423ca55c661742d107e35246f1ab0c107096f0c4b839463a"
   license "GPL-2.0-only"
-  revision 1
 
   # This uses a placeholder regex to satisfy the `PageMatch` strategy
   # requirement. In the future, this will be updated to use a `Json` strategy
@@ -24,12 +23,13 @@ class MariadbAT106 < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "db4254dac66fa9af048f1341637c9b040b98b2ac79d55cc030b8e7b0d80a94af"
-    sha256 arm64_big_sur:  "ec9de012fdf23bb06fca94f212cf5279e49d37a41543f34f21ebc21782047bb9"
-    sha256 monterey:       "d1fa2a75c91ee3d032d70dc28257f91857e90a6397af4be4e267a4a50e110ed7"
-    sha256 big_sur:        "cd03dede5f990dcd4d6a741f2d35fceecd32094e6674649dc4e247e2a36f9265"
-    sha256 catalina:       "782f3d5a7adaf28da494609e71e476a861a18c8e5d7da9854995522ca286af22"
-    sha256 x86_64_linux:   "1f21050ec82b25b1ae706c8daa99b52fd92ededef26466d69e6aefca3c209d26"
+    sha256 arm64_ventura:  "44e8335ff0f6520a1d3c3516cb7ef602cd714a9c6732b72ca135c281725e68c1"
+    sha256 arm64_monterey: "e73eca0972ce10a8ff71823cf89be8b6ef57bf533e708d7059db4ac2ba7afb78"
+    sha256 arm64_big_sur:  "b22f47d8bfd34add635c18d2210698bdf9dce5329853869bc5d3ae4244a48e3b"
+    sha256 ventura:        "cc3b7b37b68618f36d2adaea10c97e225058b77250c866ba3c66d737890d16c6"
+    sha256 monterey:       "cf9f3c446c2da1746720c7c4952b54d6ea79e3f304841289821d3dff467c4e7b"
+    sha256 big_sur:        "fbaafae189a06081c9c93fc10db908f90faa69e478dd31a04cf8acf89b3f77de"
+    sha256 x86_64_linux:   "6f34a0b823a3924417c95ee6395187d08aee0804489cf317eaed1975fb765875"
   end
 
   keg_only :versioned_formula
@@ -46,11 +46,11 @@ class MariadbAT106 < Formula
 
   uses_from_macos "bzip2"
   uses_from_macos "libxcrypt"
+  uses_from_macos "libxml2"
   uses_from_macos "ncurses"
   uses_from_macos "zlib"
 
   on_linux do
-    depends_on "gcc"
     depends_on "linux-pam"
     depends_on "readline" # uses libedit on macOS
   end

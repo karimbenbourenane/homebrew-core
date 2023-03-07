@@ -1,17 +1,18 @@
 class ReFlex < Formula
   desc "Regex-centric, fast and flexible scanner generator for C++"
   homepage "https://www.genivia.com/doc/reflex/html"
-  url "https://github.com/Genivia/RE-flex/archive/v3.2.11.tar.gz"
-  sha256 "45b1b7e6bc47f567a16ffec710dcbfd4e95f0f7a34c14472809ca2fcda0ce143"
+  url "https://github.com/Genivia/RE-flex/archive/v3.3.1.tar.gz"
+  sha256 "29d69b103c509f9841747974db85969660368d478a63a0294230106a31b74232"
   license "BSD-3-Clause"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "4e6995acc667bbd6662347d6dd25f81060707127c2a3530fa6e93c73f88d1e73"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "e73051f9561c52e462b8c48d49f20b1b9c6d98c8fd366922bc795bde2febeb0e"
-    sha256 cellar: :any_skip_relocation, monterey:       "08a85b73eb54e7eaf73bccbe20f3ffd5bae102b1d8d66741952f7d3e55c47d2c"
-    sha256 cellar: :any_skip_relocation, big_sur:        "bc9ca40b0a80b4985d08dada025f61ebd58770f93244d0da3681619b746ef9ef"
-    sha256 cellar: :any_skip_relocation, catalina:       "3fb6ec9bf8f07558b9db44c47c276fc3ee39e7bfb98e3a028222941b13a2f94f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "0bb8ea4a85b761b61e538078f5936726e60dc17243e64b3e2063dd470641aa01"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "1ebd2fc5208dc74482024450bd3d51a34a62debec4d09a488865923f4e021634"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "73949617e2a7b49ddeef20755bfd289572f024a49dd5707f8393c55cae035a43"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "c040bec4d6cea8a8dc8de7af6b447142c4600293b9d165ec0734d7105bce1993"
+    sha256 cellar: :any_skip_relocation, ventura:        "745fe573780b821ee4799a7972a0bb3a788ccd1221cb016959367ef334249e62"
+    sha256 cellar: :any_skip_relocation, monterey:       "8f317da381d77b26719efce4c6d2a19d355b6bcbc2229de91ba5565b653f5ce5"
+    sha256 cellar: :any_skip_relocation, big_sur:        "97bea016094a7fb84113ec75d02887cb17d8f107130bf5bc9baf4a071d7a319e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "1c3e579f0fd5a8d6760a4e345fba9644277f639c119ac9975ab2c9ccd4e2702b"
   end
 
   depends_on "pcre2"
@@ -24,7 +25,7 @@ class ReFlex < Formula
   end
 
   test do
-    (testpath/"echo.l").write <<~'EOS'
+    (testpath/"echo.l").write <<~EOS
       %{
       #include <stdio.h>
       %}

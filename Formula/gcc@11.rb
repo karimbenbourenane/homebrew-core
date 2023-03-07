@@ -12,12 +12,14 @@ class GccAT11 < Formula
   end
 
   bottle do
-    sha256                               arm64_monterey: "8fc2ecae68b95a731c262ea993dc8ba4a4a1f2c5cbff710b6e05cee6e7c06f5e"
-    sha256                               arm64_big_sur:  "42784ea6cae9b1e48658ee736a9cb74861e503540a8bec5148a54d0987c084ee"
-    sha256                               monterey:       "7ecaee523b6e28276efc2d04aca5ab65d7c85a790c178abd4afacd581c807e72"
-    sha256                               big_sur:        "88f4db889dd44c2d285b16e9befc25aa2308c99d036024173afdd5f0da55a28a"
-    sha256                               catalina:       "c21e358829e1ebf38fd3fe20fd3bacad95f04b8f4048705704f1da580ca3c0fd"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "64d9c853ddbe63e0361a993560da8b7883bde57854bef20a0f07afa4aa597b34"
+    rebuild 2
+    sha256                               arm64_ventura:  "2f18fea4420dccdc335906de63d33867f8f9488456cb9cb0426a7f65b7d4097b"
+    sha256                               arm64_monterey: "dce488703476feb1503515f148a968023709fec49f5b41145d28183c9ea9748f"
+    sha256                               arm64_big_sur:  "7c4e1607828da2cd0ebcb00c21ebbf5412dd07601db97317d565b41ae40d4184"
+    sha256                               ventura:        "903c7816c85617a0e676964c7b0e9af7226564efd3418b29760299f11ace27e5"
+    sha256                               monterey:       "172639c1d7f9a833b965e9038cf106664aaf8d09f02fc5012a342b17b910566c"
+    sha256                               big_sur:        "0256112a77174201596837633e196b2a2a44c6cfe2b8e83f8fb261c766fecfa7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fff7421a7aaffd0d1b7b2e2a34f66a2a5117c18bee0fd2c338b35cb56be59e91"
   end
 
   # The bottles are built on systems with the CLT installed, and do not work
@@ -42,10 +44,15 @@ class GccAT11 < Formula
   # Branch from the Darwin maintainer of GCC, with a few generic fixes and
   # Apple Silicon support, located at https://github.com/iains/gcc-11-branch
   patch do
-    on_arm do
-      url "https://raw.githubusercontent.com/Homebrew/formula-patches/07e71538/gcc/gcc-11.3.0-arm.diff"
-      sha256 "857390a7f32dbfc4c7e6163a3b3b9d5e1d392e5d9c74c3ebb98701c1d0629565"
-    end
+    url "https://raw.githubusercontent.com/Homebrew/formula-patches/07e71538/gcc/gcc-11.3.0-arm.diff"
+    sha256 "857390a7f32dbfc4c7e6163a3b3b9d5e1d392e5d9c74c3ebb98701c1d0629565"
+  end
+
+  # Fix build on macOS Ventura
+  # https://github.com/iains/gcc-11-branch/issues/5
+  patch do
+    url "https://raw.githubusercontent.com/Homebrew/formula-patches/86fa3c4b/gcc/gcc-11.3-ventura.diff"
+    sha256 "70499af2e5745c91ef4e886c0083cd70d7e94b7b45ba7b1276449bbb102df93b"
   end
 
   def install
@@ -104,10 +111,14 @@ class GccAT11 < Formula
       system "../configure", *args
       system "make"
 
+      # Do not strip the binaries on macOS, it makes them unsuitable
+      # for loading plugins
+      install_target = OS.mac? ? "install" : "install-strip"
+
       # To make sure GCC does not record cellar paths, we configure it with
       # opt_prefix as the prefix. Then we use DESTDIR to install into a
       # temporary location, then move into the cellar path.
-      system "make", "install-strip", "DESTDIR=#{Pathname.pwd}/../instdir"
+      system "make", install_target, "DESTDIR=#{Pathname.pwd}/../instdir"
       mv Dir[Pathname.pwd/"../instdir/#{opt_prefix}/*"], prefix
     end
 
@@ -182,7 +193,7 @@ class GccAT11 < Formula
       #   * `-idirafter <dir>` instructs gcc to search system header
       #     files after gcc internal header files.
       # For libraries:
-      #   * `-nostdlib -L#{libgcc}` instructs gcc to use brewed glibc
+      #   * `-nostdlib -L#{libgcc} -L#{glibc.opt_lib}` instructs gcc to use brewed glibc
       #     if applied.
       #   * `-L#{libdir}` instructs gcc to find the corresponding gcc
       #     libraries. It is essential if there are multiple brewed gcc
@@ -197,7 +208,7 @@ class GccAT11 < Formula
         + -isysroot #{HOMEBREW_PREFIX}/nonexistent #{system_header_dirs.map { |p| "-idirafter #{p}" }.join(" ")}
 
         *link_libgcc:
-        #{glibc_installed ? "-nostdlib -L#{libgcc}" : "+"} -L#{libdir} -L#{HOMEBREW_PREFIX}/lib
+        #{glibc_installed ? "-nostdlib -L#{libgcc} -L#{glibc.opt_lib}" : "+"} -L#{libdir} -L#{HOMEBREW_PREFIX}/lib
 
         *link:
         + --dynamic-linker #{HOMEBREW_PREFIX}/lib/ld.so -rpath #{libdir}

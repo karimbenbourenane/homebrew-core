@@ -1,33 +1,39 @@
 class Felinks < Formula
   desc "Text mode browser and Gemini, NNTP, FTP, Gopher, Finger, and BitTorrent client"
   homepage "https://github.com/rkd77/elinks#readme"
-  url "https://github.com/rkd77/elinks/archive/refs/tags/v0.15.1.tar.gz"
-  sha256 "a3ebb14e179fcf97f93874b7771b4b05c1b7fdc704807334e865273d9de8428f"
   license "GPL-2.0-only"
-  head "https://github.com/rkd77/elinks.git", branch: "master"
 
-  bottle do
-    sha256 cellar: :any,                 arm64_monterey: "62fb5bbd61d30658befb6916bbb5af4699fb2777286746dcaa94e9828abd2d2c"
-    sha256 cellar: :any,                 arm64_big_sur:  "1576662f71a70f08b3bb2b74fa32b8315a9f7a0012979457c805ae01daa770e9"
-    sha256 cellar: :any,                 monterey:       "9c4d8fa6827abd2147a9b20fe30de764acd9a05c6496ac3d751d94041151d39c"
-    sha256 cellar: :any,                 big_sur:        "7e382952edc473bcfd458d9bbce990acd5120588d62af6d3f37c5db55c9785d2"
-    sha256 cellar: :any,                 catalina:       "6338231bbe0e52aaa943e88aa437876604bc45c726b37e91769450b9808c8e43"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c130f71e181e3a807ad0e1951b2b0f97301f7107829d21fb3817d263f918c977"
+  # TODO: Switch to `libidn2` on next release and remove stable block
+  stable do
+    url "https://github.com/rkd77/elinks/releases/download/v0.16.0/elinks-0.16.0.tar.xz"
+    sha256 "4d65b78563af39ba1d0a9ab1c081e129ef2ed541009e6ff11c465ba9d8f0f234"
+    depends_on "libidn"
   end
 
-  depends_on "autoconf" => :build
-  depends_on "automake" => :build
-  depends_on "groff" => :build
-  depends_on "libtool" => :build
-  depends_on "xmlto" => :build
+  bottle do
+    sha256 cellar: :any,                 arm64_ventura:  "161812829640eb38d7b3cc8745a357dde5c5504d5c275b024a39c7d765cbf6ac"
+    sha256 cellar: :any,                 arm64_monterey: "a0f23116d119af283254276777bc0e15a212ff734ea62162638f5f90a9c693e9"
+    sha256 cellar: :any,                 arm64_big_sur:  "a019ea4cddf3176b28231e2fed2618a0dcd0ebbaebe11a51cdb764871e311011"
+    sha256 cellar: :any,                 ventura:        "6b26c82e2c6caa670821b65f559e717cc07a509baf7097d7cb8805cdb3c7dc31"
+    sha256 cellar: :any,                 monterey:       "6e9bf6181366d6326f086453fae724f0f22c0ea72d6efac56c00e928a7e61760"
+    sha256 cellar: :any,                 big_sur:        "bdd387e06cfefa3f3990fd59b08c8d94ca9a5b48ef9cd19876d3db1ff976fe0f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "065972f98316dabbeb4f753183a4b3a0e7915f5f9168389282e19bc453b4626e"
+  end
 
+  head do
+    url "https://github.com/rkd77/elinks.git", branch: "master"
+    depends_on "autoconf" => :build
+    depends_on "automake" => :build
+    depends_on "libidn2"
+  end
+
+  depends_on "pkg-config" => :build
   depends_on "brotli"
-  depends_on "libidn"
-  depends_on "openssl@1.1"
+  depends_on "openssl@3"
   depends_on "tre"
   depends_on "zstd"
 
-  uses_from_macos "bison"
+  uses_from_macos "bison" => :build
   uses_from_macos "bzip2"
   uses_from_macos "expat"
   uses_from_macos "zlib"
@@ -37,7 +43,7 @@ class Felinks < Formula
   def install
     # https://github.com/rkd77/elinks/issues/47#issuecomment-1190547847 parallelization issue.
     ENV.deparallelize
-    system "./autogen.sh"
+    system "./autogen.sh" if build.head?
     system "./configure", *std_configure_args,
                           "--disable-nls",
                           "--enable-256-colors",
@@ -57,6 +63,7 @@ class Felinks < Formula
                           "--without-gnutls",
                           "--without-perl",
                           "--without-spidermonkey",
+                          "--without-x",
                           "--without-xterm"
     system "make"
     system "make", "install"

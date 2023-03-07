@@ -3,18 +3,18 @@ class Gupnp < Formula
 
   desc "Framework for creating UPnP devices and control points"
   homepage "https://wiki.gnome.org/Projects/GUPnP"
-  url "https://download.gnome.org/sources/gupnp/1.4/gupnp-1.4.3.tar.xz"
-  sha256 "14eda777934da2df743d072489933bd9811332b7b5bf41626b8032efb28b33ba"
+  url "https://download.gnome.org/sources/gupnp/1.6/gupnp-1.6.3.tar.xz"
+  sha256 "4f4f418b07b81164df1f7ab612e28e4c016c2d085b8a4f39f97945f8b15ee248"
   license "LGPL-2.0-or-later"
-  revision 1
 
   bottle do
-    sha256 cellar: :any, arm64_monterey: "20a8225bd3f69fb56b37b09260e43699ac2ca88529178593c09b3b0ac6a05516"
-    sha256 cellar: :any, arm64_big_sur:  "cc2a5d6a8a5755eeddf83c5e39be393b9a8597ca4d35b4e230755cf2e25d2d78"
-    sha256 cellar: :any, monterey:       "bde4dbd7e0104c45f2776b1327fbf06876f98c376549b88221563a5e25b2597a"
-    sha256 cellar: :any, big_sur:        "a9aacbb2274395fcf56e2d8d18a6f91d342d09fbb1b1cf73e1fe51065b31af3a"
-    sha256 cellar: :any, catalina:       "ba073cf84ba7e26fa06dd14b4d6a0502650c99e0225822168d784520b2c7b036"
-    sha256               x86_64_linux:   "710a810a02b204d1570b4b20ed7d4fb625e5d009975f386c8a4a0509daa90389"
+    sha256 cellar: :any, arm64_ventura:  "b652cdd6223938ab72b4038a5c28c8dda25b20cc3cf59448aa3f0fad746e0c8f"
+    sha256 cellar: :any, arm64_monterey: "0b537680ffef717b00269d7d3bb6afdcbc63c7e8b38f40838f0de007cc5105bc"
+    sha256 cellar: :any, arm64_big_sur:  "a7f308ab85804a43457a35d75b6453c51781081d2333cc0f6db04247c1efadd1"
+    sha256 cellar: :any, ventura:        "0c6deea33cde2156fbb71291fe1a8aede21b779e9fb6607908dd866deab72571"
+    sha256 cellar: :any, monterey:       "88aa8d9031cd934b2a7109a160466090bcefe4f6a267d194d309b020566853da"
+    sha256 cellar: :any, big_sur:        "8de88ea5e2ba6ec105319ede1d78fcb9b44c8b1a4488bff8cbd3ef810da5f7ed"
+    sha256               x86_64_linux:   "50827d1577c1f06be8f5b1424ba1fc1401960192f3ab08565f095da83a0e5a12"
   end
 
   depends_on "docbook-xsl" => :build
@@ -26,13 +26,11 @@ class Gupnp < Formula
   depends_on "gettext"
   depends_on "glib"
   depends_on "gssdp"
-  depends_on "libsoup@2"
+  depends_on "libsoup"
   depends_on "libxml2"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   def install
-    ENV.prepend_path "PKG_CONFIG_PATH", Formula["libsoup@2"].opt_lib/"pkgconfig"
-    ENV.prepend_path "XDG_DATA_DIRS", Formula["libsoup@2"].opt_share
     ENV.prepend_path "XDG_DATA_DIRS", HOMEBREW_PREFIX/"share"
     ENV["XML_CATALOG_FILES"] = etc/"xml/catalog"
 
@@ -43,7 +41,10 @@ class Gupnp < Formula
   end
 
   test do
-    system bin/"gupnp-binding-tool-1.2", "--help"
+    gnupnp_version = version.major_minor.to_s
+    gssdp_version = Formula["gssdp"].version.major_minor.to_s
+
+    system bin/"gupnp-binding-tool-#{gnupnp_version}", "--help"
     (testpath/"test.c").write <<~EOS
       #include <libgupnp/gupnp-control-point.h>
 
@@ -73,14 +74,17 @@ class Gupnp < Formula
       "-I#{Formula["libxml2"].include}/libxml2"
     end
 
-    system ENV.cc, testpath/"test.c", "-I#{include}/gupnp-1.2", "-L#{lib}", "-lgupnp-1.2",
-           "-I#{Formula["gssdp"].opt_include}/gssdp-1.2",
-           "-L#{Formula["gssdp"].opt_lib}", "-lgssdp-1.2",
+    system ENV.cc, testpath/"test.c",
+           "-I#{include}/gupnp-#{gnupnp_version}",
+           "-L#{lib}",
+           "-lgupnp-#{gnupnp_version}",
+           "-I#{Formula["gssdp"].opt_include}/gssdp-#{gssdp_version}",
+           "-L#{Formula["gssdp"].opt_lib}", "-lgssdp-#{gssdp_version}",
            "-I#{Formula["glib"].opt_include}/glib-2.0",
            "-I#{Formula["glib"].opt_lib}/glib-2.0/include",
            "-L#{Formula["glib"].opt_lib}",
            "-lglib-2.0", "-lgobject-2.0",
-           "-I#{Formula["libsoup@2"].opt_include}/libsoup-2.4",
+           "-I#{Formula["libsoup"].opt_include}/libsoup-3.0",
            libxml2, "-o", testpath/"test"
     system "./test"
   end

@@ -3,10 +3,10 @@ class Gnuradio < Formula
 
   desc "SDK for signal processing blocks to implement software radios"
   homepage "https://gnuradio.org/"
-  url "https://github.com/gnuradio/gnuradio/archive/refs/tags/v3.10.3.0.tar.gz"
-  sha256 "957108a67ec75d99adaad8f3b10be8ae08760a9cef0b659a5c815a4e33898a75"
+  url "https://github.com/gnuradio/gnuradio/archive/refs/tags/v3.10.5.1.tar.gz"
+  sha256 "85d90147f7f28450bff75eeefd2b44adc88b231d29fe8e86cc3a65437dba6d9f"
   license "GPL-3.0-or-later"
-  revision 2
+  revision 1
   head "https://github.com/gnuradio/gnuradio.git", branch: "main"
 
   livecheck do
@@ -15,13 +15,13 @@ class Gnuradio < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 arm64_monterey: "019d52fb4bd1622f77c3ec625713943d76650fa5bc4001e37103be6ed2c5ef3a"
-    sha256 cellar: :any,                 arm64_big_sur:  "ac68112b20869263e7391cef2e8144afcbb8c822a7d23da51141716d209d9619"
-    sha256 cellar: :any,                 monterey:       "c22756b1c4f7f51a8bfa7aa4aa0eb0bcb0b1702321a66429ab56220b01479444"
-    sha256 cellar: :any,                 big_sur:        "e43b17f76d1885131fee0cb101ca46e31b5a7b82670c4505b1e011832831d00a"
-    sha256 cellar: :any,                 catalina:       "503aea870c59385f32d133486290133f96efcac17c9ecc1f257602f14cb7bd22"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c95d4a498ed07a3d9ae873734da7af24f2999116eb10ef23cf63583956722407"
+    sha256 cellar: :any,                 arm64_ventura:  "9e503a9ddcae5b1ec5374203f1e3c934a4273124cfd47558a2317f9f24e3f3a3"
+    sha256 cellar: :any,                 arm64_monterey: "8eec0192d5bb71a7463a7d4897cc4bdfbb0b18f74c0727785c95241195ffef01"
+    sha256 cellar: :any,                 arm64_big_sur:  "9e8612eb49cca805ac288b339529beda3362fc0736d7c55524465363e3cdb901"
+    sha256 cellar: :any,                 ventura:        "51589efc82382f1d64ca1b4cabbf129caf09e7a52d4aae2ad6180b81ac3d969a"
+    sha256 cellar: :any,                 monterey:       "2d95928ce50ab257d0fb2900acbdd9f9b0eac4357668ff51f3e0f04da36172e5"
+    sha256 cellar: :any,                 big_sur:        "268f1ccc2ced067680581fbcba54a74c36cf0a68dd412252de8d5cb8dbca9338"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "3324f42deb5220277e3d0c248e9aa94f9ff0f0f1e18ffaf55ac410fe697e6222"
   end
 
   depends_on "cmake" => :build
@@ -40,9 +40,11 @@ class Gnuradio < Formula
   depends_on "log4cpp"
   depends_on "numpy"
   depends_on "portaudio"
+  depends_on "pygments"
   depends_on "pygobject3"
   depends_on "pyqt@5"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
+  depends_on "pyyaml"
   depends_on "qt@5"
   depends_on "qwt-qt5"
   depends_on "six"
@@ -51,10 +53,6 @@ class Gnuradio < Formula
   depends_on "uhd"
   depends_on "volk"
   depends_on "zeromq"
-
-  on_linux do
-    depends_on "gcc"
-  end
 
   fails_with gcc: "5"
 
@@ -74,28 +72,18 @@ class Gnuradio < Formula
   end
 
   resource "Mako" do
-    url "https://files.pythonhosted.org/packages/50/ec/1d687348f0954bda388bfd1330c158ba8d7dea4044fc160e74e080babdb9/Mako-1.2.0.tar.gz"
-    sha256 "9a7c7e922b87db3686210cf49d5d767033a41d4010b284e747682c92bddd8b39"
-  end
-
-  resource "PyYAML" do
-    url "https://files.pythonhosted.org/packages/36/2b/61d51a2c4f25ef062ae3f74576b01638bebad5e045f747ff12643df63844/PyYAML-6.0.tar.gz"
-    sha256 "68fb519c14306fec9720a2a5b45bc9f0c8d1b9c72adf45c37baedfcd949c35a2"
+    url "https://files.pythonhosted.org/packages/05/5f/2ba6e026d33a0e6ddc1dddf9958677f76f5f80c236bd65309d280b166d3e/Mako-1.2.4.tar.gz"
+    sha256 "d60a3903dc3bb01a18ad6a89cdbe2e4eadc69c0bc8ef1e3773ba53d44c3f7a34"
   end
 
   resource "packaging" do
-    url "https://files.pythonhosted.org/packages/df/9e/d1a7217f69310c1db8fdf8ab396229f55a699ce34a203691794c5d1cad0c/packaging-21.3.tar.gz"
-    sha256 "dd47c42927d89ab911e606518907cc2d3a1f38bbd026385970643f9c5b8ecfeb"
-  end
-
-  resource "pygments" do
-    url "https://files.pythonhosted.org/packages/59/0f/eb10576eb73b5857bc22610cdfc59e424ced4004fe7132c8f2af2cc168d3/Pygments-2.12.0.tar.gz"
-    sha256 "5eb116118f9612ff1ee89ac96437bb6b49e8f04d8a13b514ba26f620208e26eb"
+    url "https://files.pythonhosted.org/packages/47/d5/aca8ff6f49aa5565df1c826e7bf5e85a6df852ee063600c1efa5b932968c/packaging-23.0.tar.gz"
+    sha256 "b6ad297f8907de0fa2fe1ccbd26fdaf387f5f47c7275fedf8cce89f99446cf97"
   end
 
   resource "markupsafe" do
-    url "https://files.pythonhosted.org/packages/1d/97/2288fe498044284f39ab8950703e88abbac2abbdf65524d576157af70556/MarkupSafe-2.1.1.tar.gz"
-    sha256 "7f91197cc9e48f989d12e4e6fbc46495c446636dfc81b9ccf50bb0ec74b91d4b"
+    url "https://files.pythonhosted.org/packages/95/7e/68018b70268fb4a2a605e2be44ab7b4dd7ce7808adae6c5ef32e34f4b55a/MarkupSafe-2.1.2.tar.gz"
+    sha256 "abcabc8c2b26036d62d4c746381a6f7cf60aafcc653198ad678306986b09450d"
   end
 
   # pygccxml only published a .whl file on PyPi
@@ -104,19 +92,8 @@ class Gnuradio < Formula
     sha256 "9815a12e3bf6b83b2e9d8c88335fb3fa0e2b4067d7fbaaed09c3bf26c6206cc7"
   end
 
-  # Fix build with newer GCC
-  # https://github.com/gnuradio/gnuradio/pull/6002.
-  patch :DATA
-
-  # Fix build with fmt 9+
-  # https://github.com/gnuradio/gnuradio/pull/6053
-  patch do
-    url "https://github.com/gnuradio/gnuradio/commit/e63ee41fd455cdd39ae983c258d8632c3ea57fc6.patch?full_index=1"
-    sha256 "be4373f13ffe8ae8ddc7216eb2b7ddb436b7be345cc0e108ae60b5010935a859"
-  end
-
   def install
-    python = "python3.10"
+    python = "python3.11"
     ENV.cxx11
 
     ENV["XML_CATALOG_FILES"] = etc/"xml/catalog"
@@ -222,12 +199,12 @@ class Gnuradio < Formula
         top.run();
       }
     EOS
-    system ENV.cxx, "-std=c++11", "-L#{lib}", "-lgnuradio-blocks",
-           "-lgnuradio-runtime", "-lgnuradio-pmt",
+    system ENV.cxx, testpath/"test.c++", "-std=c++11", "-L#{lib}",
+           "-lgnuradio-blocks", "-lgnuradio-runtime", "-lgnuradio-pmt",
            "-L#{Formula["boost"].opt_lib}", "-lboost_system",
            "-L#{Formula["log4cpp"].opt_lib}", "-llog4cpp",
            "-L#{Formula["fmt"].opt_lib}", "-lfmt",
-           testpath/"test.c++", "-o", testpath/"test"
+           "-o", testpath/"test"
     system "./test"
 
     (testpath/"test.py").write <<~EOS
@@ -254,45 +231,6 @@ class Gnuradio < Formula
 
       main()
     EOS
-    system Formula["python@3.10"].opt_bin/"python3.10", testpath/"test.py"
+    system Formula["python@3.11"].opt_bin/"python3.11", testpath/"test.py"
   end
 end
-
-__END__
-diff --git a/gr-qtgui/lib/FrequencyDisplayPlot.cc b/gr-qtgui/lib/FrequencyDisplayPlot.cc
-index f6f673e..2171f26 100644
---- a/gr-qtgui/lib/FrequencyDisplayPlot.cc
-+++ b/gr-qtgui/lib/FrequencyDisplayPlot.cc
-@@ -16,7 +16,7 @@
- #include <gnuradio/qtgui/qtgui_types.h>
- #include <qwt_scale_draw.h>
- #include <QColor>
--
-+#include <cmath>
-
- /***********************************************************************
-  * Widget to provide mouse pointer coordinate text
-diff --git a/gr-qtgui/lib/VectorDisplayPlot.cc b/gr-qtgui/lib/VectorDisplayPlot.cc
-index d5c2ecc..e047437 100644
---- a/gr-qtgui/lib/VectorDisplayPlot.cc
-+++ b/gr-qtgui/lib/VectorDisplayPlot.cc
-@@ -17,6 +17,7 @@
- #include <qwt_legend.h>
- #include <qwt_scale_draw.h>
- #include <QColor>
-+#include <cmath>
-
- #if QWT_VERSION < 0x060100
- #include <qwt_legend_item.h>
-diff --git a/gr-qtgui/lib/WaterfallDisplayPlot.cc b/gr-qtgui/lib/WaterfallDisplayPlot.cc
-index 69d82fd..d1e42e9 100644
---- a/gr-qtgui/lib/WaterfallDisplayPlot.cc
-+++ b/gr-qtgui/lib/WaterfallDisplayPlot.cc
-@@ -19,6 +19,7 @@
- #include <qwt_plot_layout.h>
- #include <qwt_scale_draw.h>
- #include <QColor>
-+#include <cmath>
-
- #if QWT_VERSION < 0x060100
- #include <qwt_legend_item.h>

@@ -1,8 +1,8 @@
 class CargoDepgraph < Formula
   desc "Creates dependency graphs for cargo projects"
   homepage "https://sr.ht/~jplatte/cargo-depgraph/"
-  url "https://git.sr.ht/~jplatte/cargo-depgraph/archive/v1.2.5.tar.gz"
-  sha256 "75e6b716996062518bc556607929abce52dffdd97422275b41079e971f9459e2"
+  url "https://git.sr.ht/~jplatte/cargo-depgraph/archive/v1.4.0.tar.gz"
+  sha256 "c138718e610673352b99d7078eda46f6039c3e20d44f85e4312d48d9dce99f77"
   license "GPL-3.0-or-later"
 
   livecheck do
@@ -11,12 +11,14 @@ class CargoDepgraph < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "7f2d8c9fb244c7f8b1b83ec485c9e67e5ecb23aa79cd17d06c338c746106c5b0"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "ab3f2fae4e4e5cbb9864f4ff250fce0e8d18a6c87e0a74e9afee328c39ed7b30"
-    sha256 cellar: :any_skip_relocation, monterey:       "7aba3c49400cc7b7285601deded9016e0c7f02a9994828525c92369dcf040d0a"
-    sha256 cellar: :any_skip_relocation, big_sur:        "3cf0a6ca9a2285476b22537b1cd999530c3b1836e9c24675c561baa198840944"
-    sha256 cellar: :any_skip_relocation, catalina:       "2be66238e2a2b7e371fcdb2c9ecfa618d3bead843fee26c430692d6061a0e1b4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d163821cff1fd8f7a09b4be44ae65064ca221bfe1ee6faae6b3ca7f93f6ece83"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "cbbb2ee6d64ccb54daaeee22d72abe7c80718bbadf12413cadc6e5bf2ac19266"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "ae25390e1c611870f71d9589bc42ebf4291255f92945a60f83a26dd57b0b7399"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "8b1d4deaf4e1aecba7d62979378c047d7858fcb086585e0efd210c04bdd0cfd1"
+    sha256 cellar: :any_skip_relocation, ventura:        "6139e89e66e1ab0cc7ba72a3fddfb1a04358a830e9a7ff37ddf3a1031f96cb9b"
+    sha256 cellar: :any_skip_relocation, monterey:       "02488af08391c6c57695a2b44ec7d878c2641b1d13f7e601f8e1687a5598a445"
+    sha256 cellar: :any_skip_relocation, big_sur:        "85e7faf97f187ae2dfe07cbbb70131c00553a3240ae6fb63813269e06a0ae0ea"
+    sha256 cellar: :any_skip_relocation, catalina:       "838d8909e653cab5582b38e9ce2b5d599d8c175047cf3835b09bf766f18ad1fb"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "39819247ae48a1dcb3adc95890d683915c89166d8b305bd122adfbe6ed0c0934"
   end
 
   depends_on "rust" => [:build, :test]

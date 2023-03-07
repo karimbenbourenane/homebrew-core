@@ -1,17 +1,18 @@
 class Freerdp < Formula
   desc "X11 implementation of the Remote Desktop Protocol (RDP)"
   homepage "https://www.freerdp.com/"
-  url "https://github.com/FreeRDP/FreeRDP/archive/2.8.0.tar.gz"
-  sha256 "86f1ce8ef71aff73881a48b40d31dda2fc2a94bdbe37e1c1af8447a0e4fa5cc8"
+  url "https://github.com/FreeRDP/FreeRDP/archive/2.10.0.tar.gz"
+  sha256 "88fa59f8e8338d5cb2490d159480564562a5624f3a3572c89fa3070b9626835c"
   license "Apache-2.0"
 
   bottle do
-    sha256 arm64_monterey: "c2c39da782f4df06eca40f1ef6cf8b398bcd623d0b9f071d6d5c3ac2ab7047d8"
-    sha256 arm64_big_sur:  "5e065d087692150df9dbc8675ca19f165c03114766ea48fe77c5ce043e25d052"
-    sha256 monterey:       "96ce94fde80de2a05572fbc9434c79945d977b494c8ea64f87fa12881628f340"
-    sha256 big_sur:        "b408af2edaf7862ae59c9f47fbc03b3ec08a681bc8b7134dabe4b78da063995a"
-    sha256 catalina:       "3f07f042a33e76153df32a8b57bb727843d3c8ff3ff90cb6715fc7ca65c78eb4"
-    sha256 x86_64_linux:   "471e90a3aca9bb342a617d59cf1f933a7bb96335a912dce471aa2863246d87ef"
+    sha256                               arm64_ventura:  "bfdb1fec28d4395805d5cec843c88f0d4164d8f530145b1263cda54764e54cb5"
+    sha256                               arm64_monterey: "6866ca2a058eafd2c034575e5a9974f6e44ecc2ed963740b938c7c6ddfac3a65"
+    sha256                               arm64_big_sur:  "ab11ca21e7cb15ac1982ab192be5069a3a6a9e2760140df051f1e21f66f8c8af"
+    sha256                               ventura:        "01de631c39bd0de0140aa04a3b4a3c4e49a229052ec45b3981b79e834c8e8eb7"
+    sha256                               monterey:       "37695834d8e2ef56aafc50b2d75672c93f5a0487f0d69e93385170bc90554172"
+    sha256                               big_sur:        "3cc55b92aeb0738b86b10a84b3cf5ddc35ff96ed046b100fbe816ddc8480be96"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "56007a1eb1dd9349c7f6fa5eadad2df21ea1dd82906a59dc49582130f743440c"
   end
 
   head do
@@ -32,7 +33,7 @@ class Freerdp < Formula
   depends_on "libxrandr"
   depends_on "libxrender"
   depends_on "libxv"
-  depends_on "openssl@1.1"
+  depends_on "openssl@3"
 
   uses_from_macos "cups"
 

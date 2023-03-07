@@ -3,29 +3,25 @@ class Autopep8 < Formula
 
   desc "Automatically formats Python code to conform to the PEP 8 style guide"
   homepage "https://github.com/hhatto/autopep8"
-  url "https://files.pythonhosted.org/packages/d0/5d/016888824972086a4ee164806520d85ff173e83699907b9cfe119aaefbbc/autopep8-1.7.0.tar.gz"
-  sha256 "ca9b1a83e53a7fad65d731dc7a2a2d50aa48f43850407c59f6a1a306c4201142"
+  url "https://files.pythonhosted.org/packages/b2/03/49cb49b37a4d51721ece9c628eb9441f9a4e26ee98ad6e5505238d5b2d7a/autopep8-2.0.2.tar.gz"
+  sha256 "f9849cdd62108cb739dbcdbfb7fdcc9a30d1b63c4cc3e1c1f893b5360941b61c"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "c52de22dd0b9d9a7773db27b587ee9d27c3cafedc121fe7a0abaa3d1c50605cc"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "c52de22dd0b9d9a7773db27b587ee9d27c3cafedc121fe7a0abaa3d1c50605cc"
-    sha256 cellar: :any_skip_relocation, monterey:       "282206f1a762ce0bcead1bac457509057287548089b3d16c2ca032de98deca37"
-    sha256 cellar: :any_skip_relocation, big_sur:        "282206f1a762ce0bcead1bac457509057287548089b3d16c2ca032de98deca37"
-    sha256 cellar: :any_skip_relocation, catalina:       "282206f1a762ce0bcead1bac457509057287548089b3d16c2ca032de98deca37"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "548a6fadf6bcc710185bbd29d444a45cab853b29817949f1208a58bd292c9bc3"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "9876c8ccc7e08dd15b048a996d0f460b993da7c3d8092c73b08d14412e47a935"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "9876c8ccc7e08dd15b048a996d0f460b993da7c3d8092c73b08d14412e47a935"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "9876c8ccc7e08dd15b048a996d0f460b993da7c3d8092c73b08d14412e47a935"
+    sha256 cellar: :any_skip_relocation, ventura:        "5aba6fbd91b8a69fa0fbf8c23e1b1aba93a7bf0e11a8f3de2f77702f068c6233"
+    sha256 cellar: :any_skip_relocation, monterey:       "5aba6fbd91b8a69fa0fbf8c23e1b1aba93a7bf0e11a8f3de2f77702f068c6233"
+    sha256 cellar: :any_skip_relocation, big_sur:        "5aba6fbd91b8a69fa0fbf8c23e1b1aba93a7bf0e11a8f3de2f77702f068c6233"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "bd2c70a4d66684833df256b1c1ede1240b09c9c89e434ead620840ed0c3d332f"
   end
 
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   resource "pycodestyle" do
-    url "https://files.pythonhosted.org/packages/b6/83/5bcaedba1f47200f0665ceb07bcb00e2be123192742ee0edfb66b600e5fd/pycodestyle-2.9.1.tar.gz"
-    sha256 "2c9607871d58c76354b697b42f5d57e1ada7d261c261efac224b664affdc5785"
-  end
-
-  resource "toml" do
-    url "https://files.pythonhosted.org/packages/be/ba/1f744cdc819428fc6b5084ec34d9b30660f6f9daaf70eead706e3203ec3c/toml-0.10.2.tar.gz"
-    sha256 "b3bda1d108d5dd99f4a20d24d9c348e91c4db7ab1b749200bded2f839ccbe68f"
+    url "https://files.pythonhosted.org/packages/06/6b/5ca0d12ef7dcf7d20dfa35287d02297f3e0f9e515da5183654c03a9636ce/pycodestyle-2.10.0.tar.gz"
+    sha256 "347187bdb476329d98f695c213d7295a846d1152ff4fe9bacb8a9590b8ee7053"
   end
 
   def install

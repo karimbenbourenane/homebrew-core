@@ -1,9 +1,9 @@
 class Libpng < Formula
   desc "Library for manipulating PNG images"
   homepage "http://www.libpng.org/pub/png/libpng.html"
-  url "https://downloads.sourceforge.net/project/libpng/libpng16/1.6.37/libpng-1.6.37.tar.xz"
-  mirror "https://sourceforge.mirrorservice.org/l/li/libpng/libpng16/1.6.37/libpng-1.6.37.tar.xz"
-  sha256 "505e70834d35383537b6491e7ae8641f1a4bed1876dbfe361201fc80868d88ca"
+  url "https://downloads.sourceforge.net/project/libpng/libpng16/1.6.39/libpng-1.6.39.tar.xz"
+  mirror "https://sourceforge.mirrorservice.org/l/li/libpng/libpng16/1.6.39/libpng-1.6.39.tar.xz"
+  sha256 "1f4696ce70b4ee5f85f1e1623dc1229b210029fa4b7aee573df3e2ba7b036937"
   license "libpng-2.0"
 
   livecheck do
@@ -12,19 +12,18 @@ class Libpng < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "40b9dd222c45fb7e2ae3d5c702a4529aedf8c9848a5b6420cb951e72d3ad3919"
-    sha256 cellar: :any,                 arm64_big_sur:  "766a7136ee626b411fb63da0c7e5bc1e848afb6e224622f25ea305b2d1a4a0f1"
-    sha256 cellar: :any,                 monterey:       "7209cfe63b2e8fdbd9615221d78201bfac44405f5206f7b08867bcd0c6046757"
-    sha256 cellar: :any,                 big_sur:        "a8f1c35f9f004c4f7878c30027e35a9fb9551782df963f88deebd3dc29d94d51"
-    sha256 cellar: :any,                 catalina:       "c8e74da602c21f978cd7ee3d489979b4fc6681e71f678a1d99012943ee3a909f"
-    sha256 cellar: :any,                 mojave:         "53bbd14cc27c86c16605e256e7646a1b5656c253abca084958c5d80a2961cb01"
-    sha256 cellar: :any,                 high_sierra:    "bbdd94bdd5954bc50c096391486e67265dce5631efb913dcffe4469806a242b6"
-    sha256 cellar: :any,                 sierra:         "e66797079a9a8134f91bd36b58054c6c32f6a9cd161c1bd19f0192319edb80aa"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "aeb238f8b62e3e8923a032caf88152e287a4435ab4afd663fa98b4a57495d116"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_ventura:  "27fb15928d0f711e37715342e2245b48536a09aff722c68910c5a1b947a37ef5"
+    sha256 cellar: :any,                 arm64_monterey: "3866f0b5172ab2d599f2cb43e14870b2a444dee43964ce5ececa35b885c9330d"
+    sha256 cellar: :any,                 arm64_big_sur:  "cf59cedc91afc6f2f3377567ba82b99b97744c60925a5d1df6ecf923fdb2f234"
+    sha256 cellar: :any,                 ventura:        "28c60231600a95cf267784ece25d0e2e5f220001baab625789cbdc7fb94611b6"
+    sha256 cellar: :any,                 monterey:       "d33e5b6d0b21373ddd6dca2d6eaf6c8314315fa882ce32fe02618a8d8bfd4cde"
+    sha256 cellar: :any,                 big_sur:        "86306aeedc4f2bc156897cb04e0a221cff1ee7fe5108c0e7a829543ebe4203a4"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "499c5d31e7d78ab405e95aa16fc713e5ae4686d8919f5b94c8864fdde26e62de"
   end
 
   head do
-    url "https://github.com/glennrp/libpng.git"
+    url "https://github.com/glennrp/libpng.git", branch: "libpng16"
 
     depends_on "autoconf" => :build
     depends_on "automake" => :build
@@ -40,6 +39,9 @@ class Libpng < Formula
     system "make"
     system "make", "test"
     system "make", "install"
+
+    # Avoid rebuilds of dependants that hardcode this path.
+    inreplace lib/"pkgconfig/libpng.pc", prefix, opt_prefix
   end
 
   test do

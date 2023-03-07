@@ -1,8 +1,8 @@
 class Ldc < Formula
   desc "Portable D programming language compiler"
   homepage "https://wiki.dlang.org/LDC"
-  url "https://github.com/ldc-developers/ldc/releases/download/v1.30.0/ldc-1.30.0-src.tar.gz"
-  sha256 "fdbb376f08242d917922a6a22a773980217fafa310046fc5d6459490af23dacd"
+  url "https://github.com/ldc-developers/ldc/releases/download/v1.31.0/ldc-1.31.0-src.tar.gz"
+  sha256 "f1c8ece9e1e35806c3441bf24fbe666cddd8eef375592c19cd8fee4701cd5458"
   license "BSD-3-Clause"
   head "https://github.com/ldc-developers/ldc.git", branch: "master"
 
@@ -12,41 +12,42 @@ class Ldc < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "703a1b7cc6dea61112183cbc21cd77faf686a7527b105bb61db7e3d92c0bd6a6"
-    sha256 arm64_big_sur:  "660bc67a5e12896a19427be2f39d58fad9f2c78d3f5948792706d20e80f351db"
-    sha256 monterey:       "c2b1c19deb39e815c8f1ddf0f8f1fdab63e849e6777c7e3e092399f3891110b1"
-    sha256 big_sur:        "c3fbdc34a89752a66e633ace1416e4f31eec1e4067f37d2cd12855323a068e15"
-    sha256 catalina:       "574931fec5e3746c83d7fb67a25af715d8c51efde11f70a48d037abecf2824ea"
-    sha256 x86_64_linux:   "7e532a02f6949cfc57355eb5c35b0f438e955db551dd5a98833d621be58a51fd"
+    sha256                               arm64_ventura:  "4e7fbf9856f9c0e18d22adb2aaafd58bc014c1dd0224c724ac4bbd9edfcb1e61"
+    sha256                               arm64_monterey: "40e61a7c3999a205cda234f83b6cc2fa89d56bc03e634bfebc5694aa9a2dbd24"
+    sha256                               arm64_big_sur:  "5da4191fe6a028b6449105261fb1373c49b38a612b17b89fac0323c988ddd02b"
+    sha256                               ventura:        "87b923166a2ca3bf2cabffac9d4f1be5859d5d9d49a5b681a87d201f31ae440e"
+    sha256                               monterey:       "40b012c3abb7d359d4f3f618231e365487cb6671827a9e43d278fdd52c1d2c8a"
+    sha256                               big_sur:        "3a5f121ac59dae6657ebec206dd486ff1e5f3d919362fce1116043d8bdb8c22d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "616506d79bd4adc591bf729fc8937adb1efd0be81346a48ca163cb458950646e"
   end
 
   depends_on "cmake" => :build
   depends_on "libconfig" => :build
   depends_on "pkg-config" => :build
-  depends_on "llvm"
+  depends_on "llvm@14" # LLVM 15 issue: https://github.com/ldc-developers/ldc/issues/4042
 
   uses_from_macos "libxml2" => :build
 
-  fails_with :gcc
-
   resource "ldc-bootstrap" do
     on_macos do
-      on_intel do
-        url "https://github.com/ldc-developers/ldc/releases/download/v1.28.1/ldc2-1.28.1-osx-x86_64.tar.xz"
-        sha256 "9aa43e84d94378f3865f69b08041331c688e031dd2c5f340eb1f3e30bdea626c"
-      end
-
       on_arm do
         url "https://github.com/ldc-developers/ldc/releases/download/v1.28.1/ldc2-1.28.1-osx-arm64.tar.xz"
         sha256 "9bddeb1b2c277019cf116b2572b5ee1819d9f99fe63602c869ebe42ffb813aed"
       end
+      on_intel do
+        url "https://github.com/ldc-developers/ldc/releases/download/v1.28.1/ldc2-1.28.1-osx-x86_64.tar.xz"
+        sha256 "9aa43e84d94378f3865f69b08041331c688e031dd2c5f340eb1f3e30bdea626c"
+      end
     end
-
     on_linux do
-      # ldc 1.27 requires glibc 2.27, which is too new for Ubuntu 16.04 LTS.  The last version we can bootstrap with
-      # is 1.26.  Change this when we migrate to Ubuntu 18.04 LTS.
-      url "https://github.com/ldc-developers/ldc/releases/download/v1.26.0/ldc2-1.26.0-linux-x86_64.tar.xz"
-      sha256 "06063a92ab2d6c6eebc10a4a9ed4bef3d0214abc9e314e0cd0546ee0b71b341e"
+      on_arm do
+        url "https://github.com/ldc-developers/ldc/releases/download/v1.28.1/ldc2-1.28.1-linux-aarch64.tar.xz"
+        sha256 "158cf484456445d4f59364b6e74881d90ec5fe78956fc62f7f7a4db205670110"
+      end
+      on_intel do
+        url "https://github.com/ldc-developers/ldc/releases/download/v1.28.1/ldc2-1.28.1-linux-x86_64.tar.xz"
+        sha256 "0195172c3a18d4eaa15a06193fea295a22e21adbfbcb7037691c630f191bceb2"
+      end
     end
   end
 
@@ -70,23 +71,7 @@ class Ldc < Formula
       ["-DCMAKE_INSTALL_RPATH=#{rpath};#{rpath(source: lib, target: llvm.opt_lib)}"]
     else
       # Fix ldc-bootstrap/bin/ldmd2: error while loading shared libraries: libxml2.so.2
-      ENV.prepend_path "LD_LIBRARY_PATH", Formula["libxml2"].lib if OS.linux?
-
-      gcc = Formula["gcc"]
-      # Link to libstdc++ for brewed GCC rather than the host GCC which is too old.
-      libstdcxx_lib = gcc.opt_lib/"gcc"/gcc.version.major
-      linux_linker_flags = "-L#{libstdcxx_lib} -Wl,-rpath,#{libstdcxx_lib}"
-
-      # Use libstdc++ headers for brewed GCC rather than host GCC which is too old.
-      libstdcxx_include = gcc.opt_include/"c++"/gcc.version.major
-      linux_cxx_flags = "-nostdinc++ -isystem#{libstdcxx_include} -isystem#{libstdcxx_include}/x86_64-pc-linux-gnu"
-
-      %W[
-        -DCMAKE_EXE_LINKER_FLAGS=#{linux_linker_flags}
-        -DCMAKE_MODULE_LINKER_FLAGS=#{linux_linker_flags}
-        -DCMAKE_SHARED_LINKER_FLAGS=#{linux_linker_flags}
-        -DCMAKE_CXX_FLAGS=#{linux_cxx_flags}
-      ]
+      ENV.prepend_path "LD_LIBRARY_PATH", Formula["libxml2"].opt_lib
     end
 
     system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args

@@ -1,10 +1,9 @@
 class Pidgin < Formula
   desc "Multi-protocol chat client"
   homepage "https://pidgin.im/"
-  url "https://downloads.sourceforge.net/project/pidgin/Pidgin/2.14.10/pidgin-2.14.10.tar.bz2"
-  sha256 "454b1b928bc6bcbb183353af30fbfde5595f2245a3423a1a46e6c97a2df22810"
+  url "https://downloads.sourceforge.net/project/pidgin/Pidgin/2.14.12/pidgin-2.14.12.tar.bz2"
+  sha256 "2b05246be208605edbb93ae9edc079583d449e2a9710db6d348d17f59020a4b7"
   license "GPL-2.0-or-later"
-  revision 1
 
   livecheck do
     url "https://sourceforge.net/projects/pidgin/files/Pidgin/"
@@ -13,12 +12,13 @@ class Pidgin < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "d373785c6d71ff6edf71acd84a25dce77016f678d59d2d8f714da5bd27398e71"
-    sha256 arm64_big_sur:  "830c1c5fe7e10ff46b44e4fb9e97cba440f73bc3aedb7d5689322fad63472eca"
-    sha256 monterey:       "040db181ed8a2eaaaf07de46da4594bfe29619d1229a89363f77053bf27bf486"
-    sha256 big_sur:        "0cc1dde1b0766557ae85ef0ce4ecf2b84e4ac4a36f7947eaa71573ea0547cb9f"
-    sha256 catalina:       "01ddce452da50c258598b58d18c2be976e94bbbbae63581c11d05e5bd197cc66"
-    sha256 x86_64_linux:   "0b20be6c06ab99805b3a3113322be80ab32aa572c542551d9cd2b482ee665380"
+    sha256 arm64_ventura:  "a04309e2217e0983459955016b4460954c613eac84da8283afc8e2f4eb650d9e"
+    sha256 arm64_monterey: "0167e1a59e189d616d909688dadfda1d9648ab7d3f84fbb8db34fb30e259b415"
+    sha256 arm64_big_sur:  "cec31339d3e2a83f61fac179cd72bc2b00e63611a5a2561018db865f659983f5"
+    sha256 ventura:        "4aa98090185eb17a74b68ec64bdf1551382d0778d01e00691395b488a0e3d027"
+    sha256 monterey:       "d6407e69aad79bcf6ad08625510306e10a45e594af1ec225249647e180462b1b"
+    sha256 big_sur:        "e70d0f821cb46ccd6d1e78855125db8c55e2bd4afeae7b20f933ec37de13d9ce"
+    sha256 x86_64_linux:   "e45ab075f267eaa4dee89536c9a4561f3e5676221337274857c268fde1c8ed81"
   end
 
   depends_on "intltool" => :build
@@ -51,7 +51,7 @@ class Pidgin < Formula
   end
 
   def install
-    ENV.prepend "PERL5LIB", Formula["intltool"].libexec/"lib/perl5" unless OS.mac?
+    ENV.prepend_path "PERL5LIB", Formula["intltool"].libexec/"lib/perl5" unless OS.mac?
 
     args = %W[
       --disable-debug

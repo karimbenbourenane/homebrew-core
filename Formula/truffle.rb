@@ -3,15 +3,18 @@ require "language/node"
 class Truffle < Formula
   desc "Development environment, testing framework and asset pipeline for Ethereum"
   homepage "https://trufflesuite.com"
-  url "https://registry.npmjs.org/truffle/-/truffle-5.5.20.tgz"
-  sha256 "d2062c5ba8ba177cd2768ab7c411310174b9ed504905f5c72b54089e39f22ebe"
+  url "https://registry.npmjs.org/truffle/-/truffle-5.7.9.tgz"
+  sha256 "f5b43bf785ff5ebcdcf1c778b2b09aae24b6bd7771aa63a84288d920f958829b"
   license "MIT"
 
   bottle do
-    sha256                               monterey:     "98002dbc9de2d94c8b9c8b5f52bc270c06b5f3f0a52e7bf9f2f4ea43538b2076"
-    sha256                               big_sur:      "ae31bf9eb686e8a8bbaaf87d306dfeb7af93f03ade5381aa33ff7116d2740b88"
-    sha256                               catalina:     "29415be18c64be31abfdd822482d05a9927f2bcb89d9eab91e4d0151de1109a6"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "4d9131a259af1c1c59ca8a90ae9a64b6d5f7af57b9c7804dbc8a1dbeea735c90"
+    sha256                               arm64_ventura:  "6afa3862e32a5ff0dc4a71cd5fb9a082a85195558dd5ef572b78cfd2733b5d37"
+    sha256                               arm64_monterey: "72941e16722df6b58452a47f59de566eb1864d306ab46d5fa4714cc7ae1fe968"
+    sha256                               arm64_big_sur:  "3629f4e3e234b57069e9e0521379ba3649d1c7339dfecbedeb4595bbc5025afe"
+    sha256                               ventura:        "dff1dabbbe67146d9bc9ffcb865be47ccc6a0863da44149960d6f09ffd2b5b93"
+    sha256                               monterey:       "5eee450c0254329f750f60841a7b11b452f957501fb5e2d55a411b30beff85da"
+    sha256                               big_sur:        "0d326dee17b57aed3685a4d7b9a77035b2f4d70d6990fffd6d033c638dd37363"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "396c10766720eb214a77d3008dff4fe832ffaa4465fa3a8568f2d619c04c068a"
   end
 
   depends_on "node"
@@ -43,9 +46,12 @@ class Truffle < Formula
     deuniversalize_machos truffle_dir/"node_modules/fsevents/fsevents.node"
 
     # Remove incompatible pre-built binaries that have arbitrary names
-    if OS.mac?
-      truffle_dir.glob("node_modules/ganache/dist/node/*.node")
-                 .each { |f| f.unlink if f.dylib? && f.archs.exclude?(Hardware::CPU.arch) }
+    truffle_dir.glob("node_modules/ganache/dist/node{/,/F/}*.node").each do |f|
+      next unless f.dylib?
+      next if f.arch == Hardware::CPU.arch
+      next if OS.mac? && f.archs.include?(Hardware::CPU.arch)
+
+      f.unlink
     end
   end
 

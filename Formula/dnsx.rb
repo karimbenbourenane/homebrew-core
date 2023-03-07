@@ -1,18 +1,19 @@
 class Dnsx < Formula
   desc "DNS query and resolution tool"
   homepage "https://github.com/projectdiscovery/dnsx"
-  url "https://github.com/projectdiscovery/dnsx/archive/v1.1.0.tar.gz"
-  sha256 "5cb53066b689982be0d08322c40a82320888184cf5ee2a7fce118d566261de20"
+  url "https://github.com/projectdiscovery/dnsx/archive/v1.1.2.tar.gz"
+  sha256 "fd2375639c00021c99e69071011df64aa233f07aa6935968880ec134412dd993"
   license "MIT"
   head "https://github.com/projectdiscovery/dnsx.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "8442bb5a58c6aa903e9190b9d8517c7b82dfe4d93cd356018c652da5030ed706"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "ea96682c14c48bb5078f285dfa289c58119a97c2132b3544961f39711532c074"
-    sha256 cellar: :any_skip_relocation, monterey:       "2174e1da2836796f0b0122a1bcef9a0a8a41a8c02b56c04f555b0e7509c209bf"
-    sha256 cellar: :any_skip_relocation, big_sur:        "f828ceee9507469f4b6be91652bfe262f4963593e040a931f0cf6362d13c95eb"
-    sha256 cellar: :any_skip_relocation, catalina:       "da6129ba9781e85b1281297f9a83b415d65f331011c1112d8da6a2f713d8f55c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5505a6b622555594c354ded016cc6f1f7e2fcb1cf302edf90de4a4fe9cf60341"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "4b4cbab6ae81471f9007a57cc7873a9ae577809bd7f0cc975f166a4b4cbad22b"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "81d3f5929ecb1de646595fee25e7df34fc4640787cbd272dd6716030cddbe50b"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "07169046171554c890f2cd35d35b951fcb3caa00e0c98d28e3ed90fd9691e361"
+    sha256 cellar: :any_skip_relocation, ventura:        "ec476741d690e6feac32d6211552da2f5d38fc6d9670fac6a9d3a7ff9f62d3a0"
+    sha256 cellar: :any_skip_relocation, monterey:       "e5d534ef4b81f122e210fc7ff29da42da266ac09cfa70e5efbdebc4e5d86452d"
+    sha256 cellar: :any_skip_relocation, big_sur:        "683efed8cab1c6720b43c5af0505ed9b8a83fae4cb684d2c44fe31e90242b8dd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "db00227996310a004fa8d2c20bb41fafc4b00a3a831da537b463df64eb505ffe"
   end
 
   depends_on "go" => :build

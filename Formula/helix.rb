@@ -1,27 +1,24 @@
 class Helix < Formula
   desc "Post-modern modal text editor"
   homepage "https://helix-editor.com"
-  url "https://github.com/helix-editor/helix/releases/download/22.08.1/helix-22.08.1-source.tar.xz"
-  sha256 "962cfb913b40b6b5e3896fce5d52590d83fa2e9c35dfba45fdfa26bada54f343"
+  url "https://github.com/helix-editor/helix/releases/download/22.12/helix-22.12-source.tar.xz"
+  sha256 "295b42a369fbc6282693eb984a77fb86260f7baf3ba3a8505d62d1c619c2f3f4"
   license "MPL-2.0"
   head "https://github.com/helix-editor/helix.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any, arm64_monterey: "57090f185674bf3809d1f8404b6051492028029015ea0ac21574002b45619c7c"
-    sha256 cellar: :any, arm64_big_sur:  "cc27d03f9a2ae50301bb52161042418de48efebbb5b287aac7d1ccad5ad544c3"
-    sha256 cellar: :any, monterey:       "e02c39d4f04e682ff8428cbec64b1ce56182745c2b93f8e2104b7b76c6caba48"
-    sha256 cellar: :any, big_sur:        "cab72badae4e61751b591f5b905f4968fb6296be4fe440597e23d1021ba06424"
-    sha256 cellar: :any, catalina:       "0d1b0d5952923c20c40ef596a159a046b3c615fa7a27f527c27325dda7e21b36"
-    sha256               x86_64_linux:   "661f36d16415f7d17a21494fe7a536c12e25da93c64a240f6822da5e68397ec9"
+    sha256 cellar: :any,                 arm64_ventura:  "9682e86e2bf301c945c77fb92e31606af64261483046f8efdcfd867d7fa0883d"
+    sha256 cellar: :any,                 arm64_monterey: "286b20ac1d02cea45262328602fb66476c6842c5042fdf16a05702893b28e5cd"
+    sha256 cellar: :any,                 arm64_big_sur:  "ea0bd7cd2c49c6f21f561972962d8d6f13c2431929024c8a31d191240cbd3a12"
+    sha256 cellar: :any,                 ventura:        "6752baa1f900ee7b74ced053bcb7b5e5ac00dd8d823cf5c8dd8afab7dea46023"
+    sha256 cellar: :any,                 monterey:       "dcafc9eac338190380361fe820515fb2745af1e6e044708853847fa912242405"
+    sha256 cellar: :any,                 big_sur:        "859393abe2375d95c1414438f3550daa9041c430b91173fb37acb6e35312b6e9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "06a540e98ac6c2153badcd1ebbddb65bf5767f8434a01810b7a9030992d1de17"
   end
 
   depends_on "rust" => :build
 
-  on_linux do
-    depends_on "gcc" # For C++17
-  end
-
-  fails_with gcc: "5"
+  fails_with gcc: "5" # For C++17
 
   def install
     system "cargo", "install", "-vv", *std_cargo_args(root: libexec, path: "helix-term")

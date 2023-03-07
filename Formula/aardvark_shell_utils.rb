@@ -5,16 +5,11 @@ class AardvarkShellUtils < Formula
   sha256 "aa2b83d9eea416aa31dd1ce9b04054be1a504e60e46426225543476c0ebc3f67"
   license "GPL-2.0-or-later"
 
-  # This regex is multiline since there's a line break between `href=` and the
-  # attribute value on the homepage.
-  livecheck do
-    url :homepage
-    regex(/href=.*?aardvark_shell_utils[._-]v?(\d+(?:\.\d+)+)\.t/im)
-  end
-
   bottle do
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "19675479ac1913e690b2820e6cd788e67ac3e3b7fd42fa86f0395df61408f559"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "9c21b88c0adf1d80654686705f6961c5fcde8c99ee5e27cc15ecd6e0eef9ced9"
     sha256 cellar: :any_skip_relocation, arm64_big_sur:  "43c817950566219fac5ddffbf9e4e2810f1841c29d1c742c96364932aae6d0a0"
+    sha256 cellar: :any_skip_relocation, ventura:        "0e2cf7fb21cec6ec0b573987f67638f6824c691a4bef53b5e2ae9753e0b00735"
     sha256 cellar: :any_skip_relocation, monterey:       "dc442adf6c9d2756745bd7fef2eafcc739754af1000827fdad1dd3dcca3a5a84"
     sha256 cellar: :any_skip_relocation, big_sur:        "9e7fad807aa43cee3917dce5a8f83ad734155167e446cf16145a91766ae7f503"
     sha256 cellar: :any_skip_relocation, catalina:       "df44cfc6ab0cf9b275f806ab72b47ab47475e35ca3faabbcbbe2054d65f6aa4e"
@@ -25,8 +20,15 @@ class AardvarkShellUtils < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "9286900cc5bf3886defd02832667001eb609328b5244ea49ee3200656c5f6826"
   end
 
+  # downloads.laffeycomputer.com is down and we use archive.org url
+  # Last release on 2003-12-25
+  deprecate! date: "2023-02-10", because: :unmaintained
+
+  on_macos do
+    conflicts_with "uutils-coreutils", because: "both install `realpath` binaries"
+  end
+
   conflicts_with "coreutils", because: "both install `realpath` binaries"
-  conflicts_with "uutils-coreutils", because: "both install `realpath` binaries"
 
   def install
     system "./configure", "--disable-debug",

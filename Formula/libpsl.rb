@@ -1,49 +1,53 @@
 class Libpsl < Formula
   desc "C library for the Public Suffix List"
   homepage "https://rockdaboot.github.io/libpsl"
-  url "https://github.com/rockdaboot/libpsl/releases/download/0.21.1/libpsl-0.21.1.tar.gz"
-  sha256 "ac6ce1e1fbd4d0254c4ddb9d37f1fa99dec83619c1253328155206b896210d4c"
+  url "https://github.com/rockdaboot/libpsl/releases/download/0.21.2/libpsl-0.21.2.tar.gz"
+  sha256 "e35991b6e17001afa2c0ca3b10c357650602b92596209b7492802f3768a6285f"
   license "MIT"
-  revision 5
+  revision 1
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "e557dadaa6ae91265e67c280cd809c0cbf5e6b02215a6345115f6e0f8d52d315"
-    sha256 cellar: :any,                 arm64_big_sur:  "99118a8a981f19bbc3ce71e1fabbebf92cda62f94d4294c5d58ada5f50f6e859"
-    sha256 cellar: :any,                 monterey:       "2a9b432b666f483235e80cafa9201920df70b1c8e4ad53f819f8d4607818d0e2"
-    sha256 cellar: :any,                 big_sur:        "9a7d0cf58a69d6b388775d32c093365e6ae8d56cf0b362af6be6b4c067202a5b"
-    sha256 cellar: :any,                 catalina:       "a6a89728976c0687f579b4c13fa0537b82d38e1aa01dfe965518e00192e4052b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b67f7d46ea88425ee5b1a0ebba7b6c28ed7d035c1752862613eb40682bea319c"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_ventura:  "7518afd0130f15500f4fd4d5c8ed43cee3b0e3c8c237a12bb3e9adbc4a6ec4cb"
+    sha256 cellar: :any,                 arm64_monterey: "7cb1d77973b8fdfa4a2804ae69434ec3cf4248a906d3a46b66e29f9920843f48"
+    sha256 cellar: :any,                 arm64_big_sur:  "5050c1c715b46f55ed6c96fcc00cebb682847c714bf225aadb18fe6b4c3f84f6"
+    sha256 cellar: :any,                 ventura:        "7c48120e1842b1ef8909e1f0310e613aadc67ca2799f216b1a88603964a815e1"
+    sha256 cellar: :any,                 monterey:       "6a021e3c659939c49c53d04a7f4ad7b9333b37c9f05587731c5a1024c15c71da"
+    sha256 cellar: :any,                 big_sur:        "95a808735dbfb307e8e3ab1a747fd8ecd82ab57bd31a72c8c2b40d71047c05b9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a7cd47ce99f50e717ef2af9c82964912cac03e3e0659e818d689294604094ba2"
   end
 
   depends_on "meson" => :build
   depends_on "ninja" => :build
   depends_on "pkg-config" => :build
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => :build
   depends_on "icu4c"
 
   def install
-    mkdir "build" do
-      system "meson", *std_meson_args, "-Druntime=libicu", "-Dbuiltin=libicu", ".."
-      system "ninja", "-v"
-      system "ninja", "install", "-v"
-    end
+    system "meson", "setup", "build", "-Druntime=libicu", "-Dbuiltin=true", *std_meson_args
+    system "meson", "compile", "-C", "build"
+    system "meson", "install", "-C", "build"
   end
 
   test do
     (testpath/"test.c").write <<~EOS
-      #include <stdio.h>
-      #include <libpsl.h>
       #include <assert.h>
+      #include <stdio.h>
+      #include <string.h>
+
+      #include <libpsl.h>
 
       int main(void)
       {
-          const char *domain = ".eu";
-          const char *cookie_domain = ".eu";
           const psl_ctx_t *psl = psl_builtin();
 
+          const char *domain = ".eu";
           assert(psl_is_public_suffix(psl, domain));
 
-          psl_free(psl);
+          const char *host = "www.example.com";
+          const char *expected_domain = "example.com";
+          const char *actual_domain = psl_registrable_domain(psl, host);
+          assert(strcmp(actual_domain, expected_domain) == 0);
 
           return 0;
       }

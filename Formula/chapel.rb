@@ -1,33 +1,26 @@
 class Chapel < Formula
   desc "Programming language for productive parallel computing at scale"
   homepage "https://chapel-lang.org/"
-  url "https://github.com/chapel-lang/chapel/releases/download/1.27.0/chapel-1.27.0.tar.gz"
-  sha256 "558b1376fb7757a5e1f254c717953f598a3e89850c8edd1936b8d09c464f3e8b"
+  url "https://github.com/chapel-lang/chapel/releases/download/1.29.0/chapel-1.29.0.tar.gz"
+  sha256 "f87bc7285c4641ed540f806c63ab904137b650b1e232a11c15f76e874e079804"
   license "Apache-2.0"
-  revision 2
   head "https://github.com/chapel-lang/chapel.git", branch: "main"
 
   bottle do
-    sha256 arm64_monterey: "8bbe059caaf4f0ecf94d21e474027d5c12cdd66eeca0e733ff3227e3817cd63e"
-    sha256 arm64_big_sur:  "0891b258dbb9eb380278dffcf5bb635c23b70a0860bf2a6e7ddfeca11da77f4f"
-    sha256 monterey:       "070d13b86167a2a6a0e919a87771825280a4ccd50c38a4ebebaef40d88966911"
-    sha256 big_sur:        "6af85521fa09d3b0b0617be98fb94634f053f03f4cea4538b610df8b0d3c5377"
-    sha256 catalina:       "68dbcbb43aea0214677cb895bd15b683ad5ad4b8f28cb0ded08aee88c3e1d94e"
-    sha256 x86_64_linux:   "e6119c8d727fa60b20c7cd7c1dc3502aa4a440a4db074026906850a1e5ae80fd"
+    rebuild 1
+    sha256 arm64_ventura:  "8334d9cce471a9bacfbe8552ead3d28d730e7af0c96c036d47f23679b41aa18a"
+    sha256 arm64_monterey: "8f39f5b62a3c929c9e666279adc377f6f1427e3d17be7fc80a0744a6f061229e"
+    sha256 arm64_big_sur:  "4bc63c52fb948046a29604fdda5b16943c3e3af8de56cb668c1560f2d68b2503"
+    sha256 ventura:        "629240cca25b97de4712b70ca3c12dc2b45cf491f79bf3db76ecdb9e39be6e81"
+    sha256 monterey:       "c13b6f38cc00a193ee94983c3e512e329b4f33358263feaa84a9dec24595015d"
+    sha256 big_sur:        "8170472696b28130225bb6436d07157af4fee7874b4833806a6c0aead3013b73"
+    sha256 x86_64_linux:   "d8c10f52877206a51e095ec1cf3d515b90cdc4c168f34d777e5e7ea154f642eb"
   end
 
+  depends_on "cmake"
   depends_on "gmp"
-  depends_on "python@3.10"
-
-  # fatal error: cannot open file './sys_basic.h': No such file or directory
-  # Issue ref: https://github.com/Homebrew/homebrew-core/issues/96915
-  on_catalina :or_older do
-    depends_on "llvm@11"
-  end
-
-  on_system :linux, macos: :big_sur_or_newer do
-    depends_on "llvm"
-  end
+  depends_on "llvm@14"
+  depends_on "python@3.11"
 
   # LLVM is built with gcc11 and we will fail on linux with gcc version 5.xx
   fails_with gcc: "5"
@@ -44,7 +37,9 @@ class Chapel < Formula
 
   def install
     # Always detect Python used as dependency rather than needing aliased Python formula
-    python = "python3.10"
+    python = "python3.11"
+    # It should be noted that this will expand to: 'for cmd in python3.11 python3 python python2; do'
+    # in our find-python.sh script.
     inreplace "util/config/find-python.sh", /^(for cmd in )(python3 )/, "\\1#{python} \\2"
 
     libexec.install Dir["*"]

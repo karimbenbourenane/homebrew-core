@@ -10,7 +10,7 @@ env:
   HOMEBREW_DEVELOPER: 1
   HOMEBREW_GITHUB_ACTIONS: 1
   HOMEBREW_NO_AUTO_UPDATE: 1
-  HOMEBREW_CHANGE_ARCH_TO_ARM: 1
+  HOMEBREW_NO_INSTALL_FROM_API: 1
 
 concurrency:
   group: "tests-${{ github.ref }}"
@@ -22,9 +22,9 @@ permissions:
 jobs:
   tap_syntax:
     if: github.repository == 'Homebrew/homebrew-core'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     container:
-      image: ghcr.io/homebrew/ubuntu16.04:master
+      image: ghcr.io/homebrew/ubuntu22.04:master
     env:
       HOMEBREW_SIMULATE_MACOS_ON_LINUX: 1
     outputs:
@@ -46,11 +46,12 @@ jobs:
     permissions:
       pull-requests: read
     if: github.event_name == 'pull_request' && github.repository == 'Homebrew/homebrew-core'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: tap_syntax
     outputs:
       syntax-only: ${{ steps.check-labels.outputs.syntax-only }}
       linux-runner: ${{ steps.check-labels.outputs.linux-runner }}
+      logs-dir: ${{ steps.check-labels.outputs.logs-dir }}
       fail-fast: ${{ steps.check-labels.outputs.fail-fast }}
       test-dependents: ${{ steps.check-labels.outputs.test-dependents }}
       timeout-minutes: ${{ steps.check-labels.outputs.timeout-minutes }}
@@ -85,7 +86,8 @@ jobs:
             if (label_names.includes('CI-linux-self-hosted')) {
               core.setOutput('linux-runner', 'linux-self-hosted-1')
             } else {
-              core.setOutput('linux-runner', 'ubuntu-latest')
+              core.setOutput('linux-runner', 'ubuntu-22.04')
+              core.setOutput('logs-dir', '/github/home/.cache/Homebrew/Logs')
             }
 
             if (label_names.includes('CI-no-fail-fast')) {
@@ -177,6 +179,13 @@ jobs:
               console.log('No CI-skip-recursive-dependents label found. Not passing --skip-recursive-dependents to brew test-bot.')
             }
 
+            if (label_names.includes('CI-skip-livecheck')) {
+              console.log('CI-skip-livecheck label found. Passing --skip-livecheck to brew test-bot.')
+              test_bot_formulae_args.push('--skip-livecheck')
+            } else {
+              console.log('No CI-skip-livecheck label found. Not passing --skip-livecheck to brew test-bot.')
+            }
+
             core.setOutput('test-bot-formulae-args', test_bot_formulae_args.join(" "))
             core.setOutput('test-bot-dependents-args', test_bot_dependents_args.join(" "))
 
@@ -186,14 +195,15 @@ jobs:
     strategy:
       matrix:
         include:
-          - runner: '12-arm64'
-          - runner: '12-${{github.run_id}}-${{github.run_attempt}}'
-          - runner: '11-arm64'
-          - runner: '11-${{github.run_id}}-${{github.run_attempt}}'
-          - runner: '10.15-${{github.run_id}}-${{github.run_attempt}}'
+          - runner: "13-arm64-${{github.run_id}}-${{github.run_attempt}}"
+          - runner: "13-${{github.run_id}}-${{github.run_attempt}}"
+          - runner: "12-arm64"
+          - runner: "12-${{github.run_id}}-${{github.run_attempt}}"
+          - runner: "11-arm64"
+          - runner: "11-${{github.run_id}}-${{github.run_attempt}}"
           - runner: ${{needs.setup_tests.outputs.linux-runner}}
             container:
-              image: ghcr.io/homebrew/ubuntu16.04:master
+              image: ghcr.io/homebrew/ubuntu22.04:master
               options: --user=linuxbrew -e GITHUB_ACTIONS_HOMEBREW_SELF_HOSTED
             workdir: /github/home
             timeout: 4320
@@ -218,6 +228,12 @@ jobs:
         id: set-up-homebrew
         uses: Homebrew/actions/setup-homebrew@master
 
+      - name: Enable debug mode
+        run: |
+          echo 'HOMEBREW_DEBUG=1' >> "${GITHUB_ENV}"
+          echo 'HOMEBREW_VERBOSE=1' >> "${GITHUB_ENV}"
+        if: runner.debug
+
       - run: brew test-bot --only-cleanup-before
 
       - run: brew test-bot --only-setup
@@ -225,6 +241,7 @@ jobs:
       - name: Run brew test-bot ${{ needs.setup_tests.outputs.test-bot-formulae-args }}
         id: brew-test-bot-formulae
         run: |
+          rm -rf bottles
           mkdir bottles
           cd bottles
           brew test-bot ${{ needs.setup_tests.outputs.test-bot-formulae-args }}
@@ -275,7 +292,7 @@ jobs:
         uses: actions/upload-artifact@main
         with:
           name: logs-${{ matrix.runner }}
-          path: ${{matrix.workdir || github.workspace}}/bottles/logs
+          path: ${{ runner.os == 'Linux' && needs.setup_tests.outputs.logs-dir || format('{0}/bottles/logs', matrix.workdir || github.workspace) }}
 
       - name: Delete logs and home
         if: always()
@@ -290,10 +307,10 @@ jobs:
           cd bottles
           count=$(ls *.json | wc -l | xargs echo -n)
           echo "$count bottles"
-          echo "::set-output name=count::$count"
+          echo "count=$count" >> $GITHUB_OUTPUT
           failures=$(ls failed/*.json | wc -l | xargs echo -n)
           echo "$failures failed bottles"
-          echo "::set-output name=failures::$failures"
+          echo "failures=$failures" >> $GITHUB_OUTPUT
 
       - name: Upload failed bottles
         if: always() && steps.bottles.outputs.failures > 0

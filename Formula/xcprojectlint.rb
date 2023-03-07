@@ -13,6 +13,8 @@ class Xcprojectlint < Formula
     sha256 cellar: :any_skip_relocation, catalina:      "e573329068894a330ee859bdc2968001d42b2d06005824ca7a099d52e2dda543"
   end
 
+  deprecate! date: "2022-12-27", because: :unmaintained
+
   depends_on xcode: ["12.0", :build]
 
   def install
@@ -44,7 +46,7 @@ class Xcprojectlint < Formula
       }
     EOS
     output = shell_output("#{bin}/xcprojectlint --project Bad.xcodeproj --report error --validations all 2>&1", 70)
-    assert_match "error: Xcode folder \“/B4A1B4A825CF28FA00DF4293\” has no children.", output
+    assert_match "error: Xcode folder “/B4A1B4A825CF28FA00DF4293” has no children.", output
 
     # Good Xcode project
     (testpath/"Good.xcodeproj/project.pbxproj").write <<~EOS

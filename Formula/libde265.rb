@@ -1,19 +1,18 @@
 class Libde265 < Formula
   desc "Open h.265 video codec implementation"
   homepage "https://github.com/strukturag/libde265"
-  url "https://github.com/strukturag/libde265/releases/download/v1.0.8/libde265-1.0.8.tar.gz"
-  sha256 "24c791dd334fa521762320ff54f0febfd3c09fc978880a8c5fbc40a88f21d905"
+  url "https://github.com/strukturag/libde265/releases/download/v1.0.11/libde265-1.0.11.tar.gz"
+  sha256 "2f8f12cabbdb15e53532b7c1eb964d4e15d444db1be802505e6ac97a25035bab"
   license "LGPL-3.0-or-later"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "e50069b8cfb753b45940ea5f95d0a44683ccfb582986947b7369d8ec404de46e"
-    sha256 cellar: :any,                 arm64_big_sur:  "856e3db9a951f15fc2e3c416ddf64c8336d405fc1e407e4728804009034367e6"
-    sha256 cellar: :any,                 monterey:       "2b6de4ce4fd4899e31114857b06a0993a915ef1eb55e4039b770775372d8ba62"
-    sha256 cellar: :any,                 big_sur:        "6c809d037d6fe6c99a4c1492882c1e4ba720c9ead911b587da26dcb352fc5524"
-    sha256 cellar: :any,                 catalina:       "774fe5c9c849784aa10648fe3fae971c7d702a47807b6954c8a8763368bce9fc"
-    sha256 cellar: :any,                 mojave:         "344e3a6eab4addecd812a51ef0d6e0db5e894c26a455603a6b4f4972757a5994"
-    sha256 cellar: :any,                 high_sierra:    "bcb11c6ab6f03a76ae39a1972ed5a8779e785fdc6a62591823bdf8e2ac102890"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9c77fa36a474fb41cb046ea5215313b160e5b61ac206b268574f75d2cac1ab18"
+    sha256 cellar: :any,                 arm64_ventura:  "cd269b04f879cf736e59a4543a359f493baec4180570ab8a64ac980d1f5d8d75"
+    sha256 cellar: :any,                 arm64_monterey: "ba6dd741ce35d7023354e6a01775fcfe59a05700c8ec3e28d9f27e2d9ec7fe9d"
+    sha256 cellar: :any,                 arm64_big_sur:  "5ba1a106c989d9836f29a89ec3c83acbefe01a400f1e94fd2d34e054614c8815"
+    sha256 cellar: :any,                 ventura:        "958ea9fe4735b4e09b99b416f229cc4d03f63ee0cd11d110f05cdd13d505528e"
+    sha256 cellar: :any,                 monterey:       "e35e1196c5d748634db9327381c567d981768488b43bf144ed8707a8e305ed98"
+    sha256 cellar: :any,                 big_sur:        "7c3afaff06376a54fde19c6e4615dcb18eb24b53a2f932e9286c2176e7ee06da"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8385af5d9d6ee2d7c009ec98ffef6884abad83664fa31f3d631f80d597ef2573"
   end
 
   # Fix -flat_namespace being used on Big Sur and later.
@@ -24,7 +23,7 @@ class Libde265 < Formula
 
   def install
     extra_args = []
-    extra_args << "--build=aarch64-apple-darwin#{OS.kernel_version}" if Hardware::CPU.arm?
+    extra_args << "--build=aarch64-apple-darwin#{OS.kernel_version}" if OS.mac? && Hardware::CPU.arm?
 
     system "./configure", "--disable-dependency-tracking",
                           "--disable-silent-rules",

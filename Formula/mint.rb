@@ -1,17 +1,18 @@
 class Mint < Formula
   desc "Dependency manager that installs and runs Swift command-line tool packages"
   homepage "https://github.com/yonaskolb/Mint"
-  url "https://github.com/yonaskolb/Mint/archive/0.17.1.tar.gz"
-  sha256 "0e3ab23e548a752f6eee3a7b98d1c137a30371e4a0ec9212840baaa56741d2e4"
+  url "https://github.com/yonaskolb/Mint/archive/0.17.5.tar.gz"
+  sha256 "f55350f7778c4ccd38311ed36f39287ff74bb63eb230f6d448e35e7f934c489c"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "1c0ec84137dd50cf949a68e1b8d3729956e2843e1cc48c6827d26e6d7dbc74fc"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "c57aaea4b6eb863ef946bafe3a77f3d32ad4e10e05876b7c6b2df8f8b9656f4e"
-    sha256 cellar: :any_skip_relocation, monterey:       "5faf98e60b6d18332bcac4ab076f6ba861ee7daea4c23a85f97e6c8fa3d1f463"
-    sha256 cellar: :any_skip_relocation, big_sur:        "3ccf422821dd5fc82488f8e0ab2a11efb645901527b8cf9c42979cc152a9ce02"
-    sha256 cellar: :any_skip_relocation, catalina:       "d09ea36619994628564fb3d7e8e71b8c368c59f68e29174fb84b9b127bd9290e"
-    sha256                               x86_64_linux:   "1d73dd0102396a53abac4721557dc7d7c2897bdb0e95551e04869c48d11df764"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "250948fe6fc14179d7c381d084a90d6796861ba9a8456617cadda9ac62cbc2b8"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "6546b80b980a45036415162189dd340b1f8d3f4e82a80d40a24e7b5dd672eb04"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "39f9d254b248a44bb44e399081b7e50a6c598834e2bf86bb7de3ebc349f11e0d"
+    sha256 cellar: :any_skip_relocation, ventura:        "068f9984e81b578f2ed6cef4cc9659835a689bdecf121651ea24ebcfefd49339"
+    sha256 cellar: :any_skip_relocation, monterey:       "f8b09a640942548a151c7450c85f33d40162c7540049666131740d49c68e61e6"
+    sha256 cellar: :any_skip_relocation, big_sur:        "528ea907912e8002cd3a769e8ddda4556cf2482122c3f848a7d923146df37101"
+    sha256                               x86_64_linux:   "7c8dd63f0310a46f67550f92ee48a370fadfc1a4d884b8a3904a36b7b610b3f2"
   end
 
   depends_on xcode: ["12.0", :build]

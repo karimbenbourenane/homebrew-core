@@ -1,8 +1,8 @@
 class PopplerQt5 < Formula
   desc "PDF rendering library (based on the xpdf-3.0 code base)"
   homepage "https://poppler.freedesktop.org/"
-  url "https://poppler.freedesktop.org/poppler-22.08.0.tar.xz"
-  sha256 "b493328721402f25cb7523f9cdc2f7d7c59f45ad999bde75c63c90604db0f20b"
+  url "https://poppler.freedesktop.org/poppler-23.03.0.tar.xz"
+  sha256 "b04148bf849c1965ada7eff6be4685130e3a18a84e0cce73bf9bc472ec32f2b4"
   license "GPL-2.0-only"
   head "https://gitlab.freedesktop.org/poppler/poppler.git", branch: "master"
 
@@ -11,12 +11,13 @@ class PopplerQt5 < Formula
   end
 
   bottle do
-    sha256                               arm64_monterey: "c481ab871309497b7def3619817adb617f8393a6d703fd5d8cb7c1b8f1cb3051"
-    sha256                               arm64_big_sur:  "d3404b6ad8d590fc7c5764a9bf93cca7f1e80f7a72e0a14129071b69d9cfac80"
-    sha256                               monterey:       "8d45b9235e5309828d7e79cd7fe4caa02e1af37e81b2c5f661b332befd9687e1"
-    sha256                               big_sur:        "087d8042b57091f8c5c018ead30acb6c8328c4c9539fa43ee8dae7185caf926c"
-    sha256                               catalina:       "46cb5c083625dd74c360bacc0b7e3ef2fe76f6f50d4b0f962fcf31a6fb443c26"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "56622ae085758f3c2392315bacc466ba66ec6220e227cb92dc91dce2b4445164"
+    sha256 arm64_ventura:  "2094ead0ecb063c41b03e7587ce78bea693bacc3d33f379c7969684a1cf6cc18"
+    sha256 arm64_monterey: "d1511c5ffea8356ffe3e087aa4520a093148170ee154145dfa21523efa5c10ed"
+    sha256 arm64_big_sur:  "fef4bdc8612d30d589855c0905d43b6e5b231bd72ce46c050ed6f8bc154f6e06"
+    sha256 ventura:        "39a3cb851e29ea6e22f53334d2ce640da0e4e77a564276df2efbd8473ebe3532"
+    sha256 monterey:       "f3fd4a4da6a47ca130e576c37da5cd3be719285f9969998e1dcffa9caa545601"
+    sha256 big_sur:        "5f6e81697a244f2267a4d44a53cef8e660449b326acc87cb1b15d7cc5150ccff"
+    sha256 x86_64_linux:   "d20e8e6b23e4219c7894eb8bd3971a817cb34cabfbcb539f1815690fb30cb784"
   end
 
   keg_only "it conflicts with poppler"
@@ -40,10 +41,6 @@ class PopplerQt5 < Formula
   uses_from_macos "gperf" => :build
   uses_from_macos "curl"
 
-  on_linux do
-    depends_on "gcc"
-  end
-
   fails_with gcc: "5"
 
   resource "font-data" do
@@ -53,10 +50,6 @@ class PopplerQt5 < Formula
 
   def install
     ENV.cxx11
-
-    # Fix for BSD sed. Reported upstream at:
-    # https://gitlab.freedesktop.org/poppler/poppler/-/issues/1290
-    inreplace "CMakeLists.txt", "${SED} -i", "\\0 -e"
 
     args = std_cmake_args + %W[
       -DBUILD_GTK_TESTS=OFF

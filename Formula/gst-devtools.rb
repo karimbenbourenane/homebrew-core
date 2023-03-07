@@ -3,10 +3,9 @@ class GstDevtools < Formula
 
   desc "GStreamer development and validation tools"
   homepage "https://gstreamer.freedesktop.org/modules/gstreamer.html"
-  url "https://gstreamer.freedesktop.org/src/gst-devtools/gst-devtools-1.20.3.tar.xz"
-  sha256 "bbbd45ead703367ea8f4be9b3c082d7b62bef47b240a39083f27844e28758c47"
+  url "https://gstreamer.freedesktop.org/src/gst-devtools/gst-devtools-1.22.0.tar.xz"
+  sha256 "4d21fee5c15f2877c0b1f6c2da0cdba67ce7caab2c199ab27e91a1394d5ba195"
   license "LGPL-2.1-or-later"
-  revision 1
   head "https://gitlab.freedesktop.org/gstreamer/gst-devtools.git", branch: "master"
 
   livecheck do
@@ -15,12 +14,13 @@ class GstDevtools < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "3095ec9f22237b0c5404954ac1ff5200040eed7917b182229c31324250cc4b75"
-    sha256 arm64_big_sur:  "9d0bf56c0adaafd48d91edcd36ed78de13acf92100471af791a6b9f3b49f1789"
-    sha256 monterey:       "0358177078512fd1bde0aa1ec4d4bbf1bbcfa7578ed522e463ab707902c85cc2"
-    sha256 big_sur:        "f03b752496981a59428124478fc5dc1595137fbf8d69a3130fa2d19602801eb4"
-    sha256 catalina:       "cd0dc00c2cef759be7c1bd4ec6efd81f14258ac781696f457d80ec37fa9b2972"
-    sha256 x86_64_linux:   "c3e9c440677b235ea209c56435a95737a8a8422c2acf77d0b87d4f42395b8697"
+    sha256 arm64_ventura:  "fcbd0823c79339f93fd0beaecf2edd2c8865fd4861ed707e0cd2575385eab23f"
+    sha256 arm64_monterey: "98d37761162ed0ff37afa62f86c2e56045f09847153490ce14c79ad22d6f4e51"
+    sha256 arm64_big_sur:  "91cd476c3f601516584333d01f7bdd449efb296fa6b7609468502393af2f3b97"
+    sha256 ventura:        "1c71376517f5b816a396e6e6efb812191e269f1646b44ac116a347d59854a121"
+    sha256 monterey:       "c1eb2b68e7fa3997d1dd7970ea58af418bb6d802ec75196c915f47ee128b49fb"
+    sha256 big_sur:        "66b4bbc01e35abe21bd8687540d00b1d14517419b8ed4f3b152d5e4e753bda3e"
+    sha256 x86_64_linux:   "0fbe200e9fd1c563d4407a52b949ddb5786a4afb33cde3d3cfdc3a8b4b9b9d4a"
   end
 
   depends_on "gobject-introspection" => :build
@@ -31,7 +31,7 @@ class GstDevtools < Formula
   depends_on "gst-plugins-base"
   depends_on "gstreamer"
   depends_on "json-glib"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   def install
     args = %w[

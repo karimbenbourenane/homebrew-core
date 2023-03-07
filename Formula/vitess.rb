@@ -1,21 +1,21 @@
 class Vitess < Formula
   desc "Database clustering system for horizontal scaling of MySQL"
   homepage "https://vitess.io"
-  url "https://github.com/vitessio/vitess/archive/v14.0.2.tar.gz"
-  sha256 "a29eb7cab925e2121a93d65748e3022c3e3093267f85110e34b0f8de9fa11b8e"
+  url "https://github.com/vitessio/vitess/archive/v16.0.0.tar.gz"
+  sha256 "67f864d4e5e9a6b248e9e8edaeae7a02dd821f1e9295865d910a697cf0443eb8"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "0941341f66d3a6080acec1ae051ba41a23eff2920d0b5ea28613010f7944fb3c"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "e42569bda5970732c90ca421f54dbff1fd0566f62f604c518fdb0c9aa0db9969"
-    sha256 cellar: :any_skip_relocation, monterey:       "874b8f51b421951bed01a7285aafc483dd13d2871cb92a0b96993c2cffe5b294"
-    sha256 cellar: :any_skip_relocation, big_sur:        "7cf46a0e20c4f013a4bf4901da4e3c80ccc596cf9f038cdd1e2cb3ec32a81494"
-    sha256 cellar: :any_skip_relocation, catalina:       "6af3734265dac7fd2ec6b9968a83040a20a393ae2952886628695ad1e5401c1f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "61d5ae2c2119d207909bdbbecd04daa992418764fb08db9263e422b689e9a7ae"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "5fe2b2173fa7480175e1db8fed436f7bee2f050cb5957d01e25b7abfb98c79aa"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "a50283ea90ffb89aa714d86fbc8e787745603bffe289b60c231f82766eb0abf0"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "e99ddbf48ea2738a5d906037dd9cbbd9d642f2eb4528565dffdebdd9860addf2"
+    sha256 cellar: :any_skip_relocation, ventura:        "4d7bf9b2164249177ed3548d617f8aef7a26acc3432a444b3b0d1a0586985783"
+    sha256 cellar: :any_skip_relocation, monterey:       "b9a4f4e44f88bd9376381e68fffef513214eace266633b8aca3bd3a129428505"
+    sha256 cellar: :any_skip_relocation, big_sur:        "2c0e73eb3e47b16f637bfc9fa3d0294cd457c177e74ee3372b893b62949165ea"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c51b295628b8db317ed64d129728bbd7a34ef35b5caf6ed4105ca2b813fc77c9"
   end
 
-  # Try to switch to the latest go on the next release
-  depends_on "go@1.18" => :build
+  depends_on "go" => :build
   depends_on "etcd"
 
   def install
@@ -51,9 +51,9 @@ class Vitess < Formula
     sleep 1
 
     fork do
-      exec bin/"vtctl", "-topo_implementation", "etcd2",
-                        "-topo_global_server_address", etcd_server,
-                        "-topo_global_root", testpath/"global",
+      exec bin/"vtctl", "--topo_implementation", "etcd2",
+                        "--topo_global_server_address", etcd_server,
+                        "--topo_global_root", testpath/"global",
                         "VtctldCommand", "AddCellInfo",
                         "--root", testpath/cell,
                         "--server-address", etcd_server,
@@ -63,13 +63,13 @@ class Vitess < Formula
 
     port = free_port
     fork do
-      exec bin/"vtgate", "-topo_implementation", "etcd2",
-                         "-topo_global_server_address", etcd_server,
-                         "-topo_global_root", testpath/"global",
-                         "-tablet_types_to_wait", "PRIMARY,REPLICA",
-                         "-cell", cell,
-                         "-cells_to_watch", cell,
-                         "-port", port.to_s
+      exec bin/"vtgate", "--topo_implementation", "etcd2",
+                         "--topo_global_server_address", etcd_server,
+                         "--topo_global_root", testpath/"global",
+                         "--tablet_types_to_wait", "PRIMARY,REPLICA",
+                         "--cell", cell,
+                         "--cells_to_watch", cell,
+                         "--port", port.to_s
     end
     sleep 3
 

@@ -1,21 +1,22 @@
 class Quantlib < Formula
   desc "Library for quantitative finance"
   homepage "https://www.quantlib.org/"
-  url "https://github.com/lballabio/QuantLib/releases/download/QuantLib-v1.27.1/QuantLib-1.27.1.tar.gz"
-  sha256 "ab5e3620e1556b025a4e7a80a9e59c5fc27ae2c7a0e850b9698ad22d0c553d18"
+  url "https://github.com/lballabio/QuantLib/releases/download/QuantLib-v1.29/QuantLib-1.29.tar.gz"
+  sha256 "b8127fb6fe5562dfabfcb7d62df4ba2f018de39d7fbe7df2b7a688578516b4b7"
   license "BSD-3-Clause"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "457b49d51ffe5cfcb196622711f5253d17b9777858c87959d2b95b776507eb5c"
-    sha256 cellar: :any,                 arm64_big_sur:  "ea6a8896bb409eb981b82dd9a919fe3dada9736fa9b76025b696f6652931c186"
-    sha256 cellar: :any,                 monterey:       "5c7e8e598634bc241aad3eb20d83a6a38a245bd0cc1cb1840dbb02862683dfe3"
-    sha256 cellar: :any,                 big_sur:        "6f2839248d3657c8ba1fbfe30af4e5e6ad2c09ef9421c62d60724d7c0245ffaa"
-    sha256 cellar: :any,                 catalina:       "1848b6d5c425938d9dcc4b695963e114c829eccc5cdb81a3f4dad9f5c36e31fb"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "3e2f3affe771d0acc0a9ca00ddb255894e56ac0c7969d4610b6955a5a2434d1b"
+    sha256 cellar: :any,                 arm64_ventura:  "7a4a01f6f617700fb30594a4b417de4710bf68c072908a4546ded2309826cd14"
+    sha256 cellar: :any,                 arm64_monterey: "d06fc70a2c4e1b4176cd14b5636fd738f5db424dd6ae1d51c0eacb4488284115"
+    sha256 cellar: :any,                 arm64_big_sur:  "bef83614d72fe85ef332e8d49b05b7f9fe260d05ad3f5bee5144951ddeb6f2a2"
+    sha256 cellar: :any,                 ventura:        "ee574115f4eb387ad7ecfb2031f2391daae38ee49971a095016da02a2906d265"
+    sha256 cellar: :any,                 monterey:       "55ef4d3fedd132a9ac2c76c50f11ab16be6dda1363aed4930628cc9d46d9390c"
+    sha256 cellar: :any,                 big_sur:        "9bc2785cc08496dfd1f0a0717392c6c3f9de3938abbbd85d18d117a7f918b12e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "367488e2678496a828cd038468c456794ee755047b8d6a196d4c6e99fa4586b0"
   end
 
   head do
-    url "https://github.com/lballabio/quantlib.git"
+    url "https://github.com/lballabio/quantlib.git", branch: "master"
 
     depends_on "autoconf" => :build
     depends_on "automake" => :build

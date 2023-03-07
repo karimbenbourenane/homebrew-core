@@ -2,18 +2,19 @@ class Easeprobe < Formula
   desc "Simple, standalone, and lightWeight tool that can do health/status checking"
   homepage "https://github.com/megaease/easeprobe"
   url "https://github.com/megaease/easeprobe.git",
-      tag:      "v1.8.0",
-      revision: "0108e6fc1a41607eef4f332ea05399ea59ce081e"
+      tag:      "v2.0.1",
+      revision: "787b337a77186503092c238ea9600e20fdf8c50c"
   license "Apache-2.0"
   head "https://github.com/megaease/easeprobe.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "81181c7323d36357bcfa63d9535dd098c697615ab7bd77fb66ea23159b8cf2ed"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "93d5914935e5fd11ddf12db56182f915071f381d98ccca52c4ec89f47a2d6346"
-    sha256 cellar: :any_skip_relocation, monterey:       "daa7275f23e28d73aad539bd7ec9fb845d93b90b700873fca53e271c403674a0"
-    sha256 cellar: :any_skip_relocation, big_sur:        "6d4c59e717e4257a92d4c3bd0866b86b90629aec2ac0cd9c163a35f518bf4817"
-    sha256 cellar: :any_skip_relocation, catalina:       "ef85ce020d94b56b032bebf9e8bed5efc8bf699d3caa421fb928a49420b7d68c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8a8af55f6f4bd3860e9514b94815102f4a086dbe77423b669d9f7d1604f16481"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "ab7df1004a6fbfe2988ad730e7bb7d51d21fe0d3ea536aafc80cc12b37550c67"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "54bdfde14ea9fea0274644df8bbfe63f481584a979ecc7a616ca01bcc767e92f"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "276ae30824b83d44e531a114bb1475b5c3528a483192823b7d6c4f0aa5e46345"
+    sha256 cellar: :any_skip_relocation, ventura:        "6a661096756c4b496f9a509c094ecbbd362459f140f8efd933b92482a87e0ad5"
+    sha256 cellar: :any_skip_relocation, monterey:       "fb33d13137839a028ae88c853a025b3f344b76892309b178049976953037c4b1"
+    sha256 cellar: :any_skip_relocation, big_sur:        "d0da63ad87099e1d441d6cb5063ba049aa32a5f8b08fca9e51cd795e15b5528a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7338d935db5a9ed52667034699d2a9c65ec774a08f2624007b8e660e940c779b"
   end
 
   depends_on "go" => :build

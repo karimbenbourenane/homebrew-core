@@ -3,25 +3,43 @@ class Pygments < Formula
 
   desc "Generic syntax highlighter"
   homepage "https://pygments.org/"
-  url "https://files.pythonhosted.org/packages/e0/ef/5905cd3642f2337d44143529c941cc3a02e5af16f0f65f81cbef7af452bb/Pygments-2.13.0.tar.gz"
-  sha256 "56a8508ae95f98e2b9bdf93a6be5ae3f7d8af858b43e02c5a2ff083726be40c1"
+  url "https://files.pythonhosted.org/packages/da/6a/c427c06913204e24de28de5300d3f0e809933f376e0b7df95194b2bb3f71/Pygments-2.14.0.tar.gz"
+  sha256 "b3ed06a9e8ac9a9aae5a6f5dbe78a8a58655d17b43b93c078f094ddc476ae297"
   license "BSD-2-Clause"
   head "https://github.com/pygments/pygments.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "b4c7d99905c7d9895a5480f2f2f1c2a5298e3deb6672f4ff095b6d0901b63ee1"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "b4c7d99905c7d9895a5480f2f2f1c2a5298e3deb6672f4ff095b6d0901b63ee1"
-    sha256 cellar: :any_skip_relocation, monterey:       "160c038d24aa8d3ad62b15846e72fa092738132c4c33d8382db29b1f771d06e8"
-    sha256 cellar: :any_skip_relocation, big_sur:        "160c038d24aa8d3ad62b15846e72fa092738132c4c33d8382db29b1f771d06e8"
-    sha256 cellar: :any_skip_relocation, catalina:       "160c038d24aa8d3ad62b15846e72fa092738132c4c33d8382db29b1f771d06e8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6c21d509491a4667da89fb9a3c3de978b0b9fc62426c6df146a46552be05047f"
+    sha256 cellar: :any_skip_relocation, all: "d4b2214521e36150b21673e1e3b3e627a22919a98274bebeaa1fb8daa0ec086d"
   end
 
-  depends_on "python@3.10"
+  depends_on "python@3.10" => [:build, :test]
+  depends_on "python@3.11" => [:build, :test]
+
+  def pythons
+    deps.select { |dep| dep.name.start_with?("python") }
+        .map(&:to_formula)
+        .sort_by(&:version)
+  end
 
   def install
     bash_completion.install "external/pygments.bashcomp" => "pygmentize"
-    virtualenv_install_with_resources
+
+    pythons.each do |python|
+      python_exe = python.opt_libexec/"bin/python"
+      system python_exe, *Language::Python.setup_install_args(libexec, python_exe)
+
+      site_packages = Language::Python.site_packages(python_exe)
+      pth_contents = "import site; site.addsitedir('#{libexec/site_packages}')\n"
+      (prefix/site_packages/"homebrew-pygments.pth").write pth_contents
+
+      pyversion = Language::Python.major_minor_version(python_exe)
+      bin.install libexec/"bin/pygmentize" => "pygmentize-#{pyversion}"
+
+      next unless python == pythons.max_by(&:version)
+
+      # The newest one is used as the default
+      bin.install_symlink "pygmentize-#{pyversion}" => "pygmentize"
+    end
   end
 
   test do
@@ -30,7 +48,19 @@ class Pygments < Formula
       print(os.getcwd())
     EOS
 
-    system bin/"pygmentize", "-f", "html", "-o", "test.html", testpath/"test.py"
-    assert_predicate testpath/"test.html", :exist?
+    pythons.each do |python|
+      python_exe = python.opt_libexec/"bin/python"
+      pyversion = Language::Python.major_minor_version(python_exe)
+
+      system bin/"pygmentize-#{pyversion}", "-f", "html", "-o", "test.html", testpath/"test.py"
+      assert_predicate testpath/"test.html", :exist?
+
+      (testpath/"test.html").unlink
+
+      next unless python == pythons.max_by(&:version)
+
+      system bin/"pygmentize", "-f", "html", "-o", "test.html", testpath/"test.py"
+      assert_predicate testpath/"test.html", :exist?
+    end
   end
 end

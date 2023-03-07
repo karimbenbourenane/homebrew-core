@@ -9,32 +9,30 @@ class Mapproxy < Formula
   revision 1
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "2396ba7893fa3d7b0831ebb18533a2f73c8f6e4b30e61ca0eb38641f19ad1a5f"
-    sha256 cellar: :any,                 arm64_big_sur:  "7cb053b16e7c06746d420c410797e9c294311fd1213000e5485f6aa2c99b9dee"
-    sha256 cellar: :any,                 monterey:       "c4fdec843abd2a725d2a6ed834a1122dd55bca8441f68373a90ae44afbadef90"
-    sha256 cellar: :any,                 big_sur:        "92b661037da1ad2a9981f194325f43ecc15c27f11e09bd375ad5cc7bba0c73e8"
-    sha256 cellar: :any,                 catalina:       "3b1adaa856106a10da076232b6c33a0fbce2971199cc6b09926a39cd34e3533e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b74e416776f291996c52dd4e195be77b7154107d3102cf7d1c49be9cd5d947ff"
+    rebuild 3
+    sha256 cellar: :any,                 arm64_ventura:  "f9e6be821df823ed62ddb8c022e62760d9ef6933fbf9c54740a7165115120eb4"
+    sha256 cellar: :any,                 arm64_monterey: "f756f95ac4a65fcbba1179adcccf2928d74be7c80d2af251efa9155c8d2c4c74"
+    sha256 cellar: :any,                 arm64_big_sur:  "023bc9bc6c397305e5c314e84e13258dc1de81c98c00b9f0136dd6e891a920b8"
+    sha256 cellar: :any,                 ventura:        "c72b39b57fdee50f70a6724ed7beaf2c6cecdaab54b77d02d3117808b091b400"
+    sha256 cellar: :any,                 monterey:       "7d43175248c2a3a3c3f744a843b4f0142c6f744aa40a5bbbd5c309e0cdee2753"
+    sha256 cellar: :any,                 big_sur:        "88307378320958deeaaf06888cc3ab9d529c794539df3e77a259733c0c696cc2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "2802c2cbede2f32c152de789c1904f8c29cf55eea2ae095cc7292390f21b7ca3"
   end
 
   depends_on "pillow"
   depends_on "proj"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
+  depends_on "pyyaml"
   depends_on "six"
 
   resource "certifi" do
-    url "https://files.pythonhosted.org/packages/07/10/75277f313d13a2b74fc56e29239d5c840c2bf09f17bf25c02b35558812c6/certifi-2022.5.18.1.tar.gz"
-    sha256 "9c5705e395cd70084351dd8ad5c41e65655e08ce46f2ec9cf6c2c08390f71eb7"
+    url "https://files.pythonhosted.org/packages/37/f7/2b1b0ec44fdc30a3d31dfebe52226be9ddc40cd6c0f34ffc8923ba423b69/certifi-2022.12.7.tar.gz"
+    sha256 "35824b4c3a97115964b408844d64aa14db1cc518f6562e8d7261699d1350a9e3"
   end
 
   resource "pyproj" do
-    url "https://files.pythonhosted.org/packages/e3/4d/348402c2fb0d8a8e85a88b8babc6f4efaae9692b7524aedce5fddbef3baf/pyproj-3.3.1.tar.gz"
-    sha256 "b3d8e14d91cc95fb3dbc03a9d0588ac58326803eefa5bbb0978d109de3304fbe"
-  end
-
-  resource "PyYAML" do
-    url "https://files.pythonhosted.org/packages/36/2b/61d51a2c4f25ef062ae3f74576b01638bebad5e045f747ff12643df63844/PyYAML-6.0.tar.gz"
-    sha256 "68fb519c14306fec9720a2a5b45bc9f0c8d1b9c72adf45c37baedfcd949c35a2"
+    url "https://files.pythonhosted.org/packages/c0/fc/fd53e45d2ad5862d32ab8614e70c3c1f52a8e0d8bd243ee6a23b6a481b4a/pyproj-3.4.1.tar.gz"
+    sha256 "261eb29b1d55b1eb7f336127344d9b31284d950a9446d1e0d1c2411f7dd8e3ac"
   end
 
   def install

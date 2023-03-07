@@ -1,33 +1,30 @@
 class Pc6001vx < Formula
   desc "PC-6001 emulator"
-  homepage "https://eighttails.seesaa.net/"
-  url "https://eighttails.up.seesaa.net/bin/PC6001VX_3.9.0_src.tar.gz"
-  sha256 "b5ad5c7191a786fb0b904701ea43319500e51f845428baceeabc6d8919e2f6be"
+  homepage "http://eighttails.seesaa.net/"
+  url "https://eighttails.up.seesaa.net/bin/PC6001VX_4.1.3_src.tar.gz"
+  sha256 "264f135ad89f443b8b103169ca28e95ba488f2ce627c6dc3791e0230587be0d9"
   license "LGPL-2.1-or-later"
   head "https://github.com/eighttails/PC6001VX.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "1fd959ab3d6b3527a09659b2db4df78f8892714758b106a3e47b76fcb4f2dec0"
-    sha256 cellar: :any,                 arm64_big_sur:  "76c031d32a5e08a6662aa4eb9fb608624132d40981928fe3123b4609abd8f9ef"
-    sha256 cellar: :any,                 monterey:       "cd638bc927e069d8705fb94da9b09095b2e567b86d431370b03b0f3605f74a24"
-    sha256 cellar: :any,                 big_sur:        "aae1f5343fcb87b2a21181db473beecba98fabb17bb64ee7189f89834137b6ea"
-    sha256 cellar: :any,                 catalina:       "e7cec22ab3e5307aceb886347da8c66a519d46cfdf17a31841a1903ea2314a3e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "56f1db0284c4dc6393c2130f21cfd0da50dccd0d40fb0dca31019ec4d927913e"
+    sha256 cellar: :any,                 arm64_ventura:  "7688445abd1ce084ee77872cbae26fe5408530114512e672ba066c416f099c64"
+    sha256 cellar: :any,                 arm64_monterey: "50241349fd575ffdfe56be4888a7f7be5ca39e2b389496f89c28bae5417dff09"
+    sha256 cellar: :any,                 arm64_big_sur:  "b9b4cce0da5b171c57cb1b71d7fbe767e47288c12ae191a47b8ec06452288974"
+    sha256 cellar: :any,                 ventura:        "5cbd8bcf42c097b974f0eef8c16760cf47bb13c32a9f31fba0e8633e249d3536"
+    sha256 cellar: :any,                 monterey:       "758ae3a0f2b407b926d33d2aea57c25770e1313991206911df766a98f5cce49f"
+    sha256 cellar: :any,                 big_sur:        "48407e792ddcfec7b9bee676c8672244afcad0371b8534bbdd4366be5bb321bf"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9e32aa2009d5d2052978138a9c82985bf47ed7f754aafc6b4d7a834643f46bd2"
   end
 
   depends_on "pkg-config" => :build
-  depends_on "ffmpeg@4"
-  depends_on "qt@5"
+  depends_on "ffmpeg"
+  depends_on "qt"
 
   fails_with gcc: "5" # ffmpeg is compiled with GCC
 
   def install
-    # Need to explicitly set up include directories
-    ENV.append_to_cflags "-I#{Formula["ffmpeg@4"].opt_include}"
-
     mkdir "build" do
-      qt5 = Formula["qt@5"].opt_prefix
-      system "#{qt5}/bin/qmake", "PREFIX=#{prefix}",
+      system "qmake", "PREFIX=#{prefix}",
                                  "QMAKE_CXXFLAGS=#{ENV.cxxflags}",
                                  "CONFIG+=no_include_pwd",
                                  ".."
@@ -44,7 +41,7 @@ class Pc6001vx < Formula
 
   test do
     ENV["QT_QPA_PLATFORM"] = "minimal" unless OS.mac?
-    user_config_dir = testpath/".pc6001vx"
+    user_config_dir = testpath/".pc6001vx4"
     user_config_dir.mkpath
     pid = fork do
       exec bin/"PC6001VX"

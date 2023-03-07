@@ -1,8 +1,8 @@
 class Bmake < Formula
   desc "Portable version of NetBSD make(1)"
   homepage "https://www.crufty.net/help/sjg/bmake.html"
-  url "https://www.crufty.net/ftp/pub/sjg/bmake-20220901.tar.gz"
-  sha256 "3f67c575ee9ae443a5f589a40acac0163743da98cb50afd1144b4246cd5063ad"
+  url "https://www.crufty.net/ftp/pub/sjg/bmake-20230303.tar.gz"
+  sha256 "e8698724ac68c63f8e6682a93c3154c1d93dc6a9072f13c8cef07ece4ccd0ed6"
   license "BSD-3-Clause"
 
   livecheck do
@@ -11,12 +11,13 @@ class Bmake < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "b980a2ef06470663a63383d93a12802dfb9af9f4661d25ffa2aa3a31633e9b86"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "972eeef3e23be540a8914fcad3479baa932f41621fdf1f9fe6db8a49f2b64794"
-    sha256                               monterey:       "838df0b198cf99be70cecd65413e3acce2f3426bd1b9c551cb8b24783cb5f12d"
-    sha256                               big_sur:        "6f142cbfc4de033ba0867676e4dd177ef3001d077f5dda26ea7bd0f09c3107a3"
-    sha256                               catalina:       "40c504f54a2127860dd54ae8a96eea8fd8c05c1e7904447b938a664d5fe3a250"
-    sha256                               x86_64_linux:   "0b0e9673cf20a44d05e9057c514b0973d0a4b9398cc1d0df9bf3b48d31be00ab"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "bcacd5dfa587c0cba22e61d40b805302066660a0c7b7086dd23fb02ed0d7b36a"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "4e67c8377cb53e66db6374546c6431ec8006b80db4a8cda475b940c419ee9d0f"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "baa4d576e3ebb3cf85ca5e03a15688da8d19a3ec825d558ef5041f3bafaf5f95"
+    sha256                               ventura:        "fac9d449e03eb757f4445501969cd73756996e9cfcceb5927d2787f8db9ba810"
+    sha256                               monterey:       "4c73a7afe3c7b0cf6635c401bbdf20bf0c5b627607f0a449df8be36da2f5b825"
+    sha256                               big_sur:        "2bfa6dd8f333e83d25e6f5e02acb967d6f26d59c1de0ca284e97ed7022a67c9a"
+    sha256                               x86_64_linux:   "1db69029e06d20fead59fd34224da0357c8768bffcad3e7ecb3e38506d15b521"
   end
 
   def install

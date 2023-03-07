@@ -1,20 +1,21 @@
 class Jimtcl < Formula
   desc "Small footprint implementation of Tcl"
   homepage "http://jim.tcl.tk/index.html"
-  url "https://github.com/msteveb/jimtcl/archive/0.81.tar.gz"
-  sha256 "ab7eb3680ba0d16f4a9eb1e05b7fcbb7d23438e25185462c55cd032a1954a985"
+  url "https://github.com/msteveb/jimtcl/archive/0.82.tar.gz"
+  sha256 "e8af929b815e4d30e54ff116b2b933e56c00a02b9110529d1a58660b2469aea7"
   license "BSD-2-Clause"
 
   bottle do
-    sha256 arm64_monterey: "7731222d5d1fc542b7bcfe89b34b634d58a4748256227aa3ebaf1a486f9cf8f1"
-    sha256 arm64_big_sur:  "3c02ff8a877c59cc3ae8f58b5012a58fa34794fe490df3ab27656f3c5655aa31"
-    sha256 monterey:       "15ffdd12ec698a5bc33868c21a02abdca859e4326900c6bcdf31250edf108419"
-    sha256 big_sur:        "527d9f121dd3f062480b2fef0db374567efa998efda9ece22fadd3cea89a96cc"
-    sha256 catalina:       "32f879425f0e363ccf2f0f23e983e1ca9b7408314c4accfe05a4d20cd6c54ea9"
-    sha256 x86_64_linux:   "f39bff291903330771406c56f255af5a8d0711cf715ca152d9e10b3994dce13f"
+    sha256 arm64_ventura:  "f80310436f9d2bc8d96178eb91a2ed561a3d935ca55046784c5e6a46a61895a1"
+    sha256 arm64_monterey: "ee69a018ea4c1fcad3d71040c0cf0d76fb886b493ac7b70345208ce0504ae0bc"
+    sha256 arm64_big_sur:  "43167817009a55f2d14e7378356d6c00d46570e1ccd7fe9bf012c23495c77398"
+    sha256 ventura:        "b55f9946c4311018d373f84a7a02c5ed128793e0f1df7519a5848d4baf286c6f"
+    sha256 monterey:       "bcb43b78367cc5b8f0814055268befc4ca46ee23afc007f36e14b534477a9668"
+    sha256 big_sur:        "b6f6bfd82e8514a83dd2a5ff0b3d8a172c85c102df7b87d1ecc4e85753fa72ac"
+    sha256 x86_64_linux:   "4b1193b996cd8fb9c7c6e41c9bb047c7a7b04238fc56fc8f9f6c67a58b291c1c"
   end
 
-  depends_on "openssl@1.1"
+  depends_on "openssl@3"
   depends_on "readline"
 
   uses_from_macos "sqlite"

@@ -1,23 +1,23 @@
 class Echidna < Formula
   desc "Ethereum smart contract fuzzer"
   homepage "https://github.com/crytic/echidna"
-  url "https://github.com/crytic/echidna/archive/refs/tags/v2.0.2.tar.gz"
-  sha256 "169f1086e6276f3f932bd2f9e062f203c22e8829ef07788f7f74c989ed8327e3"
+  url "https://github.com/crytic/echidna/archive/refs/tags/v2.0.5.tar.gz"
+  sha256 "711672269d93e024313cc74c16f0c33f45b432e71a9087ef9e65d5ac0440968e"
   license "AGPL-3.0-only"
   head "https://github.com/crytic/echidna.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "f824fb087daa0510609545dcd039b64b45632a5d33ad40877f86ee4eeb5d0223"
-    sha256 cellar: :any,                 arm64_big_sur:  "b1253ae03416bb1d0d54a083c98fff0e68eee584df18a4ba4cf563af0dfeb3ed"
-    sha256 cellar: :any,                 monterey:       "988aed91e01be93981b6af2178e57cbd99fa73bd415aa801cb5ed8081e93521d"
-    sha256 cellar: :any,                 big_sur:        "bd56181a5ab3aa08e3873cb33f3594b02101283d0fc2b21d4cb0ad6b79b023cf"
-    sha256 cellar: :any,                 catalina:       "485ae8b9dcc8270e01a116ed903e0c26ebbd20506726c6b1a80adf2a73089d4a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "4acf4152b058040edff48a064be7357c534e937265a25b43eed303c779e4e139"
+    sha256 cellar: :any,                 arm64_monterey: "22e0fdba14807b7082ad3dd6fc6fdbed68970b847c5f003a1a60c06fca3c7d27"
+    sha256 cellar: :any,                 arm64_big_sur:  "0be421a12ce86be7636cba0b5a245a353526b0970eb1fe1ee49006c6f313735f"
+    sha256 cellar: :any,                 ventura:        "3b26fbc32bf5540014e482712e001d038b4d3420cfb6b3a21fabb283f15da6a6"
+    sha256 cellar: :any,                 monterey:       "49c5d59d75c29b54a38e730517faa0436bc2f5e49807ec225fe4f0c4cfc0ad10"
+    sha256 cellar: :any,                 big_sur:        "bcc1e052340a4009539a54f1ba302fbcbd3e8ed3780866e9e4fd8cd4ec8b3402"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "3b3d9b40e7b1aadd4787cd06b97f46eda3c8a37b4b1c961dd09aaed72921d1f0"
   end
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
-  depends_on "ghc" => :build
+  depends_on "ghc@9.2" => :build
   depends_on "haskell-stack" => :build
   depends_on "libtool" => :build
 

@@ -1,18 +1,19 @@
 class Libpeas < Formula
   desc "GObject plugin library"
   homepage "https://wiki.gnome.org/Projects/Libpeas"
-  url "https://download.gnome.org/sources/libpeas/1.32/libpeas-1.32.0.tar.xz"
-  sha256 "d625520fa02e8977029b246ae439bc218968965f1e82d612208b713f1dcc3d0e"
+  url "https://download.gnome.org/sources/libpeas/1.34/libpeas-1.34.0.tar.xz"
+  sha256 "4305f715dab4b5ad3e8007daec316625e7065a94e63e25ef55eb1efb964a7bf0"
   license "LGPL-2.1-or-later"
-  revision 1
 
   bottle do
-    sha256 arm64_monterey: "3f00cc64bd20322cdcb213ef36a01bbfeee946e6529e562b47cdb6907cc4f83c"
-    sha256 arm64_big_sur:  "fd5a0bc995f0f819d7e191cc57880664d3b7352d75ea92b2f76ffdc1b0069209"
-    sha256 monterey:       "7b8a356081a65abb5c23fda43f2e4353cacb0182229cdcacbfbe4d4de59d80d6"
-    sha256 big_sur:        "38ae27203ce4ed3ea930414be2f1a10bc3488d3be721e34ac96f2477f0096c64"
-    sha256 catalina:       "9027603f11c76d48af9285bd6e9f46c6d898569bdd29c99c52a66c2f3c34879d"
-    sha256 x86_64_linux:   "06dca0f0281702151b8809b797f6b1931ff69b05f73ed266f0e0af725b563e4f"
+    rebuild 2
+    sha256 arm64_ventura:  "931d612a200796786da9b95634fa0dc424cb79981762e450659a24fb74bdabd7"
+    sha256 arm64_monterey: "ca93cd9743107022396b92f4fa1f9574a9e4d0d0609c53d6f299d589e2be6a59"
+    sha256 arm64_big_sur:  "582870b6ef61be3fa3841144caf062924477398674752c031982d043a9890185"
+    sha256 ventura:        "68b324965542b1042322eb5a44f7c0bf574edee82a7ae50da8df90c31224b7d4"
+    sha256 monterey:       "af87c25fcfa4c06b28260e830d2d2143bb725a44639f8fc9cfbb1c9b2195f189"
+    sha256 big_sur:        "ad3f6036bd758f1e23dfbd966a8448c9c080d74bd3bc4d076fc8e27da721d36a"
+    sha256 x86_64_linux:   "e5f78bbc0f5036e08d3ef81a6a44c8220b73b673402761f361f13beaa806cecc"
   end
 
   depends_on "meson" => :build
@@ -23,13 +24,9 @@ class Libpeas < Formula
   depends_on "gobject-introspection"
   depends_on "gtk+3"
   depends_on "pygobject3"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   def install
-    # This shouldn't be needed, but this fails to link with libpython3.10.so.
-    # TODO: Remove this when `python@3.10` is no longer keg-only.
-    ENV.append "LDFLAGS", "-Wl,-rpath,#{Formula["python@3.10"].opt_lib}" if OS.linux?
-
     args = %w[
       -Dpython3=true
       -Dintrospection=true

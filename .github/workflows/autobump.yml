@@ -8,7 +8,7 @@ on:
         required: false
   schedule:
     # Every day at 5am
-    - cron: '0 5 * * *'
+    - cron: "0 5 * * *"
 
 env:
   HOMEBREW_FORCE_HOMEBREW_ON_LINUX: 1
@@ -23,7 +23,6 @@ env:
     alluxio
     ammonite-repl
     angular-cli
-    annie
     ansible-lint
     ant
     ant@1.9
@@ -37,6 +36,7 @@ env:
     apidoc
     apktool
     apt
+    aptos
     arb
     argo
     argocd
@@ -45,7 +45,6 @@ env:
     arkade
     armadillo
     arrayfire
-    artifactory
     arturo
     asciidoctorj
     ask-cli
@@ -61,6 +60,7 @@ env:
     aws-elasticbeanstalk
     aws-es-proxy
     aws-rotate-key
+    aws-sam-cli
     azcopy
     b3sum
     bagit
@@ -196,7 +196,6 @@ env:
     docfx
     docker
     docker-compose
-    docker-compose-completion
     docker-credential-helper
     docker-slim
     docker-squash
@@ -224,7 +223,6 @@ env:
     ehco
     eksctl
     elan-init
-    elasticsearch@6
     elfutils
     elixir
     embulk
@@ -257,7 +255,6 @@ env:
     flow-cli
     fluent-bit
     flume
-    fluxctl
     flyway
     fmt
     fn
@@ -303,7 +300,6 @@ env:
     gnupg-pkcs11-scd
     gnuplot
     go-md2man
-    go@1.16
     gofumpt
     gojq
     golang-migrate
@@ -364,7 +360,6 @@ env:
     influxdb
     influxdb-cli
     influxdb@1
-    inlets
     ioctl
     ipinfo-cli
     ipmiutil
@@ -387,7 +382,6 @@ env:
     jrnl
     jruby
     jsonnet
-    jsonschema
     jsvc
     juju
     just
@@ -419,18 +413,14 @@ env:
     kotlin
     krew
     ktlint
-    kube-aws
     kube-linter
     kubeaudit
     kubebuilder
     kubecfg
     kubecm
     kubeconform
-    kubeless
-    kubeprod
     kubergrunt
     kubernetes-cli
-    kubernetes-service-catalog-client
     kubeseal
     kubespy
     kubevela
@@ -471,6 +461,7 @@ env:
     log4cxx
     lout
     luau
+    lux
     lychee
     macchina
     mage
@@ -494,6 +485,7 @@ env:
     micro
     micronaut
     mill
+    mimirtool
     minetest
     minikube
     miniserve
@@ -535,7 +527,6 @@ env:
     netlify-cli
     newrelic-cli
     newrelic-infra-agent
-    nexus
     nfpm
     nng
     node_exporter
@@ -551,17 +542,16 @@ env:
     oci-cli
     ocp
     ocrmypdf
-    octant
     octave
     oha
     okteto
     omniorb
     onednn
     onedrive
-    onscripter
     ooniprobe
     opa
     openrtsp
+    openiothub-server
     opensearch
     operator-sdk
     or-tools
@@ -575,7 +565,6 @@ env:
     oxipng
     pacapt
     packer
-    packr
     passenger
     patchelf
     payara
@@ -606,7 +595,7 @@ env:
     powerman
     pre-commit
     prestd
-    presto
+    prestodb
     principalmapper
     procs
     protoc-gen-go-grpc
@@ -660,7 +649,6 @@ env:
     selenium-server
     seqkit
     ser2net
-    server-go
     serverless
     shadowenv
     sheldon
@@ -684,7 +672,6 @@ env:
     solana
     sollya
     solr
-    solr@7.7
     sonarqube
     sonobuoy
     sponge
@@ -758,7 +745,6 @@ env:
     tomee-webprofile
     topgrade
     traefik
-    traefik@1
     trafficserver
     tree-sitter
     triangle
@@ -813,7 +799,6 @@ env:
     wiremock-standalone
     wolfssl
     wxwidgets
-    xalan-c
     xcbeautify
     xclogparser
     xdpyinfo
@@ -845,9 +830,9 @@ permissions:
 jobs:
   autobump:
     if: github.repository == 'Homebrew/homebrew-core'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     container:
-      image: ghcr.io/homebrew/ubuntu16.04:master
+      image: ghcr.io/homebrew/ubuntu22.04:master
     steps:
       - name: Set up Homebrew
         id: set-up-homebrew

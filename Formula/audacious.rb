@@ -2,15 +2,14 @@ class Audacious < Formula
   desc "Free and advanced audio player based on GTK+"
   homepage "https://audacious-media-player.org/"
   license "BSD-2-Clause"
-  revision 1
 
   stable do
-    url "https://distfiles.audacious-media-player.org/audacious-4.2.tar.bz2"
-    sha256 "feb304e470a481fe2b3c4ca1c9cb3b23ec262540c12d0d1e6c22a5eb625e04b3"
+    url "https://distfiles.audacious-media-player.org/audacious-4.3.tar.bz2"
+    sha256 "27584dc845c7e70db8c9267990945f17322a1ecc80ff8b452e9ca916a0ce9091"
 
     resource "plugins" do
-      url "https://distfiles.audacious-media-player.org/audacious-plugins-4.2.tar.bz2"
-      sha256 "6fa0f69c3a1041eb877c37109513ab4a2a0a56a77d9e8c13a1581cf1439a417f"
+      url "https://distfiles.audacious-media-player.org/audacious-plugins-4.3.tar.bz2"
+      sha256 "662ef6c8c4bd70d0f35fd1c5f08b91549b9436638b65f8a1a33956b09df89fc6"
     end
   end
 
@@ -20,12 +19,13 @@ class Audacious < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "4676c483e85f47cc80ac94550a38b7d6396f8be11fb6926c0a1d91d04b644bb7"
-    sha256 arm64_big_sur:  "d342eb99eacde6f98e72f02be860833e40c3f73abf83e07bc7a67f1dd6c7ca5a"
-    sha256 monterey:       "a47955e6dfaa371506e0fa8c2d630864325253f1fcdc0e24811efc9a9bc5866c"
-    sha256 big_sur:        "896bd9223537e4b00cc4a887cc8204c6193973517020d01aabf0f260f4d89f49"
-    sha256 catalina:       "04b4249d93ad6ea99475a306f53e7148e5358207ba204886f47ce216ca0a6cf1"
-    sha256 x86_64_linux:   "bf92a6849ede5d4e16400d72f001ef1acbf70db63dadaf5b504538f0f1535402"
+    sha256 arm64_ventura:  "d0dedeae2538b361776268675cd15b6d31bb447baf5292f0a6553bb0a2d0b0fd"
+    sha256 arm64_monterey: "0bce7dffa93cc7ed89b1a498916964ec77b2d2d60d91f3fd37f260590c35ffe9"
+    sha256 arm64_big_sur:  "aaaae3e21e0006eb92147032b2a2e7352cec6e1a218fdbef64850fece604a162"
+    sha256 ventura:        "3e42f001f3b6b8f5d534bdbee468fbd65487b2326eef311e309ecfcfb207411e"
+    sha256 monterey:       "c71da6067a089b7e74c847fdc31d2c58f49adf7e7287d31521ea73aa7f648885"
+    sha256 big_sur:        "dce962afa17a17605baaed5931780aed01a7fb4f40831e178684c61ac3a8566b"
+    sha256 x86_64_linux:   "daac98ed40d90ec2e11f305e706417b998c5211f4291e6542ad7baac464fcfe3"
   end
 
   head do
@@ -60,9 +60,7 @@ class Audacious < Formula
   depends_on "sdl2"
   depends_on "wavpack"
 
-  on_linux do
-    depends_on "gcc"
-  end
+  uses_from_macos "curl"
 
   fails_with gcc: "5"
 

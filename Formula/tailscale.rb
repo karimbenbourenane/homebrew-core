@@ -2,17 +2,18 @@ class Tailscale < Formula
   desc "Easiest, most secure way to use WireGuard and 2FA"
   homepage "https://tailscale.com"
   url "https://github.com/tailscale/tailscale.git",
-      tag:      "v1.30.0",
-      revision: "0b00b7a135b635fadd8a9a38567562798873ab82"
+      tag:      "v1.36.2",
+      revision: "0438c67e2517c78feeaf0d9f61ea2a6303dd875c"
   license "BSD-3-Clause"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "0f32a25536390eb7c5358d4fffd1c238f5dac26e334374bf3a4c10443347f736"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "1cfb27f8fde7f92ef557ddf42325bf0561e2cd3bd95e7e09fbff43f79cd7c42f"
-    sha256 cellar: :any_skip_relocation, monterey:       "ad96de60b24a239a44c7a0b7bcbc7f9155ea62fb11b966bd5667f66c49bd7adc"
-    sha256 cellar: :any_skip_relocation, big_sur:        "502192ec47c46ea60c4a3bc67e16e5593bb215074a3b57ac07dd8b9bff0a139b"
-    sha256 cellar: :any_skip_relocation, catalina:       "d4b1e1d63ae1e25dfd0034e781a5b0d8a8621be165fa4a9d9fb7724a4317fb69"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "087c07aa89d55808098d1d83ed1d96a24861492bc42a87116bfc16cd30bd8e4b"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "69bb17b4f1f4ab70c270a21698cb458929092ff269e88d76a3c95e3563931340"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "69bb17b4f1f4ab70c270a21698cb458929092ff269e88d76a3c95e3563931340"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "69bb17b4f1f4ab70c270a21698cb458929092ff269e88d76a3c95e3563931340"
+    sha256 cellar: :any_skip_relocation, ventura:        "beffdde494f7e901e1627ee72ee761b4dd2ccaabe07f8f1b3163522a43e615d1"
+    sha256 cellar: :any_skip_relocation, monterey:       "beffdde494f7e901e1627ee72ee761b4dd2ccaabe07f8f1b3163522a43e615d1"
+    sha256 cellar: :any_skip_relocation, big_sur:        "beffdde494f7e901e1627ee72ee761b4dd2ccaabe07f8f1b3163522a43e615d1"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "0e485a0c7912cb2cae140cffe4e9ea80ad1be218d630851b1f86096810c2a26b"
   end
 
   depends_on "go" => :build

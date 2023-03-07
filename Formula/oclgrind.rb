@@ -4,7 +4,7 @@ class Oclgrind < Formula
   url "https://github.com/jrprice/Oclgrind/archive/v21.10.tar.gz"
   sha256 "b40ea81fcf64e9012d63c3128640fde9785ef4f304f9f876f53496595b8e62cc"
   license "BSD-3-Clause"
-  revision 1
+  revision 2
 
   livecheck do
     url :homepage
@@ -12,13 +12,14 @@ class Oclgrind < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 arm64_monterey: "04c4d2f631fc6d60116b5d7399deb671d5bdde333f6e2fe10aeb50b4db847feb"
-    sha256 cellar: :any,                 arm64_big_sur:  "5b1aa1409282fd96fa062506c547820ca830792c6fd001ba6aaa857b3dc873af"
-    sha256 cellar: :any,                 monterey:       "2a63ba6a8c9521f8bed0bdf1cc61d4f61917b576c3f0895bbce2d8c18300bc8c"
-    sha256 cellar: :any,                 big_sur:        "c1ebca0bf6a54f62b1e6fb1bccdedd144fbf6af607a910a9c73a6cb641abd1c7"
-    sha256 cellar: :any,                 catalina:       "84cc33cd385f5e94480c0c8ea5aaaa9a51415d428a0067068c8bbc951abd72b8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f10dc01f531e2961be864dcd3318c24d7bfd148cd788f3edede26987e73bf0d4"
+    sha256 cellar: :any,                 arm64_ventura:  "89a927ac8cfbfe82e860a05347a7d7ca61bf3d426e2e3c6ab8c3ff93358230de"
+    sha256 cellar: :any,                 arm64_monterey: "952c3159099400839aaadcebec2c20f08bce32dc7de9e507d8435df6a5ba2e9a"
+    sha256 cellar: :any,                 arm64_big_sur:  "b56d81e7e93e41f6e339f216392541d1270a3c309d57d83328cf531802bc483c"
+    sha256 cellar: :any,                 ventura:        "c5c442f08c52f8a2a3ba70c9def1ce6b15d618c1952aefd3acb4b221be0cf7b9"
+    sha256 cellar: :any,                 monterey:       "4c9b7d599bde78dd00085ff802b84b499008e5800fc9c91a11901c9b0fec5c75"
+    sha256 cellar: :any,                 big_sur:        "37bf40f81471fedbeb7c295c7c6ecf22f2f2d32c28dd8d8e273922a66a959129"
+    sha256 cellar: :any,                 catalina:       "52da235facbe5b6d02b0990c8d987223ba8bd18e003820c4860b4fa5475179b3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "658070a3826a514c4d72109792dfb85d5d79d6d4df5f79fee780f29edf0842b7"
   end
 
   depends_on "cmake" => :build
@@ -27,10 +28,7 @@ class Oclgrind < Formula
 
   on_linux do
     depends_on "opencl-headers" => :test
-    depends_on "gcc"
   end
-
-  fails_with gcc: "5" # LLVM is built with GCC
 
   def install
     system "cmake", "-S", ".", "-B", "build", *std_cmake_args, "-DCMAKE_INSTALL_RPATH=#{rpath}"

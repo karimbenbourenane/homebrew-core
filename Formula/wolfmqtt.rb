@@ -1,19 +1,19 @@
 class Wolfmqtt < Formula
   desc "Small, fast, portable MQTT client C implementation"
   homepage "https://github.com/wolfSSL/wolfMQTT"
-  url "https://github.com/wolfSSL/wolfMQTT/archive/refs/tags/v1.14.0.tar.gz"
-  sha256 "23a073bfac172e08331ccdd01d9fb19e029fdcab5a8b4aad0e8dd4719ea97c31"
+  url "https://github.com/wolfSSL/wolfMQTT/archive/refs/tags/v1.15.0.tar.gz"
+  sha256 "2fdbd3c9c07e86cf4cb0eba91f8f3b542d5f3ddefb18c2844d81af8ca37b24db"
   license "GPL-2.0-or-later"
-  revision 1
   head "https://github.com/wolfSSL/wolfMQTT.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "ec59fe07c81cebcefca5f84bf4eaa5dadbd7bbc1bb7e67f58936886e05d0f8c2"
-    sha256 cellar: :any,                 arm64_big_sur:  "e63498f832d0fdfb16fb12fa750aa552f8abfbe3eecd45efbb3547e5c15a6b6d"
-    sha256 cellar: :any,                 monterey:       "b75dec93dfdc8f785ea6f4260aeabc57a16bbbc4930d19e4caf91a59369eb7eb"
-    sha256 cellar: :any,                 big_sur:        "e939570bc9f65a7df18e928ba535de1933086f51176d58aa0b1f36084a50d88a"
-    sha256 cellar: :any,                 catalina:       "620a99be33560c5300398c3ced6370a75ed9af044de1471f500822b73eae7492"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "23df65d7dc4404cadb1c2c4a099b00a3bfc67b0300285288802bd1d26acca385"
+    sha256 cellar: :any,                 arm64_ventura:  "bd87d77b2fa178f0f9912410e93b7fc827a28ebbbfb022acd14432cf4f998713"
+    sha256 cellar: :any,                 arm64_monterey: "0cb7d339445b3da844fe7ec8c2b3f2a0f8667dbd62eb51dba27d55061e02569c"
+    sha256 cellar: :any,                 arm64_big_sur:  "4e51129b096e6c16da80766a8e3fb30c30f89219c08fc800ab15a346c53f4874"
+    sha256 cellar: :any,                 ventura:        "01d4af5c39e32e9f3f93614cb3397caf5de3aab1369d534401f2501e53b56e20"
+    sha256 cellar: :any,                 monterey:       "309c2513f3fe7ac18ffbd28f3c9383d3c6cdf0db09ee09ab4f51c1410a4f2e62"
+    sha256 cellar: :any,                 big_sur:        "beac741f17362a25dcc9644cc7be75b4eaedbcb504bfa45e538af211c57ddc50"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "aab9cc1dfc2adb756d6f89a68cfcac402ab6d3df70145d90cb8d806d17826d09"
   end
 
   depends_on "autoconf" => :build

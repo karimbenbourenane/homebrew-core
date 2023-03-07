@@ -1,18 +1,19 @@
 class GitDelta < Formula
   desc "Syntax-highlighting pager for git and diff output"
   homepage "https://github.com/dandavison/delta"
-  url "https://github.com/dandavison/delta/archive/0.14.0.tar.gz"
-  sha256 "7d1ab2949d00f712ad16c8c7fc4be500d20def9ba70394182720a36d300a967c"
+  url "https://github.com/dandavison/delta/archive/0.15.1.tar.gz"
+  sha256 "b9afd2f80ae1d57991a19832d6979c7080a568d42290a24e59d6a2a82cbc1728"
   license "MIT"
   head "https://github.com/dandavison/delta.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "10d123a9f5e0870ca59aa41722e7b9b9ccf7981628edf136be5fdbcaf15828a6"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "edde3e7ae68861141ad9dddfe1657df3f3169360e4e599a9bfdf84c01a4d62e5"
-    sha256 cellar: :any_skip_relocation, monterey:       "0c063b6baada08b163814a6247c0d47f8259bb9af095b122731ffc5fb2b83434"
-    sha256 cellar: :any_skip_relocation, big_sur:        "0614ce7a6f55cd03c3d058c3ebea3b2863d53a0ba7438b5686161056bdcf8050"
-    sha256 cellar: :any_skip_relocation, catalina:       "6e78fd1a992dfd9a0069384d76db81bb906e1bb7c45256a71190f7487222dcec"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "0f82a93765d4d7878c6fa6503a5b16a1123f0b12fb5fed03e21a1aa98cb48f56"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "586c64302aefc15ab255ddbfb157efdb782a2a7b5f61fa0b00cd5f24df34eb15"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "ab7ecc7b6c25d92fc22a0bf3c22c9362846a0ba742a4b101be898d2b05db9992"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "60abe782f2ec06cb3c4e5c3f0ac1ead2926e4f63c7caf595e85054ab273285ad"
+    sha256 cellar: :any_skip_relocation, ventura:        "6a92d184dbe72fe95f21b2bd5e1ac8ec2f18575db9b226cd36d036a5b94ad776"
+    sha256 cellar: :any_skip_relocation, monterey:       "9df512806c712b253cac5a7e453d4bfc0541e2e3f8f5532dd4a00431704020e8"
+    sha256 cellar: :any_skip_relocation, big_sur:        "30ae9bcd50aed962356267fa4d4b74afee7b8274abc1b9058c3c3e49d0fbf94e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9b2ea26badb1a917bc425c656a0847552007de312bc6e6b1799e2628634301cd"
   end
 
   depends_on "rust" => :build
@@ -23,6 +24,7 @@ class GitDelta < Formula
   def install
     system "cargo", "install", *std_cargo_args
     bash_completion.install "etc/completion/completion.bash" => "delta"
+    fish_completion.install "etc/completion/completion.fish" => "delta.fish"
     zsh_completion.install "etc/completion/completion.zsh" => "_delta"
   end
 

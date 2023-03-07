@@ -1,17 +1,18 @@
 class Opencc < Formula
   desc "Simplified-traditional Chinese conversion tool"
   homepage "https://github.com/BYVoid/OpenCC"
-  url "https://github.com/BYVoid/OpenCC/archive/ver.1.1.4.tar.gz"
-  sha256 "ca33cf2a2bf691ee44f53397c319bb50c6d6c4eff1931a259fd11533ba26c1e9"
+  url "https://github.com/BYVoid/OpenCC/archive/ver.1.1.6.tar.gz"
+  sha256 "169bff4071ffe814dc16df7d180ff6610db418f4816e9c0ce02cf874bdf058df"
   license "Apache-2.0"
 
   bottle do
-    sha256 arm64_monterey: "b3b6c98505d778bffac40244ff3550082c67043700c11f8b4c2dc470bd708adb"
-    sha256 arm64_big_sur:  "79dbf338581ae748fcbd116e8c6ec45c57a74fc950205c11e05aa586b6601bc6"
-    sha256 monterey:       "abb5f38218d666e864435b8fdcc8dc83e5a9d74f6d5b72d13dddc518e2d068b2"
-    sha256 big_sur:        "04e1e578598037552c24853cf84d2ed66da5d23f517612ea8e793e5ba44cc0c7"
-    sha256 catalina:       "4dcee8df044e226db8af14ecee5ae84785b799a648c421e6d2f00768df9b30be"
-    sha256 x86_64_linux:   "3e911567c4bed3312fcb55d777f00383b91e4d847633afe9d4b3f0af9c59d802"
+    sha256 arm64_ventura:  "d660b5ca78b6aa2f473ad57e7acbff2422d804dd40573bd6a3f6c8200b5f762f"
+    sha256 arm64_monterey: "743f33ed76117d13c67b117f62885918a9ef46de9081dff39522adec5b08a28e"
+    sha256 arm64_big_sur:  "952232eff49bc366c65b5b2cc1d690b5f8bf10d263ebeffea85d8ed6fa2de840"
+    sha256 ventura:        "111fcb1f13bd06b8c27c0ca07fb98f1094944fa39930880b5f224ac66b5712eb"
+    sha256 monterey:       "151e193c88cdf4ae672afb4618bff3d40bf6ba9e6887255bb9462f188b227a0c"
+    sha256 big_sur:        "d1e53be3298e34e69df9b3c894149ac8757acd2790f9cb4310ca29216ea43e1f"
+    sha256 x86_64_linux:   "ba78435ec20af1fb82877f6158bc1a7f6e117371280e06b02e1f76f61cadeadd"
   end
 
   depends_on "cmake" => :build

@@ -1,9 +1,10 @@
 class Gwyddion < Formula
   desc "Scanning Probe Microscopy visualization and analysis tool"
   homepage "http://gwyddion.net/"
-  url "http://gwyddion.net/download/2.61/gwyddion-2.61.tar.gz"
-  sha256 "ae9d647b1c8c44d91d4ebec3d22d7536299fdb16bfa0bacccdf64e4704cd355e"
+  url "http://gwyddion.net/download/2.62/gwyddion-2.62.tar.gz"
+  sha256 "6c71fda9f783be5beabd21bfd749a91b2404b24cd74b7115adec31d235d40688"
   license "GPL-2.0-or-later"
+  revision 1
 
   livecheck do
     url "http://gwyddion.net/download.php"
@@ -11,19 +12,19 @@ class Gwyddion < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "af9865335f78231bee3ff95b2def880998fc437853112b03696a4d2c52c5580e"
-    sha256 arm64_big_sur:  "9a5ba5a71bd35ec492de7fe9840419ec8922daf04a31c9ebb58ba8bee59c9723"
-    sha256 monterey:       "d64d78a7b938e5147a787e9ea6276496f6e4b97fd7979534d715a04bc19ff79d"
-    sha256 big_sur:        "acfbd4430428e964b062cd8f5e43cf96fad56127801b57e07493f3550efe3eac"
-    sha256 catalina:       "ea3562016bd81e226579e0f92aa161d4551a870e46edb25dfae5bf38c0d0874b"
-    sha256 x86_64_linux:   "991d25f826d4903328f4c15bd88ad8a405aba45074408deaef8982a8c24cb41b"
+    sha256 arm64_ventura:  "4a49b940a99205827652c8fc6f1315f6bd0859da8c70aac8ed58d10afde2418f"
+    sha256 arm64_monterey: "8900ac4fdac23c65cbd1482eee05447c1a772c58254efa2328e715d6ef04b7ab"
+    sha256 arm64_big_sur:  "f9e978c7ceff5be6f41e24a8fb67f3d9e5a130e147e124ceadb02b07324c8ebb"
+    sha256 ventura:        "020b98c6bec6683132eb2880c47b7ccf01cf6de9c1f5d2a3dcec909c2f091d5e"
+    sha256 monterey:       "555150f246c5bcbe0ac084eab5cba816e1452d5e5c1ff02ed5f88cc713641ff2"
+    sha256 big_sur:        "e60db9093d3e1115e810b3e8d40792c1887dede197f536e22310018c4be8f4d4"
+    sha256 x86_64_linux:   "11eb01da39aa1cfc4611f5427f8c284d22e091b99a2fd5d44a1db93d857d0304"
   end
 
   depends_on "pkg-config" => :build
   depends_on "fftw"
   depends_on "gtk+"
   depends_on "gtkglext"
-  depends_on "gtksourceview"
   depends_on "libxml2"
   depends_on "minizip"
 
@@ -34,15 +35,16 @@ class Gwyddion < Formula
     depends_on "automake" => :build
     depends_on "gtk-doc" => :build
     depends_on "libtool" => :build
-    depends_on "gtk-mac-integration"
+    # TODO: depends_on "gtk-mac-integration"
   end
 
   def install
     system "autoreconf", "--force", "--install", "--verbose" if OS.mac?
-    system "./configure", "--disable-dependency-tracking",
+    system "./configure", *std_configure_args,
+                          "--disable-silent-rules",
                           "--disable-desktop-file-update",
-                          "--prefix=#{prefix}",
                           "--with-html-dir=#{doc}",
+                          "--without-gtksourceview",
                           "--disable-pygwy"
     system "make", "install"
   end

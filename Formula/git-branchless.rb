@@ -1,27 +1,25 @@
 class GitBranchless < Formula
   desc "High-velocity, monorepo-scale workflow for Git"
   homepage "https://github.com/arxanas/git-branchless"
-  url "https://github.com/arxanas/git-branchless/archive/refs/tags/v0.4.0.tar.gz"
-  sha256 "773eadf51fadf503b90f4a4dfb6ea38662294d9a98ec797d4b68592a731de4e0"
+  url "https://github.com/arxanas/git-branchless/archive/refs/tags/v0.7.0.tar.gz"
+  sha256 "13a7441be5c002b5a645dd9ad359dad5bdd46950b51b49e3cddccd9041deb5f5"
   license "GPL-2.0-only"
   head "https://github.com/arxanas/git-branchless.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "f4f649e311a98cd075ad03b44b5e73cbd5b5dcc8fcbad0b1078fbda82314833a"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "f49d2dcd8a4dc826d4e540b1808c79b2b9c55a75b8fb429f24fa4292931f5736"
-    sha256 cellar: :any_skip_relocation, monterey:       "d1cd42d896e207718eb25b506215f79599bee9d6821cc00f6ad36f39af036d69"
-    sha256 cellar: :any_skip_relocation, big_sur:        "0d07fd7dc467642015b81bb5de1b014eee59720714f5a7f186c3e16b59396a2a"
-    sha256 cellar: :any_skip_relocation, catalina:       "b336c0c7a94a5b19060134978cb20f724c3b2f408e1365b3584bc74fa4a9aa80"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c90a497b062a5e47126c63407182697241136b617bbd3a3f073720bf8d40dd73"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_ventura:  "5f822cc3afeaf27cd30968034621f617fd344dfd0182842dea3332047ab03978"
+    sha256 cellar: :any,                 arm64_monterey: "de47a87de4e8842e0a0be1a5bef9468647758c7f1036cb788136b80a028259b3"
+    sha256 cellar: :any,                 arm64_big_sur:  "625dde30e9e5c934d8fb1b718621b340d5ee4aaba8a0ca5c3a2d72c302f96f76"
+    sha256 cellar: :any,                 ventura:        "206fd72b6380c7f42ac7c95bf0c595e70a17fc470327e2e752325ccad497782e"
+    sha256 cellar: :any,                 monterey:       "f4e4f757475e268d65f3c02ec8802a25d705c599972b6e6a6faf9410ebc794cc"
+    sha256 cellar: :any,                 big_sur:        "da028eeb590115855e9679a71eae8b9db433b69e88e5e85c559fcb3fb28af07b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "94111a6eae62eae15f3d5a9999a430142394b3ecaf48f4189442e9506e91b9ec"
   end
 
+  depends_on "pkg-config" => :build
   depends_on "rust" => :build
-
-  uses_from_macos "zlib"
-
-  on_linux do
-    depends_on "pkg-config" => :build
-  end
+  depends_on "libgit2"
 
   def install
     system "cargo", "install", *std_cargo_args(path: "git-branchless")
@@ -35,5 +33,13 @@ class GitBranchless < Formula
 
     system "git", "branchless", "init"
     assert_match "Initial Commit", shell_output("git sl").strip
+
+    linkage_with_libgit2 = (bin/"git-branchless").dynamically_linked_libraries.any? do |dll|
+      next false unless dll.start_with?(HOMEBREW_PREFIX.to_s)
+
+      File.realpath(dll) == (Formula["libgit2"].opt_lib/shared_library("libgit2")).realpath.to_s
+    end
+
+    assert linkage_with_libgit2, "No linkage with libgit2! Cargo is likely using a vendored version."
   end
 end

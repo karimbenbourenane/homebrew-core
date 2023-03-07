@@ -1,17 +1,18 @@
 class Gnuplot < Formula
   desc "Command-driven, interactive function plotting"
   homepage "http://www.gnuplot.info/"
-  url "https://downloads.sourceforge.net/project/gnuplot/gnuplot/5.4.4/gnuplot-5.4.4.tar.gz"
-  sha256 "372300b7867f5b3538b25fc5d0ac7734af6e3fe0d202b6db926e4369913f0902"
+  url "https://downloads.sourceforge.net/project/gnuplot/gnuplot/5.4.6/gnuplot-5.4.6.tar.gz"
+  sha256 "bef7b9618079c724f19d3b0e1d7830b5b407a56b303f2b9e3690a4ce8ce0a89c"
   license "gnuplot"
 
   bottle do
-    sha256 arm64_monterey: "397145507ccbb8b18d3b905b7aadbe6ff245c52eafcbcebf03ee1c3b4d9d53cf"
-    sha256 arm64_big_sur:  "d425c0cf13e4ccbf26bd026e5676027ecb039c556d38f8d0586856f47c9a9c4e"
-    sha256 monterey:       "f7d2153dcfa662bbf84ce32a40474e77330e07424ec7b020c0cd178f35cd0a30"
-    sha256 big_sur:        "924b2e49026dc90a5cc8097b36776797765578baa09e0681231caf2bfb3a80e5"
-    sha256 catalina:       "bb28e77545fc22d9dfd1b2bab184be15916a722b0e0024a20764d3e550520f45"
-    sha256 x86_64_linux:   "3adcbd0950fe8c1ad0d65d9ec46144d93c3421d0127bc5d1c228653ca3d3c1b2"
+    sha256 arm64_ventura:  "e1ee33c426c0e999d2130719993b1325b8581a6e24dc0b7607a1126ca37d85a4"
+    sha256 arm64_monterey: "a5377332f5d9267465592e995b75caa03072ac5bc7c97199f8c7a5223c16f424"
+    sha256 arm64_big_sur:  "bc29f9bdc331596efbe2d0dbaec5d58ba906f43e36da196f39bc6171ef78b28e"
+    sha256 ventura:        "592d1e63ed1991415bd7910cd88329f691b32094d5a2758584e8f009f17f436c"
+    sha256 monterey:       "2929fe528e2e302fab4311dad74fdf2a76d13ae7cac80373fd27adf1a0ea5ea2"
+    sha256 big_sur:        "8f73b87113230e18359d82e1b0baf46b4b6515db5538fdb0d1bad274e55c0699"
+    sha256 x86_64_linux:   "0769eaadb11f6912558530b4527c6eeb95a85adc2ef35de70a9a3f5d6f94d30d"
   end
 
   head do
@@ -29,10 +30,6 @@ class Gnuplot < Formula
   depends_on "pango"
   depends_on "qt@5"
   depends_on "readline"
-
-  on_linux do
-    depends_on "gcc"
-  end
 
   fails_with gcc: "5"
 

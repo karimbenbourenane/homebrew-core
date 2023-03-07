@@ -1,8 +1,8 @@
 class Lighttpd < Formula
   desc "Small memory footprint, flexible web-server"
   homepage "https://www.lighttpd.net/"
-  url "https://download.lighttpd.net/lighttpd/releases-1.4.x/lighttpd-1.4.66.tar.xz"
-  sha256 "47ac6e60271aa0196e65472d02d019556dc7c6d09df3b65df2c1ab6866348e3b"
+  url "https://download.lighttpd.net/lighttpd/releases-1.4.x/lighttpd-1.4.69.tar.xz"
+  sha256 "16ac8db95e719629ba61949b99f8a26feba946a81d185215b28379bb4116b0b4"
   license "BSD-3-Clause"
 
   livecheck do
@@ -11,12 +11,13 @@ class Lighttpd < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "140789716124040c00768f4010deffb6e2a50eda8013e9f596441c39631b5d56"
-    sha256 arm64_big_sur:  "fe84d698c51ff01d404aadd9de3946d6bc7bc0d30b594481c0bec95cb820e31d"
-    sha256 monterey:       "6c6725d8b14700e38bb161c0d1c899e138fddf4299dd4b5423b36c64a76137a0"
-    sha256 big_sur:        "51df7b685fe47669908fc79076b9e7c89a5219a402ae44a0cca9a92a67b0a6dd"
-    sha256 catalina:       "07116ce0b11f971e4b7d776f94dae5e40e5555e2c976e22fffbc0ad1f9a03939"
-    sha256 x86_64_linux:   "2d414974667d44f72018bedae1edac0d63a04bc931622da2a5299d746af4a07b"
+    sha256 arm64_ventura:  "a071a43e67f774e6008847e976b4ff1f59513e302b89e7eef7a3f6b887d1e50b"
+    sha256 arm64_monterey: "4f9c220cfb9ce6a5d0d9d4ff0268c818e8b995e8d18bfeb69ecc56622eee340b"
+    sha256 arm64_big_sur:  "1a17f721a33ef48f80e4d708fd07dfb3ac1577e5bf403be2d2762e7a685d71e1"
+    sha256 ventura:        "7cae468376deb3df8d95d93929ec1d6ecb15c961cb13fb3dee0afdf2bfe17354"
+    sha256 monterey:       "c8731b77cc633d4600064d7fc597d0cadd5d0f6a64c6c86d786ccad44d5b6aa4"
+    sha256 big_sur:        "b0043ccc2c0fea482d3ae04edbc506acf98c3ee047c1842a720b52be30bc3e6b"
+    sha256 x86_64_linux:   "9656af82353608c103f01f626e99b4b20cabf90499e495b0d1b3686c76d49ed1"
   end
 
   depends_on "autoconf" => :build
@@ -63,11 +64,6 @@ class Lighttpd < Formula
         s.sub!(/^var\.conf_dir\s*=\s*".+"$/, "var.conf_dir    = \"#{etc}/lighttpd\"")
         s.sub!(/^server\.port\s*=\s*80$/, "server.port = 8080")
         s.sub!(%r{^server\.document-root\s*=\s*server_root \+ "/htdocs"$}, "server.document-root = server_root")
-
-        # get rid of "warning: please use server.use-ipv6 only for hostnames, not
-        # without server.bind / empty address; your config will break if the kernel
-        # default for IPV6_V6ONLY changes"
-        s.sub!(/^server.use-ipv6\s*=\s*"enable"$/, 'server.use-ipv6 = "disable"')
 
         s.sub!(/^server\.username\s*=\s*".+"$/, 'server.username  = "_www"')
         s.sub!(/^server\.groupname\s*=\s*".+"$/, 'server.groupname = "_www"')

@@ -1,18 +1,19 @@
 class Libgosu < Formula
   desc "2D game development library"
   homepage "https://libgosu.org"
-  url "https://github.com/gosu/gosu/archive/v1.4.3.tar.gz"
-  sha256 "0dadad26ff3ecbc585ce052c3d89cacc980de62690ee62e30ae8a42b1b78d2d7"
+  url "https://github.com/gosu/gosu/archive/v1.4.5.tar.gz"
+  sha256 "051fe5954b14273cf370d94dabad42abe63af95c4f86009b98efd6bf47540c0b"
   license "MIT"
   head "https://github.com/gosu/gosu.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "b1f1d5e187ea354ced29d4c4a1e6560c42ef5aaf6c1caebd12031b744c2173a5"
-    sha256 cellar: :any,                 arm64_big_sur:  "55cf01853c42161fba9d39c45d74777e74e2d9407b37b27322ecc5d415d4d37b"
-    sha256 cellar: :any,                 monterey:       "a2b97ae580dc8e4ec18b0150a7c7ae6a44613904925ca32b3f16191a553cd400"
-    sha256 cellar: :any,                 big_sur:        "c4ae08fc6393c475499ba2a54b1ad5a4af11df9e82b57711313d6b050f6fe039"
-    sha256 cellar: :any,                 catalina:       "85fa79fe1257aa9a1af7d6e4bb0356ebef41c5f7dd89a25dad2dd111a6a8f188"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "441b3f0c9c64f2ec64cad83d7db00ace5d9fce01ea4e08a042f69bf879f6bea7"
+    sha256 cellar: :any,                 arm64_ventura:  "3faddbf628295fbbd1bd4c3efa1ae5c082002695d4592c0394332c201cea1231"
+    sha256 cellar: :any,                 arm64_monterey: "9df80df6a55866654a63ba86f19b635ccda5bb3a38f835d0694a8afefa3191e1"
+    sha256 cellar: :any,                 arm64_big_sur:  "4d627075f586692786b2c01b589090e1ff47f6b2ce9ced252c5206e22f0d0ca5"
+    sha256 cellar: :any,                 ventura:        "1d549d8dcb7546a056935123c8c072ec880044d85617610f66dd7e0ae8635b43"
+    sha256 cellar: :any,                 monterey:       "2b4e38af9b2b791731c1e79550f3ad7c45187286ce03582a31afafbcb7900ee4"
+    sha256 cellar: :any,                 big_sur:        "2444114e3d70c6d55894a3e98dc308d4be9284942f58af1c75c5e1c2753a8047"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d7dc955e8fd596caa0204ee4734a5c3d01bfee7e937d83d26e48ab6099fceaa0"
   end
 
   depends_on "cmake" => :build
@@ -21,7 +22,6 @@ class Libgosu < Formula
 
   on_linux do
     depends_on "fontconfig"
-    depends_on "gcc"
     depends_on "mesa"
     depends_on "mesa-glu"
     depends_on "openal-soft"
@@ -46,7 +46,7 @@ class Libgosu < Formula
           MyWindow()
           :   Gosu::Window(640, 480)
           {
-              set_caption(\"Hello World!\");
+              set_caption("Hello World!");
           }
 
           void update()

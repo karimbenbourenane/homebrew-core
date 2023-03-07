@@ -7,8 +7,10 @@ class Scrollkeeper < Formula
   revision 2
 
   bottle do
+    sha256 arm64_ventura:  "a834db07ff6faaa052fcae2830820837d37902cdfc46427df8e98addc82ba600"
     sha256 arm64_monterey: "6de06691bc02972907fa268ce8501559f794454734b2d94894bd41f19cd33c4c"
     sha256 arm64_big_sur:  "88e96878a9f7cef658edaf418c55f7c9e6904aead82bd3102384cbdfb342a400"
+    sha256 ventura:        "03fb943a492839b62516584ae22c9ea7909ff60265e25c1bde2b864778b28ab7"
     sha256 monterey:       "a9b9a811e7d62586377152f75794cb92b57782611622815816f779a823427cb4"
     sha256 big_sur:        "0cdfc1e87fe8d2281867eb923dfce700906894f6593a763fe79f4afc936f2ad2"
     sha256 catalina:       "9bd348638b9e3492db3549c7ac0756975ca2c57303ec58685bb3e6694fff1dd1"
@@ -16,6 +18,9 @@ class Scrollkeeper < Formula
     sha256 high_sierra:    "efa4637b9d1b3942192dca6fb4602ef72ec6b285ba424c087d290c8feb5e2c5b"
     sha256 x86_64_linux:   "81a0061c55b44717079288661e0ecaac1b22d6a72c72b89e98237eb51c099539"
   end
+
+  # Last release on 2003-12-06 and no upstream activity.
+  deprecate! date: "2023-02-16", because: :unmaintained
 
   depends_on "docbook"
   depends_on "gettext"

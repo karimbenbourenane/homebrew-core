@@ -1,8 +1,8 @@
 class Pybind11 < Formula
   desc "Seamless operability between C++11 and Python"
   homepage "https://github.com/pybind/pybind11"
-  url "https://github.com/pybind/pybind11/archive/v2.10.0.tar.gz"
-  sha256 "eacf582fa8f696227988d08cfc46121770823839fe9e301a20fbce67e7cd70ec"
+  url "https://github.com/pybind/pybind11/archive/v2.10.3.tar.gz"
+  sha256 "5d8c4c5dda428d3a944ba3d2a5212cb988c2fae4670d58075a5a49075a6ca315"
   license "BSD-3-Clause"
 
   livecheck do
@@ -11,18 +11,18 @@ class Pybind11 < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "74ea39d086d17760a4c6917b70c8150fc434d5cdeaaeefaf4d9d6d88b59a8097"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "74ea39d086d17760a4c6917b70c8150fc434d5cdeaaeefaf4d9d6d88b59a8097"
-    sha256 cellar: :any_skip_relocation, monterey:       "1e749aa524598146c9854cec785ee91d28b5bdd9ffeb01502005738c6391e6d2"
-    sha256 cellar: :any_skip_relocation, big_sur:        "1e749aa524598146c9854cec785ee91d28b5bdd9ffeb01502005738c6391e6d2"
-    sha256 cellar: :any_skip_relocation, catalina:       "1e749aa524598146c9854cec785ee91d28b5bdd9ffeb01502005738c6391e6d2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "74ea39d086d17760a4c6917b70c8150fc434d5cdeaaeefaf4d9d6d88b59a8097"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "37e2d3a955f5f035ef12400bfd58bcd43f7a233e9267379f9fc7fa8bedbe3d48"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "37e2d3a955f5f035ef12400bfd58bcd43f7a233e9267379f9fc7fa8bedbe3d48"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "37e2d3a955f5f035ef12400bfd58bcd43f7a233e9267379f9fc7fa8bedbe3d48"
+    sha256 cellar: :any_skip_relocation, ventura:        "8434ebb7e19d4c4ded007b167460089c0f5c17a1d05093a93e1e63abcf843f2f"
+    sha256 cellar: :any_skip_relocation, monterey:       "8434ebb7e19d4c4ded007b167460089c0f5c17a1d05093a93e1e63abcf843f2f"
+    sha256 cellar: :any_skip_relocation, big_sur:        "8434ebb7e19d4c4ded007b167460089c0f5c17a1d05093a93e1e63abcf843f2f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "37e2d3a955f5f035ef12400bfd58bcd43f7a233e9267379f9fc7fa8bedbe3d48"
   end
 
   depends_on "cmake" => :build
   depends_on "python@3.10" => [:build, :test]
-  depends_on "python@3.8" => [:build, :test]
-  depends_on "python@3.9" => [:build, :test]
+  depends_on "python@3.11" => [:build, :test]
 
   def pythons
     deps.map(&:to_formula)

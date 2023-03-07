@@ -1,30 +1,33 @@
 class Faust < Formula
   desc "Functional programming language for real time signal processing"
   homepage "https://faust.grame.fr"
-  url "https://github.com/grame-cncm/faust/releases/download/2.41.1/faust-2.41.1.tar.gz"
-  sha256 "72145e1d4ffcdd8e687ed7960d1d0717fa2c1dd2566e0bbc3a78fa95bb8b683e"
+  url "https://github.com/grame-cncm/faust/releases/download/2.54.9/faust-2.54.9.tar.gz"
+  sha256 "29cfb88f87fd93a55620c18f58ec585a31b6f8106a9fd3528db8340048adef28"
   license "GPL-2.0-or-later"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "fc477fdc2e3c3a3348f3df4365d0e7c4dbec8696368e5d71c910d4bb1f2dc112"
-    sha256 cellar: :any,                 arm64_big_sur:  "58eb9f637145e6ba29ecb77b0b0ea7b31d90a8ef9b33be7fd63d179aa330d988"
-    sha256 cellar: :any,                 monterey:       "ad3bbbcdbf1338dcb675db1e9c213fe04d95fb121b7ec79d1cf97602b322bb65"
-    sha256 cellar: :any,                 big_sur:        "acfb0922b00d37fb2d665aa8f7690fb0744b693369481cc188a5a13cc519af97"
-    sha256 cellar: :any,                 catalina:       "fc933193d738f6dca2a8e8c795665798b40f8f643016d7c08768c77b15b98cb7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c74dd24abdf631a87c512eb3e2f291dc47927717148a3c9d2158fdabba71c5f0"
+    sha256 cellar: :any,                 arm64_ventura:  "a6387dca087a6e2f68900ed571fc9f150f4d76e8adfb8f9236ddc32a74b7ba12"
+    sha256 cellar: :any,                 arm64_monterey: "d2e5d073b745daac75adad48b4f7df552dd3447c9787f30ca1865d60b62d7e72"
+    sha256 cellar: :any,                 arm64_big_sur:  "d9575401ec2b10ea2001dec0fd69879e3aae716e95420b12b5ad93fed08df08d"
+    sha256 cellar: :any,                 ventura:        "e3f7fd4b3389906ff7da5bc3589c6af6db01a6ae2dee22dc3b95041e74545401"
+    sha256 cellar: :any,                 monterey:       "a6f924997956ce405aa97fc72a0e0532b399b836d37b44e029ed3e37ed7344f2"
+    sha256 cellar: :any,                 big_sur:        "c16fe1b50b58aebd3fde27f7d0aeb27584ec59aa4c91f45bf9db035b0c58786c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f15535584735832b88f4144838f6853f15bbed013729e0fb858004921cff23f2"
   end
 
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
   depends_on "libmicrohttpd"
   depends_on "libsndfile"
-  depends_on "llvm"
-
-  on_linux do
-    depends_on "gcc"
-  end
+  depends_on "llvm@14" # Needs LLVM 14 for `csound`.
 
   fails_with gcc: "5"
+
+  # upstream patch, https://github.com/grame-cncm/faust/pull/844
+  patch do
+    url "https://github.com/grame-cncm/faust/commit/ca013457c9d52bdc0101c9d31fc3621fe3e1b103.patch?full_index=1"
+    sha256 "e2f39b34d744cd79178e9e581f63af9076d04b3c01edc19799e2fe2d5ea18814"
+  end
 
   def install
     ENV.delete "TMP" # don't override Makefile variable

@@ -1,31 +1,28 @@
 class QtLibiodbc < Formula
   desc "Qt SQL Database Driver"
   homepage "https://www.qt.io/"
-  url "https://download.qt.io/official_releases/qt/6.3/6.3.1/submodules/qtbase-everywhere-src-6.3.1.tar.xz"
-  sha256 "0a64421d9c2469c2c48490a032ab91d547017c9cc171f3f8070bc31888f24e03"
-  license all_of: ["GPL-2.0-only", "GPL-3.0-only", "LGPL-2.1-only", "LGPL-3.0-only"]
+  url "https://download.qt.io/official_releases/qt/6.4/6.4.2/submodules/qtbase-everywhere-src-6.4.2.tar.xz"
+  sha256 "a88bc6cedbb34878a49a622baa79cace78cfbad4f95fdbd3656ddb21c705525d"
+  license any_of: ["GPL-2.0-only", "GPL-3.0-only", "LGPL-3.0-only"]
 
   livecheck do
     formula "qt"
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "575e66a82d47a8f11880aaea4194a00521ba184751f62301de98db2d2b05ee7c"
-    sha256 cellar: :any,                 arm64_big_sur:  "e8939faa15e59176bd8b764beb2d1a939880d7945befe3827accbbfaf4cb0995"
-    sha256 cellar: :any,                 monterey:       "312be913611c6854a1568b47ac347e97f513c543fd8b957e284eae24fd49ee15"
-    sha256 cellar: :any,                 big_sur:        "7de1307353b03c844021d70e5e61f79ccb600261e89d52b5a0a9f23010f01306"
-    sha256 cellar: :any,                 catalina:       "657ccc8cf21fc7d29bccff245dcb7758c67c5d90b3f9b99283020446c1108dcc"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "4f215f5bf3295c9d6ce9ed3e149b1e88747d9299cc18e1cd591fcd048b5be47e"
+    sha256 cellar: :any,                 arm64_ventura:  "300087729b1028ad226e6786c1c2dcabfd54fe8baab54763b1ada6d1483a27cd"
+    sha256 cellar: :any,                 arm64_monterey: "2a876e7224d245295650c9091df0eeaad063300e430206f1e3f1cf3165728719"
+    sha256 cellar: :any,                 arm64_big_sur:  "776631217b61ddd52ad8caa609869ccc1c100236632f139242b7244bcd628b2a"
+    sha256 cellar: :any,                 ventura:        "aca29c9284d8fc369ecca608a061740d2a37f7b0883b3a70832eed6d5193664c"
+    sha256 cellar: :any,                 monterey:       "a7d5f8ad9c463401535a10fe1285fd950149b524c7fdb82ac643796b0c180840"
+    sha256 cellar: :any,                 big_sur:        "9c38f0c9dcc064a14087365204d94cec20572d6e55a083458fcc89b8cedfe6d2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "041c390ca43f14ed362919b2e5f4a5a9e456ea559d2266cd30b45d7af7f2f488"
   end
 
   depends_on "cmake" => [:build, :test]
 
   depends_on "libiodbc"
   depends_on "qt"
-
-  on_linux do
-    depends_on "gcc"
-  end
 
   conflicts_with "qt-unixodbc",
     because: "qt-unixodbc and qt-libiodbc install the same binaries"

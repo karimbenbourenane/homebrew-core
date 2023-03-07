@@ -1,22 +1,22 @@
 class Gource < Formula
   desc "Version Control Visualization Tool"
   homepage "https://github.com/acaudwell/Gource"
-  url "https://github.com/acaudwell/Gource/releases/download/gource-0.53/gource-0.53.tar.gz"
-  sha256 "3d5f64c1c6812f644c320cbc9a9858df97bc6036fc1e5f603ca46b15b8dd7237"
+  url "https://github.com/acaudwell/Gource/releases/download/gource-0.54/gource-0.54.tar.gz"
+  sha256 "1dcbcedf65d2cf4d69fe0b633e54c202926c08b829bcad0b73eaf9e29cd6fae5"
   license "GPL-3.0-or-later"
-  revision 1
 
   bottle do
-    sha256 arm64_monterey: "efa5c9ef2d78af44422171df97d6cb513ce8f4dfd6d236aeb3089fa8029ae89c"
-    sha256 arm64_big_sur:  "6ab4d722ac6dc2984eada4861674da1e681efc254c68a3f2fd82128813d4143d"
-    sha256 monterey:       "df637390566e28ce1054679690e6ee027a830d560b08fcceae6195a8a7acfb94"
-    sha256 big_sur:        "26927a451639add4b2b7617af818d8c045ccb619e0c8e04905b8be08857a754d"
-    sha256 catalina:       "a7ef7bd6622ed0a142850b90406f94d08c5c39c58b4fb2d87c0d2f60423158fc"
-    sha256 x86_64_linux:   "2f151752f275c4431bb0719f92697a821427c5e666856fc18c5048567f8bab16"
+    sha256 arm64_ventura:  "b49d8188e5f03e8a549e24c1329b1dbffe05032a42d2766419c84d385647d1b6"
+    sha256 arm64_monterey: "5cbf7ad844d7f4b7ea5d35dda94ef8c7ee08ce22cf9b3806ecee0898beb37169"
+    sha256 arm64_big_sur:  "746a24a730d8bd1e158285c6ba4669720940037fd8cfce3454ed2e25bbc396b6"
+    sha256 ventura:        "e10bfbc4f393a035672da37fcb8e47027b55aea4f4e755aa9ac681954178e0c6"
+    sha256 monterey:       "a6f62398a07576b5cf518f4874a93a1d537bf835957c6da7d2627f3914684bd4"
+    sha256 big_sur:        "92bdb6e29436032811b16bdf9889bebf5e72c092958756e641eef6ea63e5f0d3"
+    sha256 x86_64_linux:   "aa829a21babf52ff635254d908b3beee9447d3f05a07b144c1cfb3b84abfd0ce"
   end
 
   head do
-    url "https://github.com/acaudwell/Gource.git"
+    url "https://github.com/acaudwell/Gource.git", branch: "master"
 
     depends_on "autoconf" => :build
     depends_on "automake" => :build

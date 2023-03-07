@@ -4,20 +4,17 @@ class PostgresqlAT10 < Formula
   url "https://ftp.postgresql.org/pub/source/v10.22/postgresql-10.22.tar.bz2"
   sha256 "955977555c69df1a64f44b81d4a1987eb74abbd1870579f5ad9d946133dd8e4d"
   license "PostgreSQL"
-  revision 2
-
-  livecheck do
-    url "https://ftp.postgresql.org/pub/source/"
-    regex(%r{href=["']?v?(10(?:\.\d+)+)/?["' >]}i)
-  end
+  revision 3
 
   bottle do
-    sha256 arm64_monterey: "6fda06a71aa97544b428a2b17fc6056d04763a4bc5a8bacd0b826f776e58882c"
-    sha256 arm64_big_sur:  "dcf26bedb0ce66561eeaa0e8e9043cf8449a551d8abe78d2d40e574da7855297"
-    sha256 monterey:       "c3f30dbae901a654a3d1bb08b62495060cd6940df7467f3b1941530e668a5631"
-    sha256 big_sur:        "773b236837ae41c1e044e80434e994a552a8c6a524d505fab17fc6c406421d27"
-    sha256 catalina:       "7e824feff3b576948213e8f8bc565b01dd7f89bc2cfa650ed9fc65b943302062"
-    sha256 x86_64_linux:   "5b4ed07956eac067fced34eb9d7abbd5da58b542f812d2cd75ca1b9462ae4a69"
+    sha256 arm64_ventura:  "12a23aa3da4c20fe27d7d2cf7e68a31f8072b8e5e1356e95e0918d7d528a6faa"
+    sha256 arm64_monterey: "95ff39fa2a308b2ba32569df5da563911664d447ab160cf9e7a4e0dc81cd46c1"
+    sha256 arm64_big_sur:  "ce82c9858b89a210fe816495af9072c57e4a2102007dbd481bb6055ac3ab37a5"
+    sha256 ventura:        "e192b534805c7bc6d03af8e3bbfbd5bccdac4f33a1901dfddc0f5532ea125458"
+    sha256 monterey:       "56d578ffafd4651d48ea24c65c2821d5eab5c4308dc83ec0b13a7aa069a8dfe1"
+    sha256 big_sur:        "0709771101fc5c98748b905b4687b19275fa196169a12f2b882ba4c14fc0668e"
+    sha256 catalina:       "a8fdf9b8cc39eb124cf9006ba21d13b9b47aea401f4916a9159db27877029bdc"
+    sha256 x86_64_linux:   "ba4d03256d2b7217953fa653505d053f12d71af9291f3b6adb16bc0a5a665b4f"
   end
 
   keg_only :versioned_formula

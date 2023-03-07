@@ -1,9 +1,9 @@
 class Openvpn < Formula
   desc "SSL/TLS VPN implementing OSI layer 2 or 3 secure network extension"
   homepage "https://openvpn.net/community/"
-  url "https://swupdate.openvpn.org/community/releases/openvpn-2.5.7.tar.gz"
-  mirror "https://build.openvpn.net/downloads/releases/openvpn-2.5.7.tar.gz"
-  sha256 "08340a389905c84196b6cd750add1bc0fa2d46a1afebfd589c24120946c13e68"
+  url "https://swupdate.openvpn.org/community/releases/openvpn-2.6.0.tar.gz"
+  mirror "https://build.openvpn.net/downloads/releases/openvpn-2.6.0.tar.gz"
+  sha256 "ebec933263c9850ef6f7ce125e2f22214be60b1cbb8ccff18892643fe083ae8f"
   license "GPL-2.0-only" => { with: "openvpn-openssl-exception" }
 
   livecheck do
@@ -12,12 +12,13 @@ class Openvpn < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "4d350124b3dc9c7f040d6aed9f32f78218ae543bbc8b2d47d84f1521ced30632"
-    sha256 arm64_big_sur:  "5c41d1fd9c0a1a152b0bf39c6bb5a95e60b46ae2223559cc89b32d57ee0c9391"
-    sha256 monterey:       "62fd88ba59c32b406e19c964ce270e238d14a92f45d383995c0cd813e8b85cc0"
-    sha256 big_sur:        "211ec35af0ed419841feb0d33522938d44c99c41bdcf801a5c9315ccb87e3eb5"
-    sha256 catalina:       "84e91f8c12be690f3d761efc190bce65a45c196527b130f3a7f4e84f3141555a"
-    sha256 x86_64_linux:   "7f78bd7675bd0d0e39a0521232a21faaa51453171ceff4ae5e385874c59588fe"
+    sha256 arm64_ventura:  "69dc018b3a179e25733e578f8b0e5ef739276735f8ac7ffda18ce5cc5e8e1656"
+    sha256 arm64_monterey: "bde1352f1d7b7f5e4994423e19e831fa70ccb7f49ebd9b1a017d7a1f8c65b18f"
+    sha256 arm64_big_sur:  "2b48cf1ad09c2f244221cfedf9e20d9b78dd2203ddf1846f0202d35eba197af8"
+    sha256 ventura:        "a87aa6cb0582f1c92c767f5fab8571c25a3e8fa395e84beebce7fca05c9579fe"
+    sha256 monterey:       "cd79db428eca07fcd1c2ac05065652e8218548b1284d92f0f56a50409919e0db"
+    sha256 big_sur:        "7a57fde7f9e9c031ece4e08ed8a5ac305798df02777f087806a3edea8a621414"
+    sha256 x86_64_linux:   "161f111c6e1f900058dbc640d5b2dede54bfbb07b4ee0db0551df40ea08dd376"
   end
 
   depends_on "pkg-config" => :build
@@ -27,6 +28,7 @@ class Openvpn < Formula
   depends_on "pkcs11-helper"
 
   on_linux do
+    depends_on "libcap-ng"
     depends_on "linux-pam"
     depends_on "net-tools"
   end
@@ -62,10 +64,10 @@ class Openvpn < Formula
     (var/"run/openvpn").mkpath
   end
 
-  plist_options startup: true
   service do
     run [opt_sbin/"openvpn", "--config", etc/"openvpn/openvpn.conf"]
     keep_alive true
+    require_root true
     working_dir etc/"openvpn"
   end
 

@@ -1,8 +1,8 @@
 class Bwfmetaedit < Formula
   desc "Tool for embedding, validating, and exporting BWF file metadata"
   homepage "https://mediaarea.net/BWFMetaEdit"
-  url "https://mediaarea.net/download/binary/bwfmetaedit/21.07/BWFMetaEdit_CLI_21.07_GNU_FromSource.tar.bz2"
-  sha256 "7b55d9c6df989a3cbff2bb2c9a18b0b0f3a80fa716539a160d612194906d94f2"
+  url "https://mediaarea.net/download/binary/bwfmetaedit/23.01/BWFMetaEdit_CLI_23.01_GNU_FromSource.tar.bz2"
+  sha256 "2cbaa9240e48a6105c8dfd27cc0ac252b41311510db785bc6382c1328dbf0c51"
   license "0BSD"
 
   livecheck do
@@ -11,13 +11,13 @@ class Bwfmetaedit < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "55db76b2cdd9dea54d82e644f9de1c5f5ca53cc552602115ab45704f30aef612"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "990843dbcb7a326453234dcdedb6af987be548adecc3edca6dba0086c16d689d"
-    sha256 cellar: :any_skip_relocation, monterey:       "79b70c2fe4f006d8997f05cc548148682050712366f6c26cdb90bba21e40bb42"
-    sha256 cellar: :any_skip_relocation, big_sur:        "bc4935bced4e3226e4e0fb61dbf8821ee25fb36126c494e4e93f084728032be3"
-    sha256 cellar: :any_skip_relocation, catalina:       "c5168b4682ae67f6ad9618761706b4589d6ad45fb55df851602dab205a8a7299"
-    sha256 cellar: :any_skip_relocation, mojave:         "836a3ad812aaeb0128ac0e3fe75eee3d33c6f2c2a98f92138af02cf74173c665"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "08a47ae2efd7c64a5a5eb5cc9ecdd2046d0b0f20169257af529dd9ae0e3891d3"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "df2bee4c744fe05c0c1e6310d9eb7873203a9dd1d65726558c65007b22c69fc2"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "f0b97fc28c5918ea3d8eb7faf188b5d843a5d2cfd39068a2658d4f111276fc8b"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "fdc4cc6e1faa7e8c7926e12ca509d35ceacf6b1e4ebae634fdb25308ce8241b3"
+    sha256 cellar: :any_skip_relocation, ventura:        "72b091fa0bf72711c64bc22a6c68ab6bb6a4e7284fac2e24649dd0db95f71e72"
+    sha256 cellar: :any_skip_relocation, monterey:       "5c3722c22fe93cccd2387b36222cf5c0c8f0af45c13eacc63e7dcd6c5e08d80d"
+    sha256 cellar: :any_skip_relocation, big_sur:        "1af3555fbe262d5ade4989031c434a9557173acc47f38d52d33b20e921941ad5"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ae10b4e571fa99d15876e829cbf280744499fb694c1df2441210c00ac11550a4"
   end
 
   def install

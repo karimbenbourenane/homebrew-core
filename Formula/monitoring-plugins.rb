@@ -1,8 +1,9 @@
 class MonitoringPlugins < Formula
   desc "Plugins for nagios compatible monitoring systems"
   homepage "https://www.monitoring-plugins.org"
-  url "https://www.monitoring-plugins.org/download/monitoring-plugins-2.3.1.tar.gz"
-  sha256 "f56eb84871983fd719247249e3532228b37e2efaae657a3979bd14ac1f84a35b"
+  url "https://www.monitoring-plugins.org/download/monitoring-plugins-2.3.3.tar.gz"
+  sha256 "7023b1dc17626c5115b061e7ce02e06f006e35af92abf473334dffe7ff3c2d6d"
+  license "GPL-3.0-or-later"
 
   livecheck do
     url "https://www.monitoring-plugins.org/download.html"
@@ -10,16 +11,16 @@ class MonitoringPlugins < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_monterey: "0d28c059618baac62c5d3a3703eba0196f0a38785241ef2cdaae20627ef05bd2"
-    sha256 cellar: :any, arm64_big_sur:  "5044511cc0f5a64f3424d4507559b6ca316669121f4b15d58ef6b9cec5bba3f8"
-    sha256 cellar: :any, monterey:       "02d82e44495dd015a29e9680e4ad4d82d9bc31708eb179186b399c56cc22d74b"
-    sha256 cellar: :any, big_sur:        "a49576ad287d073c67e0da12be686ba737abe34e5f61813a2e308cd44c427017"
-    sha256 cellar: :any, catalina:       "644b33de5338e00a2103c87aa4b55a39b7a16e2ecee49936f2251a0a97756f0f"
-    sha256 cellar: :any, mojave:         "883707c4b2fe29a6d0b8453d4d19005128761d5d6952b9fe21292ec4b4cb2b11"
-    sha256               x86_64_linux:   "db7cde1c3eb426811fd9ecec4a97c485caad9a35800d8006123339d0b82963b6"
+    sha256 cellar: :any, arm64_ventura:  "6a930ca2aaedd2cf73365bc71fdc93273ba78cb893c117149500f9fe20f79f43"
+    sha256 cellar: :any, arm64_monterey: "0b0be4236072aa4ffb4a7bcd0ff09f79546790c57b5dc9c9232173cb676e1e93"
+    sha256 cellar: :any, arm64_big_sur:  "0baf0ab2e51519be149ee07a87927874729f38e4751be819d831466e144a8379"
+    sha256 cellar: :any, ventura:        "91b1eb7fd56d87474127afad01204c18a206bfe7cdd0e090ba0000f47de1a428"
+    sha256 cellar: :any, monterey:       "f7c115e18c7e2d811caab8fa412fb45c55144aec6779f75576c837e7cfd47b98"
+    sha256 cellar: :any, big_sur:        "470589d619ac73271cc89fc071640bf6d4448a34234f39bb0805a857623a15bf"
+    sha256               x86_64_linux:   "a1a591f41c0bea670ae1592f05572b6e08c030e2e0cabfba9151dd5ba757f299"
   end
 
-  depends_on "openssl@1.1"
+  depends_on "openssl@3"
 
   on_linux do
     depends_on "bind"
@@ -32,7 +33,7 @@ class MonitoringPlugins < Formula
       --disable-dependency-tracking
       --prefix=#{libexec}
       --libexecdir=#{libexec}/sbin
-      --with-openssl=#{Formula["openssl@1.1"].opt_prefix}
+      --with-openssl=#{Formula["openssl@3"].opt_prefix}
     ]
 
     system "./configure", *args

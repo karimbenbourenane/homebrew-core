@@ -2,17 +2,18 @@ class Frpc < Formula
   desc "Client app of fast reverse proxy to expose a local server to the internet"
   homepage "https://github.com/fatedier/frp"
   url "https://github.com/fatedier/frp.git",
-      tag:      "v0.44.0",
-      revision: "8888610d8339bb26bbfe788d4e8edfd6b3dc9ad6"
+      tag:      "v0.47.0",
+      revision: "88e74ff24d7f2cbbae536904fe00324b195a278d"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "0a2235a157bd9d1adeee488e098be3b14724291ad3a759147d455ae669be9174"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "0a2235a157bd9d1adeee488e098be3b14724291ad3a759147d455ae669be9174"
-    sha256 cellar: :any_skip_relocation, monterey:       "158d68417ba4f5db350720b26a3b46b0e0957a4aab3c64a543ac0b983d028242"
-    sha256 cellar: :any_skip_relocation, big_sur:        "158d68417ba4f5db350720b26a3b46b0e0957a4aab3c64a543ac0b983d028242"
-    sha256 cellar: :any_skip_relocation, catalina:       "158d68417ba4f5db350720b26a3b46b0e0957a4aab3c64a543ac0b983d028242"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "228041e37e00d32bfa6d360a275380dddb5b820540c41d5d889873fd0f4da856"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "5ccdbcf6cf59ed5fe6ac0aa620629ca9d1e38ed74ad551c985a5214d8f5b6e08"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "75a883f55a5b855063d2f53618f67cee3e46feff7bc63a9e83d0e8f8347f019d"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "eccc3071582d897427f46e556857283a22ce0eab8da5aef8b45bebe1c3be3287"
+    sha256 cellar: :any_skip_relocation, ventura:        "d6937a57a93094b225807890f488e877494a9e3e5f5fa030ffba9663d2a71ad6"
+    sha256 cellar: :any_skip_relocation, monterey:       "b5655311584e9fadc0c34659d0ae6996add41a81b0bc317670d2f274d3882620"
+    sha256 cellar: :any_skip_relocation, big_sur:        "c9fd86a4c8dd66ee32c7bd612d2181e8be874daac25afedcb6d423fd02ab058f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c8a186c43bcb5deb81e76c0679c311b4e52ccfc8bcd3a804dccc17296887a716"
   end
 
   depends_on "go" => :build

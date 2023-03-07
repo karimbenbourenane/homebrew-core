@@ -1,17 +1,16 @@
 class Hashlink < Formula
   desc "Virtual machine for Haxe"
   homepage "https://hashlink.haxe.org/"
-  url "https://github.com/HaxeFoundation/hashlink/archive/1.11.tar.gz"
-  sha256 "b087ded7b93c7077f5b093b999f279a37aa1e31df829d882fa965389b5ad1aea"
+  url "https://github.com/HaxeFoundation/hashlink/archive/1.13.tar.gz"
+  sha256 "696aef6871771e5e12c617df79187d1761e79bcfe3927531e99f665a8002956f"
   license "MIT"
-  revision 5
   head "https://github.com/HaxeFoundation/hashlink.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 monterey:     "dd59e2432f05225f3eb9601fce04278d694c6d164a6a713be968ef04b4c81e4a"
-    sha256 cellar: :any,                 big_sur:      "1116d33cba9669325b72a9d2567a79469887886d2da656b37a94a0094b1965d1"
-    sha256 cellar: :any,                 catalina:     "f64cd8e07074671d1e4322246e87b586c1dab39d97c92e70238a3c89d8a5a3c4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "6e014cc31747cbe3825c7748e293501c7622d3e9dab87095d918e768446dabb2"
+    sha256 cellar: :any,                 ventura:      "873297b1650b732c537367ca8f6ff1ef92bacf295147f9d35c2c06fffb5fe8c3"
+    sha256 cellar: :any,                 monterey:     "050593487fc03f29ffde9e2439e9b31bbc89f472875f5aff47706af69023cc1a"
+    sha256 cellar: :any,                 big_sur:      "95508443ab609188bd8e6dc592186877da5269340602c2236ee77e5f68bcbb77"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "31fb972ebeab20da4999297696f339b6055b3e3021951f0f342c6baaae1d4a06"
   end
 
   depends_on "haxe" => :test
@@ -30,10 +29,15 @@ class Hashlink < Formula
   end
 
   def install
-    inreplace "Makefile", /\$\{LFLAGS\}/, "${LFLAGS} ${EXTRA_LFLAGS}" unless build.head?
-    # On Linux, also pass EXTRA_FLAGS to LIBFLAGS, so that the linker will also add the RPATH to .hdll files.
-    inreplace "Makefile", "LIBFLAGS =", "LIBFLAGS = ${EXTRA_LFLAGS}"
-    system "make", "EXTRA_LFLAGS=-Wl,-rpath,#{libexec}/lib"
+    if OS.mac?
+      # make file doesn't set rpath on mac yet
+      system "make", "PREFIX=#{libexec}", "EXTRA_LFLAGS=-Wl,-rpath,#{libexec}/lib"
+    else
+      # On Linux, also set RPATH in LIBFLAGS, so that the linker will also add the RPATH to .hdll files.
+      inreplace "Makefile", "LIBFLAGS =", "LIBFLAGS = -Wl,-rpath,${INSTALL_LIB_DIR}"
+      system "make", "PREFIX=#{libexec}"
+    end
+
     system "make", "install", "PREFIX=#{libexec}"
     bin.install_symlink Dir[libexec/"bin/*"]
   end

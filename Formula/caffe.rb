@@ -4,21 +4,19 @@ class Caffe < Formula
   url "https://github.com/BVLC/caffe/archive/1.0.tar.gz"
   sha256 "71d3c9eb8a183150f965a465824d01fe82826c22505f7aa314f700ace03fa77f"
   license "BSD-2-Clause"
-  revision 41
-
-  livecheck do
-    url :stable
-    strategy :github_latest
-  end
+  revision 43
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "0b541442a6d65a4bd33be673e3e65600e03572d2a8ba7297ce591a45dff1a936"
-    sha256 cellar: :any,                 arm64_big_sur:  "6bd1fbd55fb47274ca9a00742ce531a6489be521a1a8e5854609470403881b98"
-    sha256 cellar: :any,                 monterey:       "005bad8638ff49a119722ab5eac1c570f07fd233653a6a2de2dac546a39fc994"
-    sha256 cellar: :any,                 big_sur:        "f3296808a8390757a22c4c6bff6581e8393b22cf9fead83b9027881d22b29f0d"
-    sha256 cellar: :any,                 catalina:       "19fd2287e31575e952b735c707a050bd94a8001ebe0471a51856d60ae0a0c348"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "105f09dd49c082b65850593f88c9c39dc6f0a3aee093b3d50a7a282a8aa3235e"
+    sha256 cellar: :any,                 arm64_ventura:  "839a67b9ca63d507107b5c30b88e407c62a91e4f6cf9f4a2271f7d137ac0c301"
+    sha256 cellar: :any,                 arm64_monterey: "184737d595e4311d8dfb3e27620f65dd8d7955663c187af0bf643868faa46a5c"
+    sha256 cellar: :any,                 arm64_big_sur:  "7cf4b212b6fdf9bd18a94625348f62c20becca29ec0e00b77bc6c1bdbea45ff9"
+    sha256 cellar: :any,                 ventura:        "1da4910ab90d3980153d5fa3d2e1629679f1beea1d2438cbf249ba6d7fa782d9"
+    sha256 cellar: :any,                 monterey:       "082ccc224264bafd4b7139140fc5461f9e442cebc37ff5c8aeeed04a0f3d0c56"
+    sha256 cellar: :any,                 big_sur:        "0a4c1a98a9ca96332be624aa388dd88250cdcef2f8c2c96ee5c9f4de1479ca4b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b90091b481b0900bc049743ded1cdc2249d2aa70f3f441a05158778c47647a89"
   end
+
+  deprecate! date: "2022-12-30", because: :deprecated_upstream
 
   depends_on "cmake" => :build
   depends_on "boost"
@@ -33,11 +31,8 @@ class Caffe < Formula
   depends_on "snappy"
 
   on_linux do
-    depends_on "gcc"
     depends_on "openblas"
   end
-
-  fails_with gcc: "5" # opencv is compiled with GCC
 
   resource "homebrew-test_model" do
     url "https://github.com/nandahkrishna/CaffeMNIST/archive/2483b0ba9b04728041f7d75a3b3cf428cb8edb12.tar.gz"

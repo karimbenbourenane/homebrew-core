@@ -1,26 +1,26 @@
 class BaculaFd < Formula
   desc "Network backup solution"
   homepage "https://www.bacula.org/"
-  url "https://downloads.sourceforge.net/project/bacula/bacula/13.0.1/bacula-13.0.1.tar.gz"
-  sha256 "d63848d695ac15c1ccfc117892753314bcb9232a852c40e32cca88c0e918978a"
-  license "AGPL-3.0-only"
+  url "https://downloads.sourceforge.net/project/bacula/bacula/13.0.2/bacula-13.0.2.tar.gz"
+  sha256 "6e08bcbe6a4ab070e17e9e9c4e9bc4e944d2e5bd376521ca342c6fe96a20687d"
+  license "AGPL-3.0-only" => { with: "openvpn-openssl-exception" }
 
   bottle do
-    sha256                               arm64_monterey: "42489dd6be579995365266af6ac1e9e0efb0f059114ca11aea2e403d7f07c6bc"
-    sha256                               arm64_big_sur:  "10036f12b6348491a9b6721c8df2a1ea79158e6e8c50710aeece83b513c9bbaa"
-    sha256                               monterey:       "bad36d8e6a56caf6ec72230e48d71fcf513a09c7dc019a24f1fa3970f6509d1b"
-    sha256                               big_sur:        "4026b2d20490a6be9d3648e74b074f615c54af6257d9dbb8b2a6608e5bda8e26"
-    sha256                               catalina:       "aee4a24eac06896ca037c18918c264e73e71c5e5ab10cb64758a4baf85ee411d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "48579a00a95f1864cb86adf6b9e43bb59faee5b76e7f78d20c9e20159d0e627f"
+    sha256                               arm64_ventura:  "82da2a843d76f03bdbc456c10ac52403c4937240718a996193b17d8aeb688a10"
+    sha256                               arm64_monterey: "110317c55f1ad9cde6679e52ee6df9f5f0a915dc655c5dbabbbd6d18a0ef4053"
+    sha256                               arm64_big_sur:  "b13b510999446703b023699a01130d08f69160e2d26c7dc2a366f06432fc808d"
+    sha256                               ventura:        "b7d9faaedab0adc479c600f5e3d462eaaea3ec8111bcbc760a55019f4731b4cf"
+    sha256                               monterey:       "36dff1d741e4c9d9676729c808e9e02bc7cea01d2f57b511fa5da53814260984"
+    sha256                               big_sur:        "7aa33848a3d4c1d251c35790555bed9a8b6c9d39f3e2fdaea96a896968dfd5a8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "696f80dacb43185c4bef853807cc61218dcfd2a7624789cb46634113235fd10e"
   end
 
-  depends_on "openssl@1.1"
+  depends_on "openssl@3"
   depends_on "readline"
 
   uses_from_macos "zlib"
 
-  conflicts_with "bareos-client",
-    because: "both install a `bconsole` executable"
+  conflicts_with "bareos-client", because: "both install a `bconsole` executable"
 
   # Fix -flat_namespace being used on Big Sur and later.
   patch do
@@ -59,9 +59,9 @@ class BaculaFd < Formula
     (var/"run").mkpath
   end
 
-  plist_options startup: true
   service do
     run [opt_bin/"bacula-fd", "-f"]
+    require_root true
   end
 
   test do

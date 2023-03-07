@@ -2,8 +2,8 @@ class Openj9 < Formula
   desc "High performance, scalable, Java virtual machine"
   homepage "https://www.eclipse.org/openj9/"
   url "https://github.com/eclipse-openj9/openj9.git",
-      tag:      "openj9-0.33.1",
-      revision: "1d9d16830f713e97410e8eeed1c350e58f34fadb"
+      tag:      "openj9-0.36.1",
+      revision: "0592661e480dd108a708689dc56bf1a427677645"
   license any_of: [
     "EPL-2.0",
     "Apache-2.0",
@@ -17,9 +17,11 @@ class Openj9 < Formula
   end
 
   bottle do
-    sha256 cellar: :any, monterey: "b029a1987b8d3a86badaef9f8d3e1616dadda33c541c4f4caa0b8f0fa9a57786"
-    sha256 cellar: :any, big_sur:  "e948d8ba9ffcfcd5b29cb9c6f7e9f2a5c59f5e65d47fa8d1ad4917c3d7cbe229"
-    sha256 cellar: :any, catalina: "d4f8a526b2f1a5827589d5af0b4c174d97b6eb43d3dfe3f4b1e75f0a852652cb"
+    sha256 cellar: :any, arm64_monterey: "213f1f0d27f274f438464fce66e693829a741af827e9a875210d1a306f093612"
+    sha256 cellar: :any, arm64_big_sur:  "7880e7f0f318d52abbc964bbd4edda9841688a6fb25e1e14dba561b777900fec"
+    sha256 cellar: :any, ventura:        "576323186740d1082951bfd0619406f763265e2b38f33bf5c25d41f6f6fed43b"
+    sha256 cellar: :any, monterey:       "5213d77bcf32d9e1d06322d5383aef76478f96d1b152f193c9f292de552c7a77"
+    sha256 cellar: :any, big_sur:        "ec0c3842f142ade5c0f2f386e4f4e113f4c885d646dbce7928921e247359b0ba"
   end
 
   keg_only :shadowed_by_macos
@@ -29,7 +31,6 @@ class Openj9 < Formula
   depends_on "cmake" => :build
   depends_on "ninja" => :build
   depends_on "pkg-config" => :build
-  depends_on arch: :x86_64 # https://github.com/eclipse-openj9/openj9/issues/11164
   depends_on "fontconfig"
   depends_on "giflib"
   depends_on "harfbuzz"
@@ -61,27 +62,34 @@ class Openj9 < Formula
   end
 
   # From https://github.com/eclipse-openj9/openj9/blob/openj9-#{version}/doc/build-instructions/
+  # We use JDK 17 to bootstrap.
   resource "boot-jdk" do
     on_macos do
-      url "https://github.com/AdoptOpenJDK/semeru16-binaries/releases/download/jdk-16.0.2%2B7_openj9-0.27.0/ibm-semeru-open-jdk_x64_mac_16.0.2_7_openj9-0.27.0.tar.gz"
-      sha256 "89e807261145243a358a2a626f64340944c03622f34eaa35429053e2085d7aef"
+      on_arm do
+        url "https://github.com/AdoptOpenJDK/semeru17-binaries/releases/download/jdk-17.0.4.1%2B1_openj9-0.33.1/ibm-semeru-open-jdk_aarch64_mac_17.0.4.1_1_openj9-0.33.1.tar.gz"
+        sha256 "50e4c324e7ffcf18c2e3ea7b1bfa870672203dab3fe61520c09fb2bdbe81f2c0"
+      end
+      on_intel do
+        url "https://github.com/AdoptOpenJDK/semeru17-binaries/releases/download/jdk-17.0.5%2B8_openj9-0.35.0/ibm-semeru-open-jdk_x64_mac_17.0.5_8_openj9-0.35.0.tar.gz"
+        sha256 "a8b5aefd73cfee2f46ece159728b3d22af10e841e4a7bb55aaef6dba3aa09e2c"
+      end
     end
     on_linux do
-      url "https://github.com/AdoptOpenJDK/semeru16-binaries/releases/download/jdk-16.0.2%2B7_openj9-0.27.0/ibm-semeru-open-jdk_x64_linux_16.0.2_7_openj9-0.27.0.tar.gz"
-      sha256 "1349eb9a1d9af491a1984d66a80126730357c4a5c4fcbe7112a2c832f6c0886e"
+      url "https://github.com/AdoptOpenJDK/semeru17-binaries/releases/download/jdk-17.0.5%2B8_openj9-0.35.0/ibm-semeru-open-jdk_x64_linux_17.0.5_8_openj9-0.35.0.tar.gz"
+      sha256 "b46de9cd00af8a0223f4b50deb2627ab91fe515a69383a96fd2c12757cef24fe"
     end
   end
 
   resource "omr" do
     url "https://github.com/eclipse-openj9/openj9-omr.git",
-        tag:      "openj9-0.33.1",
-        revision: "b58aa2708c095efadf522f67aaef9f7de2a7cbc7"
+        tag:      "openj9-0.36.1",
+        revision: "f491bbf6f6f3f87bfd38a65055589125c13de555"
   end
 
   resource "openj9-openjdk-jdk" do
     url "https://github.com/ibmruntimes/openj9-openjdk-jdk17.git",
-        tag:      "openj9-0.33.1",
-        revision: "1f4d354e6540e1aee3634ef067d3949516a337f5"
+        tag:      "openj9-0.36.0",
+        revision: "927b34f84c8c5ff380df16f2df8dd84a44b8c79e"
   end
 
   def install
@@ -137,6 +145,9 @@ class Openj9 < Formula
         --with-fontconfig=#{Formula["fontconfig"].opt_prefix}
       ]
     end
+    # Ref: https://github.com/eclipse-openj9/openj9/issues/13767
+    # TODO: Remove once compressed refs mode is supported on Apple Silicon
+    config_args << "--with-noncompressedrefs" if OS.mac? && Hardware::CPU.arm?
 
     ENV["CMAKE_CONFIG_TYPE"] = "Release"
 

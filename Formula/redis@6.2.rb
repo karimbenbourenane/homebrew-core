@@ -1,8 +1,8 @@
 class RedisAT62 < Formula
   desc "Persistent key-value database, with built-in net interface"
   homepage "https://redis.io/"
-  url "https://download.redis.io/releases/redis-6.2.7.tar.gz"
-  sha256 "b7a79cc3b46d3c6eb52fa37dde34a4a60824079ebdfb3abfbbfa035947c55319"
+  url "https://download.redis.io/releases/redis-6.2.11.tar.gz"
+  sha256 "8c75fb9cdd01849e92c23f30cb7fe205ea0032a38d11d46af191014e9acc3098"
   license "BSD-3-Clause"
 
   livecheck do
@@ -11,12 +11,13 @@ class RedisAT62 < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "1b7d170b8da5d389e3d9445d922c7041690b13072981e275b1ed33db654d9fa3"
-    sha256 cellar: :any,                 arm64_big_sur:  "759bf94a0731dd0138a8ab946694b74dd59997d06026b1f662231d5da545fe96"
-    sha256 cellar: :any,                 monterey:       "13c5b091fbcd6f9d9c5e3e7a89a57a38db08d9d47b2340d236ba7c71c43fa867"
-    sha256 cellar: :any,                 big_sur:        "2d8b4db3e009882e7f3193bafd665fbad0e2854eba62a2faf242e8bfa7a89b8c"
-    sha256 cellar: :any,                 catalina:       "45405f6326db4660fa95f046bc65ae7a27e81f67fa445608799c8b8d66ce5383"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "14007b1e013e245433e328017c78d5811b9740c5213044a44ec59acc8a3f18bc"
+    sha256 cellar: :any,                 arm64_ventura:  "16d82095740c2e31fb645a70912f56922fee7a5559f19bf5588419642ab2291b"
+    sha256 cellar: :any,                 arm64_monterey: "bca817b5556c6c759f9269f2188e2aa7637c16c1708c6ecb8e3d440cc56e66cd"
+    sha256 cellar: :any,                 arm64_big_sur:  "b35fb3dcb2cd55345e786335c35ae3828613e940f9a710e2e61a6bca3c0b0411"
+    sha256 cellar: :any,                 ventura:        "f504ad5080c0bb756d7246be1ece7f1f4eafc6c8012edb30a9e61d0b7ba93ff2"
+    sha256 cellar: :any,                 monterey:       "4af50bd00bac93fb14e243273a3b8b4da1eab946851a0dbe28ee0c97a6256744"
+    sha256 cellar: :any,                 big_sur:        "d35cd01f1f0dfeee7ac49065ab206514aec56f83ec08b0b9811b6d2906a276c2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "977af1a9cd4872549e1b8a5f22561634d4e702021607db5ae0f4c115d8c29c3c"
   end
 
   keg_only :versioned_formula

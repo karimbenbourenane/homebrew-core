@@ -1,10 +1,9 @@
 class Gegl < Formula
   desc "Graph based image processing framework"
   homepage "https://www.gegl.org/"
-  url "https://download.gimp.org/pub/gegl/0.4/gegl-0.4.38.tar.xz"
-  sha256 "e4a33c8430a5042fba8439b595348e71870f0d95fbf885ff553f9020c1bed750"
+  url "https://download.gimp.org/pub/gegl/0.4/gegl-0.4.42.tar.xz"
+  sha256 "aba83a0cbaa6c56edc29ea22f2e8172950a53b96daa51592083d59222bdde02d"
   license all_of: ["LGPL-3.0-or-later", "GPL-3.0-or-later", "BSD-3-Clause", "MIT"]
-  revision 1
   head "https://gitlab.gnome.org/GNOME/gegl.git", branch: "master"
 
   livecheck do
@@ -13,19 +12,20 @@ class Gegl < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "7fae228b7235df79ae243066dce988aa02e28a4d5c3db84aa6686343cdef4c32"
-    sha256 arm64_big_sur:  "7840f644358bc9699b1f3e74b419b6de9668aad1c97cc7a4b6e86ea996f2b835"
-    sha256 monterey:       "0eeb4fe4db2b41db4dedd32abdeb0003dbce3215798f72be16e78962b14ad11f"
-    sha256 big_sur:        "c97d5001f52ab54f4e98e18db02e3e795420f1c16ef753a7ef8f209201ef5af0"
-    sha256 catalina:       "f3d7aecfadaf13afb9d14760b3f259b6b8b914a37a315f1d4d2689eba2089e21"
-    sha256 x86_64_linux:   "e23c8d7d4fe6608c4020dfac1323994d7d3c352950b8d507e0315f9e9db6e675"
+    sha256 arm64_ventura:  "bcdfeedb7a207307f6aa5a020a88ad074c23c4d7aa730fa3721b5caa46265dbc"
+    sha256 arm64_monterey: "0a743cf58b1f6be5b11854c8813a1354c50d284f2ea77883d35ed43c07cd1e55"
+    sha256 arm64_big_sur:  "593117443e80ef49af158abf3984b9ef4516b796d98e733a335145b54c2ddc25"
+    sha256 ventura:        "55012dd581675488ad651c9d8d6fab11911d1512ad927ff00a179243a2ecd7cc"
+    sha256 monterey:       "dde0419be53714acbf79b3f34b0a509244e959367664f01c2d42e5de92411268"
+    sha256 big_sur:        "2fd9f8aeeee3333420b8ddb4118600c8e67b1ea6158d0c325f5c285cb68a68b1"
+    sha256 x86_64_linux:   "0b170ac8cb5cb501062f1a39eb2cf6842a750d03e4a0fa4153799d7203e11060"
   end
 
   depends_on "gobject-introspection" => :build
   depends_on "meson" => :build
   depends_on "ninja" => :build
   depends_on "pkg-config" => :build
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => :build
   depends_on "babl"
   depends_on "gettext"
   depends_on "glib"

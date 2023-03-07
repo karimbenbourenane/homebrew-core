@@ -8,23 +8,20 @@ class Ctemplate < Formula
   head "https://github.com/olafvdspek/ctemplate.git", branch: "master"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 arm64_monterey: "2af8837c0e6f6cb3405008c71795fcc3def16818aa2512365ec027cb3ad4b48e"
-    sha256 cellar: :any,                 arm64_big_sur:  "d9b6bdf4a7d13079ea3eb55d1cae8307513a8aaa7d782eda9333a3a96ff45523"
-    sha256 cellar: :any,                 monterey:       "407f8bdf5dea727de91e5436cab5b0e271fdd935806aa985d38d5ed4c2db57e9"
-    sha256 cellar: :any,                 big_sur:        "3e4c9c7028cf8037cc61000e24d25fd34bc8741a863b440653c087908ff33169"
-    sha256 cellar: :any,                 catalina:       "9451278bdf27133395761b18b00e88fb5ac3765bb1b5a0da7acb88a671ef7977"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "aef9050d0aa26b1a38f26df4e71d084ef439f5f26600f9defd8ce8b5de2221c6"
+    rebuild 3
+    sha256 cellar: :any,                 arm64_ventura:  "ee9935e535f7fc5ad36e78a17cdfa370dd804442065fb9d71f42939042b9a239"
+    sha256 cellar: :any,                 arm64_monterey: "60926618dc8939dee2953a3eed541ffbcda70ae70ea9e4811de4c635f351c3dc"
+    sha256 cellar: :any,                 arm64_big_sur:  "229589ee690294f135322334b902cacb32c86b9be7775320920300f8716d2a2a"
+    sha256 cellar: :any,                 ventura:        "8395eba52adc92de5ec11316fd65082dba1f5c934750cd86d7ec68ab7c40251d"
+    sha256 cellar: :any,                 monterey:       "3403981879581767866598b52b148046e46362102620c6220a06464add516197"
+    sha256 cellar: :any,                 big_sur:        "d47aa3297f5e44511790bb0fb1bf4e7eb5d37c599b9c9b661133d68f821b7048"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "376a70935eec4f3f5965bcd0b39603f25459b8995d12d124c3ab10184e15f3ae"
   end
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
   depends_on "libtool" => :build
-  depends_on "python@3.10" => :build
-
-  on_linux do
-    depends_on "gcc"
-  end
+  depends_on "python@3.11" => :build
 
   fails_with gcc: "5"
 
@@ -46,8 +43,8 @@ class Ctemplate < Formula
       }
     EOS
 
-    system ENV.cxx, "-std=c++11", "-I#{include}", "-L#{lib}",
-                    "-lctemplate_nothreads", "test.cpp", "-o", "test"
+    system ENV.cxx, "test.cpp", "-std=c++11", "-I#{include}", "-L#{lib}",
+                    "-lctemplate_nothreads", "-o", "test"
     system "./test"
   end
 end

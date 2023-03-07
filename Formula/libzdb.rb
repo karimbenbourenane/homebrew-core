@@ -1,10 +1,9 @@
 class Libzdb < Formula
   desc "Database connection pool library"
   homepage "https://tildeslash.com/libzdb/"
-  url "https://tildeslash.com/libzdb/dist/libzdb-3.2.2.tar.gz"
-  sha256 "d51e4e21ee1ee84ac8763de91bf485360cd76860b951ca998e891824c4f195ae"
+  url "https://tildeslash.com/libzdb/dist/libzdb-3.2.3.tar.gz"
+  sha256 "a1957826fab7725484fc5b74780a6a7d0d8b7f5e2e54d26e106b399e0a86beb0"
   license "GPL-3.0-only"
-  revision 3
 
   livecheck do
     url :homepage
@@ -12,12 +11,14 @@ class Libzdb < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "fd195f268e04cb92867eb892ce7f6c4d745d2a332d7e556ba15446c0c913df4c"
-    sha256 cellar: :any,                 arm64_big_sur:  "add84b2009e944ba199b3cebd460b8fddb31e15b594d89b5e092d7cfc433d7eb"
-    sha256 cellar: :any,                 monterey:       "c032c8f4adde4a7d1ad48276bed4a9fd1dc8d532b5abbf1d558e94382c298f17"
-    sha256 cellar: :any,                 big_sur:        "738890ada6a9d80e2e32fc4b0deee492c4932fadcc51926d7d147d9888d82065"
-    sha256 cellar: :any,                 catalina:       "949c8e505af733fab357fc76fc6f8aef95b1e6693321d2e1e8e9a8cb4c6dc62a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "0290aa392b46bab411f016ec05594625507d61e7737721673fed5778b2b89c52"
+    sha256 cellar: :any,                 arm64_ventura:  "d9a1e85054f21d735dc85853908b1685df18539775bcc7be208ed089b68e7715"
+    sha256 cellar: :any,                 arm64_monterey: "e8e69ee7caa822faeefbbd3beb5e42d60796daae8e9865d351b35a09d30eab23"
+    sha256 cellar: :any,                 arm64_big_sur:  "bd1c26eb89919f26a72458310340981f2360444facb8a06007f831cdde8969c3"
+    sha256 cellar: :any,                 ventura:        "4f337503e65d099fee98d7cccf111ab51d45bbaf9ea8ad4bd7ee8f39adf59a2b"
+    sha256 cellar: :any,                 monterey:       "fb27c254646707f49b4c220493a904d52c166b8432e29ac89df1c2c0bdb1842a"
+    sha256 cellar: :any,                 big_sur:        "503b5ac11a438ee0ce95b4a905575061f6710948e1fbb0d25e8c1a2b555d1bb8"
+    sha256 cellar: :any,                 catalina:       "9de6c1b21c609053ff01c54f5595dcc7185d9b7a6b6ecf8d65076ef7c9f93d3c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6dcf7be43843a73041a75abfbb79fa2cdb72a82d3356e7413fd9b12ab40ac3ea"
   end
 
   depends_on "libpq"
@@ -26,17 +27,7 @@ class Libzdb < Formula
   depends_on "openssl@1.1"
   depends_on "sqlite"
 
-  on_linux do
-    depends_on "gcc" # C++ 17 is required
-  end
-
-  fails_with gcc: "5"
-
-  # Fix -flat_namespace being used on Big Sur and later.
-  patch do
-    url "https://raw.githubusercontent.com/Homebrew/formula-patches/03cf8088210822aa2c1ab544ed58ea04c897d9c4/libtool/configure-big_sur.diff"
-    sha256 "35acd6aebc19843f1a2b3a63e880baceb0f5278ab1ace661e57a502d9d78c93c"
-  end
+  fails_with gcc: "5" # C++ 17 is required
 
   def install
     system "./configure", *std_configure_args

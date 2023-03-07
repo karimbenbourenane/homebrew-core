@@ -1,10 +1,9 @@
 class KnotResolver < Formula
   desc "Minimalistic, caching, DNSSEC-validating DNS resolver"
   homepage "https://www.knot-resolver.cz"
-  url "https://secure.nic.cz/files/knot-resolver/knot-resolver-5.5.2.tar.xz"
-  sha256 "3f78aa69c3f28edc42b5900b9788fba39498d8bffda7fb9c772bb470865780cb"
+  url "https://secure.nic.cz/files/knot-resolver/knot-resolver-5.6.0.tar.xz"
+  sha256 "0c82ae937b685dc477fb3176098e3dc106c898b7cd83553e5bc54dccb83c80d7"
   license all_of: ["CC0-1.0", "GPL-3.0-or-later", "LGPL-2.1-or-later", "MIT"]
-  revision 1
   head "https://gitlab.labs.nic.cz/knot/knot-resolver.git", branch: "master"
 
   livecheck do
@@ -13,12 +12,13 @@ class KnotResolver < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "26c0cc619db0701c66d8264595ef1b4b4f341cc53e5b91a09bba810823e18aec"
-    sha256 arm64_big_sur:  "dc130750c64885bdfec3c33c66d75547fa05c350e0023851c26e1f8816345fbb"
-    sha256 monterey:       "3a0e4737a28bd51e236b800161282b4f315a4a7df34ed3571c69b811acc808d1"
-    sha256 big_sur:        "a5228303c870b7b95e3f075843d504b6373990fbfaa88306becbf8363bc815fa"
-    sha256 catalina:       "514c0c14b066f6e6698afbc917ce9a123a7e8473f8de688bafe46b93d8044b17"
-    sha256 x86_64_linux:   "9dc0d26e0408e5b913d39b659810e0a59895be8f5c3eae5725b28735e1984b0f"
+    sha256 arm64_ventura:  "5ca10e63c6082ebbd34e44e53f955022ee86f41f76171bc3f0442b75bc11df79"
+    sha256 arm64_monterey: "a7cf2a04f6eb227f6cb40a2b020a181df5e8c0e079a2639e17a61fe88d71ba47"
+    sha256 arm64_big_sur:  "de3ab727f527992c33269355569cf16bcd2c106d8df028d78b5088a1cf90669f"
+    sha256 ventura:        "1b3af6eb07c55fe1024092a11cb8026328c35e77e4b623a4c1b9656438624c50"
+    sha256 monterey:       "1d2600e90bdecc21f41ce437920fdaf111ad8992fbcff1ba16788d8fb395fe87"
+    sha256 big_sur:        "077ab810b11de8686206f95b1164c86cf519ad93e5fc5e65259ee7de2bb3ac83"
+    sha256 x86_64_linux:   "3b70cd4bce30b89bb79e609f0dfa06b31095f640be7ea3039f07c9a5e715d054"
   end
 
   depends_on "meson" => :build
@@ -29,7 +29,7 @@ class KnotResolver < Formula
   depends_on "libnghttp2"
   depends_on "libuv"
   depends_on "lmdb"
-  depends_on "luajit-openresty"
+  depends_on "luajit"
 
   on_linux do
     depends_on "libcap-ng"
@@ -51,9 +51,9 @@ class KnotResolver < Formula
     (var/"knot-resolver").mkpath
   end
 
-  plist_options startup: true
   service do
     run [opt_sbin/"kresd", "-c", etc/"knot-resolver/kresd.conf", "-n"]
+    require_root true
     working_dir var/"knot-resolver"
     input_path "/dev/null"
     log_path "/dev/null"

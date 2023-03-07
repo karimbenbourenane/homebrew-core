@@ -1,75 +1,43 @@
 class Augustus < Formula
   desc "Predict genes in eukaryotic genomic sequences"
   homepage "https://bioinf.uni-greifswald.de/augustus/"
-  url "https://github.com/Gaius-Augustus/Augustus/releases/download/v3.3.3/augustus-3.3.3.tar.gz"
-  sha256 "4cc4d32074b18a8b7f853ebaa7c9bef80083b38277f8afb4d33c755be66b7140"
+  url "https://github.com/Gaius-Augustus/Augustus/archive/refs/tags/v3.5.0.tar.gz"
+  sha256 "5ed6ce6106303b800c5e91d37a250baff43b20824657b853ae04d11ad8bdd686"
   license "Artistic-1.0"
   revision 2
   head "https://github.com/Gaius-Augustus/Augustus.git", branch: "master"
 
-  livecheck do
-    url "https://bioinf.uni-greifswald.de/augustus/binaries/"
-    regex(/href=.*?augustus[._-]v?(\d+(?:\.\d+)+)\.t/i)
-  end
-
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "48d4e709de88d93f6c00b751cd2b70238eeed73c748267973aea6ef0a50a76c6"
-    sha256                               arm64_big_sur:  "cf98b0583590e5c5c83bcae8357d9a510c18240b33b12c9f95ca4ec0318d61f4"
-    sha256 cellar: :any,                 monterey:       "d5346659a287d591d36110f987ae3becb64ab8d63cb940aaea46d68439208be4"
-    sha256 cellar: :any,                 big_sur:        "0ceda121d6ead1c2b3812f7e1a9155366751da603fd1ab6c0ccbcada6eebb668"
-    sha256 cellar: :any,                 catalina:       "526462eb67bf51a1b95fdecf402d67df75c876333adfabe5aedffe89d76946fc"
-    sha256 cellar: :any,                 mojave:         "1eab0e15ac3027334f0ccda5e4edce2d99cafeffcea50f486842aada76bf6212"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8271784fc43729dd82e83e031ef63bb278771c6ba271ff7c7bc17908abc56646"
+    sha256 cellar: :any,                 arm64_ventura:  "c8a40d5edb2642c2df7d5e93db9305fc0404ba6525ce224db40ea6bafe3ed5d7"
+    sha256 cellar: :any,                 arm64_monterey: "07ff9bfa13f2f557ddefe6b1888b3034e8bec8e7285cdc6f04dabe430dbb5c33"
+    sha256 cellar: :any,                 arm64_big_sur:  "c092fa44baaa1dde2158195dbd7614339af1f8963bcefd288cf716d36a99fd55"
+    sha256 cellar: :any,                 ventura:        "1b560cc1a8133bb39ae900d5240fb9ca740a2c6a8a113024a3ddf87b54212a3b"
+    sha256 cellar: :any,                 monterey:       "90d53a60c52ca92a27b8c8bef3084578e6b221817cd64d69de1a0704bcb3e848"
+    sha256 cellar: :any,                 big_sur:        "fc23a4198593359283bf2ae522d9cf6e750690c167e483a91eb441a988773e43"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f7618e6d6dee6fb77f0f71bc59ef3ada03bbae0fc4aab7cb25f15c1c0c84b348"
   end
 
-  # Fails to build with GCC 12
-  # https://github.com/Homebrew/homebrew-core/pull/106755
-  # https://github.com/Homebrew/homebrew-core/pull/40220
-  deprecate! date: "2022-08-03", because: :does_not_build
-
-  depends_on "boost" => :build
   depends_on "bamtools"
+  depends_on "boost"
+  depends_on "htslib"
 
+  uses_from_macos "python" => :build, since: :catalina
   uses_from_macos "zlib"
 
-  on_macos do
-    depends_on "gcc"
-  end
-
   def install
-    # Avoid "fatal error: 'sam.h' file not found" by not building bam2wig
-    inreplace "auxprogs/Makefile", "cd bam2wig; make;", "#cd bam2wig; make;"
-
-    # Fix error: api/BamReader.h: No such file or directory
-    inreplace "auxprogs/bam2hints/Makefile",
-      "INCLUDES = /usr/include/bamtools",
-      "INCLUDES = #{Formula["bamtools"].include/"bamtools"}"
-    inreplace "auxprogs/filterBam/src/Makefile",
-      "BAMTOOLS = /usr/include/bamtools",
-      "BAMTOOLS= #{Formula["bamtools"].include/"bamtools"}"
-
-    # Prevent symlinking into /usr/local/bin/
-    inreplace "Makefile", %r{ln -sf.*/usr/local/bin/}, "#ln -sf"
-
     # Compile executables for macOS. Tarball ships with executables for Linux.
     system "make", "clean"
 
-    cd "src" do
-      if OS.mac?
-        # Clang breaks proteinprofile on macOS. This issue has been first reported
-        # to upstream in 2016 (see https://github.com/nextgenusfs/funannotate/issues/3).
-        # See also https://github.com/Gaius-Augustus/Augustus/issues/64
-        gcc_major_ver = Formula["gcc"].any_installed_version.major
-        with_env("HOMEBREW_CC" => Formula["gcc"].opt_bin/"gcc-#{gcc_major_ver}") do
-          system "make"
-        end
-      else
-        system "make"
-      end
-    end
+    system "make", "COMPGENEPRED=false",
+                   "INCLUDE_PATH_BAMTOOLS=-I#{Formula["bamtools"].opt_include}/bamtools",
+                   "LIBRARY_PATH_BAMTOOLS=-L#{Formula["bamtools"].opt_lib}",
+                   "INCLUDE_PATH_HTSLIB=-I#{Formula["htslib"].opt_include}/htslib",
+                   "LIBRARY_PATH_HTSLIB=-L#{Formula["htslib"].opt_lib}"
 
-    system "make"
-    system "make", "install", "INSTALLDIR=#{prefix}"
+    # Set PREFIX to prevent symlinking into /usr/local/bin/
+    (buildpath/"tmp/bin").mkpath
+    system "make", "install", "INSTALLDIR=#{prefix}", "PREFIX=#{buildpath}/tmp"
+
     bin.env_script_all_files libexec/"bin", AUGUSTUS_CONFIG_PATH: prefix/"config"
     pkgshare.install "examples"
   end

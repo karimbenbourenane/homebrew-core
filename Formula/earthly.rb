@@ -2,23 +2,25 @@ class Earthly < Formula
   desc "Build automation tool for the container era"
   homepage "https://earthly.dev/"
   url "https://github.com/earthly/earthly.git",
-      tag:      "v0.6.22",
-      revision: "1c8bcfbab64b9b52302ef63c897e6b989b88a794"
+      tag:      "v0.7.1",
+      revision: "eb7ed29c2c3b16a47d4adae00f2e087e98e5570f"
   license "MPL-2.0"
   head "https://github.com/earthly/earthly.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "e8470876c55fd0f44f30e9917750d3f44484c7d929915f3a291334677c25e3bc"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "93ec045558aea1b1e1a91064775aebe71f93079473936668a38620ca27c3a102"
-    sha256 cellar: :any_skip_relocation, monterey:       "aefaa2826207b4fdfde276cbab179004538ccea0dec051b0bc99d6f0186bf131"
-    sha256 cellar: :any_skip_relocation, big_sur:        "04d0c548112e96ea38937e3c3ffd98b34435b6421e21d7ecb55fae2ec8524660"
-    sha256 cellar: :any_skip_relocation, catalina:       "a0a69da13ab3e9ea5501787d169e5520445b588773a532528d43a308627fd89c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "92d35c0c50f2d545d2568761d0f0d0b47d485fbc74d3b2ff684c96428907ae76"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "4520ce916bc4fdfecb5c2a18ba5ebd21544eca63f3fd75e6b2aeda9733408193"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "4520ce916bc4fdfecb5c2a18ba5ebd21544eca63f3fd75e6b2aeda9733408193"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "4520ce916bc4fdfecb5c2a18ba5ebd21544eca63f3fd75e6b2aeda9733408193"
+    sha256 cellar: :any_skip_relocation, ventura:        "84df193100b8611ef0cd7e40109282d8a1d75609ef2856576c049956e697b470"
+    sha256 cellar: :any_skip_relocation, monterey:       "84df193100b8611ef0cd7e40109282d8a1d75609ef2856576c049956e697b470"
+    sha256 cellar: :any_skip_relocation, big_sur:        "84df193100b8611ef0cd7e40109282d8a1d75609ef2856576c049956e697b470"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "08536ec6d7d54cc1fbef9c7d435aafe2c10f0fe6ffb6afa1429df3513485821f"
   end
 
   depends_on "go" => :build
 
   def install
+    ENV["CGO_ENABLED"] = "0"
     ldflags = %W[
       -s -w
       -X main.DefaultBuildkitdImage=earthly/buildkitd:v#{version}
@@ -26,7 +28,7 @@ class Earthly < Formula
       -X main.GitSha=#{Utils.git_head}
       -X main.BuiltBy=homebrew
     ]
-    tags = "dfrunmount dfrunsecurity dfsecrets dfssh dfrunnetwork"
+    tags = "dfrunmount dfrunsecurity dfsecrets dfssh dfrunnetwork dfheredoc forceposix"
     system "go", "build", "-tags", tags, *std_go_args(ldflags: ldflags), "./cmd/earthly"
 
     generate_completions_from_executable(bin/"earthly", "bootstrap", "--source", shells: [:bash, :zsh])

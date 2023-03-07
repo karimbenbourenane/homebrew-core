@@ -1,25 +1,29 @@
 class Gedit < Formula
   desc "GNOME text editor"
   homepage "https://wiki.gnome.org/Apps/Gedit"
-  url "https://download.gnome.org/sources/gedit/42/gedit-42.2.tar.xz"
-  sha256 "3c6229111f0ac066ae44964920791d1265f5bbb56b0bd949a69b7b1261fc8fca"
+  url "https://download.gnome.org/sources/gedit/44/gedit-44.2.tar.xz"
+  sha256 "3bbb1b3775d4c277daf54aaab44b0eb83a4eb1f09f0391800041c9e56893ec11"
   license "GPL-2.0-or-later"
 
   bottle do
-    sha256 arm64_monterey: "349a305bae4108e2579712280ceb0e884d0e377969b2c22e0cee37a188a745b6"
-    sha256 arm64_big_sur:  "98dbef10f7bbe8133b08a73b958b286e0f73cd1bd265d09eb7365fe66d84b1b7"
-    sha256 monterey:       "60e99ade2028f2f87bc7c1337e23467262c7368e1cb14e84312249c9b22b8399"
-    sha256 big_sur:        "8e0ad599fa98901f11027ba6e9316f92fe775772589d08f99c900b2caa1d1d7b"
-    sha256 catalina:       "710be60f7b9559237bc7e6a3ec47fe0e1b502440298881786ce18482daa734c3"
-    sha256 x86_64_linux:   "a88a052db3e1337e2f5264f192a284ab29b0332f9235beae9aefc02244ec18eb"
+    sha256 arm64_ventura:  "cc000ff6ce9a1a451fa8285e0f4bbf59fc268ad18beccce471aa86d674e2b5c5"
+    sha256 arm64_monterey: "b33cb89f188de3fe780f49976fe140265bdf1c376f196302af7d29eb8a1a7fa2"
+    sha256 arm64_big_sur:  "cc7b5b656925a805602feda814d96b12bd4f64d00072230e1c03eb55fa607137"
+    sha256 ventura:        "a7c193913c461fbb89a0a1f4e78a1cb7b726b38f6bb6d9410c6d61b98b10af80"
+    sha256 monterey:       "79f51aa19950f4c483f918ac2759fc69b58494d2f66617cfb737d894cf6a8ff9"
+    sha256 big_sur:        "b1957792f7fc3962fb40c0f23b56caf52db23fc9cc6c13de38c643dcc4c8712a"
+    sha256 x86_64_linux:   "a758efe0173d7ade8ad0576242917451221904efd1f64b85a1568208fd753e0d"
   end
 
+  depends_on "docbook-xsl" => :build
+  depends_on "gtk-doc" => :build
   depends_on "itstool" => :build
   depends_on "meson" => :build
   depends_on "ninja" => :build
   depends_on "pkg-config" => [:build, :test]
   depends_on "vala" => :build
   depends_on "adwaita-icon-theme"
+  depends_on "amtk"
   depends_on "atk"
   depends_on "cairo"
   depends_on "gdk-pixbuf"
@@ -34,9 +38,11 @@ class Gedit < Formula
   depends_on "libsoup"
   depends_on "libxml2"
   depends_on "pango"
+  depends_on "tepl"
 
   def install
     ENV["DESTDIR"] = "/"
+    ENV["XML_CATALOG_FILES"] = "#{etc}/xml/catalog"
     ENV.append "LDFLAGS", "-Wl,-rpath,#{lib}/gedit" if OS.linux?
 
     system "meson", "setup", "build", *std_meson_args
@@ -50,8 +56,7 @@ class Gedit < Formula
   end
 
   test do
-    # Remove when `jpeg-turbo` is no longer keg-only.
-    ENV.prepend_path "PKG_CONFIG_PATH", Formula["jpeg-turbo"].opt_lib/"pkgconfig"
+    ENV.prepend_path "PKG_CONFIG_PATH", Formula["icu4c"].opt_lib/"pkgconfig" if OS.mac?
 
     # main executable test
     system bin/"gedit", "--version"

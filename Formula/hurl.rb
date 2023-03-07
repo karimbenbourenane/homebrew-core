@@ -1,18 +1,19 @@
 class Hurl < Formula
   desc "Run and Test HTTP Requests with plain text and curl"
   homepage "https://hurl.dev"
-  url "https://github.com/Orange-OpenSource/hurl/archive/refs/tags/1.6.1.tar.gz"
-  sha256 "5b3de8c0375a87094ecbccdd57b89a65b465c25e2ffd8dfdffb1ab08346e4cb1"
+  url "https://github.com/Orange-OpenSource/hurl/archive/refs/tags/2.0.1.tar.gz"
+  sha256 "6fa3524be56027748aa13afc72487fc07f5b1ef3bf4ccdeb9c641436b3dcd4d3"
   license "Apache-2.0"
   head "https://github.com/Orange-OpenSource/hurl.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "672ef9da61cf8940003dca14c27c158dfe9b7c29029321c36e93228a3f527453"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "a853ce47b5e8882e058d5d55a4495f9be5dcb6ee1625a436eeb81765b2703089"
-    sha256 cellar: :any_skip_relocation, monterey:       "b8a9871aaf4dcb98a276d96689b9426a727dcba62ae10058510d4e055f44204f"
-    sha256 cellar: :any_skip_relocation, big_sur:        "bc7f03292ca0fd28de91eb0c43f6b91cfd4225c1b363a241e82b9c76ea3ce545"
-    sha256 cellar: :any_skip_relocation, catalina:       "26f9f25d03777db1975867c808df86763bb40e0e213e0dc935ef70d6cb396a39"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "adfbab5349cb2b40d8f34e17e28e317086397a61e9ac0a497d0a63178f73d6f3"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "ec06767e3c13ce75cbc38d4a58a9a666bcdde27cebdeca334f9e8938b3132bcf"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "4f6d0d17661b13880620f78eedd1a2645a1ba2f730221eb26caa7ae72a02864c"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "c1fbcbd68edfe5292957ec1b7c3cd4897f53632acc62c18367bc74be39104f49"
+    sha256 cellar: :any_skip_relocation, ventura:        "ace14dc57f016b28abc0e35332b7d369216decb7f113babc95381afeb93db992"
+    sha256 cellar: :any_skip_relocation, monterey:       "fb1fb9e4956f4c2da9d35a85843443895272a73f46028e9650c8b8ea97c1aec9"
+    sha256 cellar: :any_skip_relocation, big_sur:        "cb418a569526fb28b0503543c1b5b6c5cc7b51d94ba15e03393589586b40446c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8da8fefe3b5d1f603cf93b5a9ee8716e889d881b54d9ccf8b1c4fee1c2f0816e"
   end
 
   depends_on "rust" => :build
@@ -31,8 +32,8 @@ class Hurl < Formula
     system "cargo", "install", *std_cargo_args(path: "packages/hurl")
     system "cargo", "install", *std_cargo_args(path: "packages/hurlfmt")
 
-    man1.install "docs/man/hurl.1"
-    man1.install "docs/man/hurlfmt.1"
+    man1.install "docs/manual/hurl.1"
+    man1.install "docs/manual/hurlfmt.1"
   end
 
   test do

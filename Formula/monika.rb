@@ -3,17 +3,18 @@ require "language/node"
 class Monika < Formula
   desc "Synthetic monitoring made easy"
   homepage "https://monika.hyperjump.tech"
-  url "https://registry.npmjs.org/@hyperjumptech/monika/-/monika-1.11.0.tgz"
-  sha256 "efdb34745a1de2fca8e918ee69577feee3f09a55bd6f5f6e1cddfa9f058ceeaf"
+  url "https://registry.npmjs.org/@hyperjumptech/monika/-/monika-1.15.0.tgz"
+  sha256 "b55cff61b8ab764f25b19442c0186056e62984e9f76e94adec94d560a27b9eb3"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "aa5c21c238bace78d7f665bcf5754461f4583fc8e6268412f45b09f31ac61b4f"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "680d0fb4f40e7c47614f4cfc2e0245662e20a09cff592c85b491874451fe3216"
-    sha256 cellar: :any_skip_relocation, monterey:       "70ec69448990d413b2116d17c57d94f30d20f9c6c56ab84bdb0cd9b8c1e922d9"
-    sha256 cellar: :any_skip_relocation, big_sur:        "98318750b359f8dc6b5f64b3c869acb0358ab99f542b8654cc942395d208bb1f"
-    sha256 cellar: :any_skip_relocation, catalina:       "e9ce43a708f271f42e0ec0c36cc6f9fac4fc90cfebd4b7b263951ec5c0e84ca9"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e428eb84abe4d9abba4e9d20e1cd38e6d8114aaad0e02640a2babc52005f4b0d"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "a9a5038ecc0a621332a036b2f5b202357b68b99ddc2fd127e7152cbdce970ea5"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "0440b95ba3faa9aacd0044b2c678e13ae85dc6f35e7908c404ae0d4c9facf8c9"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "9f1944d07a0c2515fbd705b6f1cd8862b1f546ce933d01bc8b0cf60765ac6a65"
+    sha256 cellar: :any_skip_relocation, ventura:        "5cb89900235bb5fbec4d728f64fc4090dddb99ef493aac4e1f4f5962db5b0561"
+    sha256 cellar: :any_skip_relocation, monterey:       "4d85ed13a55c0444c1666e9d6c2b5bc3dd808f78c7a31b24adb16ffbcfc57374"
+    sha256 cellar: :any_skip_relocation, big_sur:        "36a102e48988842d13bce34b14de2ee7ab1d22784920a60e58e9ee0cb69e7bc6"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e15673888c87813da441454125a77118f5baa041c2154866cbdbca65adff55d9"
   end
 
   depends_on "node"
@@ -45,7 +46,7 @@ class Monika < Formula
       $stdout.reopen(monika_stdout)
       exec bin/"monika", "-r", "1", "-c", testpath/"config.yml"
     end
-    sleep 5
+    sleep 10
 
     assert_match "Starting Monika. Probes: 1. Notifications: 1", monika_stdout.read
   end

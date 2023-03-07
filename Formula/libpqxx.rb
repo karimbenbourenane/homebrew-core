@@ -6,29 +6,27 @@ class Libpqxx < Formula
   license "BSD-3-Clause"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "41bb514c52d981ac96179d259a75cb67c0279030c8291db2ac7ec9fe1b55e706"
-    sha256 cellar: :any,                 arm64_big_sur:  "2bc989c08cab03b73e5f71092e8a1dcc8bcd8d206b3fc50ed54399b642a31607"
-    sha256 cellar: :any,                 monterey:       "0a21cb1e4cf425ba12d2a75ef844f7840a18d402537bca95610dbb800d56a808"
-    sha256 cellar: :any,                 big_sur:        "de2ba50a393064fb97f664b939933d2ae74e3ce825375578896f812d7bb944e0"
-    sha256 cellar: :any,                 catalina:       "61b12a60dacb5258d72f0219bf49023de032531ae56f25996ff88f3361cd2b3c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "1091f0b1369f8ac44f91a245c86830027667b576c35dded87394229cbe30c96e"
+    rebuild 2
+    sha256 cellar: :any,                 arm64_ventura:  "93b64cdbadf88442580c25807bd1ccb37c07388d784effe6930debb16892c588"
+    sha256 cellar: :any,                 arm64_monterey: "eb6a34512b4dbe8441c6125e7ee1bebd045bdf5d237a9e13e61a46317a952f86"
+    sha256 cellar: :any,                 arm64_big_sur:  "259df212ce00831658e97c8aa0402507ffa394bf8044bd1150e99910e1634a7d"
+    sha256 cellar: :any,                 ventura:        "d49f566b9d3c80945d8304aad35b3c1c32944781556fbc173d0f5108249178e2"
+    sha256 cellar: :any,                 monterey:       "dda7a525996ed368af904279787658d503150c209a70f1ea77406b1c7ae7e34c"
+    sha256 cellar: :any,                 big_sur:        "a3064e182fe3c821e5b44093f5820e4b3e869f6f1ba6d095509f742d40b9653b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6d31206534bff2f4bfab03669216dfbdc1befbf0c5b2ab07b1a8c3cb43ff3fe7"
   end
 
   depends_on "pkg-config" => :build
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => :build
   depends_on "xmlto" => :build
   depends_on "libpq"
   depends_on macos: :catalina # requires std::filesystem
 
-  on_linux do
-    depends_on "gcc" # for C++17
-  end
-
-  fails_with gcc: "5"
+  fails_with gcc: "5" # for C++17
 
   def install
     ENV.append "CXXFLAGS", "-std=c++17"
-    ENV.prepend_path "PATH", Formula["python@3.10"].opt_libexec/"bin"
+    ENV.prepend_path "PATH", Formula["python@3.11"].opt_libexec/"bin"
     ENV["PG_CONFIG"] = Formula["libpq"].opt_bin/"pg_config"
 
     system "./configure", "--prefix=#{prefix}", "--enable-shared"

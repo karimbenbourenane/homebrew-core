@@ -1,10 +1,9 @@
 class Freeciv < Formula
   desc "Free and Open Source empire-building strategy game"
   homepage "http://freeciv.org"
-  url "https://downloads.sourceforge.net/project/freeciv/Freeciv%203.0/3.0.3/freeciv-3.0.3.tar.xz"
-  sha256 "13215adc96be9f2894d5f3a12c78b8ebb9ae06ecdab25fe6bb1794f6e6d2b61b"
+  url "https://downloads.sourceforge.net/project/freeciv/Freeciv%203.0/3.0.6/freeciv-3.0.6.tar.xz"
+  sha256 "40e701157b957a2eb3c4548e5b819d06521c2ad1d47ae926be5117c7d6ace442"
   license "GPL-2.0-or-later"
-  revision 1
 
   livecheck do
     url :stable
@@ -12,16 +11,17 @@ class Freeciv < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "f3c319b041d5a5f81693f83b1e87e8519a1fe4a7e987492b63dcb6ab74b81781"
-    sha256 arm64_big_sur:  "d3340ac8da9a72f397d7d0c9a24f44bec3d4c0e8bf5de2e8fc06bcaa8d486816"
-    sha256 monterey:       "77fcaee302c90de1abf52a93d214e20625170b1276ee383723becaf4e41c6223"
-    sha256 big_sur:        "ed32f919ad2fbd1a982a05682bd0bfdd08ecfd7032896b2b13976d320d6f47be"
-    sha256 catalina:       "0d8d998a767905ce2d62f153d8fbc7ae96e88a80351432a34dc9ead21284e119"
-    sha256 x86_64_linux:   "48fab150b4422cfc6065220546490459b19211b8e9aa14beb51d4c6923109ec3"
+    sha256 arm64_ventura:  "7e6778de44f4bdde89579138feb4c2552fe669de57ae15f95eaa1e11d39782d6"
+    sha256 arm64_monterey: "057aef3311a43db28c71e0bf984fad9a3cd9f12faa3bd464061391df37ab1e72"
+    sha256 arm64_big_sur:  "bceb77f4f1fb2a272361a970050ee086e0b28af15ab59b30d3180957aec15739"
+    sha256 ventura:        "cfadf10dbd2353f791c8b18a0236b7a82f07726eebc57a0d99ad13e1823917d1"
+    sha256 monterey:       "12ef7c9b8d97abe449514575d4aae8abc5280d6de129f1ba4fe10237394d66dd"
+    sha256 big_sur:        "4b8cedb59f300fa98a8197eed9118e1c54fadd5d26a89adfc76c80923d83a9ca"
+    sha256 x86_64_linux:   "86325e34c3139fc2bd4b6f11697068b8546014d0c39706a4faffd3fb4410af11"
   end
 
   head do
-    url "https://github.com/freeciv/freeciv.git"
+    url "https://github.com/freeciv/freeciv.git", branch: "master"
 
     depends_on "autoconf" => :build
     depends_on "automake" => :build

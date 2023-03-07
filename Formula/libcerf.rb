@@ -1,8 +1,8 @@
 class Libcerf < Formula
   desc "Numeric library for complex error functions"
   homepage "https://jugit.fz-juelich.de/mlz/libcerf"
-  url "https://jugit.fz-juelich.de/mlz/libcerf/-/archive/v2.1/libcerf-v2.1.tar.gz"
-  sha256 "8a1cd8b7fae04b82a95168252129b8c1baca098a285ff8d3f25781dead14b75a"
+  url "https://jugit.fz-juelich.de/mlz/libcerf/-/archive/v2.3/libcerf-v2.3.tar.gz"
+  sha256 "cceefee46e84ce88d075103390b4f9d04c34e4bc3b96d733292c36836d4f7065"
   license "MIT"
   version_scheme 1
   head "https://jugit.fz-juelich.de/mlz/libcerf.git", branch: "master"
@@ -13,12 +13,13 @@ class Libcerf < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "713741dafcc990ebc5523ccbf3cf60f34cca89bcd847e0a1528ea36d053ad646"
-    sha256 cellar: :any,                 arm64_big_sur:  "72addbfa1361c4080e66a9521021f4ecf7e8831563a4d92893ad058ef0db4878"
-    sha256 cellar: :any,                 monterey:       "c8550dab94475bbcbe33785f1af4a23170062a93c4f20c2093a543de20e7e637"
-    sha256 cellar: :any,                 big_sur:        "26dab60aa06f6189616673601eb30667be5ee350dbdc91e3e73480f927c50cc3"
-    sha256 cellar: :any,                 catalina:       "632421289d60a3b761094b318c21f078b595d50c5198942cac0c8e9182042982"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "53ef7134564a68c78a30a89d79d0cbb3f6b46b9a4dc5d420ef37c33ec5eb19f4"
+    sha256 cellar: :any,                 arm64_ventura:  "a5af0663e797d2634835277e1316894d4b52c86ba2290045e386a75a32fb790f"
+    sha256 cellar: :any,                 arm64_monterey: "7c5953ca89e4a87846cb36b64bc6a47acb2b6c74c913cede5e5a29eb61463a10"
+    sha256 cellar: :any,                 arm64_big_sur:  "b8f41b3d364035d9440a1f9a6cb4dd4ef821df94487e3c9f11076ab4ac3e85cc"
+    sha256 cellar: :any,                 ventura:        "27cac98b6c028053369bc89e6fabab0768dc7aee9ade40b8073484afaa469d47"
+    sha256 cellar: :any,                 monterey:       "16f8d9973dab633e5e759547c9029f8384bde177b5fce1cdb79ac4ed796e5b1b"
+    sha256 cellar: :any,                 big_sur:        "eb5e99339b766382160475399db448f795a7c1c1cab2600dca982527cfc3c4e7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c10a47d01e826e5c185efbeec58e1a9f3f4630547954c5781b5b8522f44afa18"
   end
 
   depends_on "cmake" => :build

@@ -1,18 +1,19 @@
 class Profanity < Formula
   desc "Console based XMPP client"
   homepage "https://profanity-im.github.io"
-  url "https://profanity-im.github.io/tarballs/profanity-0.12.1.tar.gz"
-  sha256 "e344481e7bf3b16baf58a169d321b809c4700becffb70db6f1c39adc3fad306e"
+  url "https://profanity-im.github.io/tarballs/profanity-0.13.1.tar.gz"
+  sha256 "2b5075272e7ec9d9c991542e592b1d474fff88c61c66e7e23096ad306ed2c84a"
   license "GPL-3.0-or-later"
-  revision 2
 
   bottle do
-    sha256 arm64_monterey: "4b6568e1bdcd0dfbfc90ddaa808073aaba70daacb1d001cc1cc175a7726a788e"
-    sha256 arm64_big_sur:  "a7034698ee4bc67b93f623a14fb1e453b5634dd084c4e2433622ebd4a41c0122"
-    sha256 monterey:       "50859d21f0c8000c4746e5255aa0c68bc5bfa8e2f5aeae14bf2eaca934853443"
-    sha256 big_sur:        "56fc2c696cd99078ed1901b2461908d6cb583d63eaaff8639791d07cc08ddefe"
-    sha256 catalina:       "083885d92e7760418730e4c9c689f59c095be42829095eb0d33410930411deb1"
-    sha256 x86_64_linux:   "ff699bdd2cfda2cb38586839cd70617debec5839ea2216621fa4bfbd2f443065"
+    rebuild 2
+    sha256 arm64_ventura:  "fcfcc39a0046f3dea14792a29b17c1f9975ae8ddf6e9e0aa6c290447c77f585b"
+    sha256 arm64_monterey: "056130e0175fe061171aa23c0aba2626987020a62162bd49c28d3b2ded79e6ad"
+    sha256 arm64_big_sur:  "2d6420972cfb0ab56b968245d67d557e5f4b08a1378c2277979ff40ba9fde266"
+    sha256 ventura:        "b3ca86b0f0e3d8e457f9b1acc436da3ce6fdd036c25a64efd7c85d8c6c2013c5"
+    sha256 monterey:       "e942a19b775d15b1c160c5f3b0924f1e93249309fa1a54f8e96c2a6b0c750d86"
+    sha256 big_sur:        "2a12f1e8209b0078713bb71e54469a6a8a3f8bbffe37a59f06541f34cf08a800"
+    sha256 x86_64_linux:   "22412eee0a04d94e03ea8871df887ab99cbc1a93d7d6b10843fd96588bc6d741"
   end
 
   head do
@@ -33,7 +34,7 @@ class Profanity < Formula
   depends_on "libsignal-protocol-c"
   depends_on "libstrophe"
   depends_on "openssl@1.1"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
   depends_on "readline"
 
   on_macos do
@@ -41,7 +42,7 @@ class Profanity < Formula
   end
 
   def install
-    ENV.prepend_path "PATH", Formula["python@3.10"].opt_libexec/"bin"
+    ENV.prepend_path "PATH", Formula["python@3.11"].opt_libexec/"bin"
 
     system "./bootstrap.sh" if build.head?
 

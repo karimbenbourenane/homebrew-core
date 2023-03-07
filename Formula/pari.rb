@@ -1,8 +1,8 @@
 class Pari < Formula
   desc "Computer algebra system designed for fast computations in number theory"
   homepage "https://pari.math.u-bordeaux.fr/"
-  url "https://pari.math.u-bordeaux.fr/pub/pari/unix/pari-2.13.4.tar.gz"
-  sha256 "bcde9eceae1592814381c1697cdb7063567b6504201b1be47bb58920f3bce185"
+  url "https://pari.math.u-bordeaux.fr/pub/pari/unix/pari-2.15.2.tar.gz"
+  sha256 "b04628111ee22876519a4b1cdafb32febaa34eafa24f9e81f58f8d057fbee0dd"
   license "GPL-2.0-or-later"
 
   livecheck do
@@ -11,12 +11,13 @@ class Pari < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "e1c950eecbb7fe0877e054706dd3ea302fd35197aeb1268d15adf7ff7a006a23"
-    sha256 cellar: :any,                 arm64_big_sur:  "ff5c62049416d85cb3981f2913b45901a5738b7bf4c23de678f0e4749d4354a7"
-    sha256 cellar: :any,                 monterey:       "8613b0be1eb6140ae00e70b1da63891302e828a9d7fbb335e02d8c417c0fcaca"
-    sha256 cellar: :any,                 big_sur:        "c039a203f00b495a0d0d0c304383fd26ee4dc0b23d0133c1f6dcc928285aec11"
-    sha256 cellar: :any,                 catalina:       "b6067a936ab86bc50e247b0fdd75704f73f373679b55463d6bc5e8b549a7e407"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5482cc0f5056c067a3b5b85fdf4346416d3f40c2449362b52d4ae848f292888c"
+    sha256 cellar: :any,                 arm64_ventura:  "d9ff317d18a988e4a7a52a878513dcf5fdd855447f8e679cea075114f786403f"
+    sha256 cellar: :any,                 arm64_monterey: "02efa3d5d389107c572f6d089c0624ddf0543e6f919081b334cc165f3140584e"
+    sha256 cellar: :any,                 arm64_big_sur:  "fa7a0c520f8b2ead0c3de0a56fe22e3a98fffb67e2ee0764049d222aa11f4747"
+    sha256 cellar: :any,                 ventura:        "8979374f8ef9476c3e65fe00bdfcad02c888671ed727a86a8150cc2369db8894"
+    sha256 cellar: :any,                 monterey:       "e35f684ff0ad226a97470cee0fe6b85b829c7404ee34d5079306b63827745c4c"
+    sha256 cellar: :any,                 big_sur:        "758617cd740dddeafbdb63febd37b87a5f5b08026f1802905ad6647bf172af53"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a64c300b846f1a101459b349312a7a13bbf15705d5641d42341f500454f0b162"
   end
 
   depends_on "gmp"

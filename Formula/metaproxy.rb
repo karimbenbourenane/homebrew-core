@@ -1,10 +1,9 @@
 class Metaproxy < Formula
   desc "Z39.50 proxy and router utilizing Yaz toolkit"
   homepage "https://www.indexdata.com/resources/software/metaproxy/"
-  url "https://ftp.indexdata.com/pub/metaproxy/metaproxy-1.20.0.tar.gz"
-  sha256 "2bd0cb514e6cdfe76ed17130865d066582b3fa4190aa5b0ea2b42db0cd6f9d8c"
+  url "https://ftp.indexdata.com/pub/metaproxy/metaproxy-1.21.0.tar.gz"
+  sha256 "874223a820b15ee2626240c378eee71e31a4e6d3498a433c94409c949e654fae"
   license "GPL-2.0-or-later"
-  revision 1
 
   # The homepage doesn't link to the latest source file, so we have to check
   # the directory listing page directly.
@@ -14,21 +13,18 @@ class Metaproxy < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "8bd251c25b40cb964ac83fad38db949526ae6a4e460458a8c24c9d0dea937b2b"
-    sha256 cellar: :any,                 arm64_big_sur:  "520ee4ee1c8f96cdd91ca31a6b77b49c3ee447273ad72c297bd687d3fe5c2aa9"
-    sha256 cellar: :any,                 monterey:       "af5a2f792bfde97b3c303d6e59c518b189b75e9c44e18b8bfe9f656b80d93916"
-    sha256 cellar: :any,                 big_sur:        "805b299b14498830c931071bb23e15125f8386046593947d92481b30c9dbb5e7"
-    sha256 cellar: :any,                 catalina:       "bb29f5fb3c0e23ea29ab2d4a8104207711749d3e325116d758ecd0ebfc3bb3d2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "2b0ccce6addc16649b74d4843e35f12372365eb34c9d83ac0c450c3e85ca2f10"
+    sha256 cellar: :any,                 arm64_ventura:  "698f5b0b8c0c7ac6d3694e76a7879222982900a2532f877ae110719113ae38cc"
+    sha256 cellar: :any,                 arm64_monterey: "b7e2e5217f0d2a93bdbc219aa3d45b7e447f29b94d2a660e9ef33811100f2988"
+    sha256 cellar: :any,                 arm64_big_sur:  "5f91675fef3bf72028a136d29320b40865ff0330014d8189eb19f7b076d1117c"
+    sha256 cellar: :any,                 ventura:        "00819dcd6b64812a3fc96b2ccc7153609bd8ded42e856112185bf8ad3f27fe4d"
+    sha256 cellar: :any,                 monterey:       "60c101d2a99d25cf1af4b575ed3ab42ff30f9310cbadec739c58494dc76d0ea3"
+    sha256 cellar: :any,                 big_sur:        "e9bf39b713279a3424faeff61cc405f6372da84dfed11d75bf96760618c1b8a5"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6f3b005198c728c7e052f88bb3ac96dd171375809fafb0944e4196e457b622de"
   end
 
   depends_on "pkg-config" => :build
   depends_on "boost"
   depends_on "yazpp"
-
-  on_linux do
-    depends_on "gcc"
-  end
 
   fails_with gcc: "5"
 

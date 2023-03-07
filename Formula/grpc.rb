@@ -2,8 +2,8 @@ class Grpc < Formula
   desc "Next generation open source RPC library and framework"
   homepage "https://grpc.io/"
   url "https://github.com/grpc/grpc.git",
-      tag:      "v1.48.1",
-      revision: "d52ed193d11dee797c0d51dc8db06032998b33f4"
+      tag:      "v1.52.1",
+      revision: "c2682c64a5f8599b5690a79b50f1c9c3ef5e2433"
   license "Apache-2.0"
   head "https://github.com/grpc/grpc.git", branch: "master"
 
@@ -17,12 +17,13 @@ class Grpc < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "568c39ad7d9610f41bcb34209cb427e9b79d367bdd36fb3d7feecba05758fced"
-    sha256 cellar: :any,                 arm64_big_sur:  "368def753bba0318add78063e1ddf700791d93c2a461df64c58b9f8496fe1212"
-    sha256 cellar: :any,                 monterey:       "620229f74c80fab4b0fdb5fb8fa251566261c3ec48f93ebe4594a21100f3cb5f"
-    sha256 cellar: :any,                 big_sur:        "2fc59389644e24a64c8900f0c9da4b6c1bc546cea62aff5a40128271b618d4a8"
-    sha256 cellar: :any,                 catalina:       "4a64e22eb6c832174fd04630b838af5225d0b5aa9ce2f3f0b620047ad9381dc3"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b0acd012d2e2281dba7412472f271daefc5b1f30a020dbf24f1e661246df98fc"
+    sha256 cellar: :any,                 arm64_ventura:  "8e05bb40f16818ff179166540366c7b886e6a5d3b158dae3061e842fd1ead9d7"
+    sha256 cellar: :any,                 arm64_monterey: "5d49d3803a3675fd13ed48cb71d40008c593a065671d206a59d2e2a3770961f5"
+    sha256 cellar: :any,                 arm64_big_sur:  "f490124105b78a932a6f2699b82779ac5969bb03178e85e222d9a8af871e4831"
+    sha256 cellar: :any,                 ventura:        "d71f142614cfa43d1675254dedf80d721cdd7d79f2efac56ae3551b97785b695"
+    sha256 cellar: :any,                 monterey:       "188873a19aeb12c8d94b441125647c513a5b8be7a4ab6d4c098350f559a98d73"
+    sha256 cellar: :any,                 big_sur:        "1733b2984d5218d8f5d9e25584a9ac32c489a074fcfe02e1c8901ef224e6248e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6c2922d216c917027c45c5e72b5ea0892566eb40e18a0bf1737dde7d92998c81"
   end
 
   depends_on "autoconf" => :build
@@ -39,13 +40,7 @@ class Grpc < Formula
   uses_from_macos "zlib"
 
   on_macos do
-    # This shouldn't be needed for `:test`, but there's a bug in `brew`:
-    # CompilerSelectionError: pdnsrec cannot be built with any available compilers.
-    depends_on "llvm" => [:build, :test] if DevelopmentTools.clang_build_version <= 1100
-  end
-
-  on_linux do
-    depends_on "gcc"
+    depends_on "llvm" => :build if DevelopmentTools.clang_build_version <= 1100
   end
 
   fails_with :clang do
@@ -56,7 +51,6 @@ class Grpc < Formula
   fails_with gcc: "5" # C++17
 
   def install
-    ENV.remove "HOMEBREW_LIBRARY_PATHS", Formula["llvm"].opt_lib
     ENV.llvm_clang if OS.mac? && (DevelopmentTools.clang_build_version <= 1100)
     mkdir "cmake/build" do
       args = %W[
@@ -98,9 +92,6 @@ class Grpc < Formula
   end
 
   test do
-    # Force use of system clang on Mojave
-    ENV.clang if OS.mac? && (DevelopmentTools.clang_build_version <= 1100)
-
     (testpath/"test.cpp").write <<~EOS
       #include <grpc/grpc.h>
       int main() {
@@ -114,7 +105,7 @@ class Grpc < Formula
     system ENV.cc, "test.cpp", "-L#{Formula["abseil"].opt_lib}", *pkg_config_flags, "-o", "test"
     system "./test"
 
-    output = shell_output("grpc_cli ls localhost:#{free_port} 2>&1", 1)
+    output = shell_output("#{bin}/grpc_cli ls localhost:#{free_port} 2>&1", 1)
     assert_match "Received an error when querying services endpoint.", output
   end
 end

@@ -1,17 +1,18 @@
 class GitXargs < Formula
   desc "CLI for making updates across multiple Github repositories with a single command"
   homepage "https://github.com/gruntwork-io/git-xargs"
-  url "https://github.com/gruntwork-io/git-xargs/archive/v0.1.1.tar.gz"
-  sha256 "7a80f457ee15851c7a8828ede6d40ad052654e36f86a3a582cebc7a28b9ee12f"
+  url "https://github.com/gruntwork-io/git-xargs/archive/v0.1.4.tar.gz"
+  sha256 "2e88106f8726f98259463a0464253caeb9d128365629d7b6c8293fc59477cac6"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "4e49c58def0241dd26f019c7f8a38389d5c4757adadf5c74184b270cc95075ad"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "38fb57824be03c96ae7e20e152ff3f7fb6ced837d24ec247e518b19180d82358"
-    sha256 cellar: :any_skip_relocation, monterey:       "4aef9183e49fbc62af2f588575bfa59959368a02fc0195340aa16eb14edcd9b8"
-    sha256 cellar: :any_skip_relocation, big_sur:        "8cbc68ea2a1cbacf37f09c027c9b6b6740e2d0a49b6dd8bc55702c3d9bb74e1f"
-    sha256 cellar: :any_skip_relocation, catalina:       "d674cebe3eec7778d00e7654249f09d991934f75b1e6803bfbfec194b7c71824"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "bfe672f7648fea6b0a09432219aafb9c5f9b68271a5cb39b4e8888f0ec8c5956"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "b62849de04d1224a727798abfaee89f8bd4e070e1da4ae9f3728b70e6c04e03a"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "e73af27a8248f5f01a995e9ebe041419a8023a8b1b6e0678be754bba897926c5"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "aca1ad133cac981f2841f38db10a3b0bc6616e927769877459e2b3d3ad18fcc4"
+    sha256 cellar: :any_skip_relocation, ventura:        "510aee1ae3214707fb1f6b29853f64703588f816a877b9f51f15a7121db359ed"
+    sha256 cellar: :any_skip_relocation, monterey:       "2ef4683d1c7d9aba3acb11a9cfb2a18fc0d39464d321c60e6340a3662ef22bbc"
+    sha256 cellar: :any_skip_relocation, big_sur:        "5d14ab6bb827388275d86de008428fd32b8b297b7f1e0d61f38b35841db775bb"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "869d61a02e115f90b2f74b37eed51df61191f4ea61cb70a766040b2c53590969"
   end
 
   depends_on "go" => :build

@@ -1,24 +1,29 @@
 class Tbb < Formula
   desc "Rich and complete approach to parallelism in C++"
   homepage "https://github.com/oneapi-src/oneTBB"
-  url "https://github.com/oneapi-src/oneTBB/archive/refs/tags/v2021.5.0.tar.gz"
-  sha256 "e5b57537c741400cf6134b428fc1689a649d7d38d9bb9c1b6d64f092ea28178a"
+  url "https://github.com/oneapi-src/oneTBB/archive/refs/tags/v2021.8.0.tar.gz"
+  sha256 "eee380323bb7ce864355ed9431f85c43955faaae9e9bce35c62b372d7ffd9f8b"
   license "Apache-2.0"
-  revision 2
 
   bottle do
     rebuild 1
-    sha256 cellar: :any,                 arm64_monterey: "21c39944a3efe3edd84db35f4b7eb930d5e728742e96b4944489b09c85f485e0"
-    sha256 cellar: :any,                 arm64_big_sur:  "57a1754dd59fbbe2179a5747ad4dc27bc7f1a6b51fdc47d3d2dbd65c1fcf0719"
-    sha256 cellar: :any,                 monterey:       "241a6095398bad1f24343da0eedb746abce5818bebcccc7bb2d82cedde7eb454"
-    sha256 cellar: :any,                 big_sur:        "6af7f19d5dac6d86e98e29db077a76b26c18d5a187e45cdfe6f5a4b4be1006ae"
-    sha256 cellar: :any,                 catalina:       "4ddc6c91e43721325d44fd8aca57e30763cf546fba204420e797f9a6a091e225"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a3f6717ebecbcaf078ebf4166f02a09e8908e89a1425370ebd4f60ea101d26af"
+    sha256 cellar: :any,                 arm64_ventura:  "46d04d29f58feb35f4fbb7e19ce0c7fab03c105cc6197348dd42db7a385eb23f"
+    sha256 cellar: :any,                 arm64_monterey: "45ee51718a1fdf082e0c1139b63cbb28e5e7e1c6cdad827f4e5fb3b75dd1e926"
+    sha256 cellar: :any,                 arm64_big_sur:  "8d20e75d3d0e7c520864f8781a0cdd3c343be0d78e40f0346e8fcb56008fc844"
+    sha256 cellar: :any,                 ventura:        "9faab40fd71f8a4697e0bd3f07b17e3059ae451ef0d068a0b55e7e468d1e57f5"
+    sha256 cellar: :any,                 monterey:       "854240810a892a3e690e5c75a7160d7c924ccd4853ecdb94586f9ace22f3b2b2"
+    sha256 cellar: :any,                 big_sur:        "5bfb895a4fe45dc2a142288c2ae849f5b01f71fbb18d5e6ef40014bb76f80ea0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9f41e9031bc50ebbab21271523fac58c9b72e7ed8fa45ee4a910b255a1e12d99"
   end
 
   depends_on "cmake" => :build
-  depends_on "python@3.10" => [:build, :test]
+  depends_on "python@3.11" => [:build, :test]
   depends_on "swig" => :build
+
+  on_linux do
+    depends_on "pkg-config" => :build
+    depends_on "hwloc"
+  end
 
   # Fix installation of Python components
   # See https://github.com/oneapi-src/oneTBB/issues/343
@@ -33,6 +38,15 @@ class Tbb < Formula
   end
 
   def install
+    # Prevent `setup.py` from installing tbb4py directly into HOMEBREW_PREFIX.
+    # We need this due to our `python@3.11` patch.
+    python = Formula["python@3.11"].opt_bin/"python3.11"
+    site_packages = Language::Python.site_packages(python)
+    inreplace "python/CMakeLists.txt", "@@SITE_PACKAGES@@", site_packages
+
+    tbb_site_packages = prefix/site_packages/"tbb"
+    ENV.append "LDFLAGS", "-Wl,-rpath,#{rpath},-rpath,#{rpath(source: tbb_site_packages)}"
+
     args = %w[
       -DTBB_TEST=OFF
       -DTBB4PY_BUILD=ON
@@ -53,12 +67,8 @@ class Tbb < Formula
 
     cd "python" do
       ENV.append_path "CMAKE_PREFIX_PATH", prefix.to_s
-      python = Formula["python@3.10"].opt_bin/"python3.10"
-
-      tbb_site_packages = prefix/Language::Python.site_packages(python)/"tbb"
-      ENV.append "LDFLAGS", "-Wl,-rpath,#{rpath(source: tbb_site_packages)}"
-
       ENV["TBBROOT"] = prefix
+
       system python, *Language::Python.setup_install_args(prefix, python)
     end
 
@@ -73,6 +83,28 @@ class Tbb < Formula
     # so let's check their existence.
     assert_path_exists lib/"libtbb.a"
     assert_path_exists lib/"libtbbmalloc.a"
+
+    # on macOS core types are not distinguished, because libhwloc does not support it for now
+    # see https://github.com/oneapi-src/oneTBB/blob/690aaf497a78a75ff72cddb084579427ab0a8ffc/CMakeLists.txt#L226-L228
+    (testpath/"cores-types.cpp").write <<~EOS
+      #include <cstdlib>
+      #include <tbb/task_arena.h>
+
+      int main() {
+          const auto numa_nodes = tbb::info::numa_nodes();
+          const auto size = numa_nodes.size();
+          const auto type = numa_nodes.front();
+      #ifdef __APPLE__
+          return size == 1 && type == tbb::task_arena::automatic ? EXIT_SUCCESS : EXIT_FAILURE;
+      #else
+          return size != 1 || type != tbb::task_arena::automatic ? EXIT_SUCCESS : EXIT_FAILURE;
+      #endif
+      }
+    EOS
+
+    system ENV.cxx, "cores-types.cpp", "--std=c++14", "-DTBB_PREVIEW_TASK_ARENA_CONSTRAINTS_EXTENSION=1",
+                                      "-L#{lib}", "-ltbb", "-o", "core-types"
+    system "./core-types"
 
     (testpath/"sum1-100.cpp").write <<~EOS
       #include <iostream>
@@ -102,7 +134,7 @@ class Tbb < Formula
     system ENV.cxx, "sum1-100.cpp", "--std=c++14", "-L#{lib}", "-ltbb", "-o", "sum1-100"
     assert_equal "5050", shell_output("./sum1-100").chomp
 
-    system Formula["python@3.10"].opt_bin/"python3.10", "-c", "import tbb"
+    system Formula["python@3.11"].opt_bin/"python3.11", "-c", "import tbb"
   end
 end
 
@@ -111,6 +143,15 @@ diff --git a/python/CMakeLists.txt b/python/CMakeLists.txt
 index 1d2b05f..81ba8de 100644
 --- a/python/CMakeLists.txt
 +++ b/python/CMakeLists.txt
+@@ -40,7 +40,7 @@ add_custom_target(
+     ${PYTHON_EXECUTABLE} ${PYTHON_BUILD_WORK_DIR}/setup.py
+         build -b${PYTHON_BUILD_WORK_DIR}
+         build_ext ${TBB4PY_INCLUDE_STRING} -L$<TARGET_FILE_DIR:TBB::tbb>
+-        install --prefix ${PYTHON_BUILD_WORK_DIR}/build -f
++        install --prefix ${PYTHON_BUILD_WORK_DIR}/build --install-lib ${PYTHON_BUILD_WORK_DIR}/build/@@SITE_PACKAGES@@ -f
+     COMMENT "Build and install to work directory the oneTBB Python module"
+ )
+ 
 @@ -49,7 +49,7 @@ add_test(NAME python_test
                   -DPYTHON_MODULE_BUILD_PATH=${PYTHON_BUILD_WORK_DIR}/build
                   -P ${PROJECT_SOURCE_DIR}/cmake/python/test_launcher.cmake)

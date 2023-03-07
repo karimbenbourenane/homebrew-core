@@ -1,12 +1,12 @@
 class BatsCore < Formula
   desc "Bash Automated Testing System"
   homepage "https://github.com/bats-core/bats-core"
-  url "https://github.com/bats-core/bats-core/archive/v1.7.0.tar.gz"
-  sha256 "ac70c2a153f108b1ac549c2eaa4154dea4a7c1cc421e3352f0ce6ea49435454e"
+  url "https://github.com/bats-core/bats-core/archive/v1.9.0.tar.gz"
+  sha256 "3c64295318d157616ca2478de819371e2c579ccdab30c1f0b7279f7b214fb1f4"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "ca25618be85dfc2f86c31b7b6ea084a3d3108badcfbd28e036613958aa9094b6"
+    sha256 cellar: :any_skip_relocation, all: "71fce4432c97bf46f4ae681afbf2958175b25bb6297a1b11ee10d553d6eddc93"
   end
 
   depends_on "coreutils"

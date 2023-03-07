@@ -1,38 +1,39 @@
 class Dartsim < Formula
   desc "Dynamic Animation and Robotics Toolkit"
   homepage "https://dartsim.github.io/"
-  url "https://github.com/dartsim/dart/archive/v6.12.2.tar.gz"
-  sha256 "db1b3ef888d37f0dbc567bc291ab2cdb5699172523a58dd5a5fe513ee38f83b0"
+  url "https://github.com/dartsim/dart/archive/v6.13.0.tar.gz"
+  sha256 "4da3ff8cee056252a558b05625a5ff29b21e71f2995e6d7f789abbf6261895f7"
   license "BSD-2-Clause"
+  revision 2
 
   bottle do
-    sha256                               arm64_monterey: "27be345f1467295f61a1be1489853445e50bb16823b730d45b784f550b7fe450"
-    sha256                               arm64_big_sur:  "8ebb53e0628478a69c7ce30b803e46e497625a40778cafc8e4fd8a818c46636f"
-    sha256                               monterey:       "a48b9ae2db6ee6ddd84bc0a273986fb1a263d13befa54569bd71e08415812e02"
-    sha256                               big_sur:        "e6ffbd95e015ae79af3c98f3b57d2824b2e9914d336b4f4eb2d317ae1890bd43"
-    sha256                               catalina:       "ecd278f70d04f92b8fecb69f01a550adba076e2f717c241647e5a8dc6a3f6a34"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6e7eaaf0506baadc360af1162665c35c9ae829d81b3328676dd79a3fb3fc095e"
+    sha256                               arm64_ventura:  "55c146a0dd1ce842b59e1f7a054d349220f14444313257b24be156f3dedddc4e"
+    sha256                               arm64_monterey: "bc17ff9b3a90355537e826774d7edf5fe155f4d624377baec3cbe0fa867d10a9"
+    sha256                               arm64_big_sur:  "01b8afa4280a8583c4e2a07bd121494d249da65bdbf69d0bb18d5e81c69825df"
+    sha256                               ventura:        "70119711d6dd50cfdb88abd6601aeadeaa85b1d8f867ba46ff167748ec209276"
+    sha256                               monterey:       "88f4a74a68fafd990a61fd65d5b274c3212a220c35b98e5771b66cbe3af3f6c0"
+    sha256                               big_sur:        "a8f245344c5b81dc0f70be0333e8f7a97bb9759f59c150806fc34100630fc673"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e462d8e551b6ccdf90605c39d59a3d5fb2d941034abac46264a1b2328ba3b267"
   end
 
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
   depends_on "assimp"
-  depends_on "boost"
   depends_on "bullet"
   depends_on "eigen"
   depends_on "fcl"
   depends_on "flann"
+  depends_on "fmt"
   depends_on "ipopt"
   depends_on "libccd"
   depends_on "nlopt"
   depends_on "ode"
   depends_on "open-scene-graph"
+  depends_on "spdlog"
   depends_on "tinyxml2"
   depends_on "urdfdom"
 
-  on_linux do
-    depends_on "gcc"
-  end
+  uses_from_macos "python" => :build
 
   fails_with gcc: "5"
 
@@ -70,7 +71,7 @@ class Dartsim < Formula
                     "-L#{Formula["boost"].opt_lib}", "-lboost_system",
                     "-L#{Formula["libccd"].opt_lib}", "-lccd",
                     "-L#{Formula["fcl"].opt_lib}", "-lfcl",
-                    "-std=c++14", "-o", "test"
+                    "-std=c++17", "-o", "test"
     system "./test"
   end
 end

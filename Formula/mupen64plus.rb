@@ -3,8 +3,8 @@ class Mupen64plus < Formula
   homepage "https://www.mupen64plus.org/"
   url "https://github.com/mupen64plus/mupen64plus-core/releases/download/2.5/mupen64plus-bundle-src-2.5.tar.gz"
   sha256 "9c75b9d826f2d24666175f723a97369b3a6ee159b307f7cc876bbb4facdbba66"
-  license "GPL-2.0"
-  revision 2
+  license "GPL-2.0-or-later"
+  revision 4
 
   livecheck do
     url :stable
@@ -12,13 +12,14 @@ class Mupen64plus < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 monterey:     "d18db51b4478969eb325d16f8ee9d6c1f0cfa7f624fb9832a9dff2ad46c1c321"
-    sha256 cellar: :any,                 big_sur:      "9cef121fd3742da598d85390381f2174ef81e4e1468fb7c7c8b6f546a434c7ef"
-    sha256 cellar: :any,                 catalina:     "c573060a4413af37c1d742c385a1f9b7ab818cbed975d0a341b9f76626ee4a0a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "ce0fc6df5eb628593be7f19c63558f2af77f746f4dbc0211137040d639cc4c88"
+    sha256 cellar: :any,                 ventura:      "5eacf154124129f106831fad1ff33835e3ee268d376993a3b2189a9d61274e06"
+    sha256 cellar: :any,                 monterey:     "89929811b162271c29daa644ad05d64af37079cc8f95b4a7b4c2b61fbdd1dda5"
+    sha256 cellar: :any,                 big_sur:      "f4de5ec3c0480181d0f33a13bd4da8e722a126b67b62e4e58afc99655f7d597e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "2886d428f085ff6d462d4411d26d057bb075023bde7ee28cfc15bb6488e64f7b"
   end
 
   depends_on "pkg-config" => :build
+  depends_on arch: :x86_64
   depends_on "boost"
   depends_on "freetype"
   depends_on "libpng"
@@ -45,6 +46,11 @@ class Mupen64plus < Formula
     # Remove in next version
     inreplace "source/mupen64plus-video-glide64mk2/src/Glide64/3dmath.cpp",
               "__builtin_ia32_storeups", "_mm_storeu_ps"
+
+    if OS.linux?
+      ENV.append "CFLAGS", "-fcommon"
+      ENV.append "CFLAGS", "-fpie"
+    end
 
     args = ["install", "PREFIX=#{prefix}"]
     args << if OS.mac?
@@ -78,7 +84,7 @@ class Mupen64plus < Formula
     end
 
     cd "source/mupen64plus-ui-console/projects/unix" do
-      system "make", *args
+      system "make", *args, "PIE=1"
     end
   end
 

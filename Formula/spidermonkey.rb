@@ -5,7 +5,7 @@ class Spidermonkey < Formula
   version "91.13.0"
   sha256 "53be2bcde0b5ee3ec106bd8ba06b8ae95e7d489c484e881dfbe5360e4c920762"
   license "MPL-2.0"
-  revision 1
+  revision 2
   head "https://hg.mozilla.org/mozilla-central", using: :hg
 
   # Spidermonkey versions use the same versions as Firefox, so we simply check
@@ -16,12 +16,13 @@ class Spidermonkey < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "e985b3fdf8827f7d491fde110937767a30fad8b33a4a92443a7be611c3c57359"
-    sha256 cellar: :any,                 arm64_big_sur:  "f666e936df2a0114799bcf80b5324ffde8ba8efa525587c20af9c9e72ef14c4a"
-    sha256 cellar: :any,                 monterey:       "491e3c9bfa16565f5c10d1d386240abb913f7ae51e7dd57063ec9b077ab166f5"
-    sha256 cellar: :any,                 big_sur:        "28bf6ac69da070d01abf59c931eafe3c30d9a68517391e95a786166e06d49266"
-    sha256 cellar: :any,                 catalina:       "bd17e93ceba743007e62a6213e385e67dfc6282c832fa6649c20247ad0e55c99"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a0c02fdd3307b92699021febf74e0ccf1a73dbcb124f31c88081aab57b0f312f"
+    sha256 cellar: :any,                 arm64_ventura:  "c86a0a00d17e639dc2894142194cc99406384626e92e9afa26c8dda8fdfc28d0"
+    sha256 cellar: :any,                 arm64_monterey: "d9ce5112d08c944ca6ae6aeb078c6b4a94349caa530a57940b9f0000f113c6eb"
+    sha256 cellar: :any,                 arm64_big_sur:  "260e78da8f7d60e493d57a5e4a200fb602c372230f0645f6808353ce7b684fa1"
+    sha256 cellar: :any,                 ventura:        "85ad09528a9fac9379ef345bfc60dd2520e1c4394da309b65dba10129b45886b"
+    sha256 cellar: :any,                 monterey:       "7218b680d85eca3628fddbbfe74d215fd2b3df40f765debed343bfff348ca976"
+    sha256 cellar: :any,                 big_sur:        "3795db1e0e26f3e560a596e0d35b0798910ffc455a98710913185d46a4d561f1"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "26a8b4df8ca062d71245432c37642a31fca065339462595f14ffd09bb2b68757"
   end
 
   depends_on "autoconf@2.13" => :build
@@ -35,10 +36,6 @@ class Spidermonkey < Formula
   uses_from_macos "llvm" => :build # for llvm-objdump
   uses_from_macos "m4" => :build
   uses_from_macos "zlib"
-
-  on_linux do
-    depends_on "gcc"
-  end
 
   conflicts_with "narwhal", because: "both install a js binary"
 

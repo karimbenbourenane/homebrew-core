@@ -1,24 +1,25 @@
 class Step < Formula
   desc "Crypto and x509 Swiss-Army-Knife"
   homepage "https://smallstep.com"
-  url "https://github.com/smallstep/cli/releases/download/v0.22.0/step_0.22.0.tar.gz"
-  sha256 "2865b7268d5a3b27913f3fdf86cd9a030c9d44dc6359f6cee54085a5d9ad6dca"
+  url "https://github.com/smallstep/cli/releases/download/v0.23.3/step_0.23.3.tar.gz"
+  sha256 "c92f396d32583940d44c2a431ea986cb14d81df028be185ace003571dd3d2992"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "8045866de4f5f2277e261c4d6599b3c02e8273c428c26b9f7b39aa737be72550"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "e8fb5d3510cfcac5951b5e1fe46f45bcec602cd816e92d39815552ad7933bef0"
-    sha256 cellar: :any_skip_relocation, monterey:       "9bbd01bfb0a2599dd6ffad6cc2da29c357f661f67b7ae42c8cd3b33d10720b5d"
-    sha256 cellar: :any_skip_relocation, big_sur:        "a8a5f25d20c89e12dd3f73eda25ce69585390d589228173d4b509720b2bd4951"
-    sha256 cellar: :any_skip_relocation, catalina:       "dfedeabd4f9e1a4973c2dc13ad91d5236feaa21ab7d4b6eb93ec18b4bd90ec6b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "083dda6d42597b10cd260709451320ad60b3cf23f3eed8bcf1919614f8a948b8"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "4d86d55b169d8b2f7b35082f62ab633230d2e93732eda06cbb1bdf4fdcba5b45"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "666e60fd92eae445d12c331e0c36088a7de1f1ab65d6060605443a727a02224a"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "b5ee9a02de0ec024907e9bb6d82ec3e12ec402c6b8b7ba44033998fe238d0f8c"
+    sha256 cellar: :any_skip_relocation, ventura:        "86143c89fb46233f39afb8b5244a7f16d2342273bba63950111bf0be16470c06"
+    sha256 cellar: :any_skip_relocation, monterey:       "7392351a536278aa904217882ec8b14c3fd109e52c206f21c134c754ee682e8e"
+    sha256 cellar: :any_skip_relocation, big_sur:        "0a12be4b642b6383e458ad0e9227799330b9e86de455662e55ac5b4d981d022b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5a3d225dc50b5d8257e1fcbdb5c61b8783de3cc7889b10536b71be7cf9c9ea6e"
   end
 
   depends_on "go" => :build
 
   resource "certificates" do
-    url "https://github.com/smallstep/certificates/releases/download/v0.22.0/step-ca_0.22.0.tar.gz"
-    sha256 "fe11b8e8aa48d8c62ed54ae577c2a5abbd1dda4d3d93502f5c26260c12395e24"
+    url "https://github.com/smallstep/certificates/releases/download/v0.23.2/step-ca_0.23.2.tar.gz"
+    sha256 "a12b7b580846efcdef60e2dd80187c713c808a841daf17f6b42da37e1a5df45c"
   end
 
   def install

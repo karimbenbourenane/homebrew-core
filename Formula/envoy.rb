@@ -1,30 +1,10 @@
 class Envoy < Formula
   desc "Cloud-native high-performance edge/middle/service proxy"
   homepage "https://www.envoyproxy.io/index.html"
-  # Switch to a tarball when the following issue is resolved:
-  # https://github.com/envoyproxy/envoy/issues/2181
+  url "https://github.com/envoyproxy/envoy/archive/refs/tags/v1.25.2.tar.gz"
+  sha256 "5fd21cc79492fec6ec163c7cd862f0316fe684faf32f46b8b80f21c796783068"
   license "Apache-2.0"
   head "https://github.com/envoyproxy/envoy.git", branch: "main"
-
-  stable do
-    url "https://github.com/envoyproxy/envoy.git",
-        tag:      "v1.22.2",
-        revision: "c919bdec19d79e97f4f56e4095706f8e6a383f1c"
-
-    # Fix build on Apple Silicon which fails on undefined symbol:
-    # v8::internal::trap_handler::TryHandleSignal(int, __siginfo*, void*)
-    patch do
-      url "https://github.com/envoyproxy/envoy/commit/823f81ea8a3c0f792a7dbb0d08422c6a3d251152.patch?full_index=1"
-      sha256 "c48ecebc8a63f41f8bf8c4598a6442402470f2f04d20511e1aa3a1f322beccc7"
-    end
-
-    # Fix build with GCC in "opt" mode which fails on strict-aliasing rules:
-    # type_url_, reinterpret_cast<std::vector<DecodedResourcePtr>&>(decoded_resources),
-    patch do
-      url "https://github.com/envoyproxy/envoy/commit/aa06f653ed736b428f3ea69900aa864ce4187305.patch?full_index=1"
-      sha256 "d05b1519e6d0d78619457deb3d0bed6bb69ee2f095d31b9913cc70c9ee851e80"
-    end
-  end
 
   livecheck do
     url :stable
@@ -32,18 +12,18 @@ class Envoy < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "122977e8eee980aab6b9d5fa2ba9fc1e58f831e68345e417e7fdc52df554d7a4"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "78d13f1e2a098f849805bf575c53e52dd452ae45c8fa2134e93941c7bcdb7e89"
-    sha256 cellar: :any_skip_relocation, monterey:       "97dde181e8691fb7594cdf1d788049d9e9e658128fd912128eb2be31ccbe0b9c"
-    sha256 cellar: :any_skip_relocation, big_sur:        "55c03e83374c3637254dc03c3ecf67833861cd6f6ef013d8c9b91d6b5d0a48ab"
-    sha256 cellar: :any_skip_relocation, catalina:       "6ec9fb982745c52765ec8cb02f9ea7bceb53ff821e30100e45d4cbb2b9587c38"
-    sha256                               x86_64_linux:   "7add4d2d423ab7ab170c5ded6e8681a6b7c1b6806ecb4ef18f772f3cc785e121"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "a73e34bb0253eadc233ba1252b810dcb0166b5d7ed5416837846a5da76e7341e"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "017e73ce42e358dfc3121fed705104579455b98c36eac0727135fae6e818e670"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "c6ff040f8cd149c32cef89d0cf68ae7fa8bb30feb5f6909093917b717e9138c1"
+    sha256 cellar: :any_skip_relocation, ventura:        "623a8102110c967c795a4680a4e0a1c22888f007f22a3de3134ba37475757285"
+    sha256 cellar: :any_skip_relocation, monterey:       "cd3fd0221e9a65a07390f0bccef71c7f87e196c7f768c630dfda6b7ea6cb0994"
+    sha256 cellar: :any_skip_relocation, big_sur:        "3740fd66c2285ffcf73acb29010a226b06860a947bfef47ce461a3c1b92d9c47"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "0a2426fec8dc0d1bb81280cffc3df2474f69f9176ada87c5a6f31949e94d4b64"
   end
 
   depends_on "automake" => :build
   depends_on "bazelisk" => :build
   depends_on "cmake" => :build
-  depends_on "coreutils" => :build
   depends_on "libtool" => :build
   depends_on "ninja" => :build
   # Starting with 1.21, envoy requires a full Xcode installation, not just
@@ -51,9 +31,10 @@ class Envoy < Formula
   depends_on xcode: :build
   depends_on macos: :catalina
 
-  on_linux do
-    depends_on "python@3.10" => :build
-    depends_on "gcc@9"
+  uses_from_macos "python" => :build
+
+  on_macos do
+    depends_on "coreutils" => :build
   end
 
   # https://github.com/envoyproxy/envoy/tree/main/bazel#supported-compiler-versions
@@ -61,21 +42,9 @@ class Envoy < Formula
     version "8"
     cause "C++17 support and tcmalloc requirement"
   end
-  # GCC 10 build fails at external/com_google_absl/absl/container/internal/inlined_vector.h:448:5:
-  # error: '<anonymous>.absl::inlined_vector_internal::Storage<char, 128, std::allocator<char> >::data_'
-  # is used uninitialized in this function [-Werror=uninitialized]
-  fails_with gcc: "10"
-  # GCC 11 build fails at external/org_brotli/c/dec/decode.c:2036:41:
-  # error: argument 2 of type 'const uint8_t *' declared as a pointer [-Werror=vla-parameter]
-  # Brotli upstream ref: https://github.com/google/brotli/pull/893
-  fails_with gcc: "11"
 
   def install
-    env_path = if OS.mac?
-      "#{HOMEBREW_PREFIX}/bin:/usr/bin:/bin"
-    else
-      "#{Formula["python@3.10"].opt_bin}:#{HOMEBREW_PREFIX}/bin:/usr/bin:/bin"
-    end
+    env_path = "#{HOMEBREW_PREFIX}/bin:/usr/bin:/bin"
     args = %W[
       --compilation_mode=opt
       --curses=no
@@ -85,13 +54,32 @@ class Envoy < Formula
     ]
 
     if OS.linux?
-      # Disable extension `tcp_stats` which requires Linux headers >= 4.6
-      # It's a directive with absolute path `#include </usr/include/linux/tcp.h>`
-      args << "--//source/extensions/transport_sockets/tcp_stats:enabled=false"
+      # Build fails with GCC 10+ at external/com_google_absl/absl/container/internal/inlined_vector.h:448:5:
+      # error: '<anonymous>.absl::inlined_vector_internal::Storage<char, 128, std::allocator<char> >::data_'
+      # is used uninitialized in this function [-Werror=uninitialized]
+      # Try to remove in a release that uses a newer abseil
+      args << "--cxxopt=-Wno-uninitialized"
+      args << "--host_cxxopt=-Wno-uninitialized"
+    else
+      # The clang available on macOS catalina has a warning that isn't clean on v8 code.
+      # The warning doesn't show up with more recent clangs, so disable it for now.
+      args << "--cxxopt=-Wno-range-loop-analysis"
+      args << "--host_cxxopt=-Wno-range-loop-analysis"
+
+      # To supress warning on deprecated declaration on v8 code. For example:
+      # external/v8/src/base/platform/platform-darwin.cc:56:22: 'getsectdatafromheader_64'
+      # is deprecated: first deprecated in macOS 13.0.
+      # https://bugs.chromium.org/p/v8/issues/detail?id=13428.
+      # Reference: https://github.com/envoyproxy/envoy/pull/23707.
+      args << "--cxxopt=-Wno-deprecated-declarations"
+      args << "--host_cxxopt=-Wno-deprecated-declarations"
     end
 
-    system Formula["bazelisk"].opt_bin/"bazelisk", "build", *args, "//source/exe:envoy-static"
-    bin.install "bazel-bin/source/exe/envoy-static" => "envoy"
+    # Write the current version SOURCE_VERSION.
+    system "python3", "tools/github/write_current_source_version.py", "--skip_error_in_git"
+
+    system Formula["bazelisk"].opt_bin/"bazelisk", "build", *args, "//source/exe:envoy-static.stripped"
+    bin.install "bazel-bin/source/exe/envoy-static.stripped" => "envoy"
     pkgshare.install "configs", "examples"
   end
 

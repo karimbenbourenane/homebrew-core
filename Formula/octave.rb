@@ -1,19 +1,28 @@
 class Octave < Formula
   desc "High-level interpreted language for numerical computing"
   homepage "https://www.gnu.org/software/octave/index.html"
-  url "https://ftp.gnu.org/gnu/octave/octave-7.2.0.tar.xz"
-  mirror "https://ftpmirror.gnu.org/octave/octave-7.2.0.tar.xz"
-  sha256 "4aef78c3c9d49f75d64ccd55267df40b3020e6414f69ea8757a1939628b30171"
   license "GPL-3.0-or-later"
-  revision 1
+  revision 3
+
+  stable do
+    url "https://ftp.gnu.org/gnu/octave/octave-7.3.0.tar.xz"
+    mirror "https://ftpmirror.gnu.org/octave/octave-7.3.0.tar.xz"
+    sha256 "a508ee6aebccfa68967c9e7e0a08793c4ca8e4ddace723aabdb8f71ad34d57f1"
+
+    # patch to support SuiteSparse 7.0.0 or newer
+    # upstream commit ref, https://hg.savannah.gnu.org/hgweb/octave/rev/aaffac4fbe30
+    # remove in next release
+    patch :DATA
+  end
 
   bottle do
-    sha256 arm64_monterey: "5baea026579896de878336938dc603c478f7d10dded22eb2d679421d119450bf"
-    sha256 arm64_big_sur:  "db84d5907dcac3a8c0e9972cff232df68a99fc71bacacf55495ac24a8cc53513"
-    sha256 monterey:       "e2dafead6e1bc2d414e6241c8e61cef9fb1fd6e4f03658818ab6986e6129147a"
-    sha256 big_sur:        "3e4f59e424e99817477be950020b382378805e6f844814eb3ed8c29f9e767f10"
-    sha256 catalina:       "b760b86d281746ed0a9c1f706c6dc0f26b1ec82cbbc49a42820ef2c073d81320"
-    sha256 x86_64_linux:   "ded660480377a43d24edf303a65de05267fa9952f80e74e5ef7e0bb5406c5d8f"
+    sha256 arm64_ventura:  "5e3a2ba3770b465bfcbb8884f2edc0bdcd61cef2df1d4b27d0c583a88003dc21"
+    sha256 arm64_monterey: "eec6637b967d6d187fb422f309d89419e81e173ed16595ccd5a3d3ef2484e925"
+    sha256 arm64_big_sur:  "a65b92d702025ce26455354c6b6a099cd08f9c5fad925b9fb3953c84fcbb2be1"
+    sha256 ventura:        "f9355b23a9b858d1a1ccdcbf4ab47803ff0bc27d7baf9a78bce472dc1bc3aebc"
+    sha256 monterey:       "02bdc29f8ad12b4a24ac06b2611369fa3c5cf741ba83b03f9183a2d4ad725881"
+    sha256 big_sur:        "0619a9a8e7f2f5d94f3dddf3b6d4e7ca607c9a54c1a72c83ecfec121d1d5d67f"
+    sha256 x86_64_linux:   "a1a6ad850ca769177f879d97caf08157517a3e58fd674193672554ec0b8d4ed9"
   end
 
   head do
@@ -54,6 +63,7 @@ class Octave < Formula
   depends_on "qrupdate"
   depends_on "qscintilla2"
   depends_on "qt@5"
+  depends_on "rapidjson"
   depends_on "readline"
   depends_on "suite-sparse"
   depends_on "sundials"
@@ -81,6 +91,10 @@ class Octave < Formula
               /%OCTAVE_CONF_OCT(AVE)?_LINK_(DEPS|OPTS)%/,
               '""'
 
+    # SUNDIALS 6.4.0 and later needs C++14 for C++ based features
+    # Configure to use gnu++14 instead of c++14 as octave uses GNU extensions
+    ENV.append "CXX", "-std=gnu++14"
+
     # Qt 5.12 compatibility
     # https://savannah.gnu.org/bugs/?55187
     ENV["QCOLLECTIONGENERATOR"] = "qhelpgenerator"
@@ -95,7 +109,6 @@ class Octave < Formula
     args = ["--prefix=#{prefix}",
             "--disable-dependency-tracking",
             "--disable-silent-rules",
-            "--enable-link-all-dependencies",
             "--enable-shared",
             "--disable-static",
             "--with-hdf5-includedir=#{Formula["hdf5"].opt_include}",
@@ -160,3 +173,42 @@ class Octave < Formula
     EOS
   end
 end
+
+__END__
+diff --git a/liboctave/util/oct-sparse.h b/liboctave/util/oct-sparse.h
+index 088554e..83a6930 100644
+--- a/liboctave/util/oct-sparse.h
++++ b/liboctave/util/oct-sparse.h
+@@ -89,16 +89,27 @@
+ #  include <SuiteSparseQR.hpp>
+ #endif
+
+-// Cope with new SuiteSparse versions
++// Cope with API differences between SuiteSparse versions
+
+ #if defined (SUITESPARSE_VERSION)
+-#  if (SUITESPARSE_VERSION >= SUITESPARSE_VER_CODE (4, 3))
++#  if (SUITESPARSE_VERSION >= SUITESPARSE_VER_CODE (7, 0))
+ #    define SUITESPARSE_NAME(name) SuiteSparse_ ## name
+-#    define SUITESPARSE_ASSIGN_FPTR(f_name, f_var, f_assign) (SuiteSparse_config.f_name = f_assign)
+-#    define SUITESPARSE_ASSIGN_FPTR2(f_name, f_var, f_assign) (SuiteSparse_config.f_name = SUITESPARSE_NAME (f_assign))
++#    define SUITESPARSE_SET_FCN(name) SuiteSparse_config_ ## name ## _set
++#    define SUITESPARSE_ASSIGN_FPTR(f_name, f_var, f_assign) \
++       SUITESPARSE_SET_FCN(f_name) (f_assign)
++#    define SUITESPARSE_ASSIGN_FPTR2(f_name, f_var, f_assign) \
++       SUITESPARSE_SET_FCN(f_name) (SUITESPARSE_NAME (f_assign))
++#  elif (SUITESPARSE_VERSION >= SUITESPARSE_VER_CODE (4, 3))
++#    define SUITESPARSE_NAME(name) SuiteSparse_ ## name
++#    define SUITESPARSE_ASSIGN_FPTR(f_name, f_var, f_assign) \
++       (SuiteSparse_config.f_name = f_assign)
++#    define SUITESPARSE_ASSIGN_FPTR2(f_name, f_var, f_assign) \
++       (SuiteSparse_config.f_name = SUITESPARSE_NAME (f_assign))
+ #  else
+-#    define SUITESPARSE_ASSIGN_FPTR(f_name, f_var, f_assign) (f_var = f_assign)
+-#    define SUITESPARSE_ASSIGN_FPTR2(f_name, f_var, f_assign) (f_var = CHOLMOD_NAME (f_assign))
++#    define SUITESPARSE_ASSIGN_FPTR(f_name, f_var, f_assign) \
++       (f_var = f_assign)
++#    define SUITESPARSE_ASSIGN_FPTR2(f_name, f_var, f_assign) \
++       (f_var = CHOLMOD_NAME (f_assign))
+ #  endif
+ #endif

@@ -1,19 +1,20 @@
 class Hbase < Formula
   desc "Hadoop database: a distributed, scalable, big data store"
   homepage "https://hbase.apache.org"
-  url "https://www.apache.org/dyn/closer.lua?path=hbase/2.4.10/hbase-2.4.10-bin.tar.gz"
-  mirror "https://archive.apache.org/dist/hbase/2.4.10/hbase-2.4.10-bin.tar.gz"
-  sha256 "7ea25b264c9d934f6d4ea25362ea8ede38b1c527747f55e4aa1ec9a700082219"
+  url "https://www.apache.org/dyn/closer.lua?path=hbase/2.5.3/hbase-2.5.3-bin.tar.gz"
+  mirror "https://archive.apache.org/dist/hbase/2.5.3/hbase-2.5.3-bin.tar.gz"
+  sha256 "874f239c341a6a4a646051c79fda9e838242481b70463bf8daa28ba7239576c2"
   # We bundle hadoop-lzo which is GPL-3.0-or-later
   license all_of: ["Apache-2.0", "GPL-3.0-or-later"]
 
   bottle do
-    sha256 arm64_monterey: "68e832c4fe692e3623b29f86ed03ce08f6059f944e370d2d95e501e90f944ca4"
-    sha256 arm64_big_sur:  "8bfaf3f502b7a9c7c671573b8de8cff4fda1d1ce60326532e2234a965a82064d"
-    sha256 monterey:       "58ffd20595142d630cd5d302235f192cba177b52a39f6c70a842b2c58d7c0687"
-    sha256 big_sur:        "b3f30692842d918532e06b18658882d791121487cdfdc5f9a3beddfbf1c4d971"
-    sha256 catalina:       "06a7f7214e854fe14f963f31890b61c77e656c967b5b7d90e2b2900db63c30e3"
-    sha256 x86_64_linux:   "a28df9cb5049a4596bf0cab24b1e2a816fd1c2b26d7dfad21d4318cbdb200b51"
+    sha256 arm64_ventura:  "1348b4dbf170964c86e57455346321472dc9b6ef07c79a60fac0b978854f6efe"
+    sha256 arm64_monterey: "3811d27fc4f219b9f8cc990c4d4318aaf29f8ba173d65857eaa1d8c96ea1e256"
+    sha256 arm64_big_sur:  "cdf9158f28f7a0bcab9233d37de15106e755b545a7494ca488d5b444533aef1d"
+    sha256 ventura:        "c1d6741bfb978a942e6126d4bffe4e4eecaf169734549e7b7c7fac60f9ef190b"
+    sha256 monterey:       "bf20de6dd959b6c4667942b292fd39946ddfb710729f5021446e6fa4e5f853f7"
+    sha256 big_sur:        "29ed8d98255b4640660afbd82c158b1e6417dabf522dabfb33d6168a306c1a1d"
+    sha256 x86_64_linux:   "398c0b246e7b6cb0a92fee7742f02d2ef96206fe893d2f19ba85f8d550ee8126"
   end
 
   depends_on "ant" => :build
@@ -68,7 +69,7 @@ class Hbase < Formula
       (libexec/"lib/native").install Dir["build/hadoop-lzo-*/lib/native/*"]
     end
 
-    inreplace "#{libexec}/conf/hbase-env.sh" do |s|
+    inreplace libexec/"conf/hbase-env.sh" do |s|
       # upstream bugs for ipv6 incompatibility:
       # https://issues.apache.org/jira/browse/HADOOP-8568
       # https://issues.apache.org/jira/browse/HADOOP-3619
@@ -83,6 +84,8 @@ class Hbase < Formula
               "export HBASE_LOG_DIR=\"${HBASE_LOG_DIR:-#{var}/log/hbase}\"")
     end
 
+    # Interface name is lo on Linux, not lo0.
+    loopback = OS.mac? ? "lo0" : "lo"
     # makes hbase usable out of the box
     # upstream has been provided this patch
     # https://issues.apache.org/jira/browse/HBASE-15426
@@ -104,15 +107,15 @@ class Hbase < Formula
           </property>
           <property>
             <name>hbase.zookeeper.dns.interface</name>
-            <value>lo0</value>
+            <value>#{loopback}</value>
           </property>
           <property>
             <name>hbase.regionserver.dns.interface</name>
-            <value>lo0</value>
+            <value>#{loopback}</value>
           </property>
           <property>
             <name>hbase.master.dns.interface</name>
-            <value>lo0</value>
+            <value>#{loopback}</value>
           </property>
       EOS
   end
@@ -151,9 +154,6 @@ class Hbase < Formula
       s.gsub!(/(hbase.rootdir.*)\n.*/, "\\1\n<value>file://#{testpath}/hbase</value>")
       s.gsub!(/(hbase.zookeeper.property.dataDir.*)\n.*/, "\\1\n<value>#{testpath}/zookeeper</value>")
       s.gsub!(/(hbase.zookeeper.property.clientPort.*)\n.*/, "\\1\n<value>#{port}</value>")
-
-      # Interface name is lo on Linux, not lo0.
-      s.gsub!("lo0", "lo") unless OS.mac?
     end
 
     ENV["HBASE_LOG_DIR"]  = testpath/"logs"
@@ -161,7 +161,7 @@ class Hbase < Formula
     ENV["HBASE_PID_DIR"]  = testpath/"pid"
 
     system "#{bin}/start-hbase.sh"
-    sleep 10
+    sleep 15
     begin
       assert_match "Zookeeper", pipe_output("nc 127.0.0.1 #{port} 2>&1", "stats")
     ensure

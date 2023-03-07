@@ -6,8 +6,8 @@ class Dynare < Formula
 
   # Remove when patch is no longer needed.
   stable do
-    url "https://www.dynare.org/release/source/dynare-5.2.tar.xz"
-    sha256 "01849a45d87cac3c1a8e8bf55030d026054ffb9b1ebf5ec09c9981a08d60f55c"
+    url "https://www.dynare.org/release/source/dynare-5.3.tar.xz"
+    sha256 "bbbbd319f9a1cb7ffd4f7012be105a7c95842ca76d9d96e96305e1fbf8d8b585"
 
     on_arm do
       # Needed since we patch a `Makefile.am` below.
@@ -32,12 +32,12 @@ class Dynare < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_monterey: "729657626a5dd8b7019b4594dc9d6c1c586863b24bc538da696fc0503127ecd9"
-    sha256 cellar: :any, arm64_big_sur:  "b9a6d4a197f260137a3db9915d2dc18296d2afa7ba175c162dad175f65701391"
-    sha256 cellar: :any, monterey:       "31b80cc41d34278e8a20ec410c0f2e8aa51b39051fc99f99216384ba76e53114"
-    sha256 cellar: :any, big_sur:        "b132c70628fbf91bfda7ad89254106f44d0cae4d1b6f918c0e9dc6546b682270"
-    sha256 cellar: :any, catalina:       "2ad82626a67004ec88a33688e51e08a9b07f0d4a3ef67a459ec1ba73be21360e"
-    sha256               x86_64_linux:   "13bb74fafff238cb14e388f3fe6784da7d38ad3563d2b82e07eafb72ca622faa"
+    sha256 cellar: :any, arm64_ventura:  "20b37989736c67662aeec515d46f406848806b131625a857edd0799b4d7fb94c"
+    sha256 cellar: :any, arm64_monterey: "9d92d3a6d5fead8e034412fbaf5cdd8669bcd0940f1f95334816e8349c5a185b"
+    sha256 cellar: :any, arm64_big_sur:  "ff54521415a80c326677f6378f356fac93405c3a44e8007634e8857c13053e7e"
+    sha256 cellar: :any, ventura:        "a2dfdd0a87012c4a5715a1635fe3f4dcdb4632042ec17e0d48bc1170ba0a0e1a"
+    sha256 cellar: :any, monterey:       "231a9d587611bda8d78414e7ad4a3fcf3f949187a32805ba79aba4bad5e25b7e"
+    sha256 cellar: :any, big_sur:        "16f608ae993d152a6e1dd3939e4f1aa34cf3ac4fa736e1129e224613d3df5d75"
   end
 
   head do
@@ -61,17 +61,17 @@ class Dynare < Formula
   depends_on "openblas"
   depends_on "suite-sparse"
 
-  resource "io" do
-    url "https://octave.sourceforge.io/download.php?package=io-2.6.4.tar.gz", using: :nounzip
-    sha256 "a74a400bbd19227f6c07c585892de879cd7ae52d820da1f69f1a3e3e89452f5a"
-  end
-
   resource "slicot" do
     url "https://deb.debian.org/debian/pool/main/s/slicot/slicot_5.0+20101122.orig.tar.gz"
     sha256 "fa80f7c75dab6bfaca93c3b374c774fd87876f34fba969af9133eeaea5f39a3d"
   end
 
-  resource "statistics" do
+  resource "homebrew-io" do
+    url "https://octave.sourceforge.io/download.php?package=io-2.6.4.tar.gz", using: :nounzip
+    sha256 "a74a400bbd19227f6c07c585892de879cd7ae52d820da1f69f1a3e3e89452f5a"
+  end
+
+  resource "homebrew-statistics" do
     url "https://octave.sourceforge.io/download.php?package=statistics-1.4.3.tar.gz", using: :nounzip
     sha256 "9801b8b4feb26c58407c136a9379aba1e6a10713829701bb3959d9473a67fa05"
   end
@@ -123,13 +123,16 @@ class Dynare < Formula
   test do
     ENV.cxx11
 
-    statistics = resource("statistics")
-    io = resource("io")
+    statistics = resource("homebrew-statistics")
+    io = resource("homebrew-io")
     testpath.install statistics, io
 
     cp lib/"dynare/examples/bkk.mod", testpath
 
+    # Replace `makeinfo` with dummy command `true` to prevent generating docs
+    # that are not useful to the test.
     (testpath/"dyn_test.m").write <<~EOS
+      makeinfo_program true
       pkg prefix #{testpath}/octave
       pkg install io-#{io.version}.tar.gz
       pkg install statistics-#{statistics.version}.tar.gz

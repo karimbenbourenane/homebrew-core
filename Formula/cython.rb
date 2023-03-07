@@ -1,18 +1,18 @@
 class Cython < Formula
   desc "Compiler for writing C extensions for the Python language"
   homepage "https://cython.org/"
-  url "https://files.pythonhosted.org/packages/4c/76/1e41fbb365ad20b6efab2e61b0f4751518444c953b390f9b2d36cf97eea0/Cython-0.29.32.tar.gz"
-  sha256 "8733cf4758b79304f2a4e39ebfac5e92341bce47bcceb26c1254398b2f8c1af7"
+  url "https://files.pythonhosted.org/packages/dc/f6/e8e302f9942cbebede88b1a0c33d0be3a738c3ac37abae87254d58ffc51c/Cython-0.29.33.tar.gz"
+  sha256 "5040764c4a4d2ce964a395da24f0d1ae58144995dab92c6b96f44c3f4d72286a"
   license "Apache-2.0"
-  revision 1
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "bf2d6933b68b87cfa36a047f49774f59e8f0193a2f53fd4284d2e81b8c6e13f6"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "fb954cb6e538d5619560ff5598f58dfff45071599be7593bc9477ea96e606dac"
-    sha256 cellar: :any_skip_relocation, monterey:       "37c7b39c9ea3300d07dbf86e96d6365f2fd305ebd953ed87e6231606960a4c65"
-    sha256 cellar: :any_skip_relocation, big_sur:        "48374cefbe3fed92a24b60688956302ea807ae2d7b0346d280198920e5381dcf"
-    sha256 cellar: :any_skip_relocation, catalina:       "b02e83dbf1ccd76667e5e16626473646cdfeee9bbd37676093284d3035ed366b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c0277874feeaa8f509bb7ee2d6c6ff0e6183983c6186095581ad19e6f25d03a1"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "785d54a5b55a33ad43c703809f7e0f47968fffe08716a7d21096e2d53d8e3908"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "c280428e686d8e4369473a440bab37e484c91626a3233abdc70832ccde0e63de"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "67cc8a6c1a6c4d9a2ba884bf5f0922a4c33dffc988e80396dd0233ec1a34c15f"
+    sha256 cellar: :any_skip_relocation, ventura:        "667e88115110c948f94ba7d0539257df6e3f074a63f5415a846055e62b1dabd8"
+    sha256 cellar: :any_skip_relocation, monterey:       "2147cd1970cc25b4fa99fef1b1cf3fb86200425cedf4c5658f662ede4d38e142"
+    sha256 cellar: :any_skip_relocation, big_sur:        "c63a8a477db07a7102ee23ce177ab2f8a3b754cfe48c94ce32454d3410e83a63"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c77c90c884634aa8ef832a96da1007b81522063de39c14d8f177ef6ff786c9ec"
   end
 
   keg_only <<~EOS
@@ -20,10 +20,10 @@ class Cython < Formula
     Users are advised to use `pip` to install cython
   EOS
 
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   def install
-    python = "python3.10"
+    python = "python3.11"
     ENV.prepend_create_path "PYTHONPATH", libexec/Language::Python.site_packages(python)
     system python, *Language::Python.setup_install_args(libexec, python)
 
@@ -32,7 +32,7 @@ class Cython < Formula
   end
 
   test do
-    python = Formula["python@3.10"].opt_bin/"python3.10"
+    python = Formula["python@3.11"].opt_bin/"python3.11"
     ENV.prepend_path "PYTHONPATH", libexec/Language::Python.site_packages(python)
 
     phrase = "You are using Homebrew"

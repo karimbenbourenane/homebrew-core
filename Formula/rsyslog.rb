@@ -1,8 +1,8 @@
 class Rsyslog < Formula
   desc "Enhanced, multi-threaded syslogd"
   homepage "https://www.rsyslog.com/"
-  url "https://www.rsyslog.com/files/download/rsyslog/rsyslog-8.2208.0.tar.gz"
-  sha256 "14de68e7b8e5ab0c5d734f82e2dc9fff22cd7f4710ad690727eb10a7b9b3df5e"
+  url "https://www.rsyslog.com/files/download/rsyslog/rsyslog-8.2302.0.tar.gz"
+  sha256 "25415f85b662615ce3c83077d53758029e8743cb5929044bfd3564e3d626a3b9"
   license all_of: ["Apache-2.0", "GPL-3.0-or-later", "LGPL-3.0-or-later"]
 
   livecheck do
@@ -11,12 +11,13 @@ class Rsyslog < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "edd00e75254b249f1456eff2b8897c3e8d6f4058f95748fcf5978e01720197a5"
-    sha256 arm64_big_sur:  "9f8f815a0a92da34bd5508ed0be67cd2da081c37c28fd2a21f912c7262e8d9da"
-    sha256 monterey:       "16a88c82940162d7f7b69d4479ab58d25b7f59126948feb30ea1a8f1d4ba35d4"
-    sha256 big_sur:        "4a74fd32483268e81742f43a312063dc70b2fb620ff26547c5feaff287356681"
-    sha256 catalina:       "5ce3c9823c48a1ee545079960d41ae27703df6c6a702debd47d8dccd3b43bd8b"
-    sha256 x86_64_linux:   "36d09c3d337256db58730835f2a3f59b9b82f07768111f1fc442dab3a94361ab"
+    sha256 arm64_ventura:  "b1a7ed6814f95a6fbe4858b973af2f6719a7bfc1983d263c47a63fb0c1bbd417"
+    sha256 arm64_monterey: "e52eff29c253fbb61862cb1b85e45f180d0342fb3c91cc94a3e49d76b1167107"
+    sha256 arm64_big_sur:  "4d1bb386a8757ba93bc75f1d75871151553348d42d891333b5644209f93f3673"
+    sha256 ventura:        "89f747cf19212c53d8db3361903930e70f842d1dbf5738477f45c052912b815e"
+    sha256 monterey:       "a1a4cb997fb8003c0450d61699e8aeb671ea1a66ee525b52fa2d14e90953f66a"
+    sha256 big_sur:        "e55ffb3260240b859cf35089fec89cea135e917f072aba3ea724395da3ec4c24"
+    sha256 x86_64_linux:   "c80403c933caa3f9790c7dc47d449f5cb4e11c8f6f9668ae1664ebef4f40cb50"
   end
 
   depends_on "pkg-config" => :build
@@ -63,8 +64,6 @@ class Rsyslog < Formula
   def post_install
     mkdir_p var/"run"
   end
-
-  plist_options manual: "rsyslogd -f #{HOMEBREW_PREFIX}/etc/rsyslog.conf -i #{HOMEBREW_PREFIX}/var/run/rsyslogd.pid"
 
   service do
     run [opt_sbin/"rsyslogd", "-n", "-f", etc/"rsyslog.conf", "-i", var/"run/rsyslogd.pid"]

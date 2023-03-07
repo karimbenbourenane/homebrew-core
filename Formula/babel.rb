@@ -4,19 +4,25 @@ require "json"
 class Babel < Formula
   desc "Compiler for writing next generation JavaScript"
   homepage "https://babeljs.io/"
-  url "https://registry.npmjs.org/@babel/core/-/core-7.19.0.tgz"
-  sha256 "fd1941ad435cc7ec6d81cbc0f2a5186d55d9f06c86b67d9dc067903e2c84efcf"
+  url "https://registry.npmjs.org/@babel/core/-/core-7.21.0.tgz"
+  sha256 "d06d6317571bd6560daecd5dedfbfb919e0737fec84e2e14f12878f1fb6d857c"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "f04ed0067e42e64c59310280a4d3a2d6eb3f1bda0359d50a03e22b6c41b44e1d"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "77de6994a503032bfd2b3a75c7ebaa4fe50f2f329d82d847a823217c81ebaf1f"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "77de6994a503032bfd2b3a75c7ebaa4fe50f2f329d82d847a823217c81ebaf1f"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "77de6994a503032bfd2b3a75c7ebaa4fe50f2f329d82d847a823217c81ebaf1f"
+    sha256 cellar: :any_skip_relocation, ventura:        "77de6994a503032bfd2b3a75c7ebaa4fe50f2f329d82d847a823217c81ebaf1f"
+    sha256 cellar: :any_skip_relocation, monterey:       "77de6994a503032bfd2b3a75c7ebaa4fe50f2f329d82d847a823217c81ebaf1f"
+    sha256 cellar: :any_skip_relocation, big_sur:        "77de6994a503032bfd2b3a75c7ebaa4fe50f2f329d82d847a823217c81ebaf1f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "207add5a939b20d8673cb755cf0b6135d38ddc113b585f7a783f0fa750a8fb11"
   end
 
   depends_on "node"
 
   resource "babel-cli" do
-    url "https://registry.npmjs.org/@babel/cli/-/cli-7.18.10.tgz"
-    sha256 "9bda888e2b4feb37e343657b2a7eff5e0480c8fc1713d8919b368a24c8164f69"
+    url "https://registry.npmjs.org/@babel/cli/-/cli-7.21.0.tgz"
+    sha256 "40d4cc27188a2f9968ed8292eb4a965a460b7386719cf0e5260a82500ef777a6"
   end
 
   def install
@@ -26,12 +32,6 @@ class Babel < Formula
     cd buildpath/"node_modules/@babel/core" do
       system "npm", "install", *Language::Node.local_npm_install_args, "--production"
     end
-
-    # declare babel-core as a bundledDependency of babel-cli
-    pkg_json = JSON.parse(File.read("package.json"))
-    pkg_json["dependencies"]["@babel/core"] = version
-    pkg_json["bundleDependencies"] = ["@babel/core"]
-    File.write("package.json", JSON.pretty_generate(pkg_json))
 
     system "npm", "install", *Language::Node.std_npm_install_args(libexec)
     bin.install_symlink Dir["#{libexec}/bin/*"]

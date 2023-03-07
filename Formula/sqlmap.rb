@@ -3,21 +3,22 @@ class Sqlmap < Formula
 
   desc "Penetration testing for SQL injection and database servers"
   homepage "https://sqlmap.org"
-  url "https://github.com/sqlmapproject/sqlmap/archive/1.6.8.tar.gz"
-  sha256 "35c51f4bd6f5cb8dd8efee4cf87d49bc7e7311ed6f42ffdd038394f7f98e69a2"
+  url "https://github.com/sqlmapproject/sqlmap/archive/1.7.2.tar.gz"
+  sha256 "58db9fb0a79332927634cdb8de6df7e62997ec85b77daef0ce733612a1d79de1"
   license "GPL-2.0-or-later"
   head "https://github.com/sqlmapproject/sqlmap.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "406d22a7e48573a795635b2f3959dd5001f900f4ba6fb99e70c7e6aee250f109"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "406d22a7e48573a795635b2f3959dd5001f900f4ba6fb99e70c7e6aee250f109"
-    sha256 cellar: :any_skip_relocation, monterey:       "10c0dec18ef03aa52507bb3ec9b45e4395559067dc49070bf1db93fef567e48e"
-    sha256 cellar: :any_skip_relocation, big_sur:        "10c0dec18ef03aa52507bb3ec9b45e4395559067dc49070bf1db93fef567e48e"
-    sha256 cellar: :any_skip_relocation, catalina:       "10c0dec18ef03aa52507bb3ec9b45e4395559067dc49070bf1db93fef567e48e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "3363ae2bfe6e96437df971b75ebcd6a353dc3f45d2d466d7b5215734e6b1777c"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "2f78c876e31c3d6d1da72ab159e9cd173bc5de9b85bb91d92d4af4399c0f637c"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "2f78c876e31c3d6d1da72ab159e9cd173bc5de9b85bb91d92d4af4399c0f637c"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "2f78c876e31c3d6d1da72ab159e9cd173bc5de9b85bb91d92d4af4399c0f637c"
+    sha256 cellar: :any_skip_relocation, ventura:        "59ff1490cb1bcd310f57c564eaa766d7c5bf81c7e30022584152ec6247b3e990"
+    sha256 cellar: :any_skip_relocation, monterey:       "59ff1490cb1bcd310f57c564eaa766d7c5bf81c7e30022584152ec6247b3e990"
+    sha256 cellar: :any_skip_relocation, big_sur:        "59ff1490cb1bcd310f57c564eaa766d7c5bf81c7e30022584152ec6247b3e990"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5254bdecaa42d5f48ce7b3f10ba962d10d55e57749fa1aa22c9c05f04f70bed6"
   end
 
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   uses_from_macos "sqlite" => :test
 

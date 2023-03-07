@@ -1,18 +1,18 @@
 class Kubesess < Formula
   desc "Manage multiple kubernetes cluster at the same time"
   homepage "https://rentarami.se/posts/2022-08-05-kube-context-2/"
-  url "https://github.com/Ramilito/kubesess/archive/refs/tags/1.2.5.tar.gz"
-  sha256 "1ce69422fc29bde69ac02a209eb7b27a447598c39a3870759aa4c83e553b2e52"
+  url "https://github.com/Ramilito/kubesess/archive/refs/tags/1.2.9.tar.gz"
+  sha256 "6166ef97bbe9603f0f5561cf478603a2fce4a1e9c9746ee95f8a786836370e7f"
   license "MIT"
-  revision 1
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "1f3bf06857d16fdd89716d833dc66b9d9fdd86737e1c38d311ed3f168c987485"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "1e888960712dcf7d95f8a040583f6ea8e8e971cf8cd1df365d74b6ed378dd6f6"
-    sha256 cellar: :any_skip_relocation, monterey:       "7b559ef8a7f42db2b93c94467e86c68f81299753f26b8370d69959394c795e9f"
-    sha256 cellar: :any_skip_relocation, big_sur:        "2ddb125f097d54aeb953e541dd2d2d2c3477964b8d1a887a1aa6af0a9428172f"
-    sha256 cellar: :any_skip_relocation, catalina:       "33e8f1c5475b097955b49f2d5905debce69adc9338c2f8d1d8b9e8213b570927"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "48d4406e9d6a019fbd6d227c715fa9517ea4cdccd1802dea2b34d5c956279ba9"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "5b58c917ad8fb92a41e2c83a686453197582922dda36fc333f93ed238e406699"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "8fd61e9305b41abd121efb51dc9698fc2aee8f04256baa1f9cdc477f9c1f44bb"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "8c78d796a83ec18fe4afeee69f662f121426d2391a7c4c3a9e6278c0f157e3ef"
+    sha256 cellar: :any_skip_relocation, ventura:        "84934e248c8474c0883541f5aa5364f1189d45c90a06c342e1791ec984b80a05"
+    sha256 cellar: :any_skip_relocation, monterey:       "4aace9938091021492aab7789636e359c665cd9dd89f4af8156f5472266cfb3e"
+    sha256 cellar: :any_skip_relocation, big_sur:        "f6d1196a7512ceee8700b9fca138bc80e3006f522b9954532c8b4d33016786bf"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "94d93a752f6abe5044b9a70c94d19ca8ff00d9e77f13be2a5c55ac8e47cf429a"
   end
 
   depends_on "rust" => :build

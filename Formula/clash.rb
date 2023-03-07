@@ -1,17 +1,18 @@
 class Clash < Formula
   desc "Rule-based tunnel in Go"
   homepage "https://github.com/Dreamacro/clash"
-  url "https://github.com/Dreamacro/clash/archive/v1.11.8.tar.gz"
-  sha256 "573fcf59648a4eee6ac8cd0a0d4717cc55f350beb866923749d343f17ff77f11"
+  url "https://github.com/Dreamacro/clash/archive/v1.13.0.tar.gz"
+  sha256 "dcef53df90d39e150f8da2f96edbf09d29b769ac89ea968699189f3f7ef15f60"
   license "GPL-3.0-only"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "f497627bfc920ab5be613c1046aad44d21c8504e4231c12f02d4e069b0fb1c53"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "fc1169b117fc0169d329b29e784f9da217372886f58fe727f203ba6552222d7d"
-    sha256 cellar: :any_skip_relocation, monterey:       "fe1ee5f41d56b631eb58c7119323729b38c648c2001afaef5d150ddb9a1ddab1"
-    sha256 cellar: :any_skip_relocation, big_sur:        "dc9ddb4b7929ebf0e340b1c34e2059208121ffdcb12f59782a0225e6f2bdfa0d"
-    sha256 cellar: :any_skip_relocation, catalina:       "8148404c9490f83b5bb942c0605f522ef179389e728f6fe6a57b23b37d7a28b2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "1643ca6e61f1e624161e8ed80387d956c8f1f2c864c4dcd3c3d35d3bdad7c327"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "d3d32bfe3d5462eed56fc47c69e651402656c5943bfb8809272eb333b544e067"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "ad474b40fc6bb4b7c87eea82f4226ad1a81937384645564391b54afbae3cb66e"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "0374f8df8b17fad8d0954afbd54eed5c6a5f3a3ee8f92b120cad84fa04baa9b2"
+    sha256 cellar: :any_skip_relocation, ventura:        "a2c95bc649a2772bf6cd394bb9e38e4fdc2f6d97b823c84b4a56d5c730839306"
+    sha256 cellar: :any_skip_relocation, monterey:       "7df06b362de2dab4c2777236e0af43630eff6597c300053e042e052a28630874"
+    sha256 cellar: :any_skip_relocation, big_sur:        "6e256cd50589906a83f05cf0bc3bd47ffe974cc680af5ad675b8b0b502ffaf2d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "be4808c4f063569b05b55eea9f566b5e4120f7cdb103bd97746bb0f019685a6c"
   end
 
   depends_on "go" => :build

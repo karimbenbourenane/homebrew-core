@@ -4,8 +4,8 @@ class Copilot < Formula
   desc "CLI tool for Amazon ECS and AWS Fargate"
   homepage "https://aws.github.io/copilot-cli/"
   url "https://github.com/aws/copilot-cli.git",
-      tag:      "v1.21.1",
-      revision: "a830133d6615247bff5e3da4562e19936e2d29f8"
+      tag:      "v1.26.0",
+      revision: "3c212fb45cf46ea497f4bb31955ac1c2e183625a"
   license "Apache-2.0"
   head "https://github.com/aws/copilot-cli.git", branch: "mainline"
 
@@ -15,12 +15,13 @@ class Copilot < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "4c0cda510f47b6966ef14d3de5286c08ca1e6fb0935148742ec63ebcd7887854"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "c2dc3d46e1cfeaa243f017ac3c9abd16cc6252f95ece1560800d66916e491fa2"
-    sha256 cellar: :any_skip_relocation, monterey:       "b45ef71297f3fe5e74c739cd5e01a000a4e691a7a1e3bee74c2695a94ef21d13"
-    sha256 cellar: :any_skip_relocation, big_sur:        "6354a5a1fa31168289fd93c07e0445fe374ca1d6a23dea335f74d250ffb0dde6"
-    sha256 cellar: :any_skip_relocation, catalina:       "f63a0890fb78bcc86cbd451462bab7e4f8646869ffeb64618e8bb91f08241f13"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "50044f3dd3ce842b109c946068581ec89b86b0d384204a4d800770244b22964e"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "fbbac14e32d28e44cbc5eb2c5ddc3b53ba9fefe985550952db4769195c2c77b1"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "95708df36122677841d21342491b2a1be3f9521aab7d45b17bc197d5c02551e9"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "1b1845cb77b86676239d58082009b3b2fe36b06542997e3872582710d9adb043"
+    sha256 cellar: :any_skip_relocation, ventura:        "95efafcb8bebbe23bcb2f8dd64d7bc5d76d0062ecf43a9cb86c46f3d7e3356b2"
+    sha256 cellar: :any_skip_relocation, monterey:       "2b03e43b028e6c8a4ea8c69383fb8b2bd1da5e170c1f2646f04491d181c42fec"
+    sha256 cellar: :any_skip_relocation, big_sur:        "66fd48dd70738c7bacba9cfec0c09da052d49faa903ed0c8066f32c5e4367b09"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7dc508cb5be5182e3da8500b3d6f2ec58532fc3b28d0815ce2f1b62bbd208377"
   end
 
   depends_on "go" => :build
@@ -48,7 +49,7 @@ class Copilot < Formula
       Process.kill 9, wait_thr.pid
     end
 
-    assert_match "could not find an application attached to this workspace, please run `app init` first",
+    assert_match "Run `copilot app init` to create an application",
       shell_output("AWS_REGION=eu-west-1 #{bin}/copilot pipeline init 2>&1", 1)
   end
 end

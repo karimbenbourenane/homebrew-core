@@ -1,19 +1,19 @@
 class Jpegoptim < Formula
   desc "Utility to optimize JPEG files"
   homepage "https://github.com/tjko/jpegoptim"
-  url "https://github.com/tjko/jpegoptim/archive/RELEASE.1.4.7.tar.gz"
-  sha256 "9d2a13b7c531d122f360209422645206931c74ada76497c4aeb953610f0d70c1"
+  url "https://github.com/tjko/jpegoptim/archive/v1.5.2.tar.gz"
+  sha256 "e8701cc85c065e05747a15da72ebb403056ebecaa98e2806cf69cdd443397910"
   license "GPL-3.0-or-later"
-  revision 1
   head "https://github.com/tjko/jpegoptim.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "e6d9c5e8553dc145485bf7ac4f51769fa784db83a3a9c32f1a3104efe44ce7b4"
-    sha256 cellar: :any,                 arm64_big_sur:  "3a86e5222a263e8839fa4cc5a1718867db725fbb586c9a835aab536f4c61ccbb"
-    sha256 cellar: :any,                 monterey:       "63e2cf66cd28f76ba91fe51e9b48aa41355c87376469305a39caa2597b5af576"
-    sha256 cellar: :any,                 big_sur:        "cd7e4b0eebb6a3ea8f46012f34e18631efe9e5d966d7c09d8ca3bddb74802285"
-    sha256 cellar: :any,                 catalina:       "f3cea036b0c5dd14edadeb0e809add5fb2dd9cca19dceafa5cfb990a336942b1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "58ce46f0434d04bb363eb84e89a9043c429163733a502716db6e1f7b52afdbf2"
+    sha256 cellar: :any,                 arm64_ventura:  "a4e84a197e57cad5030cb1a0236729e42b8fb8812bff3af4750eea5a421f951b"
+    sha256 cellar: :any,                 arm64_monterey: "0b84fa4d614118e5ad31c904b21b14d0e838ddb2b868dda33e23aa728f0dd3f5"
+    sha256 cellar: :any,                 arm64_big_sur:  "2d053fd692342f8e0ffc3bf73cde05b414212b679e7f0c550dc16e72cc8259fa"
+    sha256 cellar: :any,                 ventura:        "a7118ac5b89a31a18251fe3bb669449e18d143961068167efe26d39e52894157"
+    sha256 cellar: :any,                 monterey:       "1bfcb4ad450508a3072766b65ad975b22fd37b20eb77888a044960d012900ed4"
+    sha256 cellar: :any,                 big_sur:        "a548d4a4621dacb702f3af88bcaab382d899dd570c8e1428ece5f846b58f4a7e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "cc2fa149032fa3622ad418e4f32510a6ebfa047758b20cf1ba49328b1a118418"
   end
 
   depends_on "jpeg-turbo"

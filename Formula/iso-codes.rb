@@ -1,8 +1,8 @@
 class IsoCodes < Formula
   desc "Provides lists of various ISO standards"
   homepage "https://salsa.debian.org/iso-codes-team/iso-codes"
-  url "https://deb.debian.org/debian/pool/main/i/iso-codes/iso-codes_4.11.0.orig.tar.xz"
-  sha256 "de556503c7cfd33e08b5c1ced4902e82bb3c5137a076930a9c9da687d9146938"
+  url "https://deb.debian.org/debian/pool/main/i/iso-codes/iso-codes_4.13.0.orig.tar.xz"
+  sha256 "2d4d0e5c02327f52cf7c029202da72f2074348472c26904b7104d2be3e0750ef"
   license "LGPL-2.1-or-later"
   head "https://salsa.debian.org/iso-codes-team/iso-codes.git", branch: "main"
 
@@ -12,11 +12,11 @@ class IsoCodes < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "695036b6f74cb6fb4aaa750be44edb5deb0232d7cf33d8402e0e83a154d0b7b4"
+    sha256 cellar: :any_skip_relocation, all: "095ac74b254f5779ae33a2c017bbaabc766e1badfb3826f20894110b20b052f3"
   end
 
   depends_on "gettext" => :build
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => :build
 
   def install
     system "./configure", "--prefix=#{prefix}"

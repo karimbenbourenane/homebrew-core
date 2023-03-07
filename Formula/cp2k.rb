@@ -1,20 +1,23 @@
 class Cp2k < Formula
   desc "Quantum chemistry and solid state physics software package"
   homepage "https://www.cp2k.org/"
-  url "https://github.com/cp2k/cp2k/releases/download/v2022.1/cp2k-2022.1.tar.bz2"
-  sha256 "2c34f1a7972973c62d471cd35856f444f11ab22f2ff930f6ead20f3454fd228b"
+  url "https://github.com/cp2k/cp2k/releases/download/v2022.2/cp2k-2022.2.tar.bz2"
+  sha256 "1a473dea512fe264bb45419f83de432d441f90404f829d89cbc3a03f723b8354"
   license "GPL-2.0-or-later"
+  revision 1
 
   bottle do
-    sha256 cellar: :any, arm64_monterey: "cbaae31d66f9a00cad5e779b5626a3f36c6b3eee68d70e6f8538d4aadd2e4bac"
-    sha256 cellar: :any, arm64_big_sur:  "2db2338f594f4189f47be7d71c9ba565293bc50b2e49316f9a1bbf4d27dabc05"
-    sha256 cellar: :any, monterey:       "1b017ee636c197baa03be6cab743caddf1f8ac1ea44718a2473e7d963a306f8c"
-    sha256 cellar: :any, big_sur:        "9663b89ff6c4d6f50574896387223d723953a3f38ca037dc6bd1e703444b414c"
-    sha256 cellar: :any, catalina:       "c0194a21b6e589e27f510ad523c33390f2f7612e463f59a606726dee90fa666c"
-    sha256               x86_64_linux:   "09374682881963e91b8afae795e85229dca3928cc07d7be989c95d7e922a9d71"
+    sha256 cellar: :any, arm64_ventura:  "ac8479eb5320bbf18b04b45b098cce5800f0f14f80866f5f4fac601f0f48bc82"
+    sha256 cellar: :any, arm64_monterey: "1e61b286d38435d6e0b171bc4720ed1b5259abafc46478c70260303aa7a04972"
+    sha256 cellar: :any, arm64_big_sur:  "77b3b54d1c2f15a60c6eba44c172b7ef412be2842fa29e5932a9832220b31791"
+    sha256 cellar: :any, ventura:        "f780fc04170f374c8a5f8910bd27a991152c3a5273666604f450a328999f5d0a"
+    sha256 cellar: :any, monterey:       "cb16c0faf926a4ff2a4945edc5e93d25e11188851a77483097ce4f3758f2ef3a"
+    sha256 cellar: :any, big_sur:        "86790d9de17ae60219970440993760076df2d266fde4fd488ae5b1881f11647d"
+    sha256 cellar: :any, catalina:       "aff5ebf8a1f0b663f02f1377a1cc0f3ad8fdf34e6e855a955f91c7740daa9da3"
+    sha256               x86_64_linux:   "5473c1cb1fd3041e69e80bdff319c5955b9aac6759ccacfa082b10ea199f417f"
   end
 
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => :build
   depends_on "fftw"
   depends_on "gcc" # for gfortran
   depends_on "libxc"
@@ -34,6 +37,7 @@ class Cp2k < Formula
 
   def install
     resource("libint").stage do
+      ENV.append "FCFLAGS", "-fPIE" if OS.linux?
       system "./configure", "--prefix=#{libexec}", "--enable-fortran"
       system "make"
       ENV.deparallelize { system "make", "install" }

@@ -1,18 +1,18 @@
 class Openfast < Formula
   desc "NREL-supported OpenFAST whole-turbine simulation code"
   homepage "https://openfast.readthedocs.io"
-  url "https://github.com/openfast/openfast/archive/v3.0.0.tar.gz"
-  sha256 "9af57af054e4128b6e257a76da368dc4ad0c7fbb2b22d51fc7ea63cdf999c530"
+  url "https://github.com/openfast/openfast/archive/v3.4.1.tar.gz"
+  sha256 "0717c3aba48aa58fac10de308313328f6ed798cdf9c210172ccc978ec591f170"
   license "Apache-2.0"
-  revision 1
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "c74e06ac2370d39465580e4866f2b1dc72bf529caa58535735383b0a13114b42"
-    sha256 cellar: :any,                 arm64_big_sur:  "f39430e3363b79372b74cb369f0ab7bc0e1a4670f5deec93becca5518bc09453"
-    sha256 cellar: :any,                 monterey:       "d95245af1aacb08378265759653ce73714f46a8a342dfe46fbc65394cc0166fd"
-    sha256 cellar: :any,                 big_sur:        "5812bf4d983a25f952387c77dc0daaddec25e1b9d64680de79c3b24692b1853d"
-    sha256 cellar: :any,                 catalina:       "b1f5158a97b02f3131d2b955118790a085378322828f425ab98f835ea7bd5e47"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "dbcb5c9cabd737f03681ec84ab65b635755bb7e3ae3b522ef66069d957538fe8"
+    sha256 cellar: :any,                 arm64_ventura:  "445ecd409fccf95219db12d6cefb101e2fc997d25c75a473427c3a7ae7939221"
+    sha256 cellar: :any,                 arm64_monterey: "2edd69143709b8289fc848b865ce68b24ea7d09016dd59cff344d98f2fe0c878"
+    sha256 cellar: :any,                 arm64_big_sur:  "92fec98fed83d8d6644742efcd853ad5bfffb89b2b034420c59aba0749828c2b"
+    sha256 cellar: :any,                 ventura:        "f52f053fa965eee38b1d1fa15c5928ebdfa4550d97b26f5cca765f4ebee207de"
+    sha256 cellar: :any,                 monterey:       "5fea5d63eb9e2d12839e3c560aa03190a7b7aa8453dfa2953506fd63f0e6089a"
+    sha256 cellar: :any,                 big_sur:        "730643bb4cdaa7e0904eeda4a1e8321ad72891851f7dd5b63f9d1eea49c24d80"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "34c3acba44c2319eca5765f94a5bea766fe83d0c2887924f8b76450cab2c5dc9"
   end
 
   depends_on "cmake" => :build
@@ -54,6 +54,17 @@ class Openfast < Formula
                 0   CompSub         - Compute sub-structural dynamics (switch) {0=None; 1=SubDyn; 2=External Platform MCKF}
                 0   CompMooring     - Compute mooring system (switch) {0=None; 1=MAP++; 2=FEAMooring; 3=MoorDyn; 4=OrcaFlex}
                 0   CompIce         - Compute ice loads (switch) {0=None; 1=IceFloe; 2=IceDyn}
+                0   MHK             - MHK turbine type (switch) {0: not an MHK turbine, 1: fixed MHK turbine, 2: floating MHK turbine}
+      ---------------------- ENVIRONMENTAL CONDITIONS -------------------------------------------------
+           9.8066   Gravity         - Gravity (m/s^2).
+            1.225   AirDens         - AirDens - Air density (kg/m^3)
+             1025   WtrDens         - Water density (kg/m^3)
+       1.4639E-05   KinVisc         - Kinematic air viscosity, m^2/sec
+              335   SpdSound        - Speed of sound in working fluid (m/s)
+        1.035e+05   Patm            - Atmospheric pressure (Pa) [used only for an MHK turbine cavitation check]
+          1.7e+03   Pvap            - Vapour pressure of working fluid (Pa) [used only for an MHK turbine cavitation check]
+               50   WtrDpth         - Water Depth (m) positive value.
+                0   MSL2SWL         - Offset between still-water level and mean sea level (m) [positive upward]
       ---------------------- INPUT FILES ---------------------------------------------
       "elastodyn.dat"    EDFile          - Name of file containing ElastoDyn input parameters (quoted string)
       "unused"      BDBldFile(1)    - Name of file containing BeamDyn input parameters for blade 1 (quoted string)
@@ -204,8 +215,6 @@ class Openfast < Formula
       False         Echo        - Echo input data to "<RootName>.ech" (flag)
                 3   Method      - Integration method: {1: RK4, 2: AB4, or 3: ABM4} (-)
             0.005   DT          - Integration time step (s)
-      ---------------------- ENVIRONMENTAL CONDITION ---------------------------------
-          9.80665   Gravity     - Gravitational acceleration (m/s^2)
       ---------------------- DEGREES OF FREEDOM --------------------------------------
       True          FlapDOF1    - First flapwise blade mode DOF (flag)
       True          FlapDOF2    - Second flapwise blade mode DOF (flag)

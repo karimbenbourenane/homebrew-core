@@ -1,8 +1,8 @@
 class Tin < Formula
   desc "Threaded, NNTP-, and spool-based UseNet newsreader"
   homepage "http://www.tin.org"
-  url "https://www.nic.funet.fi/pub/unix/news/tin/v2.6/tin-2.6.1.tar.xz"
-  sha256 "9da27203e9f9066a76bcb76e94ad67d4f2384a2e9aaccacf518e91d03b9f1853"
+  url "https://www.nic.funet.fi/pub/unix/news/tin/v2.6/tin-2.6.2.tar.xz"
+  sha256 "91df3cc009017ac0fcc6bb8b625784a0a006f921fb0fd5b87229f74edb1d068c"
   license "BSD-3-Clause"
 
   livecheck do
@@ -11,25 +11,34 @@ class Tin < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "3da6ca54a9306da6d17e1c6248c37081ef3930a0d1f116990a50a091f1565d37"
-    sha256 arm64_big_sur:  "de118ef2c4532cfa71dc80c1e2205074818e0ba57c48bc9f2e63487caf8e26f6"
-    sha256 monterey:       "8897ee5f24a4004476bc93f15960c7f66d678e3f1e1636cbd8ab4c062c36053b"
-    sha256 big_sur:        "12a0c54fd7adf50bf9e495045bf63deb70c640d9a93614fd36679821d4ad4343"
-    sha256 catalina:       "5da812d0f63586b3e8f29b87d13eb143833d807034acef91eab05802700aa394"
-    sha256 x86_64_linux:   "c406776b10d1477ace215d59459332fff266f4b768c7c9d6d2837b1f550a57d4"
+    rebuild 1
+    sha256                               arm64_ventura:  "279325cdda955514a69d824ce8a10a5d93e2118561133fa8b1adc5a3c847e4c6"
+    sha256                               arm64_monterey: "20081eeca41e91c2cd9d23313fc97180e92f19f6f375dce9dc7a361298e5f709"
+    sha256                               arm64_big_sur:  "e7d9f551293c92c6a2726856204303eb18e122e24693bbf1b4efb93a51c2c8b5"
+    sha256                               ventura:        "bd598a16a48913db70e0ee74bf976b9ad62a7e5219046fdf587d6578f768cfbf"
+    sha256                               monterey:       "7b2fab82e93e8a5a769cb83a781ba4e95b14b623d40c14b93d160c8075a280f5"
+    sha256                               big_sur:        "26d6c3893d0db776c0ed9d03a9436739137fa1b9c006b19449702066fe11e0e8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "386f648f9235e7ddfa23de2e0e5a6e6cf7af4c4045ca316037819b002640adbb"
   end
 
-  depends_on "gettext"
+  depends_on "pcre2"
 
   uses_from_macos "bison" => :build
+  uses_from_macos "ncurses"
+
+  on_macos do
+    depends_on "gettext"
+  end
 
   conflicts_with "mutt", because: "both install mmdf.5 and mbox.5 man pages"
 
   def install
-    system "./configure", "--disable-debug",
-                          "--disable-dependency-tracking",
-                          "--prefix=#{prefix}",
-                          "--mandir=#{man}"
+    # Remove bundled libraries
+    %w[intl pcre].each { |l| (buildpath/l).rmtree }
+
+    system "./configure", *std_configure_args,
+                          "--mandir=#{man}",
+                          "--with-pcre2-config=#{Formula["pcre2"].opt_prefix}/bin/pcre2-config"
     system "make", "build"
     system "make", "install"
   end

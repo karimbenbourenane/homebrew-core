@@ -1,17 +1,18 @@
 class Draco < Formula
   desc "3D geometric mesh and point cloud compression library"
   homepage "https://google.github.io/draco/"
-  url "https://github.com/google/draco/archive/1.5.3.tar.gz"
-  sha256 "7882a942a1da14a9ae9d557b1a3af7f44bdee7f5d42b745c4e474fb8b28d4e5e"
+  url "https://github.com/google/draco/archive/1.5.6.tar.gz"
+  sha256 "0280888e5b8e4c4fb93bf40e65e4e8a1ba316a0456f308164fb5c2b2b0c282d6"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "8c3671a69a58b75e44ebba31b4fb959814a90d3a8fe37e066093493e3b8a8e0a"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "b5aa7bd55ef40f2f7e6c7ac7c0c6f1a2a0abfc85319ab9a125bac55fa25cf917"
-    sha256 cellar: :any_skip_relocation, monterey:       "b17c66361bad70443be506ddf7c157d76bdd741ddffe9eee95bee91d7c5beb2a"
-    sha256 cellar: :any_skip_relocation, big_sur:        "318fd4fdcd7beb70556309dcc653d0bb5375c589c8e6d08b2fd2cf82b773cecd"
-    sha256 cellar: :any_skip_relocation, catalina:       "889d24be914c95f6ec096a194894f84ad91f34a2218bd874055dd5c2b83cde6a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d31d7fdb2a3b51488b2aeeab3e896842e268cdb58e5c6d0b4d80572e6c6060ba"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "9b30900296a9302b9d9c671ef0378ff3f72cb3e10f7cf2e99863252a68020699"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "49723a07d6d9bdc90d32fc281fd4a4d7b88a9486a4c3979653d93f576efd21a3"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "198550f68b65961b9732cc97c861268043a06d291cbc25fe75bf55b6eb9a4cea"
+    sha256 cellar: :any_skip_relocation, ventura:        "6e77e04849d1ebcac81b34370e687be99d1dd06ac75fabf1a9daf5a3883826e6"
+    sha256 cellar: :any_skip_relocation, monterey:       "6063f6f10d70cf58fbe658dffc3046443bc2528194ca696c12ea6e5e2eb93190"
+    sha256 cellar: :any_skip_relocation, big_sur:        "adef68270316f1efc16fbef07cbb0ef7d7754744daac10a3fdd526736ab1a3b3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "dd62e843573d136148e7b71bfe17f9fb51a6ff60f66dd1e447c481d783141d96"
   end
 
   depends_on "cmake" => :build

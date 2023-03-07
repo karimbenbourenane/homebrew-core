@@ -2,18 +2,19 @@ class Pulumi < Formula
   desc "Cloud native development platform"
   homepage "https://pulumi.io/"
   url "https://github.com/pulumi/pulumi.git",
-      tag:      "v3.39.1",
-      revision: "e321c143d4902be63b8fb6203b3a9af5638aa9f7"
+      tag:      "v3.56.0",
+      revision: "e145adc27c6bb41e922db3846324205333256436"
   license "Apache-2.0"
   head "https://github.com/pulumi/pulumi.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "977cc71ba22b9cf65bef6342c0c9982b0fe3c4069c3a26c983d3dcfacc003dd7"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "31b8b18b4e2519192b5f171cde12bdda0beda70384a87b2b32e452a75feb9b90"
-    sha256 cellar: :any_skip_relocation, monterey:       "b0772bdf0feee46d0aecbb768970f7c881d2773271d6aa841d03f5d5e2235188"
-    sha256 cellar: :any_skip_relocation, big_sur:        "0dde56ed187ca9acb89c27d7f9d8872106ee36c0d039a9963cc36b2ac773500a"
-    sha256 cellar: :any_skip_relocation, catalina:       "217f671bb8cb190d2dc3e1d81328afbfbf8f641eb97dfe8aa183d0fb050d7f8f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "1c3421590d1680a4560f06dff6cee6d5c7104078e1f9a144b180a5eb221c99ed"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "74e5e0ead0cc836f20ea76ad8427993b26f6dfe368b64dd5cc9c2ca4e07e4023"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "b5711a4f106e14729e8fb626868686f6cd8556f02da7e05a77101b12c8301f2e"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "6863213fef7e48a6da4585e536237e5d6c0b3ae67605d7ccadaf9885769a13a8"
+    sha256 cellar: :any_skip_relocation, ventura:        "a6bb49763decc35c58629cd3640887026b761649309b7e018f4b8399b58c1eec"
+    sha256 cellar: :any_skip_relocation, monterey:       "fc40e10cc8642b552862e31256febdfabf943ad4f2b3444a47f67b7d1d8b090e"
+    sha256 cellar: :any_skip_relocation, big_sur:        "ad67c719156d0ad7962da25587e65771e7cff5d58710e93c58b20d0d6a581e8a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "2c0252cb1f7ed01afe4de039eb3fe7f85ea7b6e337b31f253629191e68c65aa6"
   end
 
   depends_on "go" => :build

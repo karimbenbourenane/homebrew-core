@@ -1,9 +1,10 @@
 class Dnsdist < Formula
   desc "Highly DNS-, DoS- and abuse-aware loadbalancer"
   homepage "https://www.dnsdist.org/"
-  url "https://downloads.powerdns.com/releases/dnsdist-1.7.2.tar.bz2"
-  sha256 "524bd2bb05aa2e05982a971ae8510f2812303ab4486a3861b62212d06b1127cd"
+  url "https://downloads.powerdns.com/releases/dnsdist-1.7.3.tar.bz2"
+  sha256 "7eaf6fac2f26565c5d8658d42a213799e05f4d3bc68e7c716e7174df41315886"
   license "GPL-2.0-only"
+  revision 1
 
   livecheck do
     url "https://downloads.powerdns.com/releases/"
@@ -11,12 +12,13 @@ class Dnsdist < Formula
   end
 
   bottle do
-    sha256                               arm64_monterey: "217340674a363376daf3661f32c2228e6a47fdc18c56a255d80879011ba792ed"
-    sha256                               arm64_big_sur:  "d5754f3a410aca4e97f47838aea285328371d64e5ead938f46ca5775956e9192"
-    sha256                               monterey:       "ae1c1eab2e439280c15d986724170e308fbe675412cb43a7f8350028376d0ee9"
-    sha256                               big_sur:        "59dec63be07da8392bd6f469e8e45e2385862cbe3b00c652731ac3dcdbcd99c1"
-    sha256                               catalina:       "e5fb9b7356c8e2453ad5fd6a3ac9da6315f99b400214b6d93b664abe2520d455"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "954c1e0ae0b8def8a45c7fca6187f40ec0e55b6489a612426a9945e79d083aca"
+    sha256 cellar: :any,                 arm64_ventura:  "c4d65f10359eab43970c34d46faf4b0d6a3d41c4d92a78ac6ff19467cb9acdc3"
+    sha256 cellar: :any,                 arm64_monterey: "0f7aecead6e27dc1c2807a76ab7f8a37eceee2f3c41a197b4b78651900edfc96"
+    sha256 cellar: :any,                 arm64_big_sur:  "174c4cb6f4952f7fbb4f94c5c8ef4b42069134b1e0bd7a0f7f4d0a21e9ec80b0"
+    sha256 cellar: :any,                 ventura:        "22d6a2d33298b1a7cf41cbba83946571ef343021c95d09d6f29e27c4561abd0a"
+    sha256 cellar: :any,                 monterey:       "90933cf68e3090800c8d3198f907e9dc559e3ab879f507c87d199397db07b6f7"
+    sha256 cellar: :any,                 big_sur:        "334533a0ac8cae2f8f6c06b729ad7746697a7b68a545352a813dc56df26654bb"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7afb19ba1959f023005234423c428823f94b0d18ec11852c9ff14a56044176c2"
   end
 
   depends_on "boost" => :build
@@ -25,17 +27,12 @@ class Dnsdist < Formula
   depends_on "fstrm"
   depends_on "h2o"
   depends_on "libsodium"
-  depends_on "luajit-openresty"
+  depends_on "luajit"
   depends_on "openssl@1.1"
   depends_on "protobuf"
   depends_on "re2"
 
   uses_from_macos "libedit"
-
-  on_linux do
-    depends_on "linux-headers@5.16" => :build
-    depends_on "gcc"
-  end
 
   fails_with gcc: "5"
 

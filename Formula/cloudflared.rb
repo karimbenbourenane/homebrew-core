@@ -1,21 +1,23 @@
 class Cloudflared < Formula
   desc "Cloudflare Tunnel client (formerly Argo Tunnel)"
   homepage "https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide"
-  url "https://github.com/cloudflare/cloudflared/archive/refs/tags/2022.8.4.tar.gz"
-  sha256 "9bdd6991e1b42a7f26262acacc66890061fed7e342321fc4108ecab810aa056a"
+  url "https://github.com/cloudflare/cloudflared/archive/refs/tags/2023.3.0.tar.gz"
+  sha256 "90fad1f6eb59689e06d09837c5ec9a3e7e3d177fea15190027f60c5b9e7950be"
   license "Apache-2.0"
   head "https://github.com/cloudflare/cloudflared.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "a92a62fbd8f59a729a0169d99d1e48dda8a1fb9588f2928ec6a5e9845f019ac9"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "f10704ae27c334f7f5d96fc9e9ca0b7d526bb63548133cdf0fbcd0b87c592307"
-    sha256 cellar: :any_skip_relocation, monterey:       "00a5c0221a796e71f6f223c75ff1d9415ee802b351dd499523d0243f9a6159ad"
-    sha256 cellar: :any_skip_relocation, big_sur:        "596ffe55e3475b4880f717284271705022f8775c3e2dfd6a2748f36dcef7563f"
-    sha256 cellar: :any_skip_relocation, catalina:       "09b1cf53a0637903e57486367b939bfb69ce941ac5081722cb890b9ccc269f46"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "1adbe041611bb5eeec95b358d314f88617c6080dc7bee0fba4ba2e28b81679dd"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "a2e9bd1dbbea83552ec1543025710a66699ae718970025fba731c5e3c4f3d58d"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "dc01c718d301294dd224ae1573de505a3e6d21531aa56e4c1158902862083b4c"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "767462db4d5e90b6deac49b47f216a9b97275f6cec714367081fa4fbe19cf586"
+    sha256 cellar: :any_skip_relocation, ventura:        "7c32008db18324ac26649987e34d8727e92ceada78742710e0ae41e017888cab"
+    sha256 cellar: :any_skip_relocation, monterey:       "4b5d32fac397927931d50e03e9b957723e6a6e88ef2576d0266a12d4309058ba"
+    sha256 cellar: :any_skip_relocation, big_sur:        "6505b8cd678868b1d819f25f542b1584481de8d75e86f08b93c48ae9efc1ab80"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "cb6e0092bde50d1c25723ce1e542b6e1636fae96a3e66f4434429e1ea384e6cc"
   end
 
-  depends_on "go" => :build
+  # https://github.com/cloudflare/cloudflared/issues/888
+  depends_on "go@1.19" => :build
 
   def install
     system "make", "install",

@@ -1,9 +1,9 @@
 class Gnutls < Formula
   desc "GNU Transport Layer Security (TLS) Library"
   homepage "https://gnutls.org/"
-  url "https://www.gnupg.org/ftp/gcrypt/gnutls/v3.7/gnutls-3.7.7.tar.xz"
-  mirror "https://www.mirrorservice.org/sites/ftp.gnupg.org/gcrypt/gnutls/v3.7/gnutls-3.7.7.tar.xz"
-  sha256 "be9143d0d58eab64dba9b77114aaafac529b6c0d7e81de6bdf1c9b59027d2106"
+  url "https://www.gnupg.org/ftp/gcrypt/gnutls/v3.8/gnutls-3.8.0.tar.xz"
+  mirror "https://www.mirrorservice.org/sites/ftp.gnupg.org/gcrypt/gnutls/v3.8/gnutls-3.8.0.tar.xz"
+  sha256 "0ea0d11a1660a1e63f960f157b197abe6d0c8cb3255be24e1fb3815930b9bdc5"
   license all_of: ["LGPL-2.1-or-later", "GPL-3.0-only"]
 
   livecheck do
@@ -12,24 +12,26 @@ class Gnutls < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "9f30799c00efb30c52d864bc865c3d4f7bb3ab5bb707101b67572c962cc6f224"
-    sha256 arm64_big_sur:  "96e743b74e73bf743db62000c3631b0b58c081e1399a7521239572f0f48da9ce"
-    sha256 monterey:       "c7ae049c2b46d81d7e8f861137d3a21e0268b1dd23932cba62ed25b72860668b"
-    sha256 big_sur:        "143c717cc4cf0d4c9c8ad05c93610023b9092b035de982aa3003530a2204a44c"
-    sha256 catalina:       "93d54df117440e3467d57198340e15a3ef7cf7807a7cb3386a84e34f0624dbfe"
-    sha256 x86_64_linux:   "7c8d8948ac53ee9c67931e011b312fd30c9414c70a7065ff1de7e5e30e105366"
+    sha256 arm64_ventura:  "a10227b5f3b46064fb325eb21d5103b6fad145dbbb87abd4f8ff8d76270ea32a"
+    sha256 arm64_monterey: "d375f9982faad9b6664508624629c9018ecf807d34c38bb91f875557cc9aa0cf"
+    sha256 arm64_big_sur:  "d21c45d81baaf4ea81a6ff134bad1df8575e5e7e50186e24d74d42402220a2d2"
+    sha256 ventura:        "a41072e29a3fe9bdf8408946b7ad308b1d504e87c79d5bb39dd57172354d4e73"
+    sha256 monterey:       "75da330e4d73ade890aa0c998443319d07d4d63089bfd6c16bf7d87ba756bff5"
+    sha256 big_sur:        "d1cddbab50cd28e1e84b57bb3c08e76c204626894bebf044c80fdb3c44d8a577"
+    sha256 x86_64_linux:   "7a131f11110a752a7326a0b1c57dff58c7fc4eea5f2a1e4ae7de781d71532883"
   end
 
   depends_on "pkg-config" => :build
   depends_on "ca-certificates"
   depends_on "gmp"
-  depends_on "guile"
   depends_on "libidn2"
   depends_on "libtasn1"
   depends_on "libunistring"
   depends_on "nettle"
   depends_on "p11-kit"
   depends_on "unbound"
+
+  uses_from_macos "zlib"
 
   def install
     args = %W[
@@ -39,9 +41,6 @@ class Gnutls < Formula
       --prefix=#{prefix}
       --sysconfdir=#{etc}
       --with-default-trust-store-file=#{pkgetc}/cert.pem
-      --with-guile-site-dir=#{share}/guile/site/3.0
-      --with-guile-site-ccache-dir=#{lib}/guile/3.0/site-ccache
-      --with-guile-extension-dir=#{lib}/guile/3.0/extensions
       --disable-heartbeat-support
       --with-p11-kit
     ]
@@ -57,35 +56,16 @@ class Gnutls < Formula
   def post_install
     rm_f pkgetc/"cert.pem"
     pkgetc.install_symlink Formula["ca-certificates"].pkgetc/"cert.pem"
-
-    # Touch gnutls.go to avoid Guile recompilation.
-    # See https://github.com/Homebrew/homebrew-core/pull/60307#discussion_r478917491
-    touch lib/"guile/3.0/site-ccache/gnutls.go"
   end
 
   def caveats
     <<~EOS
-      If you are going to use the Guile bindings you will need to add the following
-      to your .bashrc or equivalent in order for Guile to find the TLS certificates
-      database:
-        export GUILE_TLS_CERTIFICATE_DIRECTORY=#{pkgetc}/
+      Guile bindings are now in the `guile-gnutls` formula.
     EOS
   end
 
   test do
     system bin/"gnutls-cli", "--version"
-
-    gnutls = testpath/"gnutls.scm"
-    gnutls.write <<~EOS
-      (use-modules (gnutls))
-      (gnutls-version)
-    EOS
-
-    ENV["GUILE_AUTO_COMPILE"] = "0"
-    ENV["GUILE_LOAD_PATH"] = HOMEBREW_PREFIX/"share/guile/site/3.0"
-    ENV["GUILE_LOAD_COMPILED_PATH"] = HOMEBREW_PREFIX/"lib/guile/3.0/site-ccache"
-    ENV["GUILE_SYSTEM_EXTENSIONS_PATH"] = HOMEBREW_PREFIX/"lib/guile/3.0/extensions"
-
-    system "guile", gnutls
+    assert_match "expired certificate", shell_output("#{bin}/gnutls-cli expired.badssl.com", 1)
   end
 end

@@ -2,18 +2,19 @@ class Helmsman < Formula
   desc "Helm Charts as Code tool"
   homepage "https://github.com/Praqma/helmsman"
   url "https://github.com/Praqma/helmsman.git",
-      tag:      "v3.15.0",
-      revision: "2b0f8b7a4b9e4907bfdc36af2636b15e1f99270e"
+      tag:      "v3.16.4",
+      revision: "ef9c472c5ff1d7fe4a0c8f8e1d8c0146f836a894"
   license "MIT"
   head "https://github.com/Praqma/helmsman.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "a5edc0c31be6f7ea21107b9274ac365f5b084e2feeb57d16e0395f50a8ce54ab"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "93b59ff87c967894e13745cd622df84863effb404d7e93c616d8e90d1ae3e36b"
-    sha256 cellar: :any_skip_relocation, monterey:       "2356cf2e9f6cd85ee3ddbb8be3c82e1879949d6555678839d48382ec4ce9b984"
-    sha256 cellar: :any_skip_relocation, big_sur:        "cc08100d0b5140f0d74c4d05ec89304a97b53ffe8f27b9dd7e8c351a065058d0"
-    sha256 cellar: :any_skip_relocation, catalina:       "93ce598f470902ff6948a1dda6550297b7f902caa415d1cbf63593e172f5024d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7f26b548409289c9f555ff8d55cb54e4fb2d131ab9e6daa8656fa394874f25e7"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "7b43fb9ae5ad9dea01a3ea445671117492d0313270f95341cdbdfefba951652b"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "d2e0d85cb52209bba7a4e17e1842bc106a25a8100d7408cdfe25811b524c1f50"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "3dac024d5c5c32d8a9b47ce578901a0afa8c3511697dd7c2d12f3b1a6342e3f2"
+    sha256 cellar: :any_skip_relocation, ventura:        "10d142d8dd3db833939b387bd19f5eaa12f907cf4ad5e2abc736ec0a496fe308"
+    sha256 cellar: :any_skip_relocation, monterey:       "15b3326368b5f50356e6a35e064e9d4136a3a2d947adfc0673c22bbfca11de95"
+    sha256 cellar: :any_skip_relocation, big_sur:        "a782a5f97a2223abc670daee00ee2ce6e5fb6d393b587e3ac919d286e7b699c6"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "012a3f58d42229952546158b5583e1fc7d261a0d4bff88dd209981b0295d59f2"
   end
 
   depends_on "go" => :build

@@ -12,12 +12,14 @@ class Mftrace < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "e8466199e22f9463110acd4599057f136120eefd81d72dd4055a0b09dda48eeb"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "b0add7cd815e3752d182eebd26698daa34f99bc7a34a7441edc6f142ed354308"
-    sha256 cellar: :any_skip_relocation, monterey:       "6aacf0e9c4cd21ca8abe71c97175b7c3173f9dabc6426c7ec4dc5b4174d56588"
-    sha256 cellar: :any_skip_relocation, big_sur:        "39e39a52a9cc3a4d96257cd13b8f70633583102ca73ca5984035ba8ac55a6892"
-    sha256 cellar: :any_skip_relocation, catalina:       "2282c664b45e2f701121b9c19059d14642eb0060a9c2973295ba084ba23d7e8d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "cd38a84142918b6630ccc5cdffedd471eade106be0d14ce1aab90b9d6d6db90e"
+    rebuild 2
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "fcc7091b7e3aab969e797cbb583d8d8349856433c9452c818c1cc338b53537d9"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "c9b7d41129a1f83e1c9e84ad20e706ebd3d93e6c7b9801bd90e866d0e07d8234"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "24bae79ec700220fea014de05a63df51c061ecf8817e737c24a00c1fd2b3f6ea"
+    sha256 cellar: :any_skip_relocation, ventura:        "dc53be3197cdb6ee63607d4d9d3e94220953e85ba05c5e698156087382d557de"
+    sha256 cellar: :any_skip_relocation, monterey:       "bae6d024e848e8f7c7a18f8b6d86359f652b7715daa1a11bcdcb6c4e03b5e0b7"
+    sha256 cellar: :any_skip_relocation, big_sur:        "57483c84e1722e4ec6e606c24336a615bd8710c3735bbb1c32e3a3afa64b3b22"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "45f198472e3e64f2ce72fc9425338c791110ac33f1cecde0c77f584b0373fd7e"
   end
 
   head do
@@ -27,7 +29,7 @@ class Mftrace < Formula
 
   depends_on "fontforge"
   depends_on "potrace"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
   depends_on "t1utils"
 
   # Fixed in https://github.com/hanwen/mftrace/pull/14
@@ -37,13 +39,14 @@ class Mftrace < Formula
   end
 
   def install
+    ENV["PYTHON"] = which("python3.11")
     buildpath.install resource("manpage") if build.stable?
     system "./autogen.sh" if build.head?
-    system "./configure", "--prefix=#{prefix}"
+    system "./configure", *std_configure_args
     system "make", "install"
   end
 
   test do
-    system "#{bin}/mftrace", "--version"
+    system bin/"mftrace", "--version"
   end
 end

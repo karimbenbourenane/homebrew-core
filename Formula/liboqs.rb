@@ -11,22 +11,21 @@ class Liboqs < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "5eb35c4cf7d2445589282fa25c8c34cd26aab762c176f7222f625e9e595b1eb5"
-    sha256 cellar: :any,                 arm64_big_sur:  "ecb1d30e647211ede634816fd69937fbdbaca6960fd8d4d483ade292aaa72617"
-    sha256 cellar: :any,                 monterey:       "2ae8858740cbffa92d27949dd716326e351dd9582542e48541f059a49be55a9d"
-    sha256 cellar: :any,                 big_sur:        "2a57edaa4a1efbeeaf51e277b0d7ab7f2cc1ead2bc5d4fb6d93ae492d4c9dd5f"
-    sha256 cellar: :any,                 catalina:       "1b1db31d67ba3e3b46b5af0e79da4b45bf6697440ce378c923cb838217f886a6"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f6e90fee4c3a6d0b963c85d858a4a76655e811f9b5698dd7a2a82c9b0209c571"
+    rebuild 2
+    sha256 cellar: :any,                 arm64_ventura:  "e9373498c8fcf173766124396b2e5e0bca60972a0750a2de17526e6207500bdb"
+    sha256 cellar: :any,                 arm64_monterey: "3b486df792e8af162ca9b13d5c8db6ae73134ab8fecb13bdd090bf65e02f9b87"
+    sha256 cellar: :any,                 arm64_big_sur:  "33e2c0270faca011e09ebb44c6ec19c56b3a970835f66cee6890a080cf49727f"
+    sha256 cellar: :any,                 ventura:        "d4f2d318538dc16bbcbd73f73c41925ae40242a1f28cc8011d369838010d0e7d"
+    sha256 cellar: :any,                 monterey:       "d44012d6f9c125137b234fb67dfa1e0b21edf628dfe46b5334f4dade8dbfbf65"
+    sha256 cellar: :any,                 big_sur:        "08a808a714ef2d3c7e0d57ee1c1f960b9f85128fd1acdebf06cefc251f37d7c2"
+    sha256 cellar: :any,                 catalina:       "9b42e22f7bf7cfb75edb682cff5022313eb0ff6ce4a509f9ec865ffa4cdb28b8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "1d9e0b42e4c0bf7c60855f4eef44c33fa2efe16013fd9171487aa45b5ee73110"
   end
 
   depends_on "cmake" => :build
   depends_on "doxygen" => :build
   depends_on "ninja" => :build
-  depends_on "openssl@1.1"
-
-  on_linux do
-    depends_on "gcc"
-  end
+  depends_on "openssl@3"
 
   fails_with gcc: "5"
 
@@ -41,7 +40,7 @@ class Liboqs < Formula
 
   test do
     cp pkgshare/"tests/example_kem.c", "test.c"
-    system ENV.cc, "-I#{include}", "-L#{lib}", "-loqs", "-o", "test", "test.c"
+    system ENV.cc, "test.c", "-I#{include}", "-L#{lib}", "-loqs", "-o", "test"
     assert_match "operations completed", shell_output("./test")
   end
 end

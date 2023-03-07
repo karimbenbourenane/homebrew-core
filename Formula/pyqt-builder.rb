@@ -1,28 +1,28 @@
 class PyqtBuilder < Formula
-  include Language::Python::Virtualenv
-
   desc "Tool to build PyQt"
   homepage "https://www.riverbankcomputing.com/software/pyqt-builder/intro"
-  url "https://files.pythonhosted.org/packages/31/36/6c73f2bd8e4ac5594f6331735951d16d0800f297473db77996966d57cfc7/PyQt-builder-1.13.0.tar.gz"
-  sha256 "4877580c38ceb5320e129b381d083b0a8601c68166d8b99707f08fa0a1689eef"
+  url "https://files.pythonhosted.org/packages/21/6c/685981114cb350f2f8e4a0827aa7f60f142e15816aa48f3204e5a1e2578c/PyQt-builder-1.14.1.tar.gz"
+  sha256 "83bc3e300aff8b41405804b6a9c2913389ab59c48ad9f0cb8584a6ef73bca502"
   license any_of: ["GPL-2.0-only", "GPL-3.0-only"]
-  revision 1
   head "https://www.riverbankcomputing.com/hg/PyQt-builder", using: :hg
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "4c6c982868677c0dbeb7bcd0305cf38ea200b24a74be296fbdaa93e26d44c501"
+    sha256 cellar: :any_skip_relocation, all: "8aa06ea0083fdd3f9ce128acf4cec5b124e4f47cca394cc62c5519b418f99285"
   end
 
-  depends_on "python@3.10"
+  depends_on "python@3.11"
   depends_on "sip"
 
+  def python3
+    "python3.11"
+  end
+
   def install
-    system Formula["python@3.10"].opt_bin/"python3", *Language::Python.setup_install_args(prefix),
-           "--install-lib=#{prefix/Language::Python.site_packages("python3")}"
+    system python3, *Language::Python.setup_install_args(prefix, python3)
   end
 
   test do
     system bin/"pyqt-bundle", "-V"
-    system Formula["python@3.10"].opt_bin/"python3", "-c", "import pyqtbuild"
+    system python3, "-c", "import pyqtbuild"
   end
 end

@@ -4,16 +4,17 @@ class Apngasm < Formula
   url "https://github.com/apngasm/apngasm/archive/3.1.10.tar.gz"
   sha256 "8171e2c1d37ab231a2061320cb1e5d15cee37642e3ce78e8ab0b8dfc45b80f6c"
   license "Zlib"
-  revision 2
+  revision 5
   head "https://github.com/apngasm/apngasm.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "417ef627abddb455da5fda0eb6615b1c23fe0b0fe6f2920cffa6eb73f0a7930e"
-    sha256 cellar: :any,                 arm64_big_sur:  "b20fcddf36955cc5233687bb2090f95877970501f63569c5b0cae6f743063373"
-    sha256 cellar: :any,                 monterey:       "d44e728d2f8000e6e46ad8f231f047cc21da5be3f2734faf043fe54d92f24c2c"
-    sha256 cellar: :any,                 big_sur:        "973092d55f2cdc1e30030c73c6f90b5ab5622f4c63e285233aaeff73f05fc690"
-    sha256 cellar: :any,                 catalina:       "c576196db665297b539c284175b7fc76e04d7b2e71d64602e3d81259331e8193"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e5308106ba734492bd70672e601539937771e254ec43c0ca747fe30245d53a71"
+    sha256 cellar: :any,                 arm64_ventura:  "4acdb6cff6fa9d01338279fc4dac97218cb8aa028ed3863373d4e5209fb86ae7"
+    sha256 cellar: :any,                 arm64_monterey: "68e7bfc9f0857f455da553dd6cd470c58ba27d7b9b583dffbf45d26b55615cc6"
+    sha256 cellar: :any,                 arm64_big_sur:  "042c64d0af4c1ba61312ab78e6b605889890b0b71ea6e5826e1e8a24b63aaf78"
+    sha256 cellar: :any,                 ventura:        "6dd843425e4346b0dfd4715609e7f5566ed614929eab0f040ca94badfe83e64f"
+    sha256 cellar: :any,                 monterey:       "0680cc57600f7c28acd73c11a4563378876f89b8541cf8c3662fb04f27ea55c1"
+    sha256 cellar: :any,                 big_sur:        "d7fe15f3a3c4f723b7c1ed5324eb300d75c5cfca0b7d8ab0e8e48af104c91cd8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "af638cd0b4172b7afbf389201171c25307405f5e6e93b50b22f249f68aa3d3e1"
   end
 
   depends_on "cmake" => :build
@@ -22,10 +23,6 @@ class Apngasm < Formula
   depends_on "libpng"
   depends_on "lzlib"
   depends_on macos: :catalina
-
-  on_linux do
-    depends_on "gcc"
-  end
 
   fails_with :gcc do
     version "7"

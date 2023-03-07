@@ -4,20 +4,22 @@ class Lablgtk < Formula
   url "https://github.com/garrigue/lablgtk/archive/2.18.12.tar.gz"
   sha256 "43b2640b6b6d6ba352fa0c4265695d6e0b5acb8eb1da17290493e99ae6879b18"
   license "LGPL-2.1"
-
-  livecheck do
-    url :stable
-    strategy :github_latest
-  end
+  revision 1
 
   bottle do
-    sha256 cellar: :any, arm64_monterey: "f46ccbac4b613f1542bdbe5bf0747c4875c2e89b2978589468d97aa6168a3ffc"
-    sha256 cellar: :any, arm64_big_sur:  "33da190e1a69924c98e6a745380228562182abe3e13406301da4dd76dd42b694"
-    sha256 cellar: :any, monterey:       "2d7d514c6d7c31faa53b5e0292a7d4962f1c60e4bc524f4344b7895b15756e5d"
-    sha256 cellar: :any, big_sur:        "acd2ebe952607c8ad6d2fdb430fc5ad7f2f06742c3b3c571e943afc315293116"
-    sha256 cellar: :any, catalina:       "6d376c548d8cc2580b3756daedbcd24b8f33900509977a6192b34f009dc6964b"
-    sha256               x86_64_linux:   "d86fc0946e8a9d7d568c50cbb3f8af0d5aa1bedc1fdaf376b900a051bcb84d1f"
+    rebuild 1
+    sha256 cellar: :any, arm64_ventura:  "7cb01bef4d60ce7f596ad6f3adc5923d749ead4b59588b543138b1f66b74a2a6"
+    sha256 cellar: :any, arm64_monterey: "2c21ec6b8830ee50288760db11028d09ae3b044f3c13b88ff994d4216b1f0ed9"
+    sha256 cellar: :any, arm64_big_sur:  "65cfbb0af55509b9b7510f326f5b88f63f9d3a3df0977d93f065d9ef043c7425"
+    sha256 cellar: :any, ventura:        "2201dac36a46692e3528faeb8b13bddbf211bac47751ee78a129292eb6a48e51"
+    sha256 cellar: :any, monterey:       "1e26236878d78e09830714ac7367843aa0de50aaee48946958dbb795e6d27e2e"
+    sha256 cellar: :any, big_sur:        "b934fef88127a297467f7dcb144fe7e3c60d169da70c45e7ac63cccf03dc2a6e"
+    sha256               x86_64_linux:   "1e5f02345d7be4fdfa1ab57097b866248c0e9f8465f751a526909870cbeb926b"
   end
+
+  # GTK 2 is EOL: https://blog.gtk.org/2020/12/16/gtk-4-0/
+  # GTK 3 supported package is named `lablgtk3` so may be better as separate formula
+  deprecate! date: "2023-01-18", because: :unmaintained
 
   depends_on "pkg-config" => :build
   depends_on "gtk+"

@@ -1,13 +1,29 @@
 class Teku < Formula
   desc "Java Implementation of the Ethereum 2.0 Beacon Chain"
   homepage "https://docs.teku.consensys.net/"
-  url "https://github.com/ConsenSys/teku.git",
-        tag:      "22.9.0",
-        revision: "03e5a3431b82e727974f77bbbec3eb63df5c4dca"
   license "Apache-2.0"
+  head "https://github.com/ConsenSys/teku.git", branch: "master"
+
+  stable do
+    url "https://github.com/ConsenSys/teku.git",
+        tag:      "23.2.0",
+        revision: "7a4abc6f913bc16ee9e1fe1cdc85b8047f5204fe"
+
+    # Fix build with gradle 8.0. Remove with stable block on next release.
+    patch do
+      url "https://github.com/ConsenSys/teku/commit/e557eef6550ad91b05ee7adc52d70c7373f6912f.patch?full_index=1"
+      sha256 "c5e7aca45bafd31fb3f3a3eb56a33ff269f504fb74c6d4de764fa046c68e788e"
+    end
+  end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "93386b030dbf592e2d60c698548ab52e66e298fb7da1a70ffd36956ffb9a83da"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "c677013ffd68b1900da5c6ce52bc73f5284ea4e0f048a8fdf57efb52b055d7ca"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "c677013ffd68b1900da5c6ce52bc73f5284ea4e0f048a8fdf57efb52b055d7ca"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "c677013ffd68b1900da5c6ce52bc73f5284ea4e0f048a8fdf57efb52b055d7ca"
+    sha256 cellar: :any_skip_relocation, ventura:        "c677013ffd68b1900da5c6ce52bc73f5284ea4e0f048a8fdf57efb52b055d7ca"
+    sha256 cellar: :any_skip_relocation, monterey:       "c677013ffd68b1900da5c6ce52bc73f5284ea4e0f048a8fdf57efb52b055d7ca"
+    sha256 cellar: :any_skip_relocation, big_sur:        "c677013ffd68b1900da5c6ce52bc73f5284ea4e0f048a8fdf57efb52b055d7ca"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7795ad55bdee306e9c3ab4b5b3676de17f890f2a004e61685358ccd0cd47fd4a"
   end
 
   depends_on "gradle" => :build

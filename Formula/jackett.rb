@@ -1,44 +1,48 @@
 class Jackett < Formula
   desc "API Support for your favorite torrent trackers"
   homepage "https://github.com/Jackett/Jackett"
-  url "https://github.com/Jackett/Jackett/archive/refs/tags/v0.20.1830.tar.gz"
-  sha256 "9a8e1055d73452cd4d28a38e5c2dc853db2c831f70a3a510f3a82fb26333bcb5"
+  url "https://github.com/Jackett/Jackett/archive/refs/tags/v0.20.3486.tar.gz"
+  sha256 "c02db37fe353c279facd0d5877e84f5dd6a516271de631a5f51fe719b85e72c4"
   license "GPL-2.0-only"
   head "https://github.com/Jackett/Jackett.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "cd3c9f3c52b1dc196de7adab58249b8490b40a10b81ed87bb1a60a337cf2f0b1"
-    sha256 cellar: :any,                 arm64_big_sur:  "e2752b3b184941d5b8ea932bb910728406854d13527610c9befb486697679eff"
-    sha256 cellar: :any,                 monterey:       "4c9eb24b3e4a3661beeeda49f917d68e3f5d12853c3e7ce3437428ede1dd58fb"
-    sha256 cellar: :any,                 big_sur:        "a8f7d26efa393c093ec861f9b7e821c2b163034498730f72a512dd18431f29ce"
-    sha256 cellar: :any,                 catalina:       "34c493434304317269057421e3c947373ba29fac8816e71d7617f222f3f293e6"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e4e16cf8ab982ac66369f1b42e2793242b79e453c3339f0666684c6a8ea507d2"
+    sha256 cellar: :any,                 arm64_ventura:  "59cb992a2c266d5b51e0d149ec596be6a980c70329bb2250bd92a6fe431390cb"
+    sha256 cellar: :any,                 arm64_monterey: "196660965c83722b92b4dfa9612c380f0f65077c077d3e730883f0c686df9aae"
+    sha256 cellar: :any,                 arm64_big_sur:  "c3bc7823715f4cba6b845c184d6694ef7b05e85358bdad28ccdf867cfa028718"
+    sha256 cellar: :any,                 ventura:        "0723a3127b8189a76dd10142087035f7b97ce233af6066389fff9671e92fc5a7"
+    sha256 cellar: :any,                 monterey:       "cc0b18140f2c12af666936db6fc15c94aa86028322145d8c3c0e147a13fa2f85"
+    sha256 cellar: :any,                 big_sur:        "8b0f7cb04e778b13a5e78ee62b17c10f2dda04385e06992eab86feaeb850b587"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "bfccca3fb528d7cbc7de463bbe11e321e97ca33e54a7daa2657a961fb5062a97"
   end
 
-  depends_on "dotnet"
+  depends_on "dotnet@6"
 
   def install
-    cd "src" do
-      os = OS.mac? ? "osx" : OS.kernel_name.downcase
-      arch = Hardware::CPU.intel? ? "x64" : Hardware::CPU.arch.to_s
+    dotnet = Formula["dotnet@6"]
+    os = OS.mac? ? "osx" : OS.kernel_name.downcase
+    arch = Hardware::CPU.intel? ? "x64" : Hardware::CPU.arch.to_s
 
-      args = %W[
-        --configuration Release
-        --framework net#{Formula["dotnet"].version.major_minor}
-        --output #{libexec}
-        --runtime #{os}-#{arch}
-        --no-self-contained
+    args = %W[
+      --configuration Release
+      --framework net#{dotnet.version.major_minor}
+      --output #{libexec}
+      --runtime #{os}-#{arch}
+      --no-self-contained
+    ]
+    if build.stable?
+      args += %W[
         /p:AssemblyVersion=#{version}
         /p:FileVersion=#{version}
         /p:InformationalVersion=#{version}
         /p:Version=#{version}
       ]
-
-      system "dotnet", "publish", "Jackett.Server", *args
     end
 
+    system "dotnet", "publish", "src/Jackett.Server", *args
+
     (bin/"jackett").write_env_script libexec/"jackett", "--NoUpdates",
-      DOTNET_ROOT: "${DOTNET_ROOT:-#{Formula["dotnet"].opt_libexec}}"
+      DOTNET_ROOT: "${DOTNET_ROOT:-#{dotnet.opt_libexec}}"
   end
 
   service do
@@ -57,9 +61,9 @@ class Jackett < Formula
     pid = fork do
       exec "#{bin}/jackett", "-d", testpath, "-p", port.to_s
     end
-    sleep 10
 
     begin
+      sleep 10
       assert_match "<title>Jackett</title>", shell_output("curl -b cookiefile -c cookiefile -L --silent http://localhost:#{port}")
     ensure
       Process.kill "TERM", pid

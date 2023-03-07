@@ -1,39 +1,42 @@
 class Vte3 < Formula
   desc "Terminal emulator widget used by GNOME terminal"
   homepage "https://wiki.gnome.org/Apps/Terminal/VTE"
-  url "https://download.gnome.org/sources/vte/0.68/vte-0.68.0.tar.xz"
-  sha256 "13e7d4789ca216a33780030d246c9b13ddbfd04094c6316eea7ff92284dd1749"
+  url "https://download.gnome.org/sources/vte/0.70/vte-0.70.3.tar.xz"
+  sha256 "9457134a02f3157fca04f7e0d39bdb0f3099be0a3ce82b7139d0c98a80748f23"
   license "LGPL-2.0-or-later"
-  revision 1
 
   bottle do
-    sha256 arm64_monterey: "5956f0ff63ffc5af08896373d884a6e12f831f714d7c01fc78774ff1cb618515"
-    sha256 arm64_big_sur:  "7aee3f3e6e07847f7b65110b53873a3e74b5fc14268518fe0b345b9793b4ec5c"
-    sha256 monterey:       "dd1a7f9a98338987adff46db075170cd029ed8a13be293855d3d70c654349582"
-    sha256 big_sur:        "71c257c8137523518d2a1276cbf3961ee60a11ea585d1353bbda4709fda22095"
-    sha256 catalina:       "06344a53569cb93939f93e0a49e142f4af269090a200ee4a5e8eb395a9c41f80"
-    sha256 x86_64_linux:   "bf4c3ae25efa4c8d1b3d8bd22eb7a2bb25d4eaecef95f1634715c7c62b0ee584"
+    sha256 arm64_ventura:  "a00b29654da9ca4848e6440138f45b4d4a38b21a1b9779d56e37a98c5e8b5294"
+    sha256 arm64_monterey: "32675fbdc8616a47b50b39a49b9d7550c4419edf37bcd9468e56c641ef588ce3"
+    sha256 arm64_big_sur:  "909ff146ce0049d2e476e8ff1f03fab93175f20a08fff748574f17fcb41a822f"
+    sha256 ventura:        "bfd378f646a32825f99fa4e343608d192334d1dea115a723bb0604ca2c8e1fd1"
+    sha256 monterey:       "c9d67b4e8136264b9e9f86c194fb71dfaf2a43d88d1a1b2d21480f1a83a85db1"
+    sha256 big_sur:        "cc5261cf75d92b3001278501e02c760ea5684dcf167d294571bc0187a7aad918"
+    sha256 x86_64_linux:   "689ecb9ebb72864529863e971c4551ebb2bd061ba2bc9bf4ae7e11fad1c1fb6f"
   end
 
+  depends_on "gettext" => :build
   depends_on "gobject-introspection" => :build
   depends_on "meson" => :build
   depends_on "ninja" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkg-config" => [:build, :test]
   depends_on "vala" => :build
-  depends_on "gettext"
+  depends_on "fribidi"
+  depends_on "glib"
   depends_on "gnutls"
   depends_on "gtk+3"
   depends_on "icu4c"
   depends_on macos: :mojave
+  depends_on "pango"
   depends_on "pcre2"
 
   on_macos do
-    depends_on "llvm" => [:build, :test] if DevelopmentTools.clang_build_version <= 1200
+    depends_on "llvm" => :build if DevelopmentTools.clang_build_version <= 1200
+    depends_on "gettext"
   end
 
   on_linux do
-    depends_on "linux-headers@4.15" => :build
-    depends_on "gcc" # for C++20
+    depends_on "linux-headers@5.15" => :build
     depends_on "systemd"
   end
 
@@ -51,24 +54,17 @@ class Vte3 < Formula
   patch :DATA
 
   def install
-    ENV.remove "HOMEBREW_LIBRARY_PATHS", Formula["llvm"].opt_lib
     ENV.llvm_clang if OS.mac? && (DevelopmentTools.clang_build_version <= 1200)
+    ENV["XML_CATALOG_FILES"] = etc/"xml/catalog"
 
-    ENV["XML_CATALOG_FILES"] = "#{etc}/xml/catalog"
-
-    args = std_meson_args + %w[
-      -Dgir=true
-      -Dgtk3=true
-      -Dgnutls=true
-      -Dvapi=true
-      -D_b_symbolic_functions=false
-    ]
-
-    mkdir "build" do
-      system "meson", *args, ".."
-      system "ninja", "-v"
-      system "ninja", "install", "-v"
-    end
+    system "meson", "setup", "build", "-Dgir=true",
+                                      "-Dgtk3=true",
+                                      "-Dgnutls=true",
+                                      "-Dvapi=true",
+                                      "-D_b_symbolic_functions=false",
+                                      *std_meson_args
+    system "meson", "compile", "-C", "build", "--verbose"
+    system "meson", "install", "-C", "build"
   end
 
   test do
@@ -82,68 +78,7 @@ class Vte3 < Formula
         return 0;
       }
     EOS
-    atk = Formula["atk"]
-    cairo = Formula["cairo"]
-    fontconfig = Formula["fontconfig"]
-    freetype = Formula["freetype"]
-    gdk_pixbuf = Formula["gdk-pixbuf"]
-    gettext = Formula["gettext"]
-    glib = Formula["glib"]
-    gnutls = Formula["gnutls"]
-    gtkx3 = Formula["gtk+3"]
-    harfbuzz = Formula["harfbuzz"]
-    libepoxy = Formula["libepoxy"]
-    libpng = Formula["libpng"]
-    libtasn1 = Formula["libtasn1"]
-    nettle = Formula["nettle"]
-    pango = Formula["pango"]
-    pixman = Formula["pixman"]
-    flags = %W[
-      -I#{atk.opt_include}/atk-1.0
-      -I#{cairo.opt_include}/cairo
-      -I#{fontconfig.opt_include}
-      -I#{freetype.opt_include}/freetype2
-      -I#{gdk_pixbuf.opt_include}/gdk-pixbuf-2.0
-      -I#{gettext.opt_include}
-      -I#{glib.opt_include}/gio-unix-2.0/
-      -I#{glib.opt_include}/glib-2.0
-      -I#{glib.opt_lib}/glib-2.0/include
-      -I#{gnutls.opt_include}
-      -I#{gtkx3.opt_include}/gtk-3.0
-      -I#{harfbuzz.opt_include}/harfbuzz
-      -I#{include}/vte-2.91
-      -I#{libepoxy.opt_include}
-      -I#{libpng.opt_include}/libpng16
-      -I#{libtasn1.opt_include}
-      -I#{nettle.opt_include}
-      -I#{pango.opt_include}/pango-1.0
-      -I#{pixman.opt_include}/pixman-1
-      -D_REENTRANT
-      -L#{atk.opt_lib}
-      -L#{cairo.opt_lib}
-      -L#{gdk_pixbuf.opt_lib}
-      -L#{gettext.opt_lib}
-      -L#{glib.opt_lib}
-      -L#{gnutls.opt_lib}
-      -L#{gtkx3.opt_lib}
-      -L#{lib}
-      -L#{pango.opt_lib}
-      -latk-1.0
-      -lcairo
-      -lcairo-gobject
-      -lgdk-3
-      -lgdk_pixbuf-2.0
-      -lgio-2.0
-      -lglib-2.0
-      -lgnutls
-      -lgobject-2.0
-      -lgtk-3
-      -lpango-1.0
-      -lpangocairo-1.0
-      -lvte-2.91
-      -lz
-    ]
-    flags << "-lintl" if OS.mac?
+    flags = shell_output("pkg-config --cflags --libs vte-2.91").chomp.split
     system ENV.cc, "test.c", "-o", "test", *flags
     system "./test"
   end

@@ -1,23 +1,23 @@
 class Blockhash < Formula
   desc "Perceptual image hash calculation tool"
   homepage "https://github.com/commonsmachinery/blockhash"
-  url "https://github.com/commonsmachinery/blockhash/archive/v0.3.2.tar.gz"
-  sha256 "add1e27e43b35dde56e44bc6d1f0556facf4a18a0f9072df04d4134d8f517365"
+  url "https://github.com/commonsmachinery/blockhash/archive/v0.3.3.tar.gz"
+  sha256 "3c48af7bdb1f673b2f3c9f8c0bfa9107a7019b54ac3b4e30964bc0707debdd3a"
   license "MIT"
   head "https://github.com/commonsmachinery/blockhash.git", branch: "master"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 arm64_monterey: "c371333e6fb3b87bb8705b59656bee1f0273b908e9703c273491ca1e8cde6321"
-    sha256 cellar: :any,                 arm64_big_sur:  "ea24e2ec0238503bfd4d4bb60aad606be7721acec5320db0dca8518cbd017e2b"
-    sha256 cellar: :any,                 monterey:       "3f2fed32a9e23dfe2c96fbb1659c4096626b8af48c42c6f1cd9695f6be79d863"
-    sha256 cellar: :any,                 big_sur:        "f3d00d88a90889cd500ecc7c335ccb202f98d067f4224df1d940289d49caaf6c"
-    sha256 cellar: :any,                 catalina:       "cab37517dd31e66ef9092d2f390aadadeb84a2b21bea2e1c3bf1c3410f8f6fc6"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ef68b2a762b5c5bd42e28103e78b9782268d9c756beff3d3934be996a1500711"
+    sha256 cellar: :any,                 arm64_ventura:  "c249346671fb6df5de0d17abf1f7f6897cda778530aff73c3eb359592f879da1"
+    sha256 cellar: :any,                 arm64_monterey: "f69f63dabda4d48b8aef51968228268358ca91b60dcd1318bc040745c2458770"
+    sha256 cellar: :any,                 arm64_big_sur:  "e1c024ab5f658f47129674a1ad716c402e35272f4a43d14fc0a33c03793e0a6a"
+    sha256 cellar: :any,                 ventura:        "b214da364b5a6454eae3774a4232deb46337d507bafc7b18d8fea823d2ba8669"
+    sha256 cellar: :any,                 monterey:       "9f55a2219a4f75779407f478f39eddc926f23ba95fb2b8c910fe8d56e9086e01"
+    sha256 cellar: :any,                 big_sur:        "d2369a6bdd8bc7045dea6bda77939b3686150b48ea0e3450f853f165b043e1b7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "716cebef5a17982594ec464adf4753f9a00c78c24880f617037c1d2cae74021b"
   end
 
   depends_on "pkg-config" => :build
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => :build
   depends_on "imagemagick"
 
   resource "homebrew-testdata" do
@@ -26,7 +26,7 @@ class Blockhash < Formula
   end
 
   def install
-    python3 = "python3.10"
+    python3 = "python3.11"
     system python3, "./waf", "configure", "--prefix=#{prefix}"
     # pkg-config adds -fopenmp flag during configuring
     # This fails the build on system clang, and OpenMP is not used in blockhash

@@ -1,8 +1,8 @@
 class Ghz < Formula
   desc "Simple gRPC benchmarking and load testing tool"
   homepage "https://ghz.sh"
-  url "https://github.com/bojand/ghz/archive/v0.110.0.tar.gz"
-  sha256 "254463fd61b316f709a84b184da5309be1c0a4a442145665da26d9ad98da1351"
+  url "https://github.com/bojand/ghz/archive/v0.114.0.tar.gz"
+  sha256 "a2461c048731333e792aab915d0f1da626cbb984dc2bffb6cb66a7c22f198363"
   license "Apache-2.0"
 
   livecheck do
@@ -11,22 +11,19 @@ class Ghz < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "936b4059282a81110efce72237763a85ebb956179f01502e0b4391ecdd1d6011"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "bcd54221051293152c697485a29d1dfcb2462fde317675cffcb4e8b72e4fd941"
-    sha256 cellar: :any_skip_relocation, monterey:       "db4deeff23a9015f322888965dc7a004e355df64449b7ab9990be9c1803c8408"
-    sha256 cellar: :any_skip_relocation, big_sur:        "eb31627a411d3efa2067979b3ab1212e4a5115490ab5a1aa191f1a1d08eaa610"
-    sha256 cellar: :any_skip_relocation, catalina:       "1211017d2ca0ac91eb457de792f37afe3fad2a887089ee10c3a09d86d85fcb94"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7c768990085e05e9fca28ec7e0187b451432e01c3d4444962f1c0271a500f8f1"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "df8c9e6250e14bc123b93f3d8bfb2cb1d7de7504179ada94db9b9a778249d461"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "cbf23dd914628d71f434292e98510fa5819defeadd998562a75d28cfaeb20466"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "3082ce151bb85a3b9c094e4b096ef3f690a210dfa49a2b43457759431350a39b"
+    sha256 cellar: :any_skip_relocation, ventura:        "731cb0a3d044cd9718d539d07160fc9c5d5c6439d34933519f144fe935e33dfe"
+    sha256 cellar: :any_skip_relocation, monterey:       "54a1e716582fdb4039d47546b2e5f00b5a63a0016326c903581107e26029ae36"
+    sha256 cellar: :any_skip_relocation, big_sur:        "a128d20de7edc391ad22437457638e1e90f60100d4b7b03d0ce9a198c5b65d93"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fefd962c23e483abbf23eb78537bf3c8d7005a4fa325820ef1a3d2c65e50fa41"
   end
 
   depends_on "go" => :build
 
   def install
-    system "go", "build",
-      "-ldflags", "-s -w -X main.version=#{version}",
-      *std_go_args,
-      "cmd/ghz/main.go"
-    prefix.install_metafiles
+    system "go", "build", *std_go_args(ldflags: "-s -w -X main.version=#{version}"), "cmd/ghz/main.go"
   end
 
   test do

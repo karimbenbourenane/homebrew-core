@@ -1,8 +1,8 @@
 class Sdl2Image < Formula
   desc "Library for loading images as SDL surfaces and textures"
   homepage "https://github.com/libsdl-org/SDL_image"
-  url "https://github.com/libsdl-org/SDL_image/releases/download/release-2.6.2/SDL2_image-2.6.2.tar.gz"
-  sha256 "48355fb4d8d00bac639cd1c4f4a7661c4afef2c212af60b340e06b7059814777"
+  url "https://github.com/libsdl-org/SDL_image/releases/download/release-2.6.3/SDL2_image-2.6.3.tar.gz"
+  sha256 "931c9be5bf1d7c8fae9b7dc157828b7eee874e23c7f24b44ba7eff6b4836312c"
   license "Zlib"
 
   # This formula uses a file from a GitHub release, so we check the latest
@@ -14,12 +14,13 @@ class Sdl2Image < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "9957623300b351f7a5a8a9d5a53e23ab253f619e76f0ceda787ce9aa6e65bda7"
-    sha256 cellar: :any,                 arm64_big_sur:  "62d71fe497de2509c66c439a42d9388d22838d17dd7e5c5b100ae056073cdb2a"
-    sha256 cellar: :any,                 monterey:       "85536b30fa7448b4144f04c17b5505f36ff2b41d68ff2c040131a21dbdc51b2e"
-    sha256 cellar: :any,                 big_sur:        "660628e65267b3624a9337fb0828c2a6f56037b21d1da2910848be9ad58e2cbc"
-    sha256 cellar: :any,                 catalina:       "40ed17b687354fabb22a87da5d995446088512a0293f3f867c48a74cea0d376d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e68e4f635af13f76c20dcfad45cc0037b5bd65bb55a9d83c613a4e6a5742ed34"
+    sha256 cellar: :any,                 arm64_ventura:  "3d8cf29c641b4449b888028d69b6b4ffaf2821aaf31971ddba794dcf562810c6"
+    sha256 cellar: :any,                 arm64_monterey: "1be70a8f34906619fa0ec3d93e7fd21e89ae1bc0d71af6db2110218adeb7dc99"
+    sha256 cellar: :any,                 arm64_big_sur:  "5bf7d9ef30ebd8d5beebc20c2f7b731feefcb491c9e0390a31829e178ab88415"
+    sha256 cellar: :any,                 ventura:        "2ccadb87709282d613473d12d34f5227bd416cab9e731eda85eaa9a391379a4d"
+    sha256 cellar: :any,                 monterey:       "2961b465fd3e68bd7cd31b8ad14e1213b1d674a893ef4a7242ef2fefa91e0fab"
+    sha256 cellar: :any,                 big_sur:        "12db1954b7e6fdf237df73f3aa30e5d563364972a47387a4556620e21b36a285"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e5e331576551986ece36222101ae07414e3ae55cdf8073f84caa2afa8ad4cf1b"
   end
 
   head do
@@ -32,6 +33,8 @@ class Sdl2Image < Formula
 
   depends_on "pkg-config" => :build
   depends_on "jpeg-turbo"
+  depends_on "jpeg-xl"
+  depends_on "libavif"
   depends_on "libpng"
   depends_on "libtiff"
   depends_on "sdl2"
@@ -44,7 +47,9 @@ class Sdl2Image < Formula
 
     system "./configure", *std_configure_args,
                           "--disable-imageio",
+                          "--disable-avif-shared",
                           "--disable-jpg-shared",
+                          "--disable-jxl-shared",
                           "--disable-png-shared",
                           "--disable-stb-image",
                           "--disable-tif-shared",
@@ -58,9 +63,10 @@ class Sdl2Image < Formula
 
       int main()
       {
-          int success = IMG_Init(0);
+          int INIT_FLAGS = IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF | IMG_INIT_WEBP | IMG_INIT_JXL | IMG_INIT_AVIF;
+          int result = IMG_Init(INIT_FLAGS);
           IMG_Quit();
-          return success;
+          return result == INIT_FLAGS ? EXIT_SUCCESS : EXIT_FAILURE;
       }
     EOS
     system ENV.cc, "test.c", "-I#{Formula["sdl2"].opt_include}/SDL2", "-L#{lib}", "-lSDL2_image", "-o", "test"

@@ -3,20 +3,23 @@ class Vineyard < Formula
 
   desc "In-memory immutable data manager. (Project under CNCF)"
   homepage "https://v6d.io"
-  url "https://github.com/v6d-io/v6d/releases/download/v0.7.2/v6d-0.7.2.tar.gz"
-  sha256 "d0cbb4bf894c8b089fc4c612dcf198656e57cd4612918c38efb3112bf7581a06"
+  url "https://github.com/v6d-io/v6d/releases/download/v0.13.1/v6d-0.13.1.tar.gz"
+  sha256 "ed112e66fc0bb67b26b5d4ef6da9c991671f44e669a2b3f0b349c1eda1c6e192"
   license "Apache-2.0"
 
   bottle do
-    sha256                               arm64_monterey: "f1c8dbc80b09db8570e39cfe55de5cba055b9c801f0759e96d6a08b59513ddad"
-    sha256                               arm64_big_sur:  "058257ac857f9e062624df501bb21c671146c78963e12481ac8727b649957730"
-    sha256                               monterey:       "f72721e8826996ea1a36c3316f0d5bfe075d9935a58300fbb7ed5cfcb1d7e44c"
-    sha256                               big_sur:        "80b711993c5a15fabb67b7eca2caa19d2d2b79bef19d1b47a142830776ee88e9"
-    sha256                               catalina:       "f0c8edad76f880c51a26f0fc37b47b7a16c74eb1c0a278c7ae3fbaa03a9f7dd7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5afab78aace2f7d91aa6e51b2d2eaaaff898bc93a9db1dc3f87d59a5efbee3bd"
+    sha256 arm64_ventura:  "a04f1f8e356cf47ff5811325e3c8e0dadddc10d2350c3057419ead4ff0cc9727"
+    sha256 arm64_monterey: "a508938846048549abbc429e9db6ee0c0ec3ce8a81680951065e3355c43a3f1f"
+    sha256 arm64_big_sur:  "06945b86388c021ec72b2d861206a8e3d4411988d3b0560d672e97792bdd5722"
+    sha256 ventura:        "e7b325d23df2064ad07966317f7ef25e9cf9ee080058ef7cec53834e55c30b4f"
+    sha256 monterey:       "d98d90d6a3290759ab0a13475c00d12c6475f586de0e277eab0ab2e8097a529d"
+    sha256 big_sur:        "a1d87d99d29b3e587a5af434e09f4ed9bd544387d9876ec831ee80cc48968278"
+    sha256 x86_64_linux:   "d4e34501cbcbbf184b65661c5592205c92d6ba06d14193c7158960499f9cdfae"
   end
 
   depends_on "cmake" => :build
+  depends_on "llvm" => :build
+  depends_on "python@3.11" => :build
   depends_on "apache-arrow"
   depends_on "boost"
   depends_on "etcd"
@@ -24,42 +27,23 @@ class Vineyard < Formula
   depends_on "gflags"
   depends_on "glog"
   depends_on "libgrape-lite"
-  depends_on "llvm"
-  depends_on "nlohmann-json"
   depends_on "open-mpi"
   depends_on "openssl@1.1"
-  depends_on "tbb"
 
   fails_with gcc: "5"
 
-  resource "libclang" do
-    url "https://files.pythonhosted.org/packages/ea/ec/94fefe778caa8f2ecf9bb996917535a49b36580846af908b2f38fe6396c9/libclang-14.0.1.tar.gz"
-    sha256 "332e539201b46cd4676bee992bbf4b3e50450fc17f71ff33d4afc9da09cf46cb"
-  end
-
   def install
-    # We install the libclang from pypi for build as the `clang` package
-    # bundled in LLVM cannot find libclang.dylib easily.
-    #
-    # The requirement for libclang python package will be removed once
-    # LLVM been upgrade to 15, see also: Homebrew/homebrew-core#106925
-    venv = virtualenv_create(buildpath/"venv", "python3")
-    venv.pip_install resource("libclang")
-
-    # make libclang.so/libclang.dll findable by clang.cindex.Index.create()
-    ENV["LIBCLANG_LIBRARY_PATH"] = Formula["llvm"].opt_lib
-
-    # link against system libc++ instead of llvm provided libc++
-    ENV.remove "HOMEBREW_LIBRARY_PATHS", Formula["llvm"].opt_lib
+    python = "python3.11"
+    # LLVM is keg-only.
+    ENV.prepend_path "PYTHONPATH", Formula["llvm"].opt_prefix/Language::Python.site_packages(python)
 
     system "cmake", "-S", ".", "-B", "build",
                     "-DCMAKE_CXX_STANDARD=14",
                     "-DCMAKE_CXX_STANDARD_REQUIRED=TRUE",
-                    "-DPYTHON_EXECUTABLE=#{buildpath}/venv/bin/python",
+                    "-DPYTHON_EXECUTABLE=#{which(python)}",
                     "-DUSE_EXTERNAL_ETCD_LIBS=ON",
-                    "-DUSE_EXTERNAL_TBB_LIBS=ON",
-                    "-DUSE_EXTERNAL_NLOHMANN_JSON_LIBS=ON",
                     "-DBUILD_VINEYARD_TESTS=OFF",
+                    "-DUSE_LIBUNWIND=OFF",
                     "-DOPENSSL_ROOT_DIR=#{Formula["openssl@1.1"].opt_prefix}",
                     *std_cmake_args
     system "cmake", "--build", "build"

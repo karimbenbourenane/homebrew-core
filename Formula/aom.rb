@@ -2,27 +2,31 @@ class Aom < Formula
   desc "Codec library for encoding and decoding AV1 video streams"
   homepage "https://aomedia.googlesource.com/aom"
   url "https://aomedia.googlesource.com/aom.git",
-      tag:      "v3.4.0",
-      revision: "fc430c57c7b0307b4c5ffb686cd90b3c010d08d2"
+      tag:      "v3.6.0",
+      revision: "3c65175b1972da4a1992c1dae2365b48d13f9a8d"
   license "BSD-2-Clause"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "f16849b3bb161a0695d5bb6677799f4d87e1db60fbaf6719f1ea0a996847d029"
-    sha256 cellar: :any,                 arm64_big_sur:  "d73c1ddd2cfdc4c53f6362b5bbbf70a6f127d5eeae5039e77a36b6fca5bcfd92"
-    sha256 cellar: :any,                 monterey:       "a06dca8e5ce52a095f6aca1dbbc5c1840465b16f7935f671e1eb0139479ccec9"
-    sha256 cellar: :any,                 big_sur:        "ba4000b61ee2966a7064fc98aea0e5f8ae231dd249edc352fb27e01756c6cac6"
-    sha256 cellar: :any,                 catalina:       "9d64c9e660e8b21ee46544e7542eb642590d1f3da72c8d107f3b3b74b362d978"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "1824239b9ffaf9235c1bc73c6dddd8c53219bbe5a5bf041a143bf54c7ed58518"
+    sha256 cellar: :any,                 arm64_ventura:  "a42b91d504001259b899320777fbd7890d2bbb658c72be7877cc8473c26f8b13"
+    sha256 cellar: :any,                 arm64_monterey: "82c42edfcd3aa2efd0073059424a80d5a38fe48db5a387a2b18de84a77c82512"
+    sha256 cellar: :any,                 arm64_big_sur:  "f6a3f0cd52dd7bbf7ce6dde8880e3c3db9144c2891f012a9e5ce8e392c071d0f"
+    sha256 cellar: :any,                 ventura:        "d01cb23d675b8706f7ea5c889d2b6dc223c54f84d2b2a496930dcf5d7c725b29"
+    sha256 cellar: :any,                 monterey:       "cecafb1aa837a007e2cde5907515492d059b8bfd4d64983bc4f116edcaa65726"
+    sha256 cellar: :any,                 big_sur:        "3e9ca81ede28cbf3e09e0bca5d7af4529f72d9a27202e7e759ce7f62b0c0b02d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "dd6938f444ac758c20caa553b64dbfa4cdebd60b6e572d08b0be69a704599f35"
   end
 
   depends_on "cmake" => :build
-  depends_on "yasm" => :build
 
   # `jpeg-xl` is currently not bottled on Linux
   on_macos do
     depends_on "pkg-config" => :build
     depends_on "jpeg-xl"
     depends_on "libvmaf"
+  end
+
+  on_intel do
+    depends_on "yasm" => :build
   end
 
   resource "homebrew-bus_qcif_15fps.y4m" do
@@ -33,13 +37,15 @@ class Aom < Formula
   def install
     ENV.runtime_cpu_detection unless Hardware::CPU.arm?
 
-    args = std_cmake_args.concat(["-DCMAKE_INSTALL_RPATH=#{rpath}",
-                                  "-DENABLE_DOCS=off",
-                                  "-DENABLE_EXAMPLES=on",
-                                  "-DENABLE_TESTDATA=off",
-                                  "-DENABLE_TESTS=off",
-                                  "-DENABLE_TOOLS=off",
-                                  "-DBUILD_SHARED_LIBS=on"])
+    args = std_cmake_args + [
+      "-DCMAKE_INSTALL_RPATH=#{rpath}",
+      "-DENABLE_DOCS=off",
+      "-DENABLE_EXAMPLES=on",
+      "-DENABLE_TESTDATA=off",
+      "-DENABLE_TESTS=off",
+      "-DENABLE_TOOLS=off",
+      "-DBUILD_SHARED_LIBS=on",
+    ]
     # Runtime CPU detection is not currently enabled for ARM on macOS.
     args << "-DCONFIG_RUNTIME_CPU_DETECT=0" if Hardware::CPU.arm?
 

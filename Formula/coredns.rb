@@ -1,8 +1,8 @@
 class Coredns < Formula
   desc "DNS server that chains plugins"
   homepage "https://coredns.io/"
-  url "https://github.com/coredns/coredns/archive/v1.9.3.tar.gz"
-  sha256 "25e607cb39261050513057534b8d2f33bf55aeb18262218bc9396510fa8958d4"
+  url "https://github.com/coredns/coredns/archive/v1.10.1.tar.gz"
+  sha256 "f47186452e5f2925e2c71135669afd9e03b9b55831417d33d612ef2fa69924a7"
   license "Apache-2.0"
   head "https://github.com/coredns/coredns.git", branch: "master"
 
@@ -12,12 +12,13 @@ class Coredns < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "fdb8f76795c7e708879903140825480a2254c3e6d0e886e01742431b29db7583"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "46a1002d4fabd1351aba5630450f71eb527b9cc0b234c0860586b74a2710304a"
-    sha256 cellar: :any_skip_relocation, monterey:       "b4998c03fa6aef0333df12d4e8b8fdbeee3cd9ac7e7e3d275ab89b3887d8e3d2"
-    sha256 cellar: :any_skip_relocation, big_sur:        "f94c50730bb67a19c9683ca7035d8b5a9d3c0d77f4d377c49281826c8648bd71"
-    sha256 cellar: :any_skip_relocation, catalina:       "85d988db163d25c5ebd51696bf0b942b594442605acaff5454be8ab32d460166"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e6a70eff3a2aefc0fd2a6f4fc83f81f18e694415ea4099b93782159afc16713a"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "90174107c61e9ce290ab14b954292a2fc8620a342debc09ee764d3dd37564a65"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "ba15a73065ae027c910ae5f8ecc38879611abaacb7c2b8501783955a208c1882"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "949e84820bb33065bcc76c3bfe9c30b947d3a3bb0d644075d1c61cc622c647b7"
+    sha256 cellar: :any_skip_relocation, ventura:        "8dd7bd8f6639c524c3578d169271ce5290bb0824615d57f1a26df97c31f160ac"
+    sha256 cellar: :any_skip_relocation, monterey:       "19eb6ea8035710973836bec703f08a594d793d72a93af585172b01be924cb36f"
+    sha256 cellar: :any_skip_relocation, big_sur:        "a4951058901e8ca332a831826e52dd64ff30f9996e1871bb24c23651df740bbf"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c5dda235c5ce6012160636941ee9244319f65a60e9c18263a950c91078c6ba76"
   end
 
   depends_on "go" => :build
@@ -31,11 +32,10 @@ class Coredns < Formula
     bin.install "coredns"
   end
 
-  plist_options startup: true
-
   service do
     run [opt_bin/"coredns", "-conf", etc/"coredns/Corefile"]
     keep_alive true
+    require_root true
     working_dir HOMEBREW_PREFIX
     log_path var/"log/coredns.log"
     error_log_path var/"log/coredns.log"

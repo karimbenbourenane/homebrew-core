@@ -1,9 +1,9 @@
 class Couchdb < Formula
   desc "Apache CouchDB database server"
   homepage "https://couchdb.apache.org/"
-  url "https://www.apache.org/dyn/closer.lua?path=couchdb/source/3.2.2/apache-couchdb-3.2.2.tar.gz"
-  mirror "https://archive.apache.org/dist/couchdb/source/3.2.2/apache-couchdb-3.2.2.tar.gz"
-  sha256 "69c9fd6f80133557f68a02e92dda72a4fd646d646f429f45bb8329a30f82f20e"
+  url "https://www.apache.org/dyn/closer.lua?path=couchdb/source/3.3.1/apache-couchdb-3.3.1.tar.gz"
+  mirror "https://archive.apache.org/dist/couchdb/source/3.3.1/apache-couchdb-3.3.1.tar.gz"
+  sha256 "9b89d7b54f7ef52b42bd51a6a0a2d3b1b06cce395df2c99d8f1f47f9355e2bee"
   license "Apache-2.0"
   revision 1
 
@@ -13,12 +13,13 @@ class Couchdb < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "ddb892cb6f2a02d4d1e5d6630aed89a48b6686c3381ce5a6349ed7c3e839be61"
-    sha256 cellar: :any,                 arm64_big_sur:  "b6f4d442b6d2fcaf448d1af0c9b3810c411952fb6e070dffdce23fae741bc0ae"
-    sha256 cellar: :any,                 monterey:       "e14a6b5f93a966a14ebd70615958f3d46421169a2782647e3b9932b64f3a6fd1"
-    sha256 cellar: :any,                 big_sur:        "4d90068a7d02af344f2a809ff3e913b297b7990b9ccaf3df3f6f3d56d4962b4c"
-    sha256 cellar: :any,                 catalina:       "3aca18a0ea3cb5b4728b79d4ddc3bbb2d2e2e617606f3a056119d57b20bec450"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8b26f1923046f7c0bfce8c328dcff24add7a47482a2a40d0a3aabb30024bff4c"
+    sha256 cellar: :any,                 arm64_ventura:  "d194d20995a127bcf9eaa1321d0beaa536183737bfb5c76cedeb536ed0f23b2b"
+    sha256 cellar: :any,                 arm64_monterey: "127f449e5dee5ddbe972823778b358c8eaea49966765449b0343bc625de44538"
+    sha256 cellar: :any,                 arm64_big_sur:  "7418e01bd588a9d2daed576e0e7912d591020537180880c4008f6898a7b3eb8c"
+    sha256 cellar: :any,                 ventura:        "a8066bb71c6c2ca2294cb545b83ccd0ccbbcb52acb99dbc18cad9426b7710c2d"
+    sha256 cellar: :any,                 monterey:       "c27fff48191c27500af593744a17121fc5239b033e94613808cfc145f23ace6d"
+    sha256 cellar: :any,                 big_sur:        "6c9013038fec4d6b838896b4190d395bc9769eecfe9843870b594c5d2c7a8af9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "1338d77ccdb4a4964a42429f1c1385d4b6f6845759940075117caa3fbfa5c99a"
   end
 
   depends_on "autoconf" => :build
@@ -29,18 +30,14 @@ class Couchdb < Formula
   #   please re-compile this module with an Erlang/OTP 25 compiler
   # escript: exception error: undefined function rebar:main/1
   # Ref: https://github.com/Homebrew/homebrew-core/pull/105876
-  depends_on "erlang@24" => :build
+  depends_on "erlang" => :build
   depends_on "libtool" => :build
   depends_on "pkg-config" => :build
   depends_on "icu4c"
-  depends_on "openssl@3"
+  depends_on "openssl@1.1"
   # NOTE: Supported `spidermonkey` versions are hardcoded at
   # https://github.com/apache/couchdb/blob/#{version}/src/couch/rebar.config.script
   depends_on "spidermonkey"
-
-  on_linux do
-    depends_on "gcc"
-  end
 
   conflicts_with "ejabberd", because: "both install `jiffy` lib"
 

@@ -1,9 +1,9 @@
 class OperatorSdk < Formula
   desc "SDK for building Kubernetes applications"
-  homepage "https://coreos.com/operators/"
+  homepage "https://sdk.operatorframework.io/"
   url "https://github.com/operator-framework/operator-sdk.git",
-      tag:      "v1.23.0",
-      revision: "1eaeb5adb56be05fe8cc6dd70517e441696846a4"
+      tag:      "v1.27.0",
+      revision: "5cbdad9209332043b7c730856b6302edc8996faf"
   license "Apache-2.0"
   head "https://github.com/operator-framework/operator-sdk.git", branch: "master"
 
@@ -13,24 +13,22 @@ class OperatorSdk < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "2f89f13aef4b9dc7828df49f06eedd57f3be04e34bdf683df51119b71c0c4ff1"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "c9cb060ceb9b32112fea719b0d202d8abeeba9b935cb7c5b718fe82503c934d7"
-    sha256 cellar: :any_skip_relocation, monterey:       "8951bfdadac29dea267dd06dc756f2c543d1b35f6ddf642f08ee847d0842f46a"
-    sha256 cellar: :any_skip_relocation, big_sur:        "bda989ae943cda831496e5b9e4cf0ca22b87f7a9c5c79aa7efc3e5b75a4f0f17"
-    sha256 cellar: :any_skip_relocation, catalina:       "51c57d1728921fc8d7e4384c0fe04cdf840b9abfa45b6abe2902ff2c7281e3de"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f2b7bea7f3e8b8575eef6e16abccb8626dd513e6a562be19b3efd439906c6c28"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "543216ad9178837817d02103bdf94fb45a4d7f2e55b8cf183072ad87b5302596"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "9438e91689988a5824a9da738fa46dffd7d077b213022a1184000d7d5215a038"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "37286ce81c439bfb159edf840148b4878bd6c35ac8bad75f911dfa5d1915c94b"
+    sha256 cellar: :any_skip_relocation, ventura:        "b27b724626c828f9fa99fb14cd03277600ddf86589587a70f76f946e32372043"
+    sha256 cellar: :any_skip_relocation, monterey:       "46eb6de55a233ba346c6153b836e8df8b686e6ff0f710a960651f6532534f65f"
+    sha256 cellar: :any_skip_relocation, big_sur:        "b4b480ab2962a97ed7fbfb235abefbbf8491307ab7a9078bba5f267845479d3c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "708ba0f99a619d51311b305970bc36412002a0a730767d522d03b97f47abbc54"
   end
 
   depends_on "go"
 
   def install
-    ENV["GOBIN"] = libexec/"bin"
+    ENV["GOBIN"] = bin
     system "make", "install"
 
-    generate_completions_from_executable(libexec/"bin/operator-sdk", "completion")
-
-    output = libexec/"bin/operator-sdk"
-    (bin/"operator-sdk").write_env_script(output, PATH: "$PATH:#{Formula["go@1.17"].opt_bin}")
+    generate_completions_from_executable(bin/"operator-sdk", "completion")
   end
 
   test do

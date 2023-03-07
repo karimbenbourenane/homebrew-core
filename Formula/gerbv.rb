@@ -1,17 +1,18 @@
 class Gerbv < Formula
   desc "Gerber (RS-274X) viewer"
   homepage "https://gerbv.github.io/"
-  url "https://github.com/gerbv/gerbv/archive/refs/tags/v2.9.2.tar.gz"
-  sha256 "bea49fc5aa861caf1c0050be008f9316f502d318cb33588ffe59eece4ddbfcea"
+  url "https://github.com/gerbv/gerbv/archive/refs/tags/v2.9.6.tar.gz"
+  sha256 "0e517ea28bcb76fb7547c759b0d09e6d207e1cb539d95af6ef609354d2f48ad3"
   license "GPL-2.0-or-later"
 
   bottle do
-    sha256 arm64_monterey: "b4a4a6f119efcf5b6db30246b07314315c8b94a1c95559f33a63bb36a9c202d7"
-    sha256 arm64_big_sur:  "1ede9e5e499a074c4ae06f277365264dcdbf4cab6d1dc2fb4d61303c045e9073"
-    sha256 monterey:       "562bea44834291f806bc446aaf0b980bd9b4300c348560735906c153c914a11c"
-    sha256 big_sur:        "35da237c3c154a2a54efc071073f8dbb32220e063d193326914c8908d193e202"
-    sha256 catalina:       "6477c7fc3e4dd05e9b6c74ca20c862e20fb1060a13c901689e626042c9437c3e"
-    sha256 x86_64_linux:   "3be0e8d5c669bc4190438e537262c61e1e28a7dbd76fc297b41b138b3151f2b4"
+    sha256 arm64_ventura:  "c928c62d0e8eda9e96dbbf4a9baad1ab7bc18fc8078dca3a85af0f97ef49ff3e"
+    sha256 arm64_monterey: "46bf2b6cd222d5bdfe053c82f774c4eb8dad2b37622e5459a9022ccb71c62192"
+    sha256 arm64_big_sur:  "12c2b634ddd479d09858a51a59eac8fa51bb969280f8d41a2199c32420cc4c1b"
+    sha256 ventura:        "0026267f7f29606d244ca9bd395f3c4d7065fe3c4c6816dbdf6d8dfcf3a507ad"
+    sha256 monterey:       "7e7c6507bfb6b7b4b79c9719dc22d53710077b6b286b1e1db20f69af16bb97e2"
+    sha256 big_sur:        "93e553925362828ff57324975da7a6a03719e5d34e7f0083b7038d9f07e1e940"
+    sha256 x86_64_linux:   "598968f958e6c3313d4f52e2b36417835a200c767eb0f0575811750ea61649c5"
   end
 
   depends_on "autoconf" => :build
@@ -19,7 +20,7 @@ class Gerbv < Formula
   depends_on "gettext" => :build
   depends_on "libtool" => :build
   depends_on "pkg-config" => :build
-  depends_on "gtk+"
+  depends_on "gtk+" # GTK3/GTK4 issue: https://github.com/gerbv/gerbv/issues/71
 
   def install
     ENV.append "CPPFLAGS", "-DQUARTZ" if OS.mac?

@@ -3,7 +3,7 @@ class Uftp < Formula
   homepage "https://uftp-multicast.sourceforge.io/"
   url "https://downloads.sourceforge.net/project/uftp-multicast/source-tar/uftp-5.0.1.tar.gz"
   sha256 "f0435fbc8e9ffa125e05600cb6c7fc933d7d587f5bae41b257267be4f2ce0e61"
-  license "GPL-3.0-or-later"
+  license "GPL-3.0-or-later" => { with: "openvpn-openssl-exception" }
 
   livecheck do
     url :stable
@@ -11,21 +11,24 @@ class Uftp < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "d8d9b1b7a1c7e9a359242de153b087f05dee5a65d0261b042040464edd9613af"
-    sha256 cellar: :any,                 arm64_big_sur:  "ef47b9d11a228c6daa4e8a8311ed4e2e0f983aa1036efcc7029895d0b56631b7"
-    sha256 cellar: :any,                 monterey:       "ca0f38ccddec9d9e655874dfd129609fa72fb0d428769b34e97f8b21ae11cab1"
-    sha256 cellar: :any,                 big_sur:        "d15a9b0f78488e86e802bc67e949b0ec9ceaf38e1096be34e007440e0c519a4e"
-    sha256 cellar: :any,                 catalina:       "8cdfc5565a6010c1149e72c910751a65e8792e4ef4c02a76f170da4a46b3e376"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ab28f1ccdf3f8f1aff8c2123122fb41f32bd6e5f235945e37322241696f32191"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_ventura:  "e62bde780e31b0969be51009065d1538dcd0005faa72b5763d6377f73c9806c3"
+    sha256 cellar: :any,                 arm64_monterey: "419327bcf6a91fd632ae4760b3a2d6106c38faa9c88b531af321a4ada30c8c10"
+    sha256 cellar: :any,                 arm64_big_sur:  "1637d53cf74b59de04fb159100a40a68e0f2eb697d5d762cb4fed3910c64b724"
+    sha256 cellar: :any,                 ventura:        "fae25917793047496dc4cffcc9c56a3d3adfb6095d9bf9e43052c7aa83b3b27e"
+    sha256 cellar: :any,                 monterey:       "46c192edc8c39d3d42a255d1bfce9e6a4caecbdb2a8a973b7796caed331a8e64"
+    sha256 cellar: :any,                 big_sur:        "19cbee73d08382f5d52e5fa3c4dc5f2b227653bd17427d9dfe7ebcc531fc0eb5"
+    sha256 cellar: :any,                 catalina:       "f6a4cbcb1b447a5477eb21984fdf0d05394a9a9b16e07c36e3f04dbbfc6065e0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6b7469a4e9370f1f60272d22187d80419d90f52302b7d87923a1f54e6694ced3"
   end
 
-  depends_on "openssl@1.1"
+  depends_on "openssl@3"
 
   def install
-    system "make", "OPENSSL=#{Formula["openssl@1.1"].opt_prefix}", "DESTDIR=#{prefix}", "install"
+    system "make", "OPENSSL=#{Formula["openssl@3"].opt_prefix}", "DESTDIR=#{prefix}", "install"
     # the makefile installs into DESTDIR/usr/..., move everything up one and remove usr
     # the project maintainer was contacted via sourceforge on 12-Feb, he responded WONTFIX on 13-Feb
-    prefix.install Dir["#{prefix}/usr/*"]
+    prefix.install (prefix/"usr").children
     (prefix/"usr").unlink
   end
 

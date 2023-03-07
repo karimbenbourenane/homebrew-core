@@ -1,8 +1,8 @@
 class ShibbolethSp < Formula
   desc "Shibboleth 2 Service Provider daemon"
   homepage "https://wiki.shibboleth.net/confluence/display/SHIB2"
-  url "https://shibboleth.net/downloads/service-provider/3.3.0/shibboleth-sp-3.3.0.tar.bz2"
-  sha256 "f175bd0dc695a8b7cbe78f6156b14f7f407e1742d045d9a8e3f2cf1078c04704"
+  url "https://shibboleth.net/downloads/service-provider/3.4.1/shibboleth-sp-3.4.1.tar.bz2"
+  sha256 "bffe3e62e46d86cc75db1093b77fa1456b30da7c930a13708afa0139c8a8acc1"
   license "Apache-2.0"
 
   livecheck do
@@ -11,12 +11,13 @@ class ShibbolethSp < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "e90f7108926a0492b61d482442ca3363e01fe4ee0a5030d3d5128ee7bce62c04"
-    sha256 arm64_big_sur:  "3627b9b94793331278c868f3f50c0feb832db68545ee689445efcb17e56abd99"
-    sha256 monterey:       "3c5fddd0234a1d201aebf7cda85223212e0e3ccbded613e3258cc014d2811c0d"
-    sha256 big_sur:        "6adfa5b54297937bf4bc1a5abba4f57dd5bca91647c3b9cac9a0b7a86c8ca444"
-    sha256 catalina:       "82e21f772932a9edbbefc1288e26e6537b23cbb74dc7eb6d8c814486157789c9"
-    sha256 x86_64_linux:   "53dbce9a0a34d7a61083ba1130c3699d0c0657a6552c16df84b4c07b25a35ce8"
+    sha256 arm64_ventura:  "39bc3e88f3ebf7701f1a730807d1983751a48d173d1cba54040748b787afa6a0"
+    sha256 arm64_monterey: "97816635f3d80e3acde5d5e5928704bcc3e8534cbb11981be5daecd7f65b7a8d"
+    sha256 arm64_big_sur:  "edb8297894370d0bdf696fa8de765b4030f157871754c709ce07e78aed4b3110"
+    sha256 ventura:        "7b2a0d9ca98f69e14a82030c6a81fcc842f35ec010b4427cf4628018ee169f2a"
+    sha256 monterey:       "bc2d86fd34a55a12a8d542ebf7eefdd5d4cf4697f20cc6d9bdf8c4de0b3d005e"
+    sha256 big_sur:        "b1f897b4d6f5d637e3da43b008a3915e73291313c307c2c820a7a5ccec1e15f2"
+    sha256 x86_64_linux:   "4602cec97ab32f4862f5778aa7fe56924d3184acc197bbe8e1c616c265010d79"
   end
 
   depends_on "apr" => :build
@@ -57,10 +58,10 @@ class ShibbolethSp < Formula
     (var/"cache/shibboleth").mkpath
   end
 
-  plist_options startup: true
   service do
     run [opt_sbin/"shibd", "-F", "-f", "-p", var/"run/shibboleth/shibd.pid"]
     keep_alive true
+    require_root true
   end
 
   test do

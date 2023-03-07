@@ -3,8 +3,8 @@ class Clarinet < Formula
   homepage "https://github.com/hirosystems/clarinet"
   # pull from git tag to get submodules
   url "https://github.com/hirosystems/clarinet.git",
-      tag:      "v0.33.0",
-      revision: "9f410e34c80b86da776144a4cf7dab5d6eefd8d4"
+      tag:      "v1.4.2",
+      revision: "29cd1d9f896beb023623c4df5f91762b7950eec3"
   license "GPL-3.0-only"
   head "https://github.com/hirosystems/clarinet.git", branch: "main"
 
@@ -14,20 +14,15 @@ class Clarinet < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "3f22669ea9f94134ef52397722cdd8b37ff6f95515bdb1d5240f0d13a1d38424"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "a40dc00d8e4db3685b05ebcc2a88350111a1ded8acda10ac64360ca0d538a872"
-    sha256 cellar: :any_skip_relocation, monterey:       "e0fd331d0f743196f8eb8dbe3c777dfa2ab8fadbc8bcc27587a9f100345b2b06"
-    sha256 cellar: :any_skip_relocation, big_sur:        "d2f300032eb4f5b833e191df4c81b6fc75e888400a56ae2a6232c80ebdf01b84"
-    sha256 cellar: :any_skip_relocation, catalina:       "6217549ee84e5fcf8938daf56a01c7e9bb4623266943884585dca071598b9e76"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "72d77c0b822dcc19e4e7f82bd41033a14f71a41d24389bfde3b840eb60cf5466"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "118bfc6caefe9b114bd38fc83bd53f0c9038a1e33a19f8abde4da9d1372ce85d"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "795d0d3519fadf191d29835ae0a87a9d47548b0fd2d05afc60efc2f16dc43c9a"
+    sha256 cellar: :any_skip_relocation, ventura:        "f113fe2e7f3294656902251a8e74df9ce0aa2852d7fb3e0cbb9b13f932fd8965"
+    sha256 cellar: :any_skip_relocation, monterey:       "b93baba164b6646d711f03480adde4ee66ced458d6595ede1001254c15bbbccf"
+    sha256 cellar: :any_skip_relocation, big_sur:        "da98edd3a7b925edad899700bde563f6b13d3342869475183ab672f559d9fdc6"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "515b9b9af57b1d0b453fff420e56ff36c46b8365c0b6bcc5d790933f230274f6"
   end
 
   depends_on "rust" => :build
-
-  on_linux do
-    depends_on "pkg-config" => :build
-    depends_on "openssl@1.1"
-  end
 
   def install
     system "cargo", "clarinet-install", "--root", prefix.to_s

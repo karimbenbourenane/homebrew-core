@@ -1,22 +1,22 @@
 class Cmark < Formula
   desc "Strongly specified, highly compatible implementation of Markdown"
   homepage "https://commonmark.org/"
-  url "https://github.com/commonmark/cmark/archive/0.30.2.tar.gz"
-  sha256 "6c7d2bcaea1433d977d8fed0b55b71c9d045a7cdf616e3cd2dce9007da753db3"
+  url "https://github.com/commonmark/cmark/archive/0.30.3.tar.gz"
+  sha256 "85e9fb515531cc2c9ae176d693f9871774830cf1f323a6758fb187a5148d7b16"
   license "BSD-2-Clause"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 arm64_monterey: "088cdde54f9999dc34fdcc788b85052c9b58db6b4379ab601cffa7a41d936c94"
-    sha256 cellar: :any,                 arm64_big_sur:  "69c90d2fad0777d9f38bcab5c57384907dad0695e4feeb8416fba20f22f900e2"
-    sha256 cellar: :any,                 monterey:       "d48785695ca7b81ad1d36a7c97b032d8499a6025f8f230884e9ddaa816f46181"
-    sha256 cellar: :any,                 big_sur:        "458ddb5baf0452ffbeba28aa890836273ef1b880b5f729c0cc0466cd7e12ccd7"
-    sha256 cellar: :any,                 catalina:       "d5da6294f5f07fe987edab4b8c51a7b7a76a4e9c4c268635d1d08644f21a05fa"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f1072f9aa1474190ea218ae7243ad432d71a3868edd55d19c6102d2e691a4ca1"
+    sha256 cellar: :any,                 arm64_ventura:  "0b22613ee9aa75990bdb4bbbfc6166ef8d176b17c8caf7bbad25ed0738841a7b"
+    sha256 cellar: :any,                 arm64_monterey: "739ea11aa0a356b621c49661721ceb371e3c5ea56c244328bd10aae74a0f95a4"
+    sha256 cellar: :any,                 arm64_big_sur:  "162ade26201f90662fc6305a83c72ae2a550ddc4326ccf453d5ab1fd85879c25"
+    sha256 cellar: :any,                 ventura:        "ea945f37fb8de82dffc9ba85f6592b564036228e7ee2ba49951bc639b51266c6"
+    sha256 cellar: :any,                 monterey:       "43e230aa0745cc9362d1f2f7c1d85424005690242c725117d3a88be8b88d31c2"
+    sha256 cellar: :any,                 big_sur:        "cef92df088c591e3b123ad841a0773fd75c4961d59f701b5e6d27902ecde14af"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f35b1d16c83135d09f2f022a0e4f5a25479feea6411c5115bd8dddfc866f4d1a"
   end
 
   depends_on "cmake" => :build
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => :build
 
   conflicts_with "cmark-gfm", because: "both install a `cmark.h` header"
 

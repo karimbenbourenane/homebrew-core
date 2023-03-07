@@ -2,8 +2,8 @@ class Fortio < Formula
   desc "HTTP and gRPC load testing and visualization tool and server"
   homepage "https://fortio.org/"
   url "https://github.com/fortio/fortio.git",
-      tag:      "v1.35.0",
-      revision: "0eb1a25a204cabcb888fb3f1f70c6d712347c203"
+      tag:      "v1.53.0",
+      revision: "49f6e72a72ec061e0041f487d19e929d787c88f7"
   license "Apache-2.0"
 
   livecheck do
@@ -12,12 +12,13 @@ class Fortio < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "af2c7c4384ae5d7c05c6990126365750b4ae884c7447b23b13a74abc8a414cda"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "86b0449f26a5554a2bd758561ed2ba7cd50ac04d7105569a6b131192a46b9729"
-    sha256 cellar: :any_skip_relocation, monterey:       "dc6fa4e714377c6fc296569bb7d1384c680b84fb7de420e9be29517c3c43e2d7"
-    sha256 cellar: :any_skip_relocation, big_sur:        "f770dd3bba850dd233520c9232c89dd80e591bd58814dae5bbd89d1c1dc48c30"
-    sha256 cellar: :any_skip_relocation, catalina:       "6e8a8764fa6d0245645da4cd4cffd81d605bba5ec33d306d149de1f31711a9d9"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "eaf36b94fb57fa5a7d400372181cd5773629164b23184aab88b436a2e6f431e4"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "168e66935d5201fad391d4268515e3cff5c9b5c831d671715bbc60bca0d1ea39"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "625d6d1f4e20095bb6bd78952165addec0f1b28adbf4009bbb71028bcb3444ae"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "fa9ccf76c2e7f9add4a5be90b2f89cd77d223f0a5b8cc132d61815eea339882c"
+    sha256 cellar: :any_skip_relocation, ventura:        "5dd60097e8494dfdec00fcd95d58750c3d17e7fcd1088b450024257da6be94ba"
+    sha256 cellar: :any_skip_relocation, monterey:       "20d38ac569b33e48cc7d815d4f31e6f970d5ae0291e4a21de2df64cc7ab12e10"
+    sha256 cellar: :any_skip_relocation, big_sur:        "ce54410f05c9ffbaffd3bda5e84d404fe9548daece7326590c01ae0c7f285abd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9db6c6858075055bc1bc26c5009b79ed44d03c55bf882978d0617e90a4613e3a"
   end
 
   depends_on "go" => :build
@@ -28,7 +29,7 @@ class Fortio < Formula
   end
 
   test do
-    assert_match version.to_s, shell_output("#{bin}/fortio version -s")
+    assert_match version.to_s, shell_output("#{bin}/fortio version")
 
     port = free_port
     begin

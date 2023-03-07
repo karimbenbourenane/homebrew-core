@@ -5,14 +5,11 @@ class GtkChtheme < Formula
   sha256 "26f4b6dd60c220d20d612ca840b6beb18b59d139078be72c7b1efefc447df844"
   revision 3
 
-  livecheck do
-    url :homepage
-    regex(/href=.*?gtk-chtheme[._-]v?(\d+(?:\.\d+)+)\.t/i)
-  end
-
   bottle do
+    sha256 cellar: :any,                 arm64_ventura:  "5b0a66205d00b377659f777db9aa0196af0ba64519bcd759ba7bc9da55afb37e"
     sha256 cellar: :any,                 arm64_monterey: "a6b9e2b55273be2bbfe8b54a82757e22c4a19e45a1f63780500499e73393d408"
     sha256 cellar: :any,                 arm64_big_sur:  "8db79039412079abddb969b631131eb3a85f4e90edbcda84bffe4505e55f44b7"
+    sha256 cellar: :any,                 ventura:        "98eeaded4eeae18b8aab5b9a91a8063facaa044a62cdfa7ad0afeaa15cad6259"
     sha256 cellar: :any,                 monterey:       "b5f53c47bbe67239f626bd71f2c19e3d1327b232a089bf9a6989e2cb8b1eebc2"
     sha256 cellar: :any,                 big_sur:        "b6255d461ea8c2ce6606170fdfc3d0564cc7d83ad5feeb7243c6dac01a7ba9e1"
     sha256 cellar: :any,                 catalina:       "6294abe2d8ad07c52cc78c6fd156fba145340c163d4be7d103ce91ef84d2911b"
@@ -21,6 +18,10 @@ class GtkChtheme < Formula
     sha256 cellar: :any,                 sierra:         "5af49da12ab0e1799377eb160cff68283b7a24e0149135603d35810e6c0d7e55"
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "8b7b31e4dee87e90caa847fadfb056eb44f063a6903528eeb3238ab6a78b8ca9"
   end
+
+  # GTK 2 is EOL: https://blog.gtk.org/2020/12/16/gtk-4-0/
+  # No new release or commit since 2008
+  deprecate! date: "2023-01-18", because: :unmaintained
 
   depends_on "pkg-config" => :build
   depends_on "gettext"

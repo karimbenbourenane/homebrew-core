@@ -1,8 +1,8 @@
 class Lnav < Formula
   desc "Curses-based tool for viewing and analyzing log files"
   homepage "https://lnav.org/"
-  url "https://github.com/tstack/lnav/releases/download/v0.11.0/lnav-0.11.0.tar.gz"
-  sha256 "d3fa5909af8e5eb2aa7818b90120cae35aa7dd1775a3b0d2097d7e6075b8f935"
+  url "https://github.com/tstack/lnav/releases/download/v0.11.1/lnav-0.11.1.tar.gz"
+  sha256 "7685b7b3c61c54a1318b655f78c932aca25fa0f5b20ea9b0ea6a58c7f9852cd0"
   license "BSD-2-Clause"
 
   livecheck do
@@ -11,12 +11,14 @@ class Lnav < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "68192f036d31470c82966434ca14af6d647929e67ce58f03a549b28991f78c00"
-    sha256 cellar: :any,                 arm64_big_sur:  "bdd76d98b34fad9714ce922c951d33f5caacf8c5b7be2ffca868d4e2271245c0"
-    sha256 cellar: :any,                 monterey:       "662ef55af0f76c8f81c017178b1b0c683545fdf4516f5ad82eafe597b6ff82c3"
-    sha256 cellar: :any,                 big_sur:        "0fa0bc4dc53a31d7c8651c37679a711c2ba44dbcdf75bbd806c2b8599bfed26c"
-    sha256 cellar: :any,                 catalina:       "88850c2b768144d4722a373d48f703c99702e293563cd42b4d20771c7106978b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fc94900ee6c9f3d74628c23405b3025e3953fa1c123fa37e1493e42dd8cfa439"
+    sha256 cellar: :any,                 arm64_ventura:  "744155bbc1e343427acdbdc2a02307f05015b0b1880742a88907b79d035893cb"
+    sha256 cellar: :any,                 arm64_monterey: "364cc0e9958a7a9b1daa0899a9c4a29b67fdd117d6804f66f83bb1bd429dd971"
+    sha256 cellar: :any,                 arm64_big_sur:  "97fff24ec910f9c73624d2962315cd9d69f2a4582e15ac9a36f641aa669f434a"
+    sha256 cellar: :any,                 ventura:        "3064b0e3888ac5c3c32c36fed7a4712e303be92d235ca8f6a02c4742ab698e38"
+    sha256 cellar: :any,                 monterey:       "0d6dadc6f2495f5199e25095bec8093e8b838077fb1b093efb12142c38d475e2"
+    sha256 cellar: :any,                 big_sur:        "bd67b7bdf92a9cc99064a0ec2bf6019f0eff281712549c36503f704ccab77a1a"
+    sha256 cellar: :any,                 catalina:       "9e2ec27502d164cfd2c415b673009fd280d607c27262d5136145fd59ebfdc8de"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "50f25b4f2a477537758b91bc503306a62faffe4dac6d3b27c3cd85b3f6f9b1de"
   end
 
   head do
@@ -28,14 +30,10 @@ class Lnav < Formula
   end
 
   depends_on "libarchive"
-  depends_on "pcre"
+  depends_on "pcre2"
   depends_on "readline"
   depends_on "sqlite"
   uses_from_macos "curl"
-
-  on_linux do
-    depends_on "gcc"
-  end
 
   fails_with gcc: "5"
 

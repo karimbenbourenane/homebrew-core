@@ -1,17 +1,18 @@
 class Gdu < Formula
   desc "Disk usage analyzer with console interface written in Go"
   homepage "https://github.com/dundee/gdu"
-  url "https://github.com/dundee/gdu/archive/v5.15.0.tar.gz"
-  sha256 "4cbbaea0bc46853bde0508b8a9c5f9fdc95dd45ff21a2eb5c5adeb9917cb95b3"
+  url "https://github.com/dundee/gdu/archive/v5.22.0.tar.gz"
+  sha256 "cb655d2c609925fb137357704dcbebf7d80796d9011ed43df8c79c18cfa893d7"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "611bb21fb2e4ef80d21aed07dd8580cd1ed5af3d264729330892e17555bc145c"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "106343c8244071814131fe171e60956c234d9de13b802c70c48e5f44b6d30fa2"
-    sha256 cellar: :any_skip_relocation, monterey:       "9c7659e2cf2c5745ccca64fdb8630fe36a5c25ef8e95286848988bd057580a88"
-    sha256 cellar: :any_skip_relocation, big_sur:        "0fd9a1ce122498f63c9a774a157f887e73a0ad0689e20b4ff5ca255243522561"
-    sha256 cellar: :any_skip_relocation, catalina:       "a87853cbe450589967e30f0327668e4f1e364ad5d1de12af6c9606668d37db6a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6dba6a2be90a633e0410682db2df264f2adce88f90a8a498196fce93de9b0d09"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "ff7692229c9d322c370823931d36bbb0b2b93cb3f7b023cd6c9fe0bc73170b41"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "256eb895aec3d8ebb3d57a270b7b126c2ddfada05c510d3c43f26fb279fc9ee4"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "e99da60384722212df5429cfbf05413e4f269c5ae4d83c7891294ffb61421394"
+    sha256 cellar: :any_skip_relocation, ventura:        "cb50007a0547e57f3faee3eb9b1946ecc08260a5828e04d1b8c761c9a7c493d7"
+    sha256 cellar: :any_skip_relocation, monterey:       "68d9bba3332615de12d682cd17674b4f9583b0729be5c59760b02e62246a60e4"
+    sha256 cellar: :any_skip_relocation, big_sur:        "102611e6dfe1167ffeb49193bccfa1d0b7c75f0ab698d78eb091d9247e919ccb"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "56e250063ff351b32769b7a1ec6553043546a03519e65eefc7962176d3ee96f9"
   end
 
   depends_on "go" => :build

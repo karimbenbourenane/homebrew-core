@@ -1,25 +1,26 @@
 class Siege < Formula
   desc "HTTP regression testing and benchmarking utility"
   homepage "https://www.joedog.org/siege-home/"
-  url "http://download.joedog.org/siege/siege-4.1.5.tar.gz"
-  sha256 "076df9fcdb7f63c46d6f661acc2ccc8405937ae9cae490ab8a9d78a9d2e7b8cb"
+  url "https://download.joedog.org/siege/siege-4.1.6.tar.gz"
+  sha256 "309d589bfc819b6f15d2e5e8591b3c0c6f693624f5060eeac067a4d9a7757de9"
   license "GPL-3.0-or-later"
 
   livecheck do
-    url "http://download.joedog.org/siege/?C=M&O=D"
+    url "https://download.joedog.org/siege/?C=M&O=D"
     regex(/href=.*?siege[._-]v?(\d+(?:\.\d+)+)\.t/i)
   end
 
   bottle do
-    sha256 arm64_monterey: "4c25cc322a4873186c5d3621af5bc2a1aa1b9bc36bd61d01cbc6e8ffb936381d"
-    sha256 arm64_big_sur:  "c4774a5b6fc668aa03d0b8fad53d4e0e736ff475549a77ef1b7b409f370a8bf5"
-    sha256 monterey:       "bbf2686f1b3664b7a7f4392e74f5748046dac9dd5f25b6c929c34b25610826e6"
-    sha256 big_sur:        "bee643fc153e438ec4020c3e7a619cade1bcad2bdf08d25262b5040150bb9abc"
-    sha256 catalina:       "2e67988df1c76bb2dbde08064246f94cd7a356ea2273a0ef7a70d2b8ae8aa2d6"
-    sha256 x86_64_linux:   "df87d178ad402ff12a7ab1c14100147e4319c3a9227e087b2f148faccb467450"
+    sha256 arm64_ventura:  "81ceb978079fb317ee9ed96c9cb5a25630e9047359777d79203210b144dfd8c4"
+    sha256 arm64_monterey: "fcbfd35272354e1477efa43d2e908ef07c242995741fbf3edbbba4ed239528d6"
+    sha256 arm64_big_sur:  "e210900e7ac3184ebdcc030d147e391c603dd15c7807d8f55b6ed458195467c8"
+    sha256 ventura:        "fb8ddf6309df48329186c9afd517f845219a970aec991d5aa56ccd2854c0db99"
+    sha256 monterey:       "0c9a0511b4b4e5299ba245a7ca1bb4756a80793d9fd04120f0c857a430163544"
+    sha256 big_sur:        "b11b9531ea6a4ed3b0a7d2b74c48516765f462b0e65a822a8e9b38ddad8d208a"
+    sha256 x86_64_linux:   "323b6373cb6e95b475382543a8d96814d37a22e1c9a817651b6c1e772b766e58"
   end
 
-  depends_on "openssl@1.1"
+  depends_on "openssl@3"
 
   uses_from_macos "zlib"
 
@@ -30,7 +31,7 @@ class Siege < Formula
                           "--prefix=#{prefix}",
                           "--mandir=#{man}",
                           "--localstatedir=#{var}",
-                          "--with-ssl=#{Formula["openssl@1.1"].opt_prefix}",
+                          "--with-ssl=#{Formula["openssl@3"].opt_prefix}",
                           "--with-zlib=#{MacOS.sdk_path_if_needed}/usr"
     system "make", "install"
   end

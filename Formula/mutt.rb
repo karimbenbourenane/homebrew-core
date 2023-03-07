@@ -10,21 +10,23 @@
 class Mutt < Formula
   desc "Mongrel of mail user agents (part elm, pine, mush, mh, etc.)"
   homepage "http://www.mutt.org/"
-  url "https://bitbucket.org/mutt/mutt/downloads/mutt-2.2.7.tar.gz"
-  sha256 "eb13858f58bb369f477bf652d90e9b6aaddd0d610acbea3455049e5efad36df1"
+  url "https://bitbucket.org/mutt/mutt/downloads/mutt-2.2.9.tar.gz"
+  sha256 "fa531b231d58fe1f30ceda0ed626683ea9ebdfb76ce47ef8bb27c2f77422cffb"
   license "GPL-2.0-or-later"
 
   bottle do
-    sha256 arm64_monterey: "7b188f4d094f7a91be5121ea404003d0807e355f92edaa9c488a15eb18db4430"
-    sha256 arm64_big_sur:  "410217a6d21633c5b6b260c0355c307c0e77ad252973cd99f41706a55af38db8"
-    sha256 monterey:       "7c04a1ca682145a52de0b3188cf955098292e317d55f14cff99fe0bfb8d651b3"
-    sha256 big_sur:        "a8fc0e6b6151f27991b95e4d527ad6b614372527af081c7a0ee4f43a914459b0"
-    sha256 catalina:       "30da37decafee6c745c565787990b54d776f3e7ecee14b9f1c7c62b4370a8e9e"
-    sha256 x86_64_linux:   "d4a15a8973a5cee61212dd259d5e1f8d053bba673033172966bd11bc46612410"
+    rebuild 1
+    sha256 arm64_ventura:  "75402fa2874ea11b9161df5a1570d5d37a17a5b139ff963f050c724311e472f8"
+    sha256 arm64_monterey: "f278aee880d1f861f8b4bffa4a505ad37c007edc809ea4b31641a7978c2f2b85"
+    sha256 arm64_big_sur:  "b6add7e90b217df2a3bbb346182e6fb1b409bbff4619c741a3c0f08aa903d725"
+    sha256 ventura:        "7bb9f3303700a0c0d89c76a85defe9290ac60cfd63e89cbf38070e7531c1d3be"
+    sha256 monterey:       "d15f5bea037b83f62f4d7cf858cefd33345b97e9e8450fbe79f0d4849cae9ca2"
+    sha256 big_sur:        "54e8a82b62d333bb241fc4d3f212f09cff0d3ede07dca280a38e77e788b67afc"
+    sha256 x86_64_linux:   "4aa24d8649a336ef29f04e08ae3b5aad77edd63668004985c8a5aa728aedb7de"
   end
 
   head do
-    url "https://gitlab.com/muttmua/mutt.git"
+    url "https://gitlab.com/muttmua/mutt.git", branch: "master"
 
     resource "html" do
       url "https://muttmua.gitlab.io/mutt/manual-dev.html"
@@ -34,6 +36,7 @@ class Mutt < Formula
   depends_on "autoconf" => :build
   depends_on "automake" => :build
   depends_on "gpgme"
+  depends_on "libidn2"
   depends_on "openssl@1.1"
   depends_on "tokyo-cabinet"
 
@@ -54,16 +57,17 @@ class Mutt < Formula
       --disable-warnings
       --prefix=#{prefix}
       --enable-debug
+      --enable-gpgme
       --enable-hcache
       --enable-imap
       --enable-pop
       --enable-sidebar
       --enable-smtp
       --with-gss
+      --with-idn2
       --with-sasl
       --with-ssl=#{Formula["openssl@1.1"].opt_prefix}
       --with-tokyocabinet
-      --enable-gpgme
     ]
 
     system "./prepare", *args

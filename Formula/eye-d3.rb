@@ -15,15 +15,18 @@ class EyeD3 < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "2e439834b1f3942d1318b958cf4363dc68386dcc5930841207d13d56e3bf0be3"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "e3bf5857dd54a6b08e2367bfca0d01a23ad251fc4fbbc1479ffb27dca61deb08"
-    sha256 cellar: :any_skip_relocation, monterey:       "a815764695f279f4f0402da82ab02d5db6c7acae8678b9f4bc486f2fe8e1d628"
-    sha256 cellar: :any_skip_relocation, big_sur:        "884850552176a42baf923bf4c0b1a57144c8ebc6b7b5a9451dbdb1c932995e24"
-    sha256 cellar: :any_skip_relocation, catalina:       "0279f0d6ae173bbfc09afbd493e1b2ee6265bda57b312cfd8b7f1f4229ee9e76"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c511552fe4d3bbed9ef74934bfd5cf2e2cc42d395f38106cf78d70a40ad8f5aa"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "1f4883bcbee1f7a8c72a814ceda0bdd774dab13090f5788abe618e27a20c75dc"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "dd6b0258622b3307eb3bf54bcabcd8cf62c1585d77656817a25281fc387a9903"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "1f7f2c3f630ae636d131e25e7c6751e7e303c93853078ff5d91ec1a48fdb6ec1"
+    sha256 cellar: :any_skip_relocation, ventura:        "2eeb90f36cce98ebb93f4b9ce76118449e38f7736a7a1d6a6d77839110decec0"
+    sha256 cellar: :any_skip_relocation, monterey:       "b1e52d17783493b79d1c3ee81dcec2d3ea807c8593e436f0507dc95f5e96b683"
+    sha256 cellar: :any_skip_relocation, big_sur:        "aaffc02514d0c8810236b9a67650e67c3b76e41057afc6f15429102c28a3571c"
+    sha256 cellar: :any_skip_relocation, catalina:       "ef09a7738882c59ae2adf8939dd5237118668c7fe11e61c953f36c992d3648c0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5b3f33169eb14293fbcea9aa6e15b03ba6eb883f6ca6c2d18121656e4c8da9ae"
   end
 
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   # Looking for documentation? Please submit a PR to build some!
   # See https://github.com/Homebrew/homebrew/issues/32770 for previous attempt.
@@ -59,11 +62,12 @@ class EyeD3 < Formula
   end
 
   def install
-    venv = virtualenv_create(libexec, "python3")
+    python3 = "python3.11"
+    venv = virtualenv_create(libexec, python3)
     venv.pip_install resources
 
     bin_before = Dir[libexec/"bin/*"].to_set
-    system libexec/"bin/python3", *Language::Python.setup_install_args(libexec)
+    system libexec/"bin"/python3, *Language::Python.setup_install_args(libexec, python3)
     bin.install_symlink (Dir[libexec/"bin/*"].to_set - bin_before).to_a
     share.install Dir["docs/*"]
   end

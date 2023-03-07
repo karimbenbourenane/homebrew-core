@@ -2,23 +2,25 @@ class Saml2aws < Formula
   desc "Login and retrieve AWS temporary credentials using a SAML IDP"
   homepage "https://github.com/Versent/saml2aws"
   url "https://github.com/Versent/saml2aws.git",
-  tag:      "v2.36.0",
-  revision: "6957a7412352d3ce930a99417d0640f38525811f"
+      tag:      "v2.36.4",
+      revision: "8e2688a6fbbf6331eb58246a62dc42060b6229f8"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "ae2cbe79a47d330536caab6ab21f6cba706fee72a7eef912694156edb90e9927"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "de9d118be4a5b637b600fecc80e13cb8d7b11461125269c6af938988e620001e"
-    sha256 cellar: :any_skip_relocation, monterey:       "254feb9ad98a81845b0f6713a8277c456de7308d6fb37c9f517c4cee8d7b2d68"
-    sha256 cellar: :any_skip_relocation, big_sur:        "a35a6ed158042174b402ffa2b83e6caf5af61591090af50caa472db820c1e0be"
-    sha256 cellar: :any_skip_relocation, catalina:       "51ff3e17e8d81e36f7cace70ae1af3197ca7dadce1779fe8f9be361cd6ef9df8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "3040a0cf15258d1f5f0c2647d070a481a30adb588c0505a7f051440deb674c8e"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "ae5a87c007a009283c4a0306b8dc491f0cfb4c02ba36b9b00aefae83826b5d5e"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "279777218a7936aeec206c0424ed7dc33b018a0c98df4b7802c38773d34c98f5"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "facbc845229986c8f7ee34efebb9d395c7bb8d2709d5c6405c10ba788b857be9"
+    sha256 cellar: :any_skip_relocation, ventura:        "008c8ff130709f5f33a4f46735168a9fcb13b248483d84f924d8859b02f42eb2"
+    sha256 cellar: :any_skip_relocation, monterey:       "be69292275dd2f177143e17e06656845fe20b693bff879e76ad7f8999cd2b97c"
+    sha256 cellar: :any_skip_relocation, big_sur:        "4e4a28cdb7e5ee63cae8d7acca986094133e96a9acf20739502c2cf3db5c2c5d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c8673b953a52afb1b892b51e07377b35c28c1ea6de8d7efdc42c92f5ecc498cb"
   end
 
   depends_on "go" => :build
 
   def install
-    system "go", "build", *std_go_args, "-ldflags", "-s -w -X main.Version=#{version}", "./cmd/saml2aws"
+    ldflags = "-s -w -X main.Version=#{version}"
+    system "go", "build", *std_go_args(ldflags: ldflags), "./cmd/saml2aws"
   end
 
   test do

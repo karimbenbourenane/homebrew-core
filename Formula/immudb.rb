@@ -1,8 +1,8 @@
 class Immudb < Formula
   desc "Lightweight, high-speed immutable database"
   homepage "https://www.codenotary.io"
-  url "https://github.com/codenotary/immudb/archive/v1.3.2.tar.gz"
-  sha256 "e11862f5aad72f74d3a00480f57cfaaf103075ca0e86ca2d3f16d428c7d58edf"
+  url "https://github.com/codenotary/immudb/archive/v1.4.1.tar.gz"
+  sha256 "0530e49f7c494408615468d16abf1dc7cce3613290442613de06c75da2cf0fee"
   license "Apache-2.0"
 
   livecheck do
@@ -11,12 +11,14 @@ class Immudb < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "97139315a3ab470c04d1021690088af8212867d85cd5731004a514f39f27590e"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "87e2bd8a2e8a5f3ffe5f70783978281498545c70bf632fa614d3ac261d98833a"
-    sha256 cellar: :any_skip_relocation, monterey:       "15988eb0216ad85edda4130fdf33a7c7b19176d6af60138484c1aa0e1d990b6d"
-    sha256 cellar: :any_skip_relocation, big_sur:        "62e81659ab0ad5af8c6c1c5db2a31e887be8121267d1222d6e474e5a7a4055d0"
-    sha256 cellar: :any_skip_relocation, catalina:       "ecc23dfdff28eca475818277847711387b548b1568be4015fa3452b63823a4d3"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e13aa5c9b96bf1e5741c5fe0ac6769a5bbdf80dce63ede3b78ca15ee2cb2d181"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "0b7307129ab0d59d3d59552982302f7f216c61400fc1dcbbf4517d41667a59ad"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "75140b5233891e8de7b28ca9c1c619e947c6929bb296f54545e1b9348447bec2"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "627415c161d24643b62527b7d0c61e8a7da4ac9cc8d8baadf8a6c152f0bd0ea7"
+    sha256 cellar: :any_skip_relocation, ventura:        "59c47db568fae530b2a98df9a641615157a655baf3439f130247f0129e77ba8c"
+    sha256 cellar: :any_skip_relocation, monterey:       "fa19bdc637ec2e47fcea01014edd89d42e6c50fd160d68d5031377c94200beec"
+    sha256 cellar: :any_skip_relocation, big_sur:        "d93eeb424e0fe7f26ef6c6628e07f2bc5f5f111caff169a67b7beb01227788a1"
+    sha256 cellar: :any_skip_relocation, catalina:       "5bcae81f2c054c1c4a334720cbe62a4de9653f0d010915e2a40e8a77ab6db04c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "92dcddc1d897b8df590bda7bc310b8ba882fde86b9a4852162c47f34f44a5aa9"
   end
 
   depends_on "go" => :build
@@ -24,7 +26,11 @@ class Immudb < Formula
   def install
     ENV["WEBCONSOLE"] = "default"
     system "make", "all"
-    bin.install %w[immudb immuclient immuadmin]
+
+    %w[immudb immuclient immuadmin].each do |binary|
+      bin.install binary
+      generate_completions_from_executable(bin/binary, "completion")
+    end
   end
 
   def post_install

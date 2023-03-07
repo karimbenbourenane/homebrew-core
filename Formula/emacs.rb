@@ -1,19 +1,20 @@
 class Emacs < Formula
   desc "GNU Emacs text editor"
   homepage "https://www.gnu.org/software/emacs/"
-  url "https://ftp.gnu.org/gnu/emacs/emacs-28.1.tar.xz"
-  mirror "https://ftpmirror.gnu.org/emacs/emacs-28.1.tar.xz"
-  sha256 "28b1b3d099037a088f0a4ca251d7e7262eab5ea1677aabffa6c4426961ad75e1"
+  url "https://ftp.gnu.org/gnu/emacs/emacs-28.2.tar.xz"
+  mirror "https://ftpmirror.gnu.org/emacs/emacs-28.2.tar.xz"
+  sha256 "ee21182233ef3232dc97b486af2d86e14042dbb65bbc535df562c3a858232488"
   license "GPL-3.0-or-later"
 
   bottle do
     rebuild 1
-    sha256 arm64_monterey: "63e819e025b63ae5ddd5f0f34d6ca965e8678c981f32dc83824eff59b35c2814"
-    sha256 arm64_big_sur:  "11efe35336b565b8f9c1584b02d12a3de1a17b0a12764af6273425dd34898c08"
-    sha256 monterey:       "c258d8cb6b85d377381e8adda32f00bcd3d7b3db37ee4fd05cce09815d0c36f7"
-    sha256 big_sur:        "f246447a7575f2ff5a41332f23b50d72a1d26e43cdccad30f22bb5af1a4cc0f8"
-    sha256 catalina:       "e29f1627f58d9a02cfdcc56c426dcdaa257bc6e74482e4d250abe034553bf0ca"
-    sha256 x86_64_linux:   "cfb6ef8f158d521f115e66707091a36e84b63f165930979eb8948b796116aa7b"
+    sha256 arm64_ventura:  "f4a933ab0cb1c3f28dedc0704425fd34a48710845958287614589c9a73f4649e"
+    sha256 arm64_monterey: "ba71e6b793a5292ca964d3541cfb4222b968715110df1b5566f0f907b6ad673d"
+    sha256 arm64_big_sur:  "c11c264e7a5a947c06ae724bcd7ea7314c440f1014fdee1fb69adf23df76a17d"
+    sha256 ventura:        "db8c4b591ce83a564907c7208d045563da103c64f20450bf234e7355fcc27c9c"
+    sha256 monterey:       "4ae23c3a1fa87f997f08d77b874b3ca2995655173125ac0c9b62776a76899f35"
+    sha256 big_sur:        "41e45b591cec75cee7f9c08355356d35ca92e06eae2ece10b08abc1088798d18"
+    sha256 x86_64_linux:   "8612bf10b8605184e317c8ce31a0ea7a3c4d10785b5fe074a189b3b11146deb4"
   end
 
   head do
@@ -32,7 +33,7 @@ class Emacs < Formula
   uses_from_macos "ncurses"
 
   on_linux do
-    depends_on "jpeg"
+    depends_on "jpeg-turbo"
   end
 
   def install

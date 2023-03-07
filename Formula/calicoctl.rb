@@ -2,8 +2,8 @@ class Calicoctl < Formula
   desc "Calico CLI tool"
   homepage "https://www.projectcalico.org"
   url "https://github.com/projectcalico/calico.git",
-      tag:      "v3.24.1",
-      revision: "83493da010b27b2dbc2874c80a092a4e3ec7ec34"
+      tag:      "v3.25.0",
+      revision: "3f7fe4d290541bbdd73c97bdc89a29a29855a48a"
   license "Apache-2.0"
   head "https://github.com/projectcalico/calico.git", branch: "master"
 
@@ -13,12 +13,13 @@ class Calicoctl < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "589ca0ff448e9efd4c85bef8955e305b6d6eac812f7b64c9c64e6a3f9054ad7d"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "e3c82724cf335b8509bfeab34005b3afb2c56a61ccf161244eaccd7672456024"
-    sha256 cellar: :any_skip_relocation, monterey:       "b5a84a9f0fd7966610976a05734050b5e46e0eadeab31cc1a90403adf53e59fc"
-    sha256 cellar: :any_skip_relocation, big_sur:        "1e11dc1dfd3e0e9e0ce4a55568165d3836b81b33d465b73381300afad5e0cdad"
-    sha256 cellar: :any_skip_relocation, catalina:       "b8b0f0ffa76a6007c095a0d1a623720a4d45e1ee8077864cd120109e431a3c8a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d0ec2dffa3c7ef4d64872c5e367775646d8a9e1762bf8f7cfc69aa67d8db9199"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "98c8a5b66908ceb447ce1b14d1e7f649f0fe810e47a88b86326c6b04dd48d6b4"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "7fe28169866a4b1174a8c979d849e05f7504ac39cd0915e0f67e8139d9571dbf"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "f84e5f87eb96a3c9a3d72fe96f55d23125be6ea3e736427fd0750729777f484b"
+    sha256 cellar: :any_skip_relocation, ventura:        "e6da004381f5a63046613131642d30696a7359d2aacd4637083e7733c875ea5c"
+    sha256 cellar: :any_skip_relocation, monterey:       "a4d41d6dc2d23b08aae75afcbcbba2cbc6a7fd99f27283e6c6652051833ec933"
+    sha256 cellar: :any_skip_relocation, big_sur:        "fa3b010ebe8c0900cf8fa3910bbd220e6602963601168f0f712216318b23e021"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e666aec71362c4ba6a4b84a11e15f8b54ce2c1aa5202eaf46d071a7809e516b5"
   end
 
   depends_on "go" => :build

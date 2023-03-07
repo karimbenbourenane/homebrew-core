@@ -1,18 +1,19 @@
 class Muffet < Formula
   desc "Fast website link checker in Go"
   homepage "https://github.com/raviqqe/muffet"
-  url "https://github.com/raviqqe/muffet/archive/v2.6.1.tar.gz"
-  sha256 "3b457afa53990dd5fffbbaea138ec553e4be96caf2d196fece1ddab2ee4a3d57"
+  url "https://github.com/raviqqe/muffet/archive/v2.7.0.tar.gz"
+  sha256 "230e0622c07a00956da25b0a79f71056a7cf251aaa2e4714e9a618a237c9b12c"
   license "MIT"
   head "https://github.com/raviqqe/muffet.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "e5b674022320824926fc3ea853b87de186dd31c310fc1118622f11dcd380f846"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "8d49a42370922f06ef2ac7165a65578e456eadf392f48eaa2f070d010ff617d0"
-    sha256 cellar: :any_skip_relocation, monterey:       "b59af6ee74ca34cb0393c01bedf41fd73bc6790d2131a1249eb0b95e2d03d204"
-    sha256 cellar: :any_skip_relocation, big_sur:        "63e4208e32c188935346b3902b212576a623ad3585e4dc9d9aca013b1fbe2585"
-    sha256 cellar: :any_skip_relocation, catalina:       "49453b242f88d336505320022c65dab64100b481a492d724370809a4c7d833e2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7bde31c8f1a163c139ba871ca411f61813d276c45f59b1ecced6041015e87a5d"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "f3399c577fa1d0a2cd9eacf50f44f9e36f5df3ed8d776046f819d8859d28efd6"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "dd104eeeb8cd1dd1404380d9956f92d7ce1d6eb8f858b65c7adfc1ae8632d876"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "ff448fdf9c8d60ebb5dbdd3eb4db3dc0812f30b6b3b12b910fc5a183468af6d2"
+    sha256 cellar: :any_skip_relocation, ventura:        "5b2e9e4403078581ee0ab01d2f99197d4e1c720f76ba394fa34a867d8fa7aa1e"
+    sha256 cellar: :any_skip_relocation, monterey:       "aaab4287f8dd3a5c41edee89ba6eccea756c71dd78beb59d27f41834ba090a66"
+    sha256 cellar: :any_skip_relocation, big_sur:        "4809499f184b22cf5281af80c0e01e37280fbd5c657c4f61b53fdcd1b90a10ee"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b09363a25177f4da7566b2472e6d6e2cd21ef4853fbb4753a7c180f6980950da"
   end
 
   depends_on "go" => :build

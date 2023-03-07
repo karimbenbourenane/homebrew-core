@@ -1,17 +1,18 @@
 class Cglm < Formula
   desc "Optimized OpenGL/Graphics Math (glm) for C"
   homepage "https://github.com/recp/cglm"
-  url "https://github.com/recp/cglm/archive/v0.8.5.tar.gz"
-  sha256 "baefa21342d228a83c90708459a745d5aa9b0ebb381555eea42db1f37fdf7a5a"
+  url "https://github.com/recp/cglm/archive/refs/tags/v0.8.9.tar.gz"
+  sha256 "9561c998eb2a86dca5f8596b5cd290d76f56b7735c8a2486c585c43c196ceedd"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "c48a7cc3c284fd5a61fa1aef055d1aa4c51e38a87e245e402590e8dc48903e6d"
-    sha256 cellar: :any,                 arm64_big_sur:  "27d31698e3070d1f62e4be045cdb2da514d219cc0a28cb570404915aeeefcf3a"
-    sha256 cellar: :any,                 monterey:       "e67358d4569ba43fade443088f73b68ff28716da31794fd7547aff0d393563b4"
-    sha256 cellar: :any,                 big_sur:        "de5419cd5cd47d064f629d6aab9f9277e8e5bbd6a78bd3426dce5370f1a5e0a2"
-    sha256 cellar: :any,                 catalina:       "61de7afb22328af33cf17b7df29562ea8e9865337f81c315c28efff72aaa674c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "3689de044b897eb9047854f008eb8b7b7e5ce7c915cbe9f6ec6c9241d98c6f49"
+    sha256 cellar: :any,                 arm64_ventura:  "09c64c92b8fbc14122e7696c007fbad165c4d2122212e97b0522cb10c3ad7bf9"
+    sha256 cellar: :any,                 arm64_monterey: "67043e337087d9a3cdfac5f86486dbd31725eee1caaa9d7a7130b846d1c4d13f"
+    sha256 cellar: :any,                 arm64_big_sur:  "f556d15cf860255714192580d60330541dbd41328449771f875e620f34b7a29b"
+    sha256 cellar: :any,                 ventura:        "a555f5ff395baf7f7f619876ac66c07b1455e68aad04e68ca8ecb26944b5885a"
+    sha256 cellar: :any,                 monterey:       "e0fdda10593638d07a408e62077683833f62bb21750221d87c1d992877ac8a50"
+    sha256 cellar: :any,                 big_sur:        "c54a77111cb737885398fc2fdf36374f3a3cce685085f798f0b63f73cb1503d7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d4dd1386e5fff49160975443f9c9931c8e3c280356646b1a0ac74c5f20e43a70"
   end
 
   depends_on "autoconf" => :build

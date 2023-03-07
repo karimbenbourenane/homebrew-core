@@ -1,30 +1,26 @@
 class Atomicparsley < Formula
   desc "MPEG-4 command-line tool"
   homepage "https://github.com/wez/atomicparsley"
-  url "https://github.com/wez/atomicparsley/archive/20210715.151551.e7ad03a.tar.gz"
-  version "20210715.151551.e7ad03a"
-  sha256 "546dcb5f3b625aff4f6bf22d27a0a636d15854fd729402a6933d31f3d0417e0d"
+  url "https://github.com/wez/atomicparsley/archive/20221229.172126.d813aa6.tar.gz"
+  version "20221229.172126.d813aa6"
+  sha256 "2f095a251167dc771e8f4434abe4a9c7af7d8e13c718fb8439a0e0d97078899b"
   license "GPL-2.0-or-later"
   version_scheme 1
   head "https://github.com/wez/atomicparsley.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "05f8a9426c513b0bcd3e6bd3bdb2884bb85c212b9eb3cbb098d6d5e5ec0f7920"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "f1997965e9c425cd6b4d524f79ccae01c052554f1cf3926dd24ea86c50c8f494"
-    sha256 cellar: :any_skip_relocation, monterey:       "5144666ed89e97f8a79eb646d3d6151a790f4edbfcf924204073e3b495e5f05f"
-    sha256 cellar: :any_skip_relocation, big_sur:        "59476f055d9aba2d3d803830a7b6045313d39fb40a852932dd54191efc337672"
-    sha256 cellar: :any_skip_relocation, catalina:       "99e290df24ad259c91959669143108187f4654694bca9d857673e23dbd85997a"
-    sha256 cellar: :any_skip_relocation, mojave:         "e2d278c0505712c61e651450dc43c12fc2b62d0f37b018ff30031f91d4f33b1c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "872001ac408f9eaca26e329c3895162fc65f623e56c7b9b1b5802055748b34aa"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "b34175e14acdb01523b83fb7e84ba96cfedb6fba3e40e33a594481e5020608dd"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "996bb284186eaa30569575a32e0447e7e5cf2f0223c4367e58a76a1addfac27d"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "9e553cc071ff479799cd114c085b56f03f23b904ae94d03c8cf490845dae9f7e"
+    sha256 cellar: :any_skip_relocation, ventura:        "558289aeb9de98c1c813afab51c3c0d1d92fdf82388a805781d2f4b11df20690"
+    sha256 cellar: :any_skip_relocation, monterey:       "8cc2e316a549c4d1bdc4041fd9a6cfa47673e3ed196b3aecba5e72492d2dc152"
+    sha256 cellar: :any_skip_relocation, big_sur:        "256816a97ae5ff57bbf87c40db79601522aec0b6f0bf2a0b4dc939badbe730c1"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "1b7c684a13e7f448cf4fd791c7534f43489428ee0eae19749c129b4db1389d02"
   end
 
   depends_on "cmake" => :build
 
   uses_from_macos "zlib"
-
-  on_linux do
-    depends_on "gcc" => :build
-  end
 
   fails_with gcc: "5"
 

@@ -1,17 +1,18 @@
 class Lego < Formula
   desc "Let's Encrypt client and ACME library"
   homepage "https://go-acme.github.io/lego/"
-  url "https://github.com/go-acme/lego/archive/v4.8.0.tar.gz"
-  sha256 "2cebfd9c7471c0a64ad877c4270378b2c45712103332674e5f26e5a347b8b6b1"
+  url "https://github.com/go-acme/lego/archive/v4.10.2.tar.gz"
+  sha256 "8d494a03b17b5d8e8738f59ce4041da97c50f503ef039fd02e7a8f40af3006d2"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "c1614f1bd4a7fff7ceb2eae01d16ee7d114b36c6973e846e2b62d66c6494a27d"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "7576733ae6ded208c8ae8ee6702fc56f5ffe999fa44b7df89c3d7aa0e5b59a4d"
-    sha256 cellar: :any_skip_relocation, monterey:       "b7c3c84b4f05f5ae33b8b7e5e26584c336e335ca53e41b4c150725eabe2bff16"
-    sha256 cellar: :any_skip_relocation, big_sur:        "ec037467befe2042b3ccbef9a523d35ae7e07620d28d4781650a47dc8cd24317"
-    sha256 cellar: :any_skip_relocation, catalina:       "dac48b36424dacd2e878be7e406721096dd308d1013a5313f33d276f1fec9247"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "25933b7c4d06bf96e4e3f4a1290011499260c0c31523fe33741ec929036aeb08"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "4a2248ffd303905eb10912f4d0f41e93504612a4a31f395192e7ae5db241cc92"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "6ece45ba4bbda860e00756811b545c41a20649c3f5091e81ea385f7ede560063"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "0b319910dc71706532db3d18244f9c72b32db6cdfedcb5bce1560bc7c0f09525"
+    sha256 cellar: :any_skip_relocation, ventura:        "d0c1fa63c697555038c9fada4dba1bcfe412eedbcbb4e3532571446e638737a4"
+    sha256 cellar: :any_skip_relocation, monterey:       "ef91e0183b873edcaefe355ffc6d712f09a6f15941acd570eda577045651f144"
+    sha256 cellar: :any_skip_relocation, big_sur:        "ec49b4cca9d74462a326fda8280ede7d650008e0908b6622e8ba610747e6031e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "69526424f8a05cea21a5e49f0475cbe7f2c3f826e500f2966c72bf672d47e52d"
   end
 
   depends_on "go" => :build
@@ -21,10 +22,12 @@ class Lego < Formula
   end
 
   test do
-    output = shell_output("lego -a --email test@brew.sh --dns digitalocean -d brew.test run 2>&1", 1)
+    output = shell_output("#{bin}/lego -a --email test@brew.sh --dns digitalocean -d brew.test run 2>&1", 1)
     assert_match "some credentials information are missing: DO_AUTH_TOKEN", output
 
-    output = shell_output("DO_AUTH_TOKEN=xx lego -a --email test@brew.sh --dns digitalocean -d brew.test run 2>&1", 1)
+    output = shell_output(
+      "DO_AUTH_TOKEN=xx #{bin}/lego -a --email test@brew.sh --dns digitalocean -d brew.test run 2>&1", 1
+    )
     assert_match "Could not obtain certificates", output
 
     assert_match version.to_s, shell_output("#{bin}/lego -v")

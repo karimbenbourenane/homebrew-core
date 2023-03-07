@@ -1,17 +1,18 @@
 class Cgal < Formula
   desc "Computational Geometry Algorithms Library"
   homepage "https://www.cgal.org/"
-  url "https://github.com/CGAL/cgal/releases/download/v5.5/CGAL-5.5.tar.xz"
-  sha256 "98ac395ca08aacf38b7a8170a822b650aedf10355df41dd0e4bfb238408e08a6"
+  url "https://github.com/CGAL/cgal/releases/download/v5.5.2/CGAL-5.5.2.tar.xz"
+  sha256 "b2b05d5616ecc69facdc24417cce0b04fb4321491d107db45103add520e3d8c3"
   license "GPL-3.0-or-later"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "8c40b7bf645e4fd4b237700874daf73ac57fd70c40881a190e89425ba1244293"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "8c40b7bf645e4fd4b237700874daf73ac57fd70c40881a190e89425ba1244293"
-    sha256 cellar: :any_skip_relocation, monterey:       "5e4b5eba3494002500cbd62ca36251bd588b468717449c40cc6cefedb572b028"
-    sha256 cellar: :any_skip_relocation, big_sur:        "5e4b5eba3494002500cbd62ca36251bd588b468717449c40cc6cefedb572b028"
-    sha256 cellar: :any_skip_relocation, catalina:       "5e4b5eba3494002500cbd62ca36251bd588b468717449c40cc6cefedb572b028"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8c40b7bf645e4fd4b237700874daf73ac57fd70c40881a190e89425ba1244293"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "dac91a0004bad87169513d3df69586fd42c3ad4586a2158cdc8aba2c520a6171"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "dac91a0004bad87169513d3df69586fd42c3ad4586a2158cdc8aba2c520a6171"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "dac91a0004bad87169513d3df69586fd42c3ad4586a2158cdc8aba2c520a6171"
+    sha256 cellar: :any_skip_relocation, ventura:        "ded5db67baf3074c283561e9a258a0141285b8b41bc38d16405e4eceeb7d73aa"
+    sha256 cellar: :any_skip_relocation, monterey:       "ded5db67baf3074c283561e9a258a0141285b8b41bc38d16405e4eceeb7d73aa"
+    sha256 cellar: :any_skip_relocation, big_sur:        "ded5db67baf3074c283561e9a258a0141285b8b41bc38d16405e4eceeb7d73aa"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "dac91a0004bad87169513d3df69586fd42c3ad4586a2158cdc8aba2c520a6171"
   end
 
   depends_on "cmake" => [:build, :test]
@@ -22,8 +23,7 @@ class Cgal < Formula
   depends_on "mpfr"
 
   on_linux do
-    depends_on "gcc"
-    depends_on "openssl@1.1"
+    depends_on "openssl@3"
   end
 
   fails_with gcc: "5"

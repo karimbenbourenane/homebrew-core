@@ -6,19 +6,21 @@ class So < Formula
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "968cd5e7b36fc7d677e334cfbf818f8c0a746638ba471d7f27bbcff2c9fa36b4"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "8291d50a5f0410c96b930081d408ff207f2d2a84912211163de32e60db3f35f0"
-    sha256 cellar: :any_skip_relocation, monterey:       "e39ac50f777618077ab74fb2e354426102b1edb7d3647d940d35b02a72a65c25"
-    sha256 cellar: :any_skip_relocation, big_sur:        "3d7643eef9b647d2fc7651c5a3845909898fbcb186503fc808bee1b2caa32542"
-    sha256 cellar: :any_skip_relocation, catalina:       "4478bcbb919e22ef9f83ec0c6f73bc53381ed8a3588beb680f230dde53b832f7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "af48956239eb8eaca6666f9fa6332fa6b6bbe533b8314b7b69f4a698db274189"
+    rebuild 2
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "06d9d49939df633028f759557787975e717b12e496a3d20da54afd375c3967e6"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "9b94994807aa75017eaec7f76ea78cc80c3fbcf2c0a65dfba043a3ca2d62b663"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "8afac14e917fad150dd5b06f28b96c14d49ca5c7b2894e7488f9dedbfcbfb9e8"
+    sha256 cellar: :any_skip_relocation, ventura:        "f845494b286ee5b6301c5a347ca3df396cb071797cdf9fbfadb47d9309acddf1"
+    sha256 cellar: :any_skip_relocation, monterey:       "0feba955d0c7ffc8ce409df43b27831f263f9b1d85c4496ab4c4d31116e43b55"
+    sha256 cellar: :any_skip_relocation, big_sur:        "982259bab8f867dd1387facce0ee77c60610f478214f0579ccc46db24c87cd62"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c36a6333d2954cb49b323520e4e337b81d975c440c440aae10eb4f315cb210fd"
   end
 
   depends_on "rust" => :build
 
   on_linux do
     depends_on "pkg-config" => :build
-    depends_on "openssl@1.1"
+    depends_on "openssl@3"
   end
 
   def install

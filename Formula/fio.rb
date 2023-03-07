@@ -1,8 +1,8 @@
 class Fio < Formula
   desc "I/O benchmark and stress test"
   homepage "https://github.com/axboe/fio"
-  url "https://github.com/axboe/fio/archive/fio-3.32.tar.gz"
-  sha256 "409e459840912e68be487dbbda9a7a1b3f6ddf1478e3f456f278f957ce4f7b66"
+  url "https://github.com/axboe/fio/archive/fio-3.33.tar.gz"
+  sha256 "f48b2547313ffd1799c58c6a170175176131bbd42bc847b5650784eaf6d914b3"
   license "GPL-2.0-only"
 
   livecheck do
@@ -11,12 +11,14 @@ class Fio < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "3f0c022777c3de70e1054f6cd50e135c15799185fa522ceeee7efbf574c9849c"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "32ad4359f19c1d9c067fc879215983096d3fbeb0ba2373a085afed072cf81fd1"
-    sha256 cellar: :any_skip_relocation, monterey:       "79cd5ed1fa485a0ed61c87b65c53f3b8f9b96e56fe60a13b1c52784606e0a679"
-    sha256 cellar: :any_skip_relocation, big_sur:        "cc32a1ee88a4b745034be74ae1a1f555589a99ca65fdeb57fb28e41000b96433"
-    sha256 cellar: :any_skip_relocation, catalina:       "f2f24b2215efcb1bbf2604c21a4dde80813f82e69b87e1a9bbaf9adedd90e96d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5690deaa80f5cf2180d50d5e35a9b92ee60431b3f370639c7908fcbb5624150b"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "0a1cc6c30584e795685e8498f07d098e7d74bfbec6801f20740c444f370a7cdd"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "ad044da8f2320589df7222858fa2e5373f19352a6e013ae7578b94ceae2daaeb"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "a3501b18fef99ff01487a05834b769d17b74bd107b91f5ef62cd14a3f8da81bd"
+    sha256 cellar: :any_skip_relocation, ventura:        "822b5d0009d642e86ef6a01e78f36a5679db304ffd14ba50d0b3c8a4b4361983"
+    sha256 cellar: :any_skip_relocation, monterey:       "c03af8fcce9c03638c6adeb76465edd30fd355ba214a0ccd57bc74ceb5810af5"
+    sha256 cellar: :any_skip_relocation, big_sur:        "98a3dc8e453db4dbc71f0ed915aab6e073b21ddf128652ea14aa41d3cb0390d8"
+    sha256 cellar: :any_skip_relocation, catalina:       "162f653e5868da31cde97c737012d973bd4e3ce49efa251394c462e4cc4915ec"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "0fa668c1ca84aa8a4fcef741a42925533ac936a4e366ce4ae5fb20c91b827517"
   end
 
   uses_from_macos "zlib"

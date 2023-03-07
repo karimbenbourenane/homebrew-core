@@ -1,8 +1,8 @@
 class Kdoctools < Formula
   desc "Create documentation from DocBook"
   homepage "https://api.kde.org/frameworks/kdoctools/html/index.html"
-  url "https://download.kde.org/stable/frameworks/5.97/kdoctools-5.97.0.tar.xz"
-  sha256 "61ac72b2d338cddc6da57b9097287303117e0d49ccd1c717f69f38ac01150af6"
+  url "https://download.kde.org/stable/frameworks/5.103/kdoctools-5.103.0.tar.xz"
+  sha256 "ba5782de152606269a3589ae560bab2ce6709b85f0e07181fe3ef6ebd6ace4a8"
   license all_of: [
     "BSD-3-Clause",
     "GPL-2.0-or-later",
@@ -19,12 +19,13 @@ class Kdoctools < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "89f24736e8b7273c7b27a91dd78b6b585742aa50b4a4a0aff3027af03c7b4dd1"
-    sha256 cellar: :any,                 arm64_big_sur:  "8e954fa7777187cf2c2f62bf90a6875285266a50b27df9215574d00d4f79542b"
-    sha256 cellar: :any,                 monterey:       "ce81e650a3a1c3fd5c30e91ada600c384ab9c11204fbaedc15bc0832e399e140"
-    sha256 cellar: :any,                 big_sur:        "27a1a83edbede1ddea4b3eba38dce0f12f48143d573b954a49f3c646d765d768"
-    sha256 cellar: :any,                 catalina:       "f164468a9494f3faae931952676d8ca8b1c5707a76b52265d89eb3fd514ef5f5"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c4c24fd95b1e72a2891eb262d62ae4730bca064bc69f763dac77a26bc48907f2"
+    sha256 cellar: :any,                 arm64_ventura:  "90020b577c2dc83f55ccfe26e3fc6bd6a4e2f896eb5141e48b5595ae819731f0"
+    sha256 cellar: :any,                 arm64_monterey: "89646a03c3db70bd712bfc05bcc03d8bec8ed2ca5093692cce944e6170db393a"
+    sha256 cellar: :any,                 arm64_big_sur:  "33ab752112f6c1b7e829ae2b97700b19300b493b7c2576e0e2341961efa519ed"
+    sha256 cellar: :any,                 ventura:        "f886373b4ad2c3aaaa0bb07e291e50614379f063d8478240f01a41ba7cccc8b3"
+    sha256 cellar: :any,                 monterey:       "75e79712fa13ecb70ca437d9ffb2d0c7449de14fa78e6f7ad808df50df9f4ad0"
+    sha256 cellar: :any,                 big_sur:        "1a2e35ac9a1c340005e6c63a6ab3010c31faae64bb177acce9c017c8073d7ca0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "541751c3d03575e2171ff1cafb28329e35d26ef8be3e061b3ee73250217a4fda"
   end
 
   depends_on "cmake" => [:build, :test]
@@ -39,10 +40,6 @@ class Kdoctools < Formula
   uses_from_macos "libxml2"
   uses_from_macos "libxslt"
   uses_from_macos "perl"
-
-  on_linux do
-    depends_on "gcc"
-  end
 
   fails_with gcc: "5"
 

@@ -1,31 +1,26 @@
 class Manticoresearch < Formula
   desc "Open source text search engine"
   homepage "https://www.manticoresearch.com"
+  url "https://github.com/manticoresoftware/manticoresearch/archive/refs/tags/6.0.2.tar.gz"
+  sha256 "319dcdaa17fc4672cdec5cd5a679187f691cd9aec8ce31c3012dc113d99b7d80"
   license "GPL-2.0-only"
-  revision 1
   version_scheme 1
   head "https://github.com/manticoresoftware/manticoresearch.git", branch: "master"
 
-  stable do
-    url "https://github.com/manticoresoftware/manticoresearch/archive/refs/tags/5.0.2.tar.gz"
-    sha256 "ca7828a6841ed8bdbc330516f85ad3a85749998f443b9de319cec60e12c64c07"
-
-    # Allow system ICU usage and tune build (config from homebrew; release build; don't split symbols).
-    # Remove with next release
-
-    patch do
-      url "https://github.com/manticoresoftware/manticoresearch/commit/70ede046a1ed.patch?full_index=1"
-      sha256 "8c15dc5373898c2788cea5c930c4301b9a21d8dc35d22a1bbb591ddcf94cf7ff"
-    end
+  # Only even patch versions are stable releases
+  livecheck do
+    url :stable
+    regex(/^v?(\d+(?:\.\d+)+\.\d*[02468])$/i)
   end
 
   bottle do
-    sha256 arm64_monterey: "0d31819a20010dd00d54cd895a1b9afc7da46fbb6d7650b83f1d6388676d8583"
-    sha256 arm64_big_sur:  "da661fd25ac664003e7ebe7837ea6f1904884b8926e3365fd424e9b4a04b52c8"
-    sha256 monterey:       "bf3d26100dc52e4db781a92dd78da63486e1f0ab1b61845ae08c46fe68a1cef6"
-    sha256 big_sur:        "697b60f5f866ef32d24225286bf6a87da48481359b93a858b8806f2cdf832d81"
-    sha256 catalina:       "9546799a9aefe73f36368839ae8d00c31c4aca4046771cf72e327063b6c420c8"
-    sha256 x86_64_linux:   "ce6a2f0ce1bd4dabc0eb3dedff7b5ba24a7351a4d6318e424b2a9253459cf6f0"
+    sha256                               arm64_ventura:  "1a7f1eca5d4999b51e14ba55eda00d106ffeadd3f36648c5f7214b11c4f4e2a2"
+    sha256                               arm64_monterey: "cbe75fa0b8d5f9f06d177857dba9ef164334e4f5a46781979b6938b796a88e9d"
+    sha256                               arm64_big_sur:  "0b0aabd17ee2a8f7e9e0a643259e111230f06286e6ba0a2d8cd022903aa4ca9a"
+    sha256                               ventura:        "d7831346f4165106b356a4d41963a5bd7f8de9da150bdfe64d04e86b1c8c2458"
+    sha256                               monterey:       "5a8f02675fa0b63d4b6dbba62b7ea68be3512f543944c2660b8971a93d0a7eac"
+    sha256                               big_sur:        "dfe3fdc2f39b47f775fd135432211a6d08a1e45f266842ab770deb5388de678c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a4a3f6273d6ac178773b8f445ba52693b3edc77a8af4abc0c63697088ed3b371"
   end
 
   depends_on "boost" => :build
@@ -41,10 +36,6 @@ class Manticoresearch < Formula
   uses_from_macos "flex" => :build
   uses_from_macos "libxml2"
   uses_from_macos "zlib"
-
-  on_linux do
-    depends_on "gcc"
-  end
 
   conflicts_with "sphinx", because: "manticoresearch is a fork of sphinx"
 

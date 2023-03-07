@@ -1,9 +1,9 @@
 class Kcov < Formula
   desc "Code coverage tester for compiled programs, Python, and shell scripts"
   homepage "https://simonkagstrom.github.io/kcov/"
-  url "https://github.com/SimonKagstrom/kcov/archive/v40.tar.gz"
-  sha256 "6b1c11b066d57426d61375a31c3816f1fcd2610b447050c86d9920e22d5200b3"
-  license "GPL-3.0-or-later"
+  url "https://github.com/SimonKagstrom/kcov/archive/v41.tar.gz"
+  sha256 "13cddde0c6c97dc78ece23f7adcad7a8f2b5ae3c84193020e7edd9bf44e5997c"
+  license "GPL-2.0-or-later"
   head "https://github.com/SimonKagstrom/kcov.git", branch: "master"
 
   # We check the Git tags because, as of writing, the "latest" release on GitHub
@@ -14,17 +14,18 @@ class Kcov < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "ac1c2c3b59a021af7822ed720ef499aee7dfd3650374c2b87afad5f03c7e7e20"
-    sha256 arm64_big_sur:  "bdb4c013e4153a73e3f18b3c5dce933719946491ab23642c0f30ed63400e051d"
-    sha256 monterey:       "994883172334f1c2279dc51a1d5a57aef8e6774d1a9a78beb907caa6d8e2798c"
-    sha256 big_sur:        "b0f468c3f75bb9c5fe67735e40d362916885b47ac678162b7a283a91813f8c25"
-    sha256 catalina:       "d219d3bf36180ce31b3d7cf0352803a079ee058cecbba3aff6062ba793b01b1b"
-    sha256 x86_64_linux:   "a94c3256cb943cb1638ae0c39e93c3bd5ac6106ebf148c1135325d1c95c3104f"
+    sha256 arm64_ventura:  "b56293d52b8d2b3591baccec7f8143aec6fe9b8dc832c5accf5c92fd92f6f3c5"
+    sha256 arm64_monterey: "68a6853a5064d77b60aa89e7b1767b9be1505a5c848e9012be017c6d11d55272"
+    sha256 arm64_big_sur:  "f9d812f5775df049096ab757479b152f7fc3ccedf25ed18fdec9e027f7210712"
+    sha256 ventura:        "d7a061859b7948722c56dd458509476340eee62d4aacd5c496cc8d2514e559e5"
+    sha256 monterey:       "3a4aa6158fcf675c5246ae2b45dba40e5054692cb26c6eeabae907293a016ad1"
+    sha256 big_sur:        "8ab0e4c6e2716dbf7d8ee4382c06af38d2312e9f877366a05e2529913592747c"
+    sha256 x86_64_linux:   "aa3efcf2ba34eb00534fe3a16c8d1dd3e53476dca3819744b9b3f1e8f826df66"
   end
 
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => :build
   depends_on "openssl@3"
 
   uses_from_macos "curl"

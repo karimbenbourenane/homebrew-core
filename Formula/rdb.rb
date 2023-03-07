@@ -1,17 +1,18 @@
 class Rdb < Formula
   desc "Redis RDB parser"
   homepage "https://github.com/HDT3213/rdb/"
-  url "https://github.com/HDT3213/rdb/archive/refs/tags/v1.0.4.tar.gz"
-  sha256 "156df3d22f5291cba6da07808d43a3add2e97a9c054316c53f296e2ab0ab9829"
+  url "https://github.com/HDT3213/rdb/archive/refs/tags/v1.0.6.tar.gz"
+  sha256 "e23ddf13155535622b3244ae0366135f1dffe3cb4931db02710374f2c24bec31"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "6c05b93b3ed3da141c2251771f082f92f921a94d28c35a69724d883a5e32ed0e"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "0c35743dc862f6f8314b20dcb8790e5e21498945a5d0ca733d2c2b160dabad9d"
-    sha256 cellar: :any_skip_relocation, monterey:       "afaa8238d30bc864e7026bfd6cf29b1cddb78f6080e1328d1309acc8b45a85be"
-    sha256 cellar: :any_skip_relocation, big_sur:        "9b6ff127235b303ff079df61602c75cdcc19cc4e76ffda5f5083094f78ea9bc9"
-    sha256 cellar: :any_skip_relocation, catalina:       "ee294ca26edcfd4960549cf052e99aa1fbb76a93e85736cd1cc6e8ecf6affeef"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5c723bc4dc1e0fe893ff8df16c4734f9424d22694265d9e3014525acf1f1833a"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "4961f7b192dabf9294c3f7347fcc9ab67c0df979b8ad3b2aa861e740f2dc1c03"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "f1c58f1c205514011865207012f8191392b08d29453c6d728cb6788459e455c8"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "9fcd3c426468fb35a419e6233fcdac61c31ccd8f66e54fb89a9f8ac56bdebeaa"
+    sha256 cellar: :any_skip_relocation, ventura:        "9ba8b0c40e711092e3d571ca64d09d7bb72df457de915e2bb532a1dad528b703"
+    sha256 cellar: :any_skip_relocation, monterey:       "8622cbd7908ede97b5113c0c4e0d5c8ddb28f0be9c05191c5a6fe5124df96c28"
+    sha256 cellar: :any_skip_relocation, big_sur:        "0e00f858f59db0cefaf3034c2115d93f8ae5d14e33ae4e4f6b47affb40b82b1a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "56896b55595be0aee14e814730f41c9d8b81f072cd2f549c145234bcc6b35dd0"
   end
 
   depends_on "go" => :build
@@ -24,6 +25,6 @@ class Rdb < Formula
   test do
     cp_r pkgshare/"cases", testpath
     system bin/"rdb", "-c", "memory", "-o", testpath/"mem1.csv", testpath/"cases/memory.rdb"
-    assert_equal (testpath/"cases/memory.csv").read, (testpath/"mem1.csv").read
+    assert_match "0,hash,hash,131,131B,2,ziplist,", (testpath/"mem1.csv").read
   end
 end

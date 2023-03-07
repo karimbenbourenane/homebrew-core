@@ -1,8 +1,8 @@
 class Scummvm < Formula
   desc "Graphic adventure game interpreter"
   homepage "https://www.scummvm.org/"
-  url "https://downloads.scummvm.org/frs/scummvm/2.6.0/scummvm-2.6.0.tar.xz"
-  sha256 "1c1438e8d0c9d9e15fd129e2e9e2d2227715bd7559f83b2e7208f5d8704ffc17"
+  url "https://downloads.scummvm.org/frs/scummvm/2.7.0/scummvm-2.7.0.tar.xz"
+  sha256 "444b1ffd61774fe867824e57bb3033c9998ffa8a4ed3a13246b01611d5cf9993"
   license "GPL-3.0-or-later"
   head "https://github.com/scummvm/scummvm.git", branch: "master"
 
@@ -12,12 +12,13 @@ class Scummvm < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "9c02e29261c4a74a5bf0b87b43e48cd4097f101d8357d533192c8295d61b7b8c"
-    sha256 arm64_big_sur:  "0c8d1b0dc89cf193d415aa8a0bbab69ccb0ba742e67e1e21bb9576bca1a6bedd"
-    sha256 monterey:       "64e4ce5ab970c55f261ac3057a5fba90c934577b20a4767f984e831bf45b12f2"
-    sha256 big_sur:        "7bb1f9aa31f752222ddf0f7a98a3ed685a16864009ef6b9b8a0d01efab7c2304"
-    sha256 catalina:       "c8ac1fb55fa19dbeb6339a73739467e150840f77813e34f1a27d2af9a8c432ca"
-    sha256 x86_64_linux:   "cd8e2f725818daff4f5ef6b810a39e1d67713764546049d78710db77edb2798d"
+    sha256 arm64_ventura:  "550a1b394b3ce96aa23f5c06730a9ffb94af558ff5064878af1c4ebeedc5ec94"
+    sha256 arm64_monterey: "6a3e4f2670f4bfe040618dca252120b1946148056c22d9548d5eebdb0fcaa072"
+    sha256 arm64_big_sur:  "f568c1d596748d76b628ed548bbbe8b17edf8fb780eca5deb5099a74841b9db5"
+    sha256 ventura:        "b6b91116e0bc3a6aba9ffcc8ce427d0492bc38277d83c00b3d72c4df4d84f5e8"
+    sha256 monterey:       "9f491464ff065d629b7c355a1c50c21b751d7631c5bcc164fbb8f2be13531078"
+    sha256 big_sur:        "517a01101d6a3c71ce9409433e8ca5f5cf05cc91cc07a2c472d48d4ff6cbb3e8"
+    sha256 x86_64_linux:   "50ba6a89f7ac6eed4f33180a58d19385fb9253f795b5e201056fe84a5c81f84f"
   end
 
   depends_on "a52dec"
@@ -44,9 +45,9 @@ class Scummvm < Formula
   end
 
   test do
-    # Test fails on headless CI: Could not initialize SDL: No available video device
-    return if OS.linux? && ENV["HOMEBREW_GITHUB_ACTIONS"]
-
+    # Use dummy driver to avoid issues with headless CI
+    ENV["SDL_VIDEODRIVER"] = "dummy"
+    ENV["SDL_AUDIODRIVER"] = "dummy"
     system bin/"scummvm", "-v"
   end
 end

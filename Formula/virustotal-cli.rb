@@ -1,28 +1,26 @@
 class VirustotalCli < Formula
   desc "Command-line interface for VirusTotal"
   homepage "https://github.com/VirusTotal/vt-cli"
-  url "https://github.com/VirusTotal/vt-cli/archive/0.10.2.tar.gz"
-  sha256 "09953ce45c2fbf872f70294d5fb58e856c0167ed6a7e1312f770e45bab18356b"
+  url "https://github.com/VirusTotal/vt-cli/archive/0.12.0.tar.gz"
+  sha256 "9214228416e7748d1eff4ef62cbc7f784c60a14a3224de26799df179d09994ed"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "49cb3acdc2acfec6d7c5e90ca3b75a15d597725eefb39c3a18485954b4dd3665"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "73e67213c77275de6d81483520d6b69010cc499f6229c8d8ccf93938e2adb6f0"
-    sha256 cellar: :any_skip_relocation, monterey:       "d9e61d072fb423cd10c79d2f90436d2d5e11a10074e60cef18d687c74c746808"
-    sha256 cellar: :any_skip_relocation, big_sur:        "2262044ba922438a95fad57af7207ae438b90cf39c2921b51ef4044836e048a9"
-    sha256 cellar: :any_skip_relocation, catalina:       "770c44dbb66c317f2662ca77771140a245b97405ebcac0c4222e64b0f92eaa37"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "12f7d8dc597833558487984ec3535ba2b453039662c8580553777a78f1c30e85"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "60e69ef5580692fc032b137662d1d12efce9cce6c72232d0f14595508b5aef1c"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "60e69ef5580692fc032b137662d1d12efce9cce6c72232d0f14595508b5aef1c"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "60e69ef5580692fc032b137662d1d12efce9cce6c72232d0f14595508b5aef1c"
+    sha256 cellar: :any_skip_relocation, ventura:        "8aabe8fb702a176f2ac5f455659433f797cd2d4f37e028d9af1e2c4a668f1162"
+    sha256 cellar: :any_skip_relocation, monterey:       "8aabe8fb702a176f2ac5f455659433f797cd2d4f37e028d9af1e2c4a668f1162"
+    sha256 cellar: :any_skip_relocation, big_sur:        "8aabe8fb702a176f2ac5f455659433f797cd2d4f37e028d9af1e2c4a668f1162"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "0d9d351ff0ee7f1e6b422911a3f98be5899b2e96121bfef4f9d07c136159f889"
   end
 
-  # Bump to 1.18 on the next release, if possible.
-  depends_on "go@1.17" => :build
+  depends_on "go" => :build
 
   def install
-    system "go", "build", "-ldflags",
-            "-X cmd.Version=#{version}",
-            "-o", bin/"vt", "./vt/main.go"
+    system "go", "build", *std_go_args(output: bin/"vt", ldflags: "-X cmd.Version=#{version}"), "./vt/main.go"
 
-    generate_completions_from_executable(bin/"vt", "completion", base_name: "vt", shells: [:bash, :zsh])
+    generate_completions_from_executable(bin/"vt", "completion", base_name: "vt")
   end
 
   test do

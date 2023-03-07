@@ -1,34 +1,46 @@
 class Gawk < Formula
   desc "GNU awk utility"
   homepage "https://www.gnu.org/software/gawk/"
-  url "https://ftp.gnu.org/gnu/gawk/gawk-5.1.1.tar.xz"
-  mirror "https://ftpmirror.gnu.org/gawk/gawk-5.1.1.tar.xz"
-  sha256 "d87629386e894bbea11a5e00515fc909dc9b7249529dad9e6a3a2c77085f7ea2"
+  url "https://ftp.gnu.org/gnu/gawk/gawk-5.2.1.tar.xz"
+  mirror "https://ftpmirror.gnu.org/gawk/gawk-5.2.1.tar.xz"
+  sha256 "673553b91f9e18cc5792ed51075df8d510c9040f550a6f74e09c9add243a7e4f"
   license "GPL-3.0-or-later"
+  revision 1
   head "https://git.savannah.gnu.org/git/gawk.git", branch: "master"
 
   bottle do
-    sha256 arm64_monterey: "093465f34b94ec8ddeb4ff8dab2a02dafbccf8ec05f6ef0391673b7c4fd0a91f"
-    sha256 arm64_big_sur:  "efc88dd4e2c2d87eaddb7aed2487eb17128e056ce47ce117f234a287e0e7160e"
-    sha256 monterey:       "2dcae063cbf93dd82b36be9d9aaf08644831a5f9efd304af768b3b59f7db5192"
-    sha256 big_sur:        "f909760ee429b1b41478900af7245c57cffe0a31f76b651c86e08cd1b6bcbc4d"
-    sha256 catalina:       "1bfbe650e0ef014e64d5380558c21a450aff7196f06596ff89484b185777dc90"
-    sha256 x86_64_linux:   "e62547695b5737c52a3174813091354f5ef1ef6e1369401f5f72367278caf578"
+    sha256 arm64_ventura:  "398affcca2ae34f356319c04675a1f9dac987fe93c24b7e44f3de0c3f2f80578"
+    sha256 arm64_monterey: "9b5790b804bb252baff6d8fd36c72346b976ae6620d0a611da8dd259fe280937"
+    sha256 arm64_big_sur:  "d36c8dde904dbc42ab10935b328bf5826a520df6f9116b6027d76bb6825480f7"
+    sha256 ventura:        "3ac715c614601790fd8330232db1152ce43b7faf4360b86a6c4abd0fbd589042"
+    sha256 monterey:       "5b8c20dceb9faf67e9527a55b80b1b6238f8f1dc43519c5cc1f8637bd2d5520b"
+    sha256 big_sur:        "05e3e4bfe065797628bba4e0c5239cbd6392690259ff6f0eed0c58a1cd880422"
+    sha256 x86_64_linux:   "cbf9ec54861af080e96532c8591ca2e9cf1347f3bcfdb7f70c92c1e35dcf2c48"
   end
 
   depends_on "gettext"
   depends_on "mpfr"
   depends_on "readline"
 
-  conflicts_with "awk",
-    because: "both install an `awk` executable"
+  on_linux do
+    conflicts_with "awk", because: "both install an `awk` executable"
+  end
 
   def install
     system "./bootstrap.sh" if build.head?
-    system "./configure", "--disable-debug",
-                          "--disable-dependency-tracking",
-                          "--prefix=#{prefix}",
-                          "--without-libsigsegv-prefix"
+
+    args = %W[
+      --disable-debug
+      --disable-dependency-tracking
+      --prefix=#{prefix}
+      --without-libsigsegv-prefix
+    ]
+    # Persistent memory allocator (PMA) is enabled by default. At the time of
+    # writing, that would force an x86_64 executable on macOS arm64, because a
+    # native ARM binary with such feature would not work. See:
+    # https://git.savannah.gnu.org/cgit/gawk.git/tree/README_d/README.macosx?h=gawk-5.2.1#n1
+    args << "--disable-pma" if OS.mac? && Hardware::CPU.arm?
+    system "./configure", *args
 
     system "make"
     if which "cmp"
@@ -38,9 +50,22 @@ class Gawk < Formula
     end
     system "make", "install"
 
+    (bin/"awk").unlink if OS.mac?
     (libexec/"gnubin").install_symlink bin/"gawk" => "awk"
     (libexec/"gnuman/man1").install_symlink man1/"gawk.1" => "awk.1"
     libexec.install_symlink "gnuman" => "man"
+  end
+
+  def caveats
+    on_macos do
+      <<~EOS
+        GNU "awk" has been installed as "gawk".
+        If you need to use it as "awk", you can add a "gnubin" directory
+        to your PATH from your ~/.bashrc and/or ~/.zshrc like:
+
+            PATH="#{opt_libexec}/gnubin:$PATH"
+      EOS
+    end
   end
 
   test do

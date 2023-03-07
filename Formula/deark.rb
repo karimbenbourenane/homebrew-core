@@ -1,8 +1,8 @@
 class Deark < Formula
   desc "File conversion utility for older formats"
   homepage "https://entropymine.com/deark/"
-  url "https://entropymine.com/deark/releases/deark-1.6.2.tar.gz"
-  sha256 "199f5cd6c65cd23af9323bc464f0d33f53d22686135695b4aa4ddf2ec43534ae"
+  url "https://entropymine.com/deark/releases/deark-1.6.4.tar.gz"
+  sha256 "21f7c9485f228bf7067fdb6d2336e559985e140ee790c97352ecd2a863fdbade"
   license "MIT"
 
   livecheck do
@@ -11,12 +11,13 @@ class Deark < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "8e560bcecac579e61c6e55dd4fedf07831d7f14ca84731feb672bc92b17ffaf5"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "41b5fe260d01e8520ebfa31a9df1545be5aabeafc7def39e565691a2be5736d5"
-    sha256 cellar: :any_skip_relocation, monterey:       "df89df680d31ba928a3f41a6c8beafd19310db780551ba4e9c64eecdc3488aac"
-    sha256 cellar: :any_skip_relocation, big_sur:        "c8b135424c8da134b51def027de5207150ab81329fb999cb347d4fe0b7d4f7b1"
-    sha256 cellar: :any_skip_relocation, catalina:       "823e4f833b2c843c5ffda4cf393f3baebd6e6bd19432187b47346166e6217555"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b84a83ac5ac0b5b06aadeb3bb744a08cff912630610b9f13dc4c7ab6a79e4a8b"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "5ed4fa3b539e020e2c4afa580166293b9d148cce9caf602bb3ca994139abc2b1"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "e68115bc2870357c15a2ebd94f70382116eec4c5d94500421c93cda21fa60696"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "38837770d573c53e889a75d9dfcea9701f33539d3bd350e96721e4dac43a5ba7"
+    sha256 cellar: :any_skip_relocation, ventura:        "def3274201210f991dd0ddc79546bf1d36a900bcde3e202b26a176e3949dc2cc"
+    sha256 cellar: :any_skip_relocation, monterey:       "18e3ce42adea9c623fbc926e16106edd362103a0d9f1bcda251e73bd12c9255b"
+    sha256 cellar: :any_skip_relocation, big_sur:        "96ff6225b7606a00a2786398264653fe87c4f995922ec9418ce3b400b8f1da0e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "162e85f0bb303675e98e5f421b398512beb7c5ea0744457642e6af265bbfedbf"
   end
 
   def install

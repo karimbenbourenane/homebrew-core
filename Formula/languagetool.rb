@@ -2,8 +2,8 @@ class Languagetool < Formula
   desc "Style and grammar checker"
   homepage "https://www.languagetool.org/"
   url "https://github.com/languagetool-org/languagetool.git",
-      tag:      "v5.8",
-      revision: "82e790a7d6aee95ca68e8212cd68706f5e6378ea"
+      tag:      "v6.0",
+      revision: "e44dbb08fb820b622e6639c8877d1f240c3f638e"
   license "LGPL-2.1-or-later"
   head "https://github.com/languagetool-org/languagetool.git", branch: "master"
 
@@ -13,12 +13,13 @@ class Languagetool < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "2831fd09e7f8c64a12c5292d6f7e8864a92001516b71e33e82ee5ffd81166760"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "7f79d56a4e846aa59f7b46530f11d14cdc73e8551fba2d51d144fa8a7357002e"
-    sha256 cellar: :any_skip_relocation, monterey:       "5e5d57f0b5741976fc58927498cc8a71de4d846fc336f71f42a22138aa7d2b3d"
-    sha256 cellar: :any_skip_relocation, big_sur:        "9929cedd8f5632101e4b71eea5ccb69dd0f5ff94698aad9eaf0edf3193806ea3"
-    sha256 cellar: :any_skip_relocation, catalina:       "b9717fbbfdc8bbf42053ffc01f7bde2cbedb5960474a848c5ec8043ae4d9e1e8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a25e2b80d402d560f6f5c0c456c36348b28340f6c22e02225a66157026655d6e"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "0e94268e46fd9a0a001c855dbc00f2e587500402e4aee4dbdb94393192b0ac26"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "7f1d47cd942c138fc11fcd970dd761f59ddae34b203746285dfced9b2f44ca75"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "77029a607129545ce00dc766d9bbc71c4c277a47020c8acf63885b77732fb05f"
+    sha256 cellar: :any_skip_relocation, ventura:        "dc46ea4e847850e466ae444e5cfc2b42500a17fe14a612cc9a541edfaa8746b1"
+    sha256 cellar: :any_skip_relocation, monterey:       "7f60ac5f015348ca22386b4d08969882e21357efe2150788dbeb9f17af543246"
+    sha256 cellar: :any_skip_relocation, big_sur:        "9e7995c3081e984420641a7ea25d21a03dadeca5d9d2d47d4dad201d896cd0ea"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "200948cb33c554c3d38139e23ea4c4d2765aba3a0f904f4824683a05dd787ac3"
   end
 
   depends_on "maven" => :build

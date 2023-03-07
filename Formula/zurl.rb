@@ -8,30 +8,28 @@ class Zurl < Formula
   license "GPL-3.0-or-later"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "f4f20dfa4fa21116538bf6150b3ed05fb8e1ade026fa0a08b67d00f033c13de1"
-    sha256 cellar: :any,                 arm64_big_sur:  "dbe3e4510bfb54034ca28ad3eb228314d9bde1c68e666af0c76b7676136c105b"
-    sha256 cellar: :any,                 monterey:       "10197ca2f6b2b2e783781b0e33800f76c3a17d05cd423c19c228113c3b7d074b"
-    sha256 cellar: :any,                 big_sur:        "156dbba9a7152ab28f5f70670de6692857c7910a00449e7040fb7ae89431a08c"
-    sha256 cellar: :any,                 catalina:       "5d251122a34705e001a53b33539895698a31e8aad29a3bf7e0c6eaa3579b6a1c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5b83d6978ef49ead8934309eb8d3db989e849479bbcc0eb695f80df53a460db5"
+    rebuild 2
+    sha256 cellar: :any,                 arm64_ventura:  "a6cae5932ecc6e54b3874c5c0ffd3fd42938a5cc73858647941f50e669326eea"
+    sha256 cellar: :any,                 arm64_monterey: "3e64b28ec36eb751cf1eedc05403644f751e6833ee0ab4ffb4543adb005fb42a"
+    sha256 cellar: :any,                 arm64_big_sur:  "9a86510d8ffb9c0550c7dcfc14fe92cd20b876c4ded19db26f1ca14b81657bc7"
+    sha256 cellar: :any,                 ventura:        "34e3faccba5108af712ee514615b60bfcdaf10968e04860559c8c80a25a85b2f"
+    sha256 cellar: :any,                 monterey:       "43b4a966a87dc863c364b4c48ebf6de61fd82599bfa85b64a5e715d367d30de5"
+    sha256 cellar: :any,                 big_sur:        "80bb1d4733e032fdc64bb18f08edac44eca3095f290f8f74216662cab66313c4"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "19c6ed0468ae2c6b2fbfb73cd4bc2f83e3f625494040a0e34177faca58ec4849"
   end
 
   depends_on "pkg-config" => :build
-  depends_on "python@3.10" => :test
+  depends_on "python@3.11" => :test
   depends_on "qt@5"
   depends_on "zeromq"
 
   uses_from_macos "curl"
 
-  on_linux do
-    depends_on "gcc"
-  end
-
   fails_with gcc: "5"
 
   resource "pyzmq" do
-    url "https://files.pythonhosted.org/packages/6c/95/d37e7db364d7f569e71068882b1848800f221c58026670e93a4c6d50efe7/pyzmq-22.3.0.tar.gz"
-    sha256 "8eddc033e716f8c91c6a2112f0a8ebc5e00532b4a6ae1eb0ccc48e027f9c671c"
+    url "https://files.pythonhosted.org/packages/46/0d/b06cf99a64d4187632f4ac9ddf6be99cd35de06fe72d75140496a8e0eef5/pyzmq-24.0.1.tar.gz"
+    sha256 "216f5d7dbb67166759e59b0479bca82b8acf9bed6015b526b8eb10143fb08e77"
   end
 
   def install
@@ -41,13 +39,13 @@ class Zurl < Formula
   end
 
   test do
-    python3 = "python3.10"
+    python3 = "python3.11"
 
     conffile = testpath/"zurl.conf"
     ipcfile = testpath/"zurl-req"
     runfile = testpath/"test.py"
 
-    venv = virtualenv_create(testpath/"vendor", Formula["python@3.10"].opt_bin/python3)
+    venv = virtualenv_create(testpath/"vendor", python3)
     venv.pip_install resource("pyzmq")
 
     conffile.write(<<~EOS,

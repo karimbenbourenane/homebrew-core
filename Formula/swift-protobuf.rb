@@ -1,18 +1,19 @@
 class SwiftProtobuf < Formula
   desc "Plugin and runtime library for using protobuf with Swift"
   homepage "https://github.com/apple/swift-protobuf"
-  url "https://github.com/apple/swift-protobuf/archive/1.20.1.tar.gz"
-  sha256 "66d2cbffed3a5c289405630f39c4a80d696f762558872b3a27e9b33e409bcbf0"
+  url "https://github.com/apple/swift-protobuf/archive/1.21.0.tar.gz"
+  sha256 "48f58cd353f8e9110e5b2ffa27872a17d369740927079d7661e4b2c5058fa4eb"
   license "Apache-2.0"
   head "https://github.com/apple/swift-protobuf.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "36e84496c7f16bf9f318f899fa2ed3423ca4a302450d1e68d476a03d175099f2"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "b790680a423626fe077f0f8bc8d24601a07edec2947a4343ff0586493dd1e661"
-    sha256 cellar: :any_skip_relocation, monterey:       "362254db2dfe04119a6d32d1a80e22633af98f36fe1d5184afd3a38ac15e7bcc"
-    sha256 cellar: :any_skip_relocation, big_sur:        "37265f340278ef0cb6f9ee90f2dfd4f74e6e6f4caa0f16950c50330fb376759a"
-    sha256 cellar: :any_skip_relocation, catalina:       "34c6d2be247e52e95a0add0bc40346332b31f666819be89c6a3d269422614eef"
-    sha256                               x86_64_linux:   "5d48da7672dfa9401ad037cc5a3b4bbe4434b830c33d0ec7ceadb91c63f0ffff"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "4ab81cd57fa5d4e0deceb37a6f8154358487993feb4e285b6a89b2ff64696b1e"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "ffd933a75cd2ffed9df15963280d588f52fdbe16406ec717b68e9cf949d06de7"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "d4b88c2de6a47a6dbfd5610a8593fa4a02a3a0873c61b3a3c475aa94b70d4c55"
+    sha256 cellar: :any_skip_relocation, ventura:        "9316fe689efc7fb59bb3054b6d46129e77b22d1be37b26a2e2699f90fc02a65d"
+    sha256 cellar: :any_skip_relocation, monterey:       "3379e66262839bcbd26a18a6bc45905753b8843fe859b6dc87df9136a5155f44"
+    sha256 cellar: :any_skip_relocation, big_sur:        "caeeced8da8117c23ae74c10ff7fc6df514b87fa62fe7420ad8d771aa2bfdb15"
+    sha256                               x86_64_linux:   "b4d312e67d6c85613a57ee2e030a25b398bdd98da2bbde591597f953a31da8a7"
   end
 
   depends_on xcode: ["8.3", :build]

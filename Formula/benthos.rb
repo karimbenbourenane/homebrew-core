@@ -1,18 +1,19 @@
 class Benthos < Formula
   desc "Stream processor for mundane tasks written in Go"
   homepage "https://www.benthos.dev"
-  url "https://github.com/benthosdev/benthos/archive/v4.6.0.tar.gz"
-  sha256 "ab552ea0344d97735dd9b1882cb5bc9575f9a246b3fb67f0822357ab55243ebe"
+  url "https://github.com/benthosdev/benthos/archive/v4.12.1.tar.gz"
+  sha256 "aa8f082049714528a84515a74c126a3f2ab021dcf35d476bc8aff6623e29d017"
   license "MIT"
   head "https://github.com/benthosdev/benthos.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "7b8c79b16f26f704ed0f8154f37329d4baf974009f50122ce2a4f52a0ebc4cd5"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "2cbfd3f1b89349261e0d6d7a1983ec4d6f6002a66fed1b9ab1dfa7403d6c80f9"
-    sha256 cellar: :any_skip_relocation, monterey:       "0ef478a445158cec320bd4401d166fff7a3487698c375fd5e7598d9c23bb9e45"
-    sha256 cellar: :any_skip_relocation, big_sur:        "b0e61cbcd817b556545ba697542abd36ee2c2a618d36e00f76650e93fda0064f"
-    sha256 cellar: :any_skip_relocation, catalina:       "4575621db43aa5a92158500e0e024e433ebe8f25cb66856ad8463c6e2cd2be28"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9795f554f3d5a6f4bd793359e566d352935691abfa24fce9ba689fe36dce3f61"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "aab8ac0a13550cf9df0c3ce6e41ae3f89cbb9c0dff42c7d61d8696046dd0d8ad"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "6cf861769784b82f36cb54991b29d17bfa29abaa0533a31fb185db70c65624ba"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "180938c66bd8f41cae4ae4620f36ed1c2ba67f3ce7cde10e414c32d26f25fbe9"
+    sha256 cellar: :any_skip_relocation, ventura:        "a6237bf9e3df42e237117d99d178f779f3c2b1bd9385088cd1dcbdc417381d42"
+    sha256 cellar: :any_skip_relocation, monterey:       "ed86f8b6f4646fda003fc7de74a863c99cb72c6fa2a0abb53b4f7b38e0dfe996"
+    sha256 cellar: :any_skip_relocation, big_sur:        "8e86818f1d11fe715554009ad36f84d06b45c17c4d093908dc99a5f66ca1a82f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7253e9200c6272addf328364a419c68ffa76371c578f4ffd56234ddc3b20edbf"
   end
 
   depends_on "go" => :build

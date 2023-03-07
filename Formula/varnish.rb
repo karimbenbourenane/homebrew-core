@@ -1,9 +1,9 @@
 class Varnish < Formula
   desc "High-performance HTTP accelerator"
   homepage "https://www.varnish-cache.org/"
-  url "https://varnish-cache.org/_downloads/varnish-7.1.1.tgz"
-  mirror "https://fossies.org/linux/www/varnish-7.1.1.tgz"
-  sha256 "2cafbe2590e7d58a7bac8ad99be92e440fe4d38ada6816dd8836f22fa513a190"
+  url "https://varnish-cache.org/_downloads/varnish-7.2.1.tgz"
+  mirror "https://fossies.org/linux/www/varnish-7.2.1.tgz"
+  sha256 "4d937d1720a8ec19c533f972d9303a1c9889b7bfca7437893ae5c27cf204a940"
   license "BSD-2-Clause"
 
   livecheck do
@@ -12,18 +12,19 @@ class Varnish < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "5edc877c4ed912bc08cc79b66f17b587407effba4b17b7e7eb2f347272c08682"
-    sha256 arm64_big_sur:  "751c56a3f50dcd998902fccc4685d549a9f3739dd932ab363cbca72187ab34e8"
-    sha256 monterey:       "f6df33e1ef99b43b81b1f493cae8d5985cdca535100a2d5c77c5f27c4ad0b9ea"
-    sha256 big_sur:        "293dd22ec28bd709e48e172cbef81691f802a44dde59bb7c3b4494bbb5634c5d"
-    sha256 catalina:       "928cc7340cee64eee3f4ef4cb9cfa9cd8e19b46c52107543fee8b85d3a5ae739"
-    sha256 x86_64_linux:   "e6f876136cf35e802d2e7ce792ad8d9ba6fd10c44af552dd6f569116ee820140"
+    sha256 arm64_ventura:  "97837ceaffdb8bd8bfb4eb8bb6ca2ecaffa0330d9f3230118cd80beb64a69f3c"
+    sha256 arm64_monterey: "54d9b377ca097b2b52a6587b008861942980304d498f1ca763c381eadda84dde"
+    sha256 arm64_big_sur:  "52abe334b03a84878db5e12e656fdee57bf96d0850e16acf5c41de22e20d3a42"
+    sha256 monterey:       "1f5136cf626233f818e8b360903681fb6ac26da594eebc22464f3645e15676af"
+    sha256 big_sur:        "1e898c2342fc114e4d125da13affff0abe826f88b83d130da9b93e9decfdb9dc"
+    sha256 catalina:       "71676992efeb6f6bdc5bbd9dee205e3b0e752cb5b38032586d35043ac007361d"
+    sha256 x86_64_linux:   "64855ed4ce7f02bcd01eccc9dfdd0977239a39023349f7b83b91ffc5cb15d53c"
   end
 
   depends_on "docutils" => :build
   depends_on "graphviz" => :build
   depends_on "pkg-config" => :build
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => :build
   depends_on "sphinx-doc" => :build
   depends_on "pcre2"
 
@@ -31,7 +32,7 @@ class Varnish < Formula
   uses_from_macos "ncurses"
 
   def install
-    ENV["PYTHON"] = Formula["python@3.10"].opt_bin/"python3.10"
+    ENV["PYTHON"] = Formula["python@3.11"].opt_bin/"python3.11"
 
     system "./configure", "--disable-dependency-tracking",
                           "--prefix=#{prefix}",

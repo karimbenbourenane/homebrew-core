@@ -1,29 +1,30 @@
 class Httpx < Formula
   desc "Fast and multi-purpose HTTP toolkit"
   homepage "https://github.com/projectdiscovery/httpx"
-  url "https://github.com/projectdiscovery/httpx/archive/v1.2.4.tar.gz"
-  sha256 "5d95a35586c851bba43be2fb79b790ff417e58aa34ae515a79b3bd8c6f2df7e0"
+  url "https://github.com/projectdiscovery/httpx/archive/v1.2.7.tar.gz"
+  sha256 "c3f2d2f8670d66dd7e855b89b111b130d1b1751f5a7fed399480faef406632a3"
   license "MIT"
   head "https://github.com/projectdiscovery/httpx.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "8847479dcfd206f2b400c59275b5c89c99f61a432f3f9b4c0b26872509480d15"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "e16f44d2f3ffaa3f0826ee09d02917587474aa353e1b3c3cbcf135c6c47b1b90"
-    sha256 cellar: :any_skip_relocation, monterey:       "35d1275e6be68e1ecff9d1df7000e10943a67a059756fa114f8bf93cd5526bb8"
-    sha256 cellar: :any_skip_relocation, big_sur:        "49d8597fec0d9e68d1365ecf7d8b8d8a825073c0f8ad7b49057c11b17bf7308f"
-    sha256 cellar: :any_skip_relocation, catalina:       "0b1f4f21353bd9d413209252e44ba281f1a363e2ebede6f697f32d7dfd244b85"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "19f6383086cd06ca7bbade724e0852f83e53a5a2eb9bae00a56cbec588e263ae"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "3efdb9934a8a3ee226d2a70b8ce404a91adf324ab96e5b6db29c3ce9616ee9c6"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "299fffcf8f5c9089a41af4e6d4375442e01acfa28bdf541dc32074d37183e65a"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "881c6d00fc32be8c76f04853271c697c94772716bdcb0b4f6f3aabf1518a46c5"
+    sha256 cellar: :any_skip_relocation, ventura:        "5d7b008cb86db2d69196a511c0eaba89aaffe0dffce15e78f62d6c88b918dc7e"
+    sha256 cellar: :any_skip_relocation, monterey:       "c4fa1dcbf8130c1ad0c56ab9bcbd126b187ef3c3cc6c967265eedb21ce9ff5c6"
+    sha256 cellar: :any_skip_relocation, big_sur:        "f693b26ad77ad9b371b0749d0ed2b9c32b186aba3c4562cbfbd788283423e613"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ff5dfa75ad771229bf3d65558f2517c81a1769920913fb1f797ed09bb6b3bfd6"
   end
 
   depends_on "go" => :build
 
   def install
-    system "go", "build", *std_go_args, "./cmd/httpx"
+    system "go", "build", *std_go_args(ldflags: "-s -w"), "./cmd/httpx"
   end
 
   test do
-    output = JSON.parse(pipe_output("#{bin}/httpx -silent -status-code -title -json", "example.org"))
-    assert_equal 200, output["status-code"]
+    output = JSON.parse(shell_output("#{bin}/httpx -silent -title -json -u example.org"))
+    assert_equal 200, output["status_code"]
     assert_equal "Example Domain", output["title"]
   end
 end

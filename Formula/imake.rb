@@ -1,10 +1,9 @@
 class Imake < Formula
   desc "Build automation system written for X11"
   homepage "https://xorg.freedesktop.org"
-  url "https://xorg.freedesktop.org/releases/individual/util/imake-1.0.8.tar.bz2"
-  sha256 "b8d2e416b3f29cd6482bcffaaf19286d32917a164d07102a0e531ccd41a2a702"
+  url "https://xorg.freedesktop.org/releases/individual/util/imake-1.0.9.tar.xz"
+  sha256 "72de9d278f74d95d320ec7b0d745296f582264799eab908260dbea0ce8e08f83"
   license "MIT"
-  revision 6
 
   livecheck do
     url "https://xorg.freedesktop.org/releases/individual/util/"
@@ -12,12 +11,14 @@ class Imake < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "16a1925ce2b28d8d3aefc1fd554cfa74fff7c05a5b81847f7c3340717e5c5149"
-    sha256 arm64_big_sur:  "981cf5a9966c199d0955266f7d7f8ca8d22742c3a952ee4d30547437caaf6d3c"
-    sha256 monterey:       "f5be1c74dc23cb33de8eac020f9dc293bca0a7ed36308a46676a60a4c438428b"
-    sha256 big_sur:        "0c0f73e6dc9edb4792e789e6235fe20e9f5a21a32a5d66a8e59e7c2f953b77ed"
-    sha256 catalina:       "cd6a5f473087960077709005c51b86ef377ea3d4a5d32e9f1d17b37d65629181"
-    sha256 x86_64_linux:   "44e14e698e25dabfa8e7ee4d1ba913fa332cffed12b986951dddf680f9afe029"
+    sha256 arm64_ventura:  "9cd2947492b3f29a500e1a45bd3721de23944ac43f3deb7fdb8ae5a9931a9acf"
+    sha256 arm64_monterey: "0cd31c02ff18e5ce5561bebaea0096b04a78f7b761f2994f022c65bbbb4379dd"
+    sha256 arm64_big_sur:  "9238c3ea5a96d566c6b531637cae7c07d2aca46f7bbaba67ffcd8421bbd5fe6f"
+    sha256 ventura:        "a8cdbbffad5eca7bb7c5fa3352df4cb4fe044ae9215b0ddc4a3ba194309cdefd"
+    sha256 monterey:       "90ec4cbb2593c65b1ed2ae3908f610e864581a634d20e78874354e408f7f8c63"
+    sha256 big_sur:        "61f4aa90ea524c8d5891213400075ebd496462f48aa1caf1b8e7ec3279504f6f"
+    sha256 catalina:       "c3ec401e08a4ed98d9d36b9536964db97f9073dc73b77148ff12ac2239e3a6da"
+    sha256 x86_64_linux:   "fc7e1e0901a6cfa77aef555b843df784aeaff81ebdd27a5cd866b3818389f1ec"
   end
 
   depends_on "pkg-config" => :build

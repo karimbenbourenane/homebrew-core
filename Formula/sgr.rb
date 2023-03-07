@@ -6,21 +6,25 @@ class Sgr < Formula
   url "https://github.com/splitgraph/sgr/archive/refs/tags/v0.3.12.tar.gz"
   sha256 "e5153944383a0160efe4d56a2c4a6d11f74bb1a04d097df95806ddcbc1ab5618"
   license "Apache-2.0"
+  revision 1
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "9ed51698283079824a7d599d00710ae5d742128721d6f782ce2311813ebc828b"
-    sha256 cellar: :any,                 arm64_big_sur:  "ca7de3c262b37b0eacdd714b52a53176e9e19047290076df1dd46448c83527d3"
-    sha256 cellar: :any,                 monterey:       "1e7346eaf87e3a016a2320f44c3c06748eb9bcd6a69cc4c26ba4cbe55de5072b"
-    sha256 cellar: :any,                 big_sur:        "c8a928fc8caec9e1d8d2a7085785648659174ce2b1aa63c8f5d4b8ccded0b42c"
-    sha256 cellar: :any,                 catalina:       "411f1924e918a81a8230cbafbcec86a9e78c5982bd79e3fda9cdf6777e7fb8c0"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5c459933ee16f232f9bd09512dca9d30c6962f1bc15d7b821b38ad54faa40652"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_ventura:  "8c1b3cdad5a8929e729d19e01ec396532e4eb5744ca6728cab1f31ef43165424"
+    sha256 cellar: :any,                 arm64_monterey: "138ce113025e2c5f653170e25cf8465d6b892c2efd126fc1b5da2477cbb8a56c"
+    sha256 cellar: :any,                 arm64_big_sur:  "5b9736c66c5b33a2804b7edd05b2e07c2f85c278a619e1e7d79fb6e68127122e"
+    sha256 cellar: :any,                 ventura:        "77aa3ec88fb23e71026d182e9c490c1956b1d08e6d02b25fa948e28b604c4d0a"
+    sha256 cellar: :any,                 monterey:       "49097472ad80b5862c90bb8d0a8d502915d8c569ad5c60f0fe50d379e386451a"
+    sha256 cellar: :any,                 big_sur:        "67aef300fb9502bddae5bca4739d4ce11e0cbd96d68cd9d72cae7a1f98a9ed88"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "90d51ba0c11eaf95cec87f5a8069b2fff71e6288a2442c0a64ad73955da99098"
   end
 
-  depends_on "libpython-tabulate" => :build
   depends_on "poetry" => :build
   depends_on "rust" => :build # for cryptography
   depends_on "libpq" # for psycopg2-binary
-  depends_on "python@3.10"
+  depends_on "python-tabulate"
+  depends_on "python-typing-extensions"
+  depends_on "python@3.11"
 
   resource "asciitree" do
     url "https://files.pythonhosted.org/packages/2d/6a/885bc91484e1aa8f618f6f0228d76d0e67000b0fdd6090673b777e311913/asciitree-0.3.3.tar.gz"
@@ -28,8 +32,8 @@ class Sgr < Formula
   end
 
   resource "attrs" do
-    url "https://files.pythonhosted.org/packages/d7/77/ebb15fc26d0f815839ecd897b919ed6d85c050feeb83e100e020df9153d2/attrs-21.4.0.tar.gz"
-    sha256 "626ba8234211db98e869df76230a137c4c40a12d72445c45d5f5b716f076e2fd"
+    url "https://files.pythonhosted.org/packages/21/31/3f468da74c7de4fcf9b25591e682856389b3400b4b62f201e65f15ea3e07/attrs-22.2.0.tar.gz"
+    sha256 "c9227bfc2f01993c03f68db37d1d15c9690188323c067c641f1a35ca58185f99"
   end
 
   resource "certifi" do
@@ -88,8 +92,8 @@ class Sgr < Formula
   end
 
   resource "jsonschema" do
-    url "https://files.pythonhosted.org/packages/19/0f/89db7764dfb59fc1c2b18c2d63f11375b4827aa3e93ae037166a780d2bed/jsonschema-4.7.2.tar.gz"
-    sha256 "73764f461d61eb97a057c929368610a134d1d1fffd858acfe88864ee94f1f1d3"
+    url "https://files.pythonhosted.org/packages/36/3d/ca032d5ac064dff543aa13c984737795ac81abc9fb130cd2fcff17cfabc7/jsonschema-4.17.3.tar.gz"
+    sha256 "0f864437ab8b6076ba6707453ef8f98a6a0d512a80e93f8abdb676f737ecb60d"
   end
 
   resource "minio" do
@@ -108,8 +112,8 @@ class Sgr < Formula
   end
 
   resource "pglast" do
-    url "https://files.pythonhosted.org/packages/88/df/201bb63cd9777007b89070b23e6bfb00e6da0ef2cbb9d8a4fd3df4c257e1/pglast-3.4.tar.gz"
-    sha256 "d2288d9607097a08529d9165970261c1be956934e8a8f6d9ed2a96d9b8f03fc6"
+    url "https://files.pythonhosted.org/packages/3b/a8/4d85067f06f13e8199dcf1efc57668e7e45160f618ae47864e98560c7b16/pglast-3.17.tar.gz"
+    sha256 "0b6496b97e8bb7847adab90d27da8ea152b9d23f93524868194c3eb1e5a34d0c"
   end
 
   resource "psycopg2-binary" do
@@ -133,8 +137,8 @@ class Sgr < Formula
   end
 
   resource "pyrsistent" do
-    url "https://files.pythonhosted.org/packages/42/ac/455fdc7294acc4d4154b904e80d964cc9aae75b087bbf486be04df9f2abd/pyrsistent-0.18.1.tar.gz"
-    sha256 "d4d61f8b993a7255ba714df3aca52700f8125289f84f704cf80916517c46eb96"
+    url "https://files.pythonhosted.org/packages/bf/90/445a7dbd275c654c268f47fa9452152709134f61f09605cf776407055a89/pyrsistent-0.19.3.tar.gz"
+    sha256 "1a2994773706bbb4995c31a97bc94f1418314923bd1048c6d964837040376440"
   end
 
   resource "requests" do
@@ -148,8 +152,8 @@ class Sgr < Formula
   end
 
   resource "ruamel.yaml.clib" do
-    url "https://files.pythonhosted.org/packages/8b/25/08e5ad2431a028d0723ca5540b3af6a32f58f25e83c6dda4d0fcef7288a3/ruamel.yaml.clib-0.2.6.tar.gz"
-    sha256 "4ff604ce439abb20794f05613c374759ce10e3595d1867764dd1ae675b85acbd"
+    url "https://files.pythonhosted.org/packages/d5/31/a3e6411947eb7a4f1c669f887e9e47d61a68f9d117f10c3c620296694a0b/ruamel.yaml.clib-0.2.7.tar.gz"
+    sha256 "1f08fd5a2bea9c4180db71678e850b995d2a5f4537be0e94557668cf0f5f9497"
   end
 
   resource "sodapy" do
@@ -172,11 +176,6 @@ class Sgr < Formula
     sha256 "40be55d30e200777a307a7585aee69e4eabb46b4ec6a4b4a5f2d9f11e7d5408d"
   end
 
-  resource "typing-extensions" do
-    url "https://files.pythonhosted.org/packages/9e/1d/d128169ff58c501059330f1ad96ed62b79114a2eb30b8238af63a2e27f70/typing_extensions-4.3.0.tar.gz"
-    sha256 "e6d2677a32f47fc7eb2795db1dd15c1f34eff616bcaf2cfb5e997f854fa1c4a6"
-  end
-
   resource "urllib3" do
     url "https://files.pythonhosted.org/packages/25/36/f056e5f1389004cf886bb7a8514077f24224238a7534497c014a6b9ac770/urllib3-1.26.10.tar.gz"
     sha256 "879ba4d1e89654d9769ce13121e0f94310ea32e8d2f8cf587b77c08bbcdb30d6"
@@ -188,7 +187,7 @@ class Sgr < Formula
   end
 
   def install
-    venv = virtualenv_create(libexec, "python3")
+    venv = virtualenv_create(libexec, "python3.11")
     venv.pip_install resources
     poetry = Formula["poetry"].opt_bin/"poetry"
     system poetry, "build", "--format", "wheel", "--verbose", "--no-interaction"

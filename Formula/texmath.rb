@@ -1,18 +1,19 @@
 class Texmath < Formula
   desc "Haskell library for converting LaTeX math to MathML"
   homepage "https://johnmacfarlane.net/texmath.html"
-  url "https://hackage.haskell.org/package/texmath-0.12.5.2/texmath-0.12.5.2.tar.gz"
-  sha256 "ef7f6501aa5afe197a5903db87d433d85efad61b8c1eaea4fc5a2be853954e8f"
+  url "https://hackage.haskell.org/package/texmath-0.12.6/texmath-0.12.6.tar.gz"
+  sha256 "6fc38a9e876650e3466e4167f7aa5242fbbe5a5f636528af1d6e607da913fe98"
   license "GPL-2.0-or-later"
   head "https://github.com/jgm/texmath.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "8148a6edc93d707170e432b93375740f90d1dcdf633c78732cc9eabc5ed44953"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "32e5646b41724c6c9783806fe09a3fe4e9b6fadea39991ed756bdae7051f08eb"
-    sha256 cellar: :any_skip_relocation, monterey:       "113b22dc9fc5f6e8f96738f67325b18baa47942ec89646a3226d1cc57e292e10"
-    sha256 cellar: :any_skip_relocation, big_sur:        "c4f9e468a0072856d1e7f5dab61a6f5e1699881c862064b7c5d9d1df1d9af036"
-    sha256 cellar: :any_skip_relocation, catalina:       "cba74dc0e4fd05bd102441b557224bb58a2c7f1e254001becc685d43f14c61c6"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d4af06fb5e1031316e9e2ab40a9a92b03e85fbd40e2bd9f1806b055e047cd175"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "9218cbb4dee29a13455b7fabe79be153b26fcada3a9c16f612cac20514d66fd2"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "7fae42feba2ef59284fb037baf2cbe62bd8832bca0a69c6d0c7de263014b4615"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "af950c39d0f977e1416185f9285db85c993dba170622cb033c3b79ca4e3f1fa9"
+    sha256 cellar: :any_skip_relocation, ventura:        "94dd539ab8a939fe2abd94b930c9b53e2348ab43351c72eb20495abcef033a89"
+    sha256 cellar: :any_skip_relocation, monterey:       "ae03f1c26d684b8f385966ec3917729c1be50f1eaa27af8146eedc144ed62f80"
+    sha256 cellar: :any_skip_relocation, big_sur:        "552ad82f0a98f93e5c1e4f5962701b0d4d63d19d4f6f0f243046156990c0a2d7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "89f39d3b4a56e86ecc23777744f53f5ee287dd8566a0743ec3f197be3edeca80"
   end
 
   depends_on "cabal-install" => :build

@@ -1,18 +1,19 @@
 class Dprint < Formula
   desc "Pluggable and configurable code formatting platform written in Rust"
   homepage "https://dprint.dev/"
-  url "https://github.com/dprint/dprint/archive/0.31.1.tar.gz"
-  sha256 "95fe041894fec8fb7241b189defb879ca6fc39d6aca49de33566620c05825692"
+  url "https://github.com/dprint/dprint/archive/0.34.5.tar.gz"
+  sha256 "e0980db9f4003823b99b1b9a17f460f71ce55bffaddfba80c5f00e0492746e00"
   license "MIT"
   head "https://github.com/dprint/dprint.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "7e66e41e474cab896dc6f5489683d16283e836d1c7b7abfc95dde0406baf1969"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "1de0e67330c87448e700857b3eb75170f5f2be8a30b9907dd21ee19a571b2afb"
-    sha256 cellar: :any_skip_relocation, monterey:       "19bdbddd64b39cf5b74f5cb48a3b11ca6a6b84d4090adff85d4986300518f291"
-    sha256 cellar: :any_skip_relocation, big_sur:        "20c38ff77d9e0f02011650ef1a7c668e5a951d9fa459483d68037944e3edb9c6"
-    sha256 cellar: :any_skip_relocation, catalina:       "a33d3255a22a68a3d0dfe0e1494c28ecc41eddd64ae2ff45da7e6f44e4e0f575"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "bc2b5e0e77677100bcebf9d6a2a16da84342a2883bc6f453359465459e863e8e"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "7b9ea7ec7bc667fe2b19701cfaface9b95bcd90b977945ee9d52a718981018ca"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "65b1a5c886ef8df1d4a4a95334ee15c3fd57def60f463a4be5b783a644490ae7"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "9d942ff599de786f0faf4913daeacae3d9403ae9672f51023a3b4a12ecec2d6b"
+    sha256 cellar: :any_skip_relocation, ventura:        "5646933e52bf0c196b0ea05e02eee26a8fec772845159c875f401eb0131a9347"
+    sha256 cellar: :any_skip_relocation, monterey:       "788f3e1b2e0ef543fe755d2df27d66a34a3ede4b1d1e0667f0c07e2b3412e71b"
+    sha256 cellar: :any_skip_relocation, big_sur:        "0e2a7c3955a80414b4899adbb8570480182946e4583ad86958eeb20aaa977e05"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fe770d689f12e9d553f03cb442ef6757e8f3c5fc570ab71ae8ae1b7a73422885"
   end
 
   depends_on "rust" => :build

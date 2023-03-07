@@ -1,8 +1,8 @@
 class Talisman < Formula
   desc "Tool to detect and prevent secrets from getting checked in"
   homepage "https://thoughtworks.github.io/talisman/"
-  url "https://github.com/thoughtworks/talisman/archive/v1.28.1.tar.gz"
-  sha256 "687fc7861820cb62c847cff53b27845af13cbd445bc6ddfbdc612037e8fcde0d"
+  url "https://github.com/thoughtworks/talisman/archive/v1.30.0.tar.gz"
+  sha256 "78e9e336130e56054a9092ff8b2a856e073e0dcea4087969fab96b041dab2753"
   license "MIT"
   version_scheme 1
   head "https://github.com/thoughtworks/talisman.git", branch: "master"
@@ -13,12 +13,13 @@ class Talisman < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "fa94dcd0e6497388dcc92ec8b1c79a8b4f0e2bbdb71c97debbf4e2535d7b76e2"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "2627bd5684302439a326cd320146131c1d35188e9e4a5ac2d7eca1e4d9ab6ac3"
-    sha256 cellar: :any_skip_relocation, monterey:       "2350477b98ff5d6fbfcb8fa73733877472a23ee2bf514ab4b56aff19ecf17469"
-    sha256 cellar: :any_skip_relocation, big_sur:        "538836f37a306e352e393d69f9eead72a1ab20d9dbb4037db9b1055ef43e8238"
-    sha256 cellar: :any_skip_relocation, catalina:       "0e19ebfd7ae1391e4dfbb989b2020f53424da6a2d59d0e5bba4b4f32705133a8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8975c284a2079a30db81abfa19ed8e3dac19c7176532d546bb8fb33a4fcee853"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "4af4f91a18c6948f43c7d5dfcb86898516f9e3f5668edabb21c9215154621b40"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "a05eaa21c8abaa050135eae5c54dd5fd1baa90d0ff774583e7d70fe3efbb126f"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "96d217a0da5368744829033915bddd2b2c0d334ef3ccd15ca597be9113c00181"
+    sha256 cellar: :any_skip_relocation, ventura:        "70413d979d52dbd5fad2f11ad6b6fcd007e5016f142d450f6ab823174679d905"
+    sha256 cellar: :any_skip_relocation, monterey:       "908b104981718c4815e6c6014a750d4e1c2c2920ee470a22d5ba828b92112675"
+    sha256 cellar: :any_skip_relocation, big_sur:        "3b97c81154b43e0b9b561dc31d017df6d0bf14d1e53c7470f2606830341e81d3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ad8e9511e94538dcd5b725eb5b32d17fd7991c5fc02baf9f1f439d4d21f1b5d9"
   end
 
   depends_on "go" => :build

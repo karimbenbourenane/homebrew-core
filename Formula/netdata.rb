@@ -1,8 +1,8 @@
 class Netdata < Formula
   desc "Diagnose infrastructure problems with metrics, visualizations & alarms"
   homepage "https://netdata.cloud/"
-  url "https://github.com/netdata/netdata/releases/download/v1.36.1/netdata-v1.36.1.tar.gz"
-  sha256 "f4a1233112b55e07e2862ffda0416255f0aa4c8e2b16929b76fa7ad6b69fd931"
+  url "https://github.com/netdata/netdata/releases/download/v1.38.1/netdata-v1.38.1.tar.gz"
+  sha256 "e32a5427f0c00550210dbbf0046c2621313955256edf836db686e2bc270b8d10"
   license "GPL-3.0-or-later"
 
   livecheck do
@@ -11,12 +11,13 @@ class Netdata < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "d512dabe93ee951a8952636e2e006da4570ddc6c8bd496613f23f4779e43d31e"
-    sha256 arm64_big_sur:  "b0eb5533886dfc014f02b8015fdbeca1b3b8143e4911129870ae08fba11d020c"
-    sha256 monterey:       "4eb1331def7402540fbbbc9b7a5591f7ca13f2e1211afecf02cdaabbf0d2b646"
-    sha256 big_sur:        "f901b0389f560f986a9466e261782312bc90f91649e5f31804a6729b4272b202"
-    sha256 catalina:       "408ef315509af5d834b522de314d6f7f1075a569acf0ea2155a9caeeb7d8d5a6"
-    sha256 x86_64_linux:   "6dde898bd4c5e0b43ef50ba8968f97adadc4bb7fb2092da28934b050655e2b9c"
+    sha256 arm64_ventura:  "6c4471013a25cf3b17b96359a0e44f51cadc9ae2159a58b155b51ae423279d76"
+    sha256 arm64_monterey: "98a7ae423f287a8dd518a1c2f28f6fa297748ecfc5183728771eb12d997f31b9"
+    sha256 arm64_big_sur:  "232e854704a19b540ecb042202c6ff809835e5b50da52eb92bc93bf03c799ba1"
+    sha256 ventura:        "4bbdf98716571dff3f3a1c63c3deba38c4337c7b9106c155a6ac58d1a4b91d25"
+    sha256 monterey:       "fed0e06f3fbcae40148c2eca52ad227e0d74fec75ed3b565dee2d4c669b99517"
+    sha256 big_sur:        "6a68b1b73614760ca24472199ccf79bc1b355c68d2b45c3ed8087f2a5676cc8f"
+    sha256 x86_64_linux:   "70d09aa0d1c9c88612f8d8d8962e3afe0856f042bb81719a5ba0c0533caff01e"
   end
 
   depends_on "autoconf" => :build

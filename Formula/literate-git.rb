@@ -6,29 +6,23 @@ class LiterateGit < Formula
   url "https://github.com/bennorth/literate-git/archive/v0.3.1.tar.gz"
   sha256 "f1dec77584236a5ab2bcee9169e16b5d976e83cd53d279512136bdc90b04940a"
   license "GPL-3.0-or-later"
-  revision 12
+  revision 13
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "0494553acd4da03d39c78afc1aa6cb4bf15fd6bcd7047477fb6b33949d3e3948"
-    sha256 cellar: :any,                 arm64_big_sur:  "eb4acde55eee94e64423348ad6be510d6914342aafdc73b484dcf174938cc2d6"
-    sha256 cellar: :any,                 monterey:       "7306590698c9c18e5131ea46969b20300eefb444634e4b3a8f649d8d03838924"
-    sha256 cellar: :any,                 big_sur:        "69c963635ce4ab7711856a7ee3e2e64d7604edbde1acc33383788923f04077f0"
-    sha256 cellar: :any,                 catalina:       "a5c6e5cdf7c393f773c18ad3b0dc291f9902754a42f5b03b6ec6a82f9816ca98"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "45893bf099f2c666fa4e9db2e33831a398104626985298928f19652d4a6e39dc"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "31e0c7b5e24fa754a3a9c093101535e64af4a5e00618fdfe4eea06afcca8ad2e"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "268a50887b3929b544fed71277bd93e65c8285fed93d3d81d70b30391fae72d6"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "e2f80196bf354dc363f82bfacc81bb8872deee508d1f8b2b3fec34d7d64e3c7a"
+    sha256 cellar: :any_skip_relocation, ventura:        "c4270a2bc1b79e32660ad64483746ef2c734a898edd98453976a468903b2c93f"
+    sha256 cellar: :any_skip_relocation, monterey:       "68117dad13005e6bbb6ec4b3e6759137d5a6c2cc9a1a3dc2081cdf4a39b6c637"
+    sha256 cellar: :any_skip_relocation, big_sur:        "9127986e4e878f5711f623f7198d10718e916528ebf81d2d8f70cf901e209fbc"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "cfdb32662011363420758133f66f4837af84e07ebdae57cf9416057eb66bf815"
   end
 
-  depends_on "libgit2"
-  depends_on "python@3.10"
-
-  uses_from_macos "libffi"
+  depends_on "pygit2"
+  depends_on "python@3.11"
 
   on_linux do
     depends_on "pkg-config" => :build
-  end
-
-  resource "cffi" do
-    url "https://files.pythonhosted.org/packages/2b/a8/050ab4f0c3d4c1b8aaa805f70e26e84d0e27004907c5b8ecc1d31815f92a/cffi-1.15.1.tar.gz"
-    sha256 "d400bfb9a37b1351253cb402671cea7e89bdecc294e8016a707f6d1d8ac934f9"
   end
 
   resource "docopt" do
@@ -49,16 +43,6 @@ class LiterateGit < Formula
   resource "MarkupSafe" do
     url "https://files.pythonhosted.org/packages/b9/2e/64db92e53b86efccfaea71321f597fa2e1b2bd3853d8ce658568f7a13094/MarkupSafe-1.1.1.tar.gz"
     sha256 "29872e92839765e546828bb7754a68c418d927cd064fd4708fab9fe9c8bb116b"
-  end
-
-  resource "pycparser" do
-    url "https://files.pythonhosted.org/packages/5e/0b/95d387f5f4433cb0f53ff7ad859bd2c6051051cebbb564f139a999ab46de/pycparser-2.21.tar.gz"
-    sha256 "e644fdec12f7872f86c58ff790da456218b10f863970249516d60a5eaca77206"
-  end
-
-  resource "pygit2" do
-    url "https://files.pythonhosted.org/packages/e7/8a/e52a1c8b9878e9d9743089393f8289bb9c8a81eaab722df22df46a38b9e9/pygit2-1.10.0.tar.gz"
-    sha256 "7c751eee88c731b922e4e487ee287e2e40906b2bd32d0bfd2105947f63e867de"
   end
 
   resource "Pygments" do

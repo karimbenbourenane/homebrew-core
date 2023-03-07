@@ -1,24 +1,25 @@
 class Pymupdf < Formula
   desc "Python bindings for the PDF toolkit and renderer MuPDF"
   homepage "https://github.com/pymupdf/PyMuPDF"
-  url "https://files.pythonhosted.org/packages/4a/09/6afe87a8ea7acb6e4709223a704270ffe9929497add4d06b12305e229ba8/PyMuPDF-1.20.2.tar.gz"
-  sha256 "02eedf01f57c6bafb5e8667cea0088a2d2522643c47100f1908bec3a68a84888"
+  url "https://files.pythonhosted.org/packages/30/44/9fce79689e5df7deebe2d17cb2b9b2a6b888439c241e71296e732aefa649/PyMuPDF-1.21.1.tar.gz"
+  sha256 "f815741a435c62a0036bbcbf5fa6c533567bd69c5338d413714fc57b22db93e0"
   license "AGPL-3.0-only"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "040b53594f1f9e082ea22aa3031b70e9bce85771db4898f20e8d620cee90ce9c"
-    sha256 cellar: :any,                 arm64_big_sur:  "982c82003dd5479647f53972984d9a79434845d06cc44aa089a7f42eb9626c6c"
-    sha256 cellar: :any,                 monterey:       "3d2061b48c2acc155878904c90ce684972b05c801286db291f43c8ff2dd105e9"
-    sha256 cellar: :any,                 big_sur:        "123c9c70094da62c6b329c0fddd1321f560ef231e9a5ae1b882e2a020ab979ca"
-    sha256 cellar: :any,                 catalina:       "768ea5353e7f4e3729ff6c22acac3a0cb9a2e305bd74e4a147eb84ddea6aceff"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e2b9dd7e07509785cba7e00e2c7cf6b950ef3259ae4e7c258d68ab2a6d03c9b5"
+    sha256 cellar: :any,                 arm64_ventura:  "8bc9eba5fb8bb3f3d10950518bf7e59128a0055fc54ce1d44e4217a96d2c4de4"
+    sha256 cellar: :any,                 arm64_monterey: "b5ddcc91c1a7f61f4892a0faedf8705a40e964c21768f5a003d20c3ea6fd5883"
+    sha256 cellar: :any,                 arm64_big_sur:  "8f9397042a6c515b13167dacc98d120db10bb927414b44f939fadac0cb1c4fcf"
+    sha256 cellar: :any,                 ventura:        "6dfbc154a712d4bc577dd75ca54d93d8c26f521bd3cf4359847ba8dcabb71c5f"
+    sha256 cellar: :any,                 monterey:       "511cb6b6318808f17c5e7b2d0193787cab690988ae71f11468bc95d160a02016"
+    sha256 cellar: :any,                 big_sur:        "6147f4ce4ac89f2f490715e1be1767119bcb5f61f7235b9bc0d6b87d3d5cc06a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8a28c16eb94fae965241b3adbb2d55de329edbdcb4becd2ac35f925f7c9b9cca"
   end
 
   depends_on "freetype" => :build
   depends_on "swig" => :build
 
   depends_on "mupdf"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   on_linux do
     depends_on "gumbo-parser"
@@ -26,6 +27,10 @@ class Pymupdf < Formula
     depends_on "jbig2dec"
     depends_on "mujs"
     depends_on "openjpeg"
+  end
+
+  def python3
+    "python3.11"
   end
 
   def install
@@ -38,7 +43,7 @@ class Pymupdf < Formula
     # https://github.com/pymupdf/PyMuPDF/blob/1.20.0/setup.py#L447
     ENV["PYMUPDF_SETUP_MUPDF_BUILD"] = ""
 
-    system "python3", *Language::Python.setup_install_args(prefix), "build"
+    system python3, *Language::Python.setup_install_args(prefix, python3), "build"
   end
 
   test do
@@ -62,7 +67,7 @@ class Pymupdf < Formula
     in_pdf = test_fixtures("test.pdf")
     out_png = testpath/"test.png"
 
-    system Formula["python@3.10"].opt_bin/"python3", testpath/"test.py", in_pdf, out_png
+    system python3, testpath/"test.py", in_pdf, out_png
     assert_predicate out_png, :exist?
   end
 end

@@ -1,8 +1,8 @@
 class Moarvm < Formula
   desc "VM with adaptive optimization and JIT compilation, built for Rakudo"
   homepage "https://moarvm.org"
-  url "https://github.com/MoarVM/MoarVM/releases/download/2022.07/MoarVM-2022.07.tar.gz"
-  sha256 "337ef04d16f826f99465c653b92006028fe220be68d3dcfd0729612f4f6b5b46"
+  url "https://github.com/MoarVM/MoarVM/releases/download/2023.02/MoarVM-2023.02.tar.gz"
+  sha256 "67e214d44d5f626787ca7f04424043a639308a43a7777b6fa41926b7240e0dc5"
   license "Artistic-2.0"
 
   livecheck do
@@ -11,12 +11,13 @@ class Moarvm < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "c335ea6fcf6d368da8cd089eef6d4e92f1afacc0b3611c3998962a30e11ef541"
-    sha256 arm64_big_sur:  "136c4fa195d271d6173d7cedce64687469d78f98abdb54e63ad0867b509aeee1"
-    sha256 monterey:       "9701ad19168d40f5bc1f8dd8be949a8dedce92aa126ea2ec94610910cddeac8f"
-    sha256 big_sur:        "2a620be5f33a4905533b3c72e3cf89362539ce7afe73d9df8980c7546ede3346"
-    sha256 catalina:       "9e0bb460a56d78c2b92a9cd4a5c5bccab43a50cee9cb6edc32777edf4177f741"
-    sha256 x86_64_linux:   "0e0a0f4df22ec7905fe04088cb0f1544c889f3c7146ebe76d54d14808cbd18cf"
+    sha256 arm64_ventura:  "25ef89f366c23e4ee1466e54b833699756210957d599d124f8bdb8f941d221a2"
+    sha256 arm64_monterey: "810a8b90e384ebafc3129c442fc8011ff15bfbc8a402ee112f1234be7fe971cd"
+    sha256 arm64_big_sur:  "1f48684d345d051d79e5e8077d055ec0349517aed2a22e43bc0e7b02355b2184"
+    sha256 ventura:        "d5e27c13c55d2a0b6cd8aeb2679f61aef40f7bd5257621d60b601710b85778b7"
+    sha256 monterey:       "f8e2a42f8d00a8abc07d80dc844d8ed09fdbe6f1f186c3b8ec3fdb3d25fbdd6d"
+    sha256 big_sur:        "3c002e9a027d4b8b585243e4217d23d96bf7e0d27d503780fa6a57196b684afa"
+    sha256 x86_64_linux:   "52b1fbdd24828845cc4ffbe62a230f8479d3df49c1e996ba742a9a1177440ff3"
   end
 
   depends_on "pkg-config" => :build
@@ -30,8 +31,8 @@ class Moarvm < Formula
   conflicts_with "rakudo-star", because: "rakudo-star currently ships with moarvm included"
 
   resource "nqp" do
-    url "https://github.com/Raku/nqp/releases/download/2022.07/nqp-2022.07.tar.gz"
-    sha256 "58081c106d672a5406018fd69912c8d485fd12bf225951325c50c929a8232268"
+    url "https://github.com/Raku/nqp/releases/download/2023.02/nqp-2023.02.tar.gz"
+    sha256 "e35ed5ed94ec32a6d730ee815bf85c5fcf88a867fac6566368c1ad49fe63b53f"
   end
 
   def install

@@ -1,17 +1,18 @@
 class TRec < Formula
   desc "Blazingly fast terminal recorder that generates animated gif images for the web"
   homepage "https://github.com/sassman/t-rec-rs"
-  url "https://github.com/sassman/t-rec-rs/archive/v0.7.4.tar.gz"
-  sha256 "cb0b741df0e21e2fc7899ecb3b3128554d037df867c7a8eab8e497e11fb5a021"
+  url "https://github.com/sassman/t-rec-rs/archive/v0.7.6.tar.gz"
+  sha256 "a261104e33d6f60a8f9fe51c2339b79875ddb5ff5b9e7de68e7e52f9d25bf19e"
   license "GPL-3.0-only"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "1b7d9f0e3c8706a98d91d9ef24bffaff8d7840bc6f82c9b19c47020f4eafe93c"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "d6caa476f9869ed960c23d6471f1fb6fd31181c14746d4a59bef00f162b339e4"
-    sha256 cellar: :any_skip_relocation, monterey:       "78fbf9c6db61e970395ad30cf10b9d845c800329ea8f60d0b484a7d8fc795803"
-    sha256 cellar: :any_skip_relocation, big_sur:        "53674c3659a7915b8f410517a2fbb4c95d5b82f2b5c92838c8850df2202f2636"
-    sha256 cellar: :any_skip_relocation, catalina:       "9fecb32f33a88a62f903f20b1b83c6eaab61681f3812a0a2c4c86356cfbbf723"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "aff882605d28bcac69324c473bfb763141367fb920b77e778be8bb7a9b454d0f"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "f66c613c2713d64447c565f01e31ac69153ebf9dcefb3c3292fa5ec92c7b96fc"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "10e8931e0466e77574f5528464d94d78fefa4a303219341605430c0cd992441c"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "bedf1fd21666f526ffa3aad1196c3b7847b17734af07c984affcd2d20646ba16"
+    sha256 cellar: :any_skip_relocation, ventura:        "b2d905a57f708846827719505b1a6c7e43f45a0e2a1e0b4112039288b64d8194"
+    sha256 cellar: :any_skip_relocation, monterey:       "52275aef2850a0cac76c8fb91ce392bd29b6c494312b7f563896922bd8c78a8c"
+    sha256 cellar: :any_skip_relocation, big_sur:        "a1ea4ff9e0fd2f102ff606a9de2f7a851f51d518cd36cd70192fadf8d0ad2680"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "3d3e2cb3b655b70016073b173db82dc545abb140388880ac0ae8c205c0732a1b"
   end
 
   depends_on "rust" => :build

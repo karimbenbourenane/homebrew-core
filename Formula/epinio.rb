@@ -1,23 +1,26 @@
 class Epinio < Formula
   desc "CLI for Epinio, the Application Development Engine for Kubernetes"
   homepage "https://epinio.io/"
-  url "https://github.com/epinio/epinio/archive/refs/tags/v1.1.0.tar.gz"
-  sha256 "2066d00a6d91cc1b5410b90cad4f88d8e1be9dc4c013db50e80c516bb25c07f7"
+  url "https://github.com/epinio/epinio/archive/refs/tags/v1.7.0.tar.gz"
+  sha256 "46e7072cdeb01bf36a48cb6dce3d4a7cfa9bb468a996fc1926b2504235fd55ec"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "e3714c86675da237144b4c67459bb47128eb7278cde1daebed292b094fc8a8fe"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "fdb0748299b75d12a76bf0b6449309a0dddcdbc4348594169fdfc8c3e44e54d9"
-    sha256 cellar: :any_skip_relocation, monterey:       "aa29821ac163811c6ef2fb8ecdf8f0344dea1e114c611767f3a98c3886988cb5"
-    sha256 cellar: :any_skip_relocation, big_sur:        "feaf5a4b5d571b7edd05bbd0f1c1567efc73745cb3f089f11551bbc20b1fb01f"
-    sha256 cellar: :any_skip_relocation, catalina:       "11c35dfd5cc1e56c330d22344f303496d7ada2240466f7fe9c6d6d1d14b1fa63"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a73fc03d3109b06c062ab16c7b367c156f8f6aa4d929d4429c019deb80ed8e57"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "251ba5f68fb2ce384a807ac596255f669a3c6a0efd0cf11ef808d65b8edb2c3c"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "fed19e8e25696650cdbf7482f8b6754be3811c76a3a1d9381509ad474090f01c"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "deacbe2108dba57bebba059f3c55a2a17887faf4373ec7f968665b8d80c131ad"
+    sha256 cellar: :any_skip_relocation, ventura:        "594740426998bf03d635d45c621069a3770f3c4f9f76ff97cddb6998306b0d5a"
+    sha256 cellar: :any_skip_relocation, monterey:       "8d5128a5c8c265d2812b35694e8b785e7705e8c50217f1bf50117fb40ec76d73"
+    sha256 cellar: :any_skip_relocation, big_sur:        "d2e5897a7924f81dba12862faa5adc1deca79eb6cbad9d56aa5fae9f17ae499d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "daf2547901fa464a3916fe1c36c9d24ea85b2a167ee9b2c8b65dcdb022dfae12"
   end
 
   depends_on "go" => :build
 
   def install
     system "go", "build", *std_go_args(ldflags: "-s -w -X github.com/epinio/epinio/internal/version.Version=#{version}")
+
+    generate_completions_from_executable(bin/"epinio", "completion")
   end
 
   test do

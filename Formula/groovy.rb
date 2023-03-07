@@ -1,8 +1,8 @@
 class Groovy < Formula
   desc "Java-based scripting language"
   homepage "https://www.groovy-lang.org/"
-  url "https://groovy.jfrog.io/artifactory/dist-release-local/groovy-zips/apache-groovy-binary-4.0.4.zip"
-  sha256 "3fd7f9f7c0e88ccd26c969e2f057dbede795dcb1f37b24caf6857bb5e8650ff1"
+  url "https://groovy.jfrog.io/artifactory/dist-release-local/groovy-zips/apache-groovy-binary-4.0.9.zip"
+  sha256 "e0d26363ec798976b448857126b42823290c2007d63ecd97843a1718797131d4"
   license "Apache-2.0"
 
   livecheck do
@@ -11,12 +11,13 @@ class Groovy < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "7ed60f2c8d17f115eb1f9dfa4ebb502964410243d46fd1e06d3a771d7abffdac"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "310b9f07493cf28f5099e4f8411d756f52fbf0850800e17c140f189a8be36a6c"
-    sha256 cellar: :any_skip_relocation, monterey:       "331dd6f98907bd6ce667e31162d70128c1c3d9ef11dbb1e1fd757af0417a78e0"
-    sha256 cellar: :any_skip_relocation, big_sur:        "e2a4ebc31ada6ef901a678f68580cd34915fa7adca237166930a4c879e034e7a"
-    sha256 cellar: :any_skip_relocation, catalina:       "37670753801d5add678f3682fbd6ea04b26aeafbefaf6afca3e88bfd3b4025ed"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "37b76fc2e835ca9359523d69be483a90414fc6e20f13ce4233310e30e5a1d532"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "a4804b5a32ede9fa55c057d5f277994ca1b2fa9a92d423401f1cb60cfccf6f98"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "dc273d2abdbbba13f0d53276171fdcd222fcef8f778dc51460faef76716fdf0e"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "666cb8953fb433472b6ee046052fcdccb55bb27610fed3d131bb7389947917f1"
+    sha256 cellar: :any_skip_relocation, ventura:        "2965487d906beaf6459876ef7212b5d23c16b5674fe1b6dd2ecf43c6f51deeb2"
+    sha256 cellar: :any_skip_relocation, monterey:       "e9b0bf24701d4758d8d8a5c9f2814f4b15fdba6385bb59715eb4b3cc9b41b1d6"
+    sha256 cellar: :any_skip_relocation, big_sur:        "a7c102e8b5abf6d5abdc4762c1af2fae1e22a6717cd9f8f68cb3d7e80ab635e0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "aeedadebaf74ee4c5d176a1e787f2b90fd84dae2241ff1dbaf4b5968a6a07e95"
   end
 
   depends_on "openjdk"

@@ -1,8 +1,8 @@
 class ExtraCmakeModules < Formula
   desc "Extra modules and scripts for CMake"
   homepage "https://api.kde.org/frameworks/extra-cmake-modules/html/index.html"
-  url "https://download.kde.org/stable/frameworks/5.97/extra-cmake-modules-5.97.0.tar.xz"
-  sha256 "9ed235f3dad82ba67dc61eeab12536b6d5936c036d32d7e7d2f38a17b9efc50a"
+  url "https://download.kde.org/stable/frameworks/5.103/extra-cmake-modules-5.103.0.tar.xz"
+  sha256 "92ca2e55cb38956fbdeaf254231f074647173ccfd12dc9664989c6fa9e9c4346"
   license all_of: ["BSD-2-Clause", "BSD-3-Clause", "MIT"]
   head "https://invent.kde.org/frameworks/extra-cmake-modules.git", branch: "master"
 
@@ -14,12 +14,13 @@ class ExtraCmakeModules < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "e21d9ccf1b497cf4f18cff4f53382d259c656e6ef9265d841647bb993a8c66a9"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "4e43dbf1c1f051195396ceac755a853adca88f91ffdd0970b986e2a565fec93d"
-    sha256 cellar: :any_skip_relocation, monterey:       "87e1f1f4cf996234a7c4c82638c77707a8dc0527a947e47a971aa4af4fec3c28"
-    sha256 cellar: :any_skip_relocation, big_sur:        "3fc859d4178ec6485f11f8c83c00be2c86dca2b3072b4203cf78d9c070bd3375"
-    sha256 cellar: :any_skip_relocation, catalina:       "3fc859d4178ec6485f11f8c83c00be2c86dca2b3072b4203cf78d9c070bd3375"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f5c6c50985e6a84557702b0e04dfcfd42a5ec4b70eae62ec4798cea1c138e948"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "a7a922208c449c0d6a9f0a144ac281cd16a96fbe2313d251a234c23faaea05ce"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "a7a922208c449c0d6a9f0a144ac281cd16a96fbe2313d251a234c23faaea05ce"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "a7a922208c449c0d6a9f0a144ac281cd16a96fbe2313d251a234c23faaea05ce"
+    sha256 cellar: :any_skip_relocation, ventura:        "f3464d10dd235ec21c2341175b6fd86e8d822c4aa508d7e455a6b781500c7b90"
+    sha256 cellar: :any_skip_relocation, monterey:       "f897eb364528670f98adde5dff6a21857896c1e11db8fa01508fdf26b1a24bee"
+    sha256 cellar: :any_skip_relocation, big_sur:        "f897eb364528670f98adde5dff6a21857896c1e11db8fa01508fdf26b1a24bee"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "27a02d81b7784cd55fc340bfbac008f94a387d8c74e7937472c6d8224a4733a7"
   end
 
   depends_on "cmake" => [:build, :test]

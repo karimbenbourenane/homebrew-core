@@ -1,27 +1,27 @@
 class Nauty < Formula
   desc "Automorphism groups of graphs and digraphs"
   homepage "https://pallini.di.uniroma1.it/"
-  url "https://pallini.di.uniroma1.it/nauty27r4.tar.gz"
-  version "2.7r4"
-  sha256 "b810c85a6fe299f3b4c9f24aaf929cac7f9546c2f35c20e1dd0adbc7408848a6"
+  url "https://pallini.di.uniroma1.it/nauty2_8_6.tar.gz"
+  sha256 "f2ce98225ca8330f5bce35f7d707b629247e09dda15fc479dc00e726fee5e6fa"
   license "Apache-2.0"
   version_scheme 1
 
   livecheck do
     url :homepage
-    regex(/Current\s+?version:\s*?v?(\d+(?:\.\d+)+(?:r\d+)?)/i)
+    regex(/Current\s+?version:\s*?v?(\d+(?:[._]\d+)+(?:r\d+)?)/i)
     strategy :page_match do |page, regex|
-      page.scan(regex).map { |match| match.first.tr("R", "r") }
+      page.scan(regex).map { |match| match.first.tr("_R", ".r") }
     end
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "acb78882c72f75a110350392020355667a491a719a2c99a5a22de883d4b3c229"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "4a090567fde94a7ee21dcaefad77260fae1bca3908784fd5b774c50da104373e"
-    sha256 cellar: :any_skip_relocation, monterey:       "943940daf353131c9c44f058600bfeebb53c5977524aaf8990ebbbc512494ad2"
-    sha256 cellar: :any_skip_relocation, big_sur:        "415553d529e04d204d4e48f094118d13d49d960b8c5bb09bd5e85e09536bd6fd"
-    sha256 cellar: :any_skip_relocation, catalina:       "1fce01b26a7202adf02c78857f8f1385ffdd32ba40683a9329606b366bab5eda"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "2ed0b14878f7b2adee1dcdc4d8f5c9e797f972050bf163bad29d388c30cdbb46"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "2189657578d49e50a9bc3d1e929af5ab944a67f415d49e897b2d5130f884f593"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "68dae716e63fbfa5c091fb00f3dd42632a19d5c620514e5c2121b8d3952a3a1a"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "052b0490556da2586abc70c74509c9fb031350c77130222eaf38cd9ffd2e9fd7"
+    sha256 cellar: :any_skip_relocation, ventura:        "9bbba4cd6c453b5a69f2f7458bce7ba2086218cf3e4d05bff9908eae13bd9414"
+    sha256 cellar: :any_skip_relocation, monterey:       "22b84b07e19852f8ed33cd090b5864a4a0120eb9d5f9762de625c84ecc9b05a8"
+    sha256 cellar: :any_skip_relocation, big_sur:        "0d1ad5f56bae624d64cb5c7039a774d6a64babb94bffd2ef784275a10cecff25"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c3ad1d061abeddf585c4112957c5728735872dcc90996532277012629cedaeed"
   end
 
   def install
@@ -29,22 +29,22 @@ class Nauty < Formula
     system "make", "all"
 
     bin.install %w[
-      NRswitchg addedgeg amtog assembleg biplabg catg complg converseg
-      copyg countg cubhamg deledgeg delptg directg dreadnaut dretodot
-      dretog edgetransg genbg genbgL geng gengL genquarticg genrang
-      genspecialg gentourng gentreeg hamheuristic labelg linegraphg
-      listg multig newedgeg pickg planarg ranlabg shortg showg
-      subdivideg twohamg underlyingg vcolg watercluster2
+      NRswitchg addedgeg addptg amtog ancestorg assembleg biplabg catg complg
+      converseg copyg countg cubhamg deledgeg delptg dimacs2g directg dreadnaut
+      dretodot dretog edgetransg genbg genbgL geng gengL genposetg genquarticg
+      genrang genspecialg gentourng gentreeg hamheuristic labelg linegraphg
+      listg multig nbrhoodg newedgeg pickg planarg productg ranlabg shortg
+      showg subdivideg twohamg underlyingg vcolg watercluster2
     ]
 
     (include/"nauty").install Dir["*.h"]
 
     lib.install "nauty.a" => "libnauty.a"
 
-    doc.install "nug27.pdf", "README", Dir["*.txt"]
+    doc.install "nug#{version.major_minor.to_s.tr(".", "")}.pdf", "README", Dir["*.txt"]
 
     # Ancillary source files listed in README
-    pkgshare.install %w[sumlines.c sorttemplates.c bliss2dre.c blisstog.c poptest.c dretodot.c]
+    pkgshare.install %w[sumlines.c sorttemplates.c bliss2dre.c poptest.c]
   end
 
   test do

@@ -3,25 +3,20 @@ class Restund < Formula
   homepage "https://web.archive.org/web/20200427184619/www.creytiv.com/restund.html"
   url "https://sources.openwrt.org/restund-0.4.12.tar.gz"
   sha256 "3170441dc882352ab0275556b6fc889b38b14203d936071b5fa12f39a5c86d47"
-  revision 5
-
-  # The sources.openwrt.org directory listing page is 2+ MB in size and
-  # growing. This alternative check is less ideal but only a few KB. Versions
-  # on the package page can use a format like 1.2.3-4, so we omit any trailing
-  # suffix to match the tarball version.
-  livecheck do
-    url "https://openwrt.org/packages/pkgdata/restund"
-    regex(/<dd [^>]*?class="version"[^>]*?>\s*?v?(\d+(?:\.\d+)+)/im)
-  end
+  license "BSD-3-Clause"
+  revision 9
 
   bottle do
-    sha256 arm64_monterey: "fac7150f5870a83898ef4375952d6fd5a49222e28b786fe11df395d378e894b9"
-    sha256 arm64_big_sur:  "d1542845633a2aa8c763751de4a8e620e61b7542935aeeacd37869f6921246ef"
-    sha256 monterey:       "babbac1ef3298b8d65c44149f1d0d130ffee1933b03233db8c21f02ca06b649a"
-    sha256 big_sur:        "74474e34ca2dfb5013fad6552c1cfdd142934ca1b075773a46df1c146b093f18"
-    sha256 catalina:       "eb582cf9fb175e8f0b603da2fd3a61ecd4ac4e589ede03baf3336fdf3067d661"
-    sha256 x86_64_linux:   "0736e1dec11c1a7ede13e81496439ca0b45263ac1a83cd2b9b7d112222ca641d"
+    sha256 arm64_ventura:  "b9ba059a6225c2f65e8a9c5e6f6f1e0e697026a5adbd11feebe829bcda207e09"
+    sha256 arm64_monterey: "0d6aba84bcbe504021c1fd5add9804830061fcab75ec2fb596645bc50c3f9eae"
+    sha256 arm64_big_sur:  "ad737b821dd36a44e0c9f396c4b3e4e647fc3cc090ecf9b7c4a1b333264c69f6"
+    sha256 ventura:        "0748883809bea3879eb9d559b4989c4cd3b510816e49a85c25eb476bcf3f8280"
+    sha256 monterey:       "b01e965a4ef6ce7c29e03c14ac544a3f2e74014ed8eb4214c926f5ea54cff5b0"
+    sha256 big_sur:        "73ad50480e142d78199a62c58557e5235b7ab987447688620314af3a9e692b37"
+    sha256 x86_64_linux:   "edc5342cec41fc3fe065907f880cfaafd50dd83258a296c43b1144ed63a7b8d0"
   end
+
+  deprecate! date: "2023-01-11", because: :unmaintained
 
   depends_on "libre"
 

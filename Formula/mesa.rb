@@ -4,12 +4,11 @@ class Mesa < Formula
   desc "Graphics Library"
   homepage "https://www.mesa3d.org/"
   license "MIT"
-  revision 1
   head "https://gitlab.freedesktop.org/mesa/mesa.git", branch: "main"
 
   stable do
-    url "https://mesa.freedesktop.org/archive/mesa-22.1.7.tar.xz"
-    sha256 "da838eb2cf11d0e08d0e9944f6bd4d96987fdc59ea2856f8c70a31a82b355d89"
+    url "https://mesa.freedesktop.org/archive/mesa-22.3.6.tar.xz"
+    sha256 "4ec8ec65dbdb1ee9444dba72970890128a19543a58cf05931bd6f54f124e117f"
 
     patch do
       url "https://raw.githubusercontent.com/Homebrew/formula-patches/f0a40cf7d70ee5a25639b91d9a8088749a2dd04e/mesa/fix-build-on-macOS.patch"
@@ -18,23 +17,24 @@ class Mesa < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "eb24ef3abf412137e0a551d162349d75432d1daab95175d68fd9c70fd6d6371f"
-    sha256 arm64_big_sur:  "328f9499edbddc7c8079b1a7da70a67fd60fd8e0ae8d0d3034fe16de7db662c9"
-    sha256 monterey:       "8310ebf3896c2710671d0b6f74838733ffff862e56e736ece591e3077a76e481"
-    sha256 big_sur:        "cf68a05e61e2198a269af6b98f21c6a9d2693ea327b86036856ce4c65c49ef80"
-    sha256 catalina:       "3303c3d7ca5ebd638ef14dd9fc171c5bc693e7264b142e3d4dcf8bb3fe6f77e0"
-    sha256 x86_64_linux:   "4700e831c33251e451d9453fbed51f07291f67f9b72adb504c92063fafdc7223"
+    sha256 arm64_ventura:  "78ff0ec3c6cf55e5d1ba90c2c0fe18ce49b8751bac823027f4a96b0110f76c08"
+    sha256 arm64_monterey: "44359d2253b1da9759a203cc086f5e7afa33dd489ecce8250e5b869d78b77c17"
+    sha256 arm64_big_sur:  "1524f6487d68a066ccc0e722b6d6cdea5c6e0202379ae646ec40e8859341b18c"
+    sha256 ventura:        "fb2c5772bb8d48e6d5c2d361362be7dbe0232c214a366ba73e457e1f66d9988b"
+    sha256 monterey:       "5acf9d9aaf2c7a7043c1e47e3792e5e6383aac48ba96266aaf77197cbe342c19"
+    sha256 big_sur:        "57282b092fc2132ad1d724bac7a39014295ad55478586d82db5741a6cd6a30af"
+    sha256 x86_64_linux:   "c02a17bf31d456217110de520fd65972b6873e1c7007bfbe725f9941074f3649"
   end
 
-  depends_on "bison" => :build # can't use form macOS, needs '> 2.3'
+  depends_on "bison" => :build # can't use from macOS, needs '> 2.3'
   depends_on "meson" => :build
   depends_on "ninja" => :build
   depends_on "pkg-config" => :build
-  depends_on "python@3.10" => :build
+  depends_on "pygments" => :build
+  depends_on "python@3.11" => :build
   depends_on "xorgproto" => :build
 
   depends_on "expat"
-  depends_on "gettext"
   depends_on "libx11"
   depends_on "libxcb"
   depends_on "libxdamage"
@@ -45,9 +45,13 @@ class Mesa < Formula
   uses_from_macos "ncurses"
   uses_from_macos "zlib"
 
+  on_macos do
+    depends_on "gettext"
+  end
+
   on_linux do
     depends_on "elfutils"
-    depends_on "gcc"
+    depends_on "glslang"
     depends_on "gzip"
     depends_on "libdrm"
     depends_on "libva"
@@ -56,7 +60,6 @@ class Mesa < Formula
     depends_on "libxrandr"
     depends_on "libxshmfence"
     depends_on "libxv"
-    depends_on "libxvmc"
     depends_on "libxxf86vm"
     depends_on "lm-sensors"
     depends_on "wayland"
@@ -66,23 +69,18 @@ class Mesa < Formula
   fails_with gcc: "5"
 
   resource "Mako" do
-    url "https://files.pythonhosted.org/packages/ad/dd/34201dae727bb183ca14fd8417e61f936fa068d6f503991f09ee3cac6697/Mako-1.2.1.tar.gz"
-    sha256 "f054a5ff4743492f1aa9ecc47172cb33b42b9d993cffcc146c9de17e717b0307"
-  end
-
-  resource "Pygments" do
-    url "https://files.pythonhosted.org/packages/e0/ef/5905cd3642f2337d44143529c941cc3a02e5af16f0f65f81cbef7af452bb/Pygments-2.13.0.tar.gz"
-    sha256 "56a8508ae95f98e2b9bdf93a6be5ae3f7d8af858b43e02c5a2ff083726be40c1"
+    url "https://files.pythonhosted.org/packages/05/5f/2ba6e026d33a0e6ddc1dddf9958677f76f5f80c236bd65309d280b166d3e/Mako-1.2.4.tar.gz"
+    sha256 "d60a3903dc3bb01a18ad6a89cdbe2e4eadc69c0bc8ef1e3773ba53d44c3f7a34"
   end
 
   resource "MarkupSafe" do
-    url "https://files.pythonhosted.org/packages/1d/97/2288fe498044284f39ab8950703e88abbac2abbdf65524d576157af70556/MarkupSafe-2.1.1.tar.gz"
-    sha256 "7f91197cc9e48f989d12e4e6fbc46495c446636dfc81b9ccf50bb0ec74b91d4b"
+    url "https://files.pythonhosted.org/packages/95/7e/68018b70268fb4a2a605e2be44ab7b4dd7ce7808adae6c5ef32e34f4b55a/MarkupSafe-2.1.2.tar.gz"
+    sha256 "abcabc8c2b26036d62d4c746381a6f7cf60aafcc653198ad678306986b09450d"
   end
 
   resource "glxgears.c" do
-    url "https://gitlab.freedesktop.org/mesa/demos/-/raw/db5ad06a346774a249b22797e660d55bde0d9571/src/xdemos/glxgears.c"
-    sha256 "3873db84d708b5d8b3cac39270926ba46d812c2f6362da8e6cd0a1bff6628ae6"
+    url "https://gitlab.freedesktop.org/mesa/demos/-/raw/caac7be425a185e191224833375413772c4aff8d/src/xdemos/glxgears.c"
+    sha256 "344a03aff01708350d90603fd6b841bccd295157670f519b459bbf3874acf847"
   end
 
   resource "gl_wrap.h" do
@@ -91,12 +89,10 @@ class Mesa < Formula
   end
 
   def install
-    ENV.prepend_path "PATH", Formula["python@3.10"].opt_libexec/"bin"
-
     venv_root = buildpath/"venv"
-    venv = virtualenv_create(venv_root, "python3")
+    venv = virtualenv_create(venv_root, "python3.11")
 
-    %w[Mako Pygments MarkupSafe].each do |res|
+    %w[Mako MarkupSafe].each do |res|
       venv.pip_install resource(res)
     end
 
@@ -108,22 +104,21 @@ class Mesa < Formula
       args += %w[
         -Dplatforms=x11,wayland
         -Dglx=auto
-        -Ddri3=true
+        -Ddri3=enabled
         -Dgallium-drivers=auto
         -Dgallium-omx=disabled
-        -Degl=true
-        -Dgbm=true
+        -Degl=enabled
+        -Dgbm=enabled
         -Dopengl=true
         -Dgles1=enabled
         -Dgles2=enabled
-        -Dgallium-xvmc=disabled
-        -Dvalgrind=false
-        -Dtools=drm-shim,etnaviv,freedreno,glsl,nir,nouveau,xvmc,lima
+        -Dvalgrind=disabled
+        -Dtools=drm-shim,etnaviv,freedreno,glsl,nir,nouveau,lima
       ]
     end
 
-    system "meson", "build", *args, *std_meson_args
-    system "meson", "compile", "-C", "build"
+    system "meson", "setup", "build", *args, *std_meson_args
+    system "meson", "compile", "-C", "build", "--verbose"
     system "meson", "install", "-C", "build"
     inreplace lib/"pkgconfig/dri.pc" do |s|
       s.change_make_var! "dridriverdir", HOMEBREW_PREFIX/"lib/dri"

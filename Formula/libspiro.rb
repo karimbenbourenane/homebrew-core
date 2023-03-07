@@ -1,22 +1,24 @@
 class Libspiro < Formula
   desc "Library to simplify the drawing of curves"
   homepage "https://github.com/fontforge/libspiro"
-  url "https://github.com/fontforge/libspiro/releases/download/20220722/libspiro-dist-20220722.tar.gz"
-  sha256 "3b8e54473f3d4d99c014f2630e62f966f5f4e25c28ca59b63d30bd8e9b7593f5"
-  license "GPL-3.0"
+  url "https://github.com/fontforge/libspiro/releases/download/20221101/libspiro-dist-20221101.tar.gz"
+  sha256 "5984fb5af3e4e1f927f3a74850b705a711fb86284802a5e6170b09786440e8be"
+  license "GPL-3.0-or-later"
   version_scheme 1
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "b3498c1a31dba2bbd728c4940c270458a946e2b0b4318a92d611d825b93c56f5"
-    sha256 cellar: :any,                 arm64_big_sur:  "586a41d1ce7658531787026822d18043dce42b0f31f89f2506f544b28a156e4c"
-    sha256 cellar: :any,                 monterey:       "37809c1fcd66a6e7f33a8113b04d6799f9740b6a4407a32229f0d8985a38c42b"
-    sha256 cellar: :any,                 big_sur:        "c1022c3d1173013815484d27276a03a251fcc6bf44eacdc74c9baf00e0e9ad5a"
-    sha256 cellar: :any,                 catalina:       "0856dba557c27a3f09a10791e7030aacfd4e8093dc169ecc68d6dd350b6ac146"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "dd949a77a584f8a6783e9432a48f0601c1fec3600f8c0e0dc26a93c32418a1f1"
+    sha256 cellar: :any,                 arm64_ventura:  "51c8921af221ce78f184e95a55a79e81d38fc1fa84abe2dc46625a57788e6b0e"
+    sha256 cellar: :any,                 arm64_monterey: "1e90fd585fcaa84a166d7a77c2ae5aeb97fd8692c98dc5b2f6952d9d9033bf9a"
+    sha256 cellar: :any,                 arm64_big_sur:  "d2d54755d2a1a15ab93350e6a74697357a7e7478f9a53e78d7c40b2c47fd9651"
+    sha256 cellar: :any,                 ventura:        "5721b7e65026b5a86e387c4f648925b6e9166825b158226fbfb6a4ce2387c2f4"
+    sha256 cellar: :any,                 monterey:       "946ef3d6e92c177e4456421353ed3090128d8eebca4630bcd8f1ee1cd4bb9b49"
+    sha256 cellar: :any,                 big_sur:        "f95068a1f9cb22591a2e37cb2b061199f8f624cbab15d743b1176438020fb119"
+    sha256 cellar: :any,                 catalina:       "a4487593a91bce4bdd4456bee4f3a31219d03ed1c6960e6d998d551e50e186df"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b4dfa30c267a3b79aa235c9569a0289ebce4cd3d8f0a570c4fc48fea840d9ff3"
   end
 
   head do
-    url "https://github.com/fontforge/libspiro.git"
+    url "https://github.com/fontforge/libspiro.git", branch: "master"
 
     depends_on "autoconf" => :build
     depends_on "automake" => :build

@@ -1,21 +1,22 @@
 class Ouch < Formula
   desc "Painless compression and decompression for your terminal"
   homepage "https://github.com/ouch-org/ouch"
-  url "https://github.com/ouch-org/ouch/archive/refs/tags/0.3.1.tar.gz"
-  sha256 "269abaf5ac2f80da3796dbf5e73419c1b64104d1295f3ff57965141f079e6f6d"
+  url "https://github.com/ouch-org/ouch/archive/refs/tags/0.4.1.tar.gz"
+  sha256 "b0fcd6bbe6c66544b5bf1167d72605427c5cc6afae564f23f3eff5ea22b01b79"
   license "MIT"
   head "https://github.com/ouch-org/ouch.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "a50b6a78f0c51e0c7980e8512f59656857427e7e3dc2a0eeae78e8d1493d72b5"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "814910019e9fbd5c6b2546ac4b053040900b261d263aee06af152a8da4f82585"
-    sha256 cellar: :any_skip_relocation, monterey:       "a56fbc35f35b3cb277a67815ed627f5c70339b53c7b9c9806935844f3fd3eac3"
-    sha256 cellar: :any_skip_relocation, big_sur:        "492fc5a573d4769b38779937283bcb6f95cd2be9e64b162d379c3fec74532424"
-    sha256 cellar: :any_skip_relocation, catalina:       "fccc2c5f957ab41a45e0b0e8e18476c1e34f4554db994d070838626b316fe5a3"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "245bdb652a2d45dc46cdbeef3ac7b777f2cd6cd068d2f46b0748e9c4275bb866"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "8c2d4175eb2bb0b53e76d836026bf70d3444478f5b4d83a36433fb3eae8c703d"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "417850ab47030112e2dd445e5c99deb7a4cb7189281620b574a968abda0063a4"
+    sha256 cellar: :any_skip_relocation, ventura:        "aa447b270e120c279a5412a41e769725e5f1b9b6c876e9b7e9d26e0604b25042"
+    sha256 cellar: :any_skip_relocation, monterey:       "68dd3c0e779e63ded96fd57b6f04a67fd305ff3f69071653329896fc9229df84"
+    sha256 cellar: :any_skip_relocation, big_sur:        "9b4f86dabc95a6cb8f18dbd6a21e0da66c0b5f37fd33540faf5e4fa21cec9ec1"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "4264c67dbed580fd1246969d25f1895fd396d9f3154fdd0e6f24115fe5abbd23"
   end
 
   depends_on "rust" => :build
-  depends_on :macos # Doesn't build on Linux
 
   uses_from_macos "bzip2"
   uses_from_macos "xz"
@@ -33,9 +34,9 @@ class Ouch < Formula
       system bin/"ouch", "compress", "file1", "file2", "archive.#{format}"
       assert_predicate testpath/"archive.#{format}", :exist?
 
-      system bin/"ouch", "decompress", "archive.#{format}", "--dir", testpath/format
-      assert_equal "Hello", (testpath/format/"file1").read
-      assert_equal "World!", (testpath/format/"file2").read
+      system bin/"ouch", "decompress", "-y", "archive.#{format}", "--dir", testpath/format
+      assert_equal "Hello", (testpath/format/"archive/file1").read
+      assert_equal "World!", (testpath/format/"archive/file2").read
     end
   end
 end

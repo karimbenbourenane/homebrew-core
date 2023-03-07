@@ -2,17 +2,18 @@ class Dpp < Formula
   desc "Directly include C headers in D source code"
   homepage "https://github.com/atilaneves/dpp"
   url "https://github.com/atilaneves/dpp.git",
-      tag:      "v0.4.11",
-      revision: "4c66d7959917f8440970ac447129b7b9f691dbc0"
+      tag:      "v0.4.14",
+      revision: "efcdeece9e577504e1cc2438da10a136901b914f"
   license "BSL-1.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "0c2eb7cfae10d78fb99ea1290ea1bbc58751603aef67e18f88279a4fec36dbdf"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "8eca82d866ab06ee607cf656e7ae85ce5071aa9b1a2667ab5dd6194714b2b58f"
-    sha256 cellar: :any,                 monterey:       "7f366f783ee50fe0a49f4bb2e06c6243346c100d310974dd87690f854c4cb315"
-    sha256 cellar: :any,                 big_sur:        "adf314b02d371dae57b5c39a5c2b64d29e055191aa4c2e57779d330327e007c6"
-    sha256 cellar: :any,                 catalina:       "3a4d4faf920f4e24d4169caadd7947dc99fe7a53ea4660da93de5f9908d158fb"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "cfa73022f3ae3ba09c62df22a02cbb9faf54e9abb662babc0c5654baa45d5dcb"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "369795c21bba3228030746cd649a83fc679f4f87b75525afef3bd132d1114699"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "64a22e941ed8457d3075a74838dc964573330f68ea8b68e82c7538dc95557316"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "a35bfe8f975383dee33e9ac42ec9b059976bc882df30355e6ef304be5ea264cc"
+    sha256 cellar: :any_skip_relocation, ventura:        "a5374d874c00ef9401423a1da133736236e9534f9f21fcb923fff7e8a6f1e4bd"
+    sha256 cellar: :any_skip_relocation, monterey:       "c7ccc222bf26054e503d1740de0a13056b4f5f1d25350045e55f25aa54d9ad87"
+    sha256 cellar: :any_skip_relocation, big_sur:        "a15d9d85cc4fa8306be57a9f3edd5f069dc8e91449cef5fc971d68c6e5853726"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "4d4667872ae69547c1c7afe2ce4484e4d64553fd0d06870378520dfafcd895f4"
   end
 
   depends_on "dub" => :build

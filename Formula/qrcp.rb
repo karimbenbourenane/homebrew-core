@@ -6,19 +6,22 @@ class Qrcp < Formula
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "2bac381f8b8a28fea31bfe824a7aa22e45cf3215195226d940a9e899867b14db"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "38159c798be38412d244b90a17fc4ece1e1fc455a73f74a1d25c14ca6963a9c0"
-    sha256 cellar: :any_skip_relocation, monterey:       "e821bac199d4fa84ed10f0a6d036c4140a9237430537e5f0305a5d5ffd5f4fb2"
-    sha256 cellar: :any_skip_relocation, big_sur:        "35e22a116f80c16a03720fbd8594bc6632c9b743641220befc232d115cb0debf"
-    sha256 cellar: :any_skip_relocation, catalina:       "15671040d5f67509509ecb94e48a6d65a9c35855319f10e660bcd042f9ccfffd"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d0fca2937cc06d6c5d76e067b4bd69511fc24c8e9632b8bd5e2274658a5a1f6c"
+    rebuild 2
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "38d90c6db412242ad80b6757e322b01ef67950ab05515c30acf8e66f9e378ad3"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "c78211f9d68f2d3cd87480480e1bbd77d41c1bb901cb8a3de9a485f33daf0586"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "a9e802476922a3b2838bf05a8e94ee9499c9c80178f1a269b6ab6cb09506506c"
+    sha256 cellar: :any_skip_relocation, ventura:        "7a9f8ec7bf540c48a95566c06d6619ad4bd7452f53b34a09b8729ffda68eabcb"
+    sha256 cellar: :any_skip_relocation, monterey:       "f48c800a4db6a665e865152fd0aa73341c23e445c6c4343175af56a4e88c0bc9"
+    sha256 cellar: :any_skip_relocation, big_sur:        "688fd46790df307ab1bf1b52fd8c65b3af682c55aaa4a210d49aba3e32bb3707"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9ccd045ad89452ab621622c1aca81888f9d57242a4f8360284b77580eee2efe8"
   end
 
-  # Bump to 1.18 on the next release, if possible.
-  depends_on "go@1.17" => :build
+  depends_on "go" => :build
 
   def install
     system "go", "build", *std_go_args
+
+    generate_completions_from_executable(bin/"qrcp", "completion")
   end
 
   test do

@@ -3,8 +3,8 @@ require "language/node"
 class Vsce < Formula
   desc "Tool for packaging, publishing and managing VS Code extensions"
   homepage "https://code.visualstudio.com/api/working-with-extensions/publishing-extension#vsce"
-  url "https://registry.npmjs.org/vsce/-/vsce-2.11.0.tgz"
-  sha256 "165f7f3215449f62f875e8068301a3b4ccf33cf0edf5f93fddeaaa8981d88645"
+  url "https://registry.npmjs.org/vsce/-/vsce-2.15.0.tgz"
+  sha256 "df4dd4002ad13c4787d29f4ced37133970c89db04af1c9041ad14b279b2a722f"
   license "MIT"
   head "https://github.com/microsoft/vscode-vsce.git", branch: "main"
 
@@ -14,12 +14,13 @@ class Vsce < Formula
   end
 
   bottle do
-    sha256                               arm64_monterey: "0798c8eb757068d60f115ec2c740046e6c45b62c0d8278300641a398b1890183"
-    sha256                               arm64_big_sur:  "0c188e6625e1794cc8c94b29ec8fe44a5e888bc7358294d1a79fd5881cb08ff3"
-    sha256                               monterey:       "8759946a2ede277f7d916230a200052e4f707ee7b91b46d30d36d39f98fa6433"
-    sha256                               big_sur:        "f07f654f4f2b1d86c39b6f3803d7af29a078c59ccb94621d59d4e71e47f3a874"
-    sha256                               catalina:       "67020af8705c6517b77937839f6a141c53e05aa7768f151c4cccdbfbb03aa3ea"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fd13f6ec21694aa3644510ec70577cc81730beaa33eec0481fdbe3cf5fc9510e"
+    sha256                               arm64_ventura:  "7f4a3b3b9f799b1a9c9512d7ef494b9824addf2a905eddd82e64bf9d63144442"
+    sha256                               arm64_monterey: "bdf14a9463ff09ed539eb806fa32ea0f696211393b63b0e863c5fd84b3b7c9c4"
+    sha256                               arm64_big_sur:  "a2f3f741154cf72545c2040069ef9b46bd0bbf1dc5fb2a44d7e316b46459b75b"
+    sha256                               ventura:        "8a63015f35cb184f30152a9c6436a49cbbea4d69360862dadd7727e6cc78f8ea"
+    sha256                               monterey:       "58550e96cc292bebc2f160606a487dfe586f7a1f1b420ecdd9f834cd9a6f647f"
+    sha256                               big_sur:        "d663fa67753a57eb4a82253bffcc7ae2563a0b8721e3ead316554ac7c305e830"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f848e56aeabd87e89ccd59771bfc6a7e5fb165d3b942b1cd75fc59d3ed040727"
   end
 
   depends_on "node"

@@ -2,18 +2,27 @@ class Hof < Formula
   desc "Flexible data modeling & code generation system"
   homepage "https://hofstadter.io/"
   url "https://github.com/hofstadter-io/hof.git",
-      tag:      "v0.6.6",
-      revision: "0f49b4d71a66788b006daacf905a2b138768beca"
+      tag:      "v0.6.7",
+      revision: "5f6770b9628cd46a4caa24594e052dd715ac2dca"
   license "BSD-3-Clause"
   head "https://github.com/hofstadter-io/hof.git", branch: "_dev"
 
+  # Latest release tag contains `-beta`, which is not ideal
+  # adding a livecheck block to check the stable release
+  livecheck do
+    url :stable
+    regex(/^v?(\d+(?:\.\d+)+)$/i)
+  end
+
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "75ab35b3306aae9403b60288ac6e3f53dc8fb2a56a1a6d92643b9c4872ec1a79"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "75ab35b3306aae9403b60288ac6e3f53dc8fb2a56a1a6d92643b9c4872ec1a79"
-    sha256 cellar: :any_skip_relocation, monterey:       "4a19dd456fd4d394eef9c77af87ba4511f8af94b44f6f5d78e7cbe498e3e9ffa"
-    sha256 cellar: :any_skip_relocation, big_sur:        "4a19dd456fd4d394eef9c77af87ba4511f8af94b44f6f5d78e7cbe498e3e9ffa"
-    sha256 cellar: :any_skip_relocation, catalina:       "4a19dd456fd4d394eef9c77af87ba4511f8af94b44f6f5d78e7cbe498e3e9ffa"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "79bac705d5a07de8f182b4d6ed0035683c852681296491a4a68a84d6b88d3fb0"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "201fc39b5bfa2a144cf714cd8c974ab4d7c40bc73fe3c0ffb880f2d910759463"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "201fc39b5bfa2a144cf714cd8c974ab4d7c40bc73fe3c0ffb880f2d910759463"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "201fc39b5bfa2a144cf714cd8c974ab4d7c40bc73fe3c0ffb880f2d910759463"
+    sha256 cellar: :any_skip_relocation, ventura:        "682e97ef134c35fae44303613bf5153d778c043ce4bd82269f9d5c53a9348e2f"
+    sha256 cellar: :any_skip_relocation, monterey:       "17049cc5cb7f04eebe8de0ec4353c77df7cf04466b91ab84fe982f0b8b7cd7e2"
+    sha256 cellar: :any_skip_relocation, big_sur:        "17049cc5cb7f04eebe8de0ec4353c77df7cf04466b91ab84fe982f0b8b7cd7e2"
+    sha256 cellar: :any_skip_relocation, catalina:       "17049cc5cb7f04eebe8de0ec4353c77df7cf04466b91ab84fe982f0b8b7cd7e2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "222943c19066f222fefcd9530b28f0024e74bea67395ecb57107bf9d11451754"
   end
 
   depends_on "go" => :build

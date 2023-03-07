@@ -1,18 +1,20 @@
 class Libvatek < Formula
   desc "User library to control VATek chips"
   homepage "https://github.com/VisionAdvanceTechnologyInc/vatek_sdk_2"
-  url "https://github.com/VisionAdvanceTechnologyInc/vatek_sdk_2/archive/v3.06.tar.gz"
-  sha256 "ff851c4f2d73f309ee0e04e87cd023cdd1254c8910f1bc6d996fe725126fc016"
+  url "https://github.com/VisionAdvanceTechnologyInc/vatek_sdk_2/archive/v3.08.tar.gz"
+  sha256 "b2ccf79d2575a9a63faac394e739ed483ed6267039e55cebcb7c4b35bf76122e"
   license "BSD-2-Clause"
   head "https://github.com/VisionAdvanceTechnologyInc/vatek_sdk_2.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "96da317a59c8873a93302b32ddf1eb78a480c4c8bb6a73317ffceebbc539dd9b"
-    sha256 cellar: :any,                 arm64_big_sur:  "78b685a5b746122d5e4ed06e3e865b65ad26eab10aef75bd29ff42085e66d6c3"
-    sha256 cellar: :any,                 monterey:       "e63e70729565a12f45264e222a66a589ea233a14907996fac1f1f75a99355dee"
-    sha256 cellar: :any,                 big_sur:        "14b4c46d76b5814871c1de3957d517e7d42b35fde4da0e933f93bcd7bb05be9a"
-    sha256 cellar: :any,                 catalina:       "28e75865e5dcca69a9f65b353cc63cc9c3b24f6c9f04199093ab48c0943dae04"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "cc0d323290079069b38c71f89b9f02aa8ee987c930c0bb4de6e808a3d6bdab8d"
+    sha256 cellar: :any,                 arm64_ventura:  "2f15bbaf7cd448348d4620f46a35c01775d6d79ba1bd7b9cfc3bed8e474a01d6"
+    sha256 cellar: :any,                 arm64_monterey: "2cc74f113ca99c32faf042f1b8bf91ddbf6bfeab54240884c4e442f48abf9143"
+    sha256 cellar: :any,                 arm64_big_sur:  "cc0f294eb360e4ddc871dda1f9cf225923707de0e3a1da75f06a3552eaee6bbd"
+    sha256 cellar: :any,                 ventura:        "14a8147b3e93c86c3ad6e82894f74164b0804c370caa5ee63e820e7fb5c7d96a"
+    sha256 cellar: :any,                 monterey:       "c9c5ea7f5705196cd2cdda4459e3992e91d2cd7938cacd648c3e41553c9d1ab4"
+    sha256 cellar: :any,                 big_sur:        "3082ab9f18c28c09f8fa604a0a6c1abfe0b8c0806fd3c92b8cac6c1079e2fd06"
+    sha256 cellar: :any,                 catalina:       "0c2cba5352b4acc6b8735a58697485608e3fd4d7eda1b8a8a5f07b354d199942"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5d008f6ca39f8fa289780c1d4d44494c8186040304817233bcf1418de2185b78"
   end
 
   depends_on "cmake" => :build

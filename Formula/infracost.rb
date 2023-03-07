@@ -1,18 +1,19 @@
 class Infracost < Formula
   desc "Cost estimates for Terraform"
   homepage "https://www.infracost.io/docs/"
-  url "https://github.com/infracost/infracost/archive/v0.10.11.tar.gz"
-  sha256 "25956ef500ae171d2d36c3c61017b427a8ea986c2ef17ba6f89e5f64745dfe2a"
+  url "https://github.com/infracost/infracost/archive/v0.10.17.tar.gz"
+  sha256 "034b8fa4ce467895190586953b5622bcff870d1bf868e55d13d1b1ffde37dce7"
   license "Apache-2.0"
   head "https://github.com/infracost/infracost.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "a217fdd4ef03064b383ed7fe117e02b3769242803a147262868173c709c8c4d5"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "550e40bbb78747f30cb1edd5f5a00e7e72d40aea5f55d665da594d38cb735cfa"
-    sha256 cellar: :any_skip_relocation, monterey:       "9a78415286fd4576d42835533b879bc96dc2a9279f670a5953281fda3d9da0ff"
-    sha256 cellar: :any_skip_relocation, big_sur:        "9a78415286fd4576d42835533b879bc96dc2a9279f670a5953281fda3d9da0ff"
-    sha256 cellar: :any_skip_relocation, catalina:       "ad2b6af468469334745db2cb191cb35650d77e9d8b460e2bedfbd05b35a34ca0"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ec39c8cdab55cc4ec64a49f7e4cab7442f122293fbabfe168c4d2ced824119e3"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "e5c0ba2cbdd9d47e0d3cc633effcf6fcc1e10f2a88aa993a7e7a59cce222f0ea"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "e5c0ba2cbdd9d47e0d3cc633effcf6fcc1e10f2a88aa993a7e7a59cce222f0ea"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "e5c0ba2cbdd9d47e0d3cc633effcf6fcc1e10f2a88aa993a7e7a59cce222f0ea"
+    sha256 cellar: :any_skip_relocation, ventura:        "8f7878aec0308c72ebab4593b81cada87e2d5b837779958d00d25e06e305d141"
+    sha256 cellar: :any_skip_relocation, monterey:       "93de1299f0821162cc6fab5ddb7e49921527bf3c64dd21d48406c5b020553464"
+    sha256 cellar: :any_skip_relocation, big_sur:        "93de1299f0821162cc6fab5ddb7e49921527bf3c64dd21d48406c5b020553464"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fa34f19dcb876743682d09299feb5c5ccd678a6af557623e153b9cbe8f26225a"
   end
 
   depends_on "go" => :build
@@ -22,6 +23,8 @@ class Infracost < Formula
     ENV["CGO_ENABLED"] = "0"
     ldflags = "-X github.com/infracost/infracost/internal/version.Version=v#{version}"
     system "go", "build", *std_go_args(ldflags: ldflags), "./cmd/infracost"
+
+    generate_completions_from_executable(bin/"infracost", "completion", "--shell")
   end
 
   test do

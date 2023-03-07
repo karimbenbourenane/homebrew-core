@@ -5,15 +5,16 @@ class AvroCpp < Formula
   mirror "https://archive.apache.org/dist/avro/avro-1.11.0/cpp/avro-cpp-1.11.0.tar.gz"
   sha256 "ef70ca8a1cfeed7017dcb2c0ed591374deab161b86be6ca4b312bc24cada9c56"
   license "Apache-2.0"
-  revision 2
+  revision 4
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "d145604463d480ee07b3794aff978506e8b6b9416e6026fcfd535b8ed4e6d04e"
-    sha256 cellar: :any,                 arm64_big_sur:  "e3593bbb6bee2823fb7579f905811185a8ba2e8210adcd4638c35a658e625aca"
-    sha256 cellar: :any,                 monterey:       "4e7669cb5ad4b716ea291d0d6ae21a81f9f1788c214fbf3d4c29b00f4ee0d39a"
-    sha256 cellar: :any,                 big_sur:        "a402156606df45a62409bd79abf55fb5758e17458a02085aafc8ae2d9717a126"
-    sha256 cellar: :any,                 catalina:       "d99a75d903f5f4e39b13b553d087f0ac6c538dc367f3c89c36baca6945714ccb"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d487876c7a03a2c2fce379cb73105b33b19adbfcd1ea38f67dd9da76e1442506"
+    sha256 cellar: :any,                 arm64_ventura:  "d28e6e8ad94ce88d639e2bf47c8380ca870bafb12765c8c8864574ad7327f3f6"
+    sha256 cellar: :any,                 arm64_monterey: "ddaa7f7c209a439f8f7b62d8abcbd16b90f11d31f3e61e63804665b405efd4fb"
+    sha256 cellar: :any,                 arm64_big_sur:  "4976ca9f300014464f37566598860ec3e045422102d7bd25d572cfcc366b3ce0"
+    sha256 cellar: :any,                 ventura:        "0b5163bb5e6084a52a5d904c8ec73273cae339257cb708f01ce172a18e21769f"
+    sha256 cellar: :any,                 monterey:       "cb85f45a2e61112b1e8402c1729b0d394367f419ca0b7c54ab7716a7e83ea3a6"
+    sha256 cellar: :any,                 big_sur:        "ff16bcf7ee8aee89bf6112f37a8dc46b6c3290618471a0c3cc6c8f285ab20250"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "0a19f4faf655588028005cc3fe90b56e92505a2d170e2c1d4029d44a623adc1a"
   end
 
   depends_on "cmake" => :build

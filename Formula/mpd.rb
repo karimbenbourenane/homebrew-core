@@ -1,10 +1,9 @@
 class Mpd < Formula
   desc "Music Player Daemon"
   homepage "https://www.musicpd.org/"
-  url "https://www.musicpd.org/download/mpd/0.23/mpd-0.23.9.tar.xz"
-  sha256 "2becaba980402e8dc7972ccc3476e493b7ae2eeb720d31fa6712472ed48e9f2d"
+  url "https://www.musicpd.org/download/mpd/0.23/mpd-0.23.12.tar.xz"
+  sha256 "b7fca62284ecc25a681ea6a07abc49200af5353be42cb5a31e3173be9d8702e7"
   license "GPL-2.0-or-later"
-  revision 1
   head "https://github.com/MusicPlayerDaemon/MPD.git", branch: "master"
 
   livecheck do
@@ -13,12 +12,13 @@ class Mpd < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_monterey: "0887974e31f59b03c5601c6d052ca1c32d412c77b8aa1facedf0f0bfe5087aca"
-    sha256 cellar: :any, arm64_big_sur:  "cf013b984382dfb1abe29a28ae3894f84539314f09af24b9f77a9efba0543b00"
-    sha256 cellar: :any, monterey:       "77c538094f8b8fa4557c107743fba8d68e0b05521b96b141dbdb235503db7843"
-    sha256 cellar: :any, big_sur:        "bf7abe4ea63d2c36f7e4e5cb64f788af100073f08b95911990f2ba345f275f81"
-    sha256 cellar: :any, catalina:       "64bb99376fb006b907d0c215514abec46c23776f1d5788cb6154bed517c23e78"
-    sha256               x86_64_linux:   "34f42f8ca0b82b708814bef095b8f8b176f4d371f1a087dbe3c107d47815deaf"
+    sha256 cellar: :any, arm64_ventura:  "43c66ea0ac59c83f3f9fd24086c2d68833426ec5d79b5f1cbb88dec0dffce42f"
+    sha256 cellar: :any, arm64_monterey: "9a0c545f9daf10c985ce0f9916937836c43fdcdc89c17ac2638450f02bc92aca"
+    sha256 cellar: :any, arm64_big_sur:  "7e0d3c147166899df4f408f82c971dff1f82cc1e76e846083c508c71d4aadbb4"
+    sha256 cellar: :any, ventura:        "78a264dab7a090b474bf4698689e0f05a730ae727aa1be562e6aea9426249835"
+    sha256 cellar: :any, monterey:       "a94c6380d6be9f39411c00d56d8c638e26b352408740add3d1e1486493a59ce5"
+    sha256 cellar: :any, big_sur:        "76a2a531ef84b28e49aa52aa7a5db65fec8dc84cfd28dd6e28fce82fe046ca01"
+    sha256               x86_64_linux:   "5cb33974c1728e9357bb1739b844fa44d0c98b6c3b2a26397f2abf35035e8ffa"
   end
 
   depends_on "boost" => :build
@@ -48,10 +48,6 @@ class Mpd < Formula
   depends_on "sqlite"
 
   uses_from_macos "curl"
-
-  on_linux do
-    depends_on "gcc"
-  end
 
   fails_with gcc: "5"
 

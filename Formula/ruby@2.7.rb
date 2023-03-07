@@ -1,10 +1,9 @@
 class RubyAT27 < Formula
   desc "Powerful, clean, object-oriented scripting language"
   homepage "https://www.ruby-lang.org/"
-  url "https://cache.ruby-lang.org/pub/ruby/2.7/ruby-2.7.6.tar.xz"
-  sha256 "54dcd3044726c4ab75a9d4604720501442b229a3aed6a55fe909567da8807f24"
+  url "https://cache.ruby-lang.org/pub/ruby/2.7/ruby-2.7.7.tar.xz"
+  sha256 "b38dff2e1f8ce6e5b7d433f8758752987a6b2adfd9bc7571dbc42ea5d04e3e4c"
   license "Ruby"
-  revision 1
 
   livecheck do
     url "https://www.ruby-lang.org/en/downloads/"
@@ -12,12 +11,13 @@ class RubyAT27 < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "efb3bc1db53bbde6746a41181abbdb26dac2cdd3b8a504e0296f14653d2bcd9f"
-    sha256 arm64_big_sur:  "6cefedc69d5be3f339cbd93b58396abc0a6aad5a6f426b30648deb6744e143ab"
-    sha256 monterey:       "6083bfcbff65e642c9a6b98a2d5255b10abd5cd5164b802efc093297232f17d0"
-    sha256 big_sur:        "d1ebf48b9d58bb72b14b2f29b30340cd45a30e8bf8295e823a1b81458d1660a2"
-    sha256 catalina:       "769d1f81b562c03486eb97b224641bfcc6a362ba6036cc452eccd6ade7f3a60f"
-    sha256 x86_64_linux:   "369e603f4dc8e1ab2c2f1a5eb863feec00fd3e4191cffa8ad39bc992df4e0eb1"
+    sha256 arm64_ventura:  "046c58910bdcd858417c1c57c6038b9e75caa0208773857965e4641863c48f80"
+    sha256 arm64_monterey: "6bfa5341a3d4266c9ef9f132ae30385f8846d0775f1a30f41028a85cf71fbb6a"
+    sha256 arm64_big_sur:  "ee986c02f1a990dd31f80ff6faa381b15feddf2f4e44696ed183a71dc869dd34"
+    sha256 ventura:        "6df86204bf44b0125437f33ce4e160da51787b0967651f7e3e46f781652ea18d"
+    sha256 monterey:       "164b44f6c91a5be9ea8b1e77edbf681813e4aeea21479f5fe83b4ffa59460034"
+    sha256 big_sur:        "8878a79d9e8495b9167c20561f85f3627b276237996585b712a003d2d3ea1983"
+    sha256 x86_64_linux:   "d9a9afbbc121f76266a2898b9d184a7cac0b05ecd4ed7fac223871d2e025645a"
   end
 
   keg_only :versioned_formula
@@ -34,8 +34,8 @@ class RubyAT27 < Formula
   # The exception is Rubygem security fixes, which mandate updating this
   # formula & the versioned equivalents and bumping the revisions.
   resource "rubygems" do
-    url "https://rubygems.org/rubygems/rubygems-3.3.11.tgz"
-    sha256 "64184aec5bf3d4314eca3b8bae2085c5ddec50564b822340035187431dc1c074"
+    url "https://rubygems.org/rubygems/rubygems-3.3.26.tgz"
+    sha256 "9b17a53a000a599926cf1ef19e9d2a35f87b436ae6500225eebe55db320dc68c"
   end
 
   def api_version
@@ -229,10 +229,10 @@ class RubyAT27 < Formula
 
     (testpath/"Gemfile").write <<~EOS
       source 'https://rubygems.org'
-      gem 'gemoji'
+      gem 'github-markup'
     EOS
     system bin/"bundle", "exec", "ls" # https://github.com/Homebrew/homebrew-core/issues/53247
     system bin/"bundle", "install", "--binstubs=#{testpath}/bin"
-    assert_predicate testpath/"bin/gemoji", :exist?, "gemoji is not installed in #{testpath}/bin"
+    assert_predicate testpath/"bin/github-markup", :exist?, "github-markup is not installed in #{testpath}/bin"
   end
 end

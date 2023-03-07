@@ -1,17 +1,18 @@
 class Libheif < Formula
   desc "ISO/IEC 23008-12:2017 HEIF file format decoder and encoder"
   homepage "https://www.libde265.org/"
-  url "https://github.com/strukturag/libheif/releases/download/v1.13.0/libheif-1.13.0.tar.gz"
-  sha256 "c20ae01bace39e89298f6352f1ff4a54b415b33b9743902da798e8a1e51d7ca1"
+  url "https://github.com/strukturag/libheif/releases/download/v1.15.1/libheif-1.15.1.tar.gz"
+  sha256 "28d5a376fe7954d2d03453f983aaa0b7486f475c27c7806bda31df9102325556"
   license "LGPL-3.0-only"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "56393746a6a2b778fea34efd0f54bb021cbbd3037e5331e7bd43692c7197afc0"
-    sha256 cellar: :any,                 arm64_big_sur:  "90e4cd50afc636c2c5a4c65ef24e69dd8b4e8882972835f674827974bf31829b"
-    sha256 cellar: :any,                 monterey:       "c430a3ac250cac7589d3d5a1b49e646bddc8ad612a9539967e407448209c38c0"
-    sha256 cellar: :any,                 big_sur:        "645812fa238861a35d8969c8a024b21cec7d196c243215dc851915602d840ceb"
-    sha256 cellar: :any,                 catalina:       "903dd8b70663ea86f9be75da09b3fe721d484a2075ed4dd9cabd539c736ea772"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c8430376a3c220ee03cae6abfd71fca61fd47d581bb2bea011d02c29f28fafbc"
+    sha256 cellar: :any,                 arm64_ventura:  "649a164eb04ae67c7ee680f2db12056e0e0c79d9510e5940b346c54e9eeb88e9"
+    sha256 cellar: :any,                 arm64_monterey: "ff51b4c0e99a60307cb26ffa05c24b1e3ef67829969a19dc85f95e881dc099a8"
+    sha256 cellar: :any,                 arm64_big_sur:  "305cd39610e2a05c760448ef722afac2b9bc230f3248012296a279c6dbb93aa2"
+    sha256 cellar: :any,                 ventura:        "5afe174adae78f29caf8bfd4427fbb41e3fbf82af8ff44098dc3a9371aa8c37a"
+    sha256 cellar: :any,                 monterey:       "cc76c8be3470e8253c85cfe1204f94391e2599f0ff9c302d3aded4bc83c42da1"
+    sha256 cellar: :any,                 big_sur:        "fbdfe6c282585a3f8f14575130ad24baa9220ebfe4464a116201fb0c5b3baa9e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "87421411f1ee23d5a017c4fb201263df8baaa488de71395c40e91db4c4214767"
   end
 
   depends_on "pkg-config" => :build

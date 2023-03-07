@@ -2,18 +2,19 @@ class Wtfutil < Formula
   desc "Personal information dashboard for your terminal"
   homepage "https://wtfutil.com"
   url "https://github.com/wtfutil/wtf.git",
-      tag:      "v0.41.0",
-      revision: "fb027f1ec75b52137bc2828a8e0976a510b5591e"
+      tag:      "v0.43.0",
+      revision: "ea7f6ed1ce0e3a96c7ce7aa337bfdae9cfc27a93"
   license "MPL-2.0"
   head "https://github.com/wtfutil/wtf.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "328f632701bb230bb7c1f585eaa8e8302caee981132bee7ece771ea620068d93"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "be10a4a93edcba84f41e3ee1963e846e1b0835d4ccf463a7ceef1aa949ea6063"
-    sha256 cellar: :any_skip_relocation, monterey:       "854d20c1a7b251d6c696a43b53bccd951c3ae68848b294067a11a483d77bedf5"
-    sha256 cellar: :any_skip_relocation, big_sur:        "f2b79ebab8e78ad546ef90e286907e85b7973c72be7678ee1f84d7d4c0a7bca9"
-    sha256 cellar: :any_skip_relocation, catalina:       "8f0694be170caf23c9ca6e45acdc0992059adee1dbdd6d477095d2a211dcd368"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "28ccf8bde8dda105bfaae2762d4a2f9bebdd58748fad6db78c1d4b12d6651253"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "3d811c8da851a06afb1aa0f1396755385a3eace99e2abdbf58719619efecdd3b"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "2dde8a7584268f28be28e4ff1e98f8895314c2950d88d002830f7ed79ec51c52"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "efb3e2fd24e639a315cc5e50acd8a20dc4b454a6a8aff0dfb2c169c9eac6afd9"
+    sha256 cellar: :any_skip_relocation, ventura:        "1c66eb6d6b8c4a9b3167163371c1d774b9df6f1dd36155b380ee83e82ac8e13d"
+    sha256 cellar: :any_skip_relocation, monterey:       "4183402aa957eead2c29e62f9e1d6afb0940568d6b387e360ae4e0fdcc61be35"
+    sha256 cellar: :any_skip_relocation, big_sur:        "717dcf43f6c5d8f55c3f0aefd8e255ef91aab685a02b668ed27ce375e1bc404a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c46aabfdfe08b790df12e07d83d93d0b1d10c4c963315979445ec220e2463372"
   end
 
   depends_on "go" => :build

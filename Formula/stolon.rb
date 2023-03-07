@@ -8,8 +8,10 @@ class Stolon < Formula
   revision 1
 
   bottle do
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "e2ff141e91b71942f67871741dabcd110310a06c72d68ce361391e2a1ce233ee"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "17af62bc7751903d4f85e447907825f3bf4df255263487c47b44e299a9b196be"
     sha256 cellar: :any_skip_relocation, arm64_big_sur:  "767212e3c8d9dc59a030aa96083a48f42be86fa4c43b1df2158c6d3d9fa50f54"
+    sha256 cellar: :any_skip_relocation, ventura:        "ca9b4d2758cdb30d4d68573285228d3ee30f007b0a10f2b1981fca2b5f3ed300"
     sha256 cellar: :any_skip_relocation, monterey:       "6e82da7f0cd74193592f16415ba7386c7483bf9006814177df8086cc96e7b57a"
     sha256 cellar: :any_skip_relocation, big_sur:        "2955ce82d16c3601d928d8f7125bda27dde894fd9e8b8c8e2025a178c38cb640"
     sha256 cellar: :any_skip_relocation, catalina:       "6f8469a79e442788d8a8c774c7097ee45d1deeebb17968c79e4efbd37965e69f"
@@ -21,23 +23,43 @@ class Stolon < Formula
   depends_on "libpq"
 
   def install
-    system "go", "build", "-ldflags", "-s -w -X github.com/sorintlab/stolon/cmd.Version=#{version}",
-                          "-trimpath", "-o", bin/"stolonctl", "./cmd/stolonctl"
-    system "go", "build", "-ldflags", "-s -w -X github.com/sorintlab/stolon/cmd.Version=#{version}",
-                          "-trimpath", "-o", bin/"stolon-keeper", "./cmd/keeper"
-    system "go", "build", "-ldflags", "-s -w -X github.com/sorintlab/stolon/cmd.Version=#{version}",
-                          "-trimpath", "-o", bin/"stolon-sentinel", "./cmd/sentinel"
-    system "go", "build", "-ldflags", "-s -w -X github.com/sorintlab/stolon/cmd.Version=#{version}",
-                          "-trimpath", "-o", bin/"stolon-proxy", "./cmd/proxy"
-    prefix.install_metafiles
+    ldflags = "-s -w -X github.com/sorintlab/stolon/cmd.Version=#{version}"
+
+    %w[
+      stolonctl ./cmd/stolonctl
+      stolon-keeper ./cmd/keeper
+      stolon-sentinel ./cmd/sentinel
+      stolon-proxy ./cmd/proxy
+    ].each_slice(2) do |bin_name, src_path|
+      system "go", "build", *std_go_args(ldflags: ldflags, output: bin/bin_name), src_path
+    end
+  end
+
+  def port_open?(ip_address, port, seconds = 1)
+    Timeout.timeout(seconds) do
+      TCPSocket.new(ip_address, port).close
+    end
+    true
+  rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH, Timeout::Error
+    false
   end
 
   test do
-    pid = fork do
-      exec "consul", "agent", "-dev"
-    end
-    sleep 2
+    require "socket"
+    require "timeout"
 
+    consul_default_port = 8500
+    localhost_ip = "127.0.0.1".freeze
+
+    if port_open?(localhost_ip, consul_default_port)
+      puts "Consul already running"
+    else
+      fork do
+        exec "consul agent -dev -bind 127.0.0.1"
+        puts "Consul started"
+      end
+      sleep 5
+    end
     assert_match "stolonctl version #{version}",
       shell_output("#{bin}/stolonctl version 2>&1")
     assert_match "nil cluster data: <nil>",
@@ -49,7 +71,6 @@ class Stolon < Formula
     assert_match "stolon-proxy version #{version}",
       shell_output("#{bin}/stolon-proxy --version 2>&1")
 
-    Process.kill("TERM", pid)
-    Process.wait(pid)
+    system "consul", "leave"
   end
 end

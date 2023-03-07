@@ -1,10 +1,9 @@
 class Mgba < Formula
   desc "Game Boy Advance emulator"
   homepage "https://mgba.io/"
-  url "https://github.com/mgba-emu/mgba/archive/0.9.3.tar.gz"
-  sha256 "692ff0ac50e18380df0ff3ee83071f9926715200d0dceedd9d16a028a59537a0"
+  url "https://github.com/mgba-emu/mgba/archive/0.10.1.tar.gz"
+  sha256 "5fc1d7ac139fe51ef71782d5de12d11246563cdebd685354b6188fdc82a84bdf"
   license "MPL-2.0"
-  revision 1
   head "https://github.com/mgba-emu/mgba.git", branch: "master"
 
   livecheck do
@@ -13,29 +12,34 @@ class Mgba < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_monterey: "34235cb6f1aaeca67d11e4b060bfd2d7adf462b61b115beb029fd81ec0adc563"
-    sha256 cellar: :any, arm64_big_sur:  "0dc3200fa947b5872c48500c3c7b4841668edfc2143d2977226e850fa53db2dd"
-    sha256 cellar: :any, monterey:       "8486c6db482c218845f22d3dfbc5402066d002c6712b1fc0faefa3ce88d186f0"
-    sha256 cellar: :any, big_sur:        "575163b96818d53848c6b4a536fbccea185cce14487394974519b1655c3cb03f"
-    sha256 cellar: :any, catalina:       "fe54e4803c93036beb054b6e649f722e21f1ae08fa4efb4c2808d9b5b875fd8f"
-    sha256               x86_64_linux:   "2e521f7ea91d0e5b77583d818c0eed31ece44389d4ac3235dd6ed52bfd6141ae"
+    sha256 arm64_ventura:  "584bde4b0f0d0baa337a4fceedaff49e7f234d41d6b8aaed8e036571abed575c"
+    sha256 arm64_monterey: "4aaeb726cf6617932f74a21f955ddb10d64ef5cdb299054f4926f39f013143e6"
+    sha256 arm64_big_sur:  "c0b2a3a4aa9e1de968df9e8f1503b7ee81fecfd37bc44389f58cb4072494fb0c"
+    sha256 ventura:        "fea6b0f43e41647bd8e3bf94d2d311e133fd56bfb0a264a599f9e6a5d6cec688"
+    sha256 monterey:       "9932d3d66de37e3c724860551764ce5c19e89bfc97e823b36f32cbd8d411089b"
+    sha256 big_sur:        "4989c70fecfe563140e844a04ce126c5e25a6faf7b2f76474bbfde876a08bbbc"
+    sha256 x86_64_linux:   "ba11dc52534a5970901684e57fe58a07871c6fcee7b8c644075101c2e7ddce2b"
   end
 
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
-  depends_on "ffmpeg@4"
+  depends_on "ffmpeg"
   depends_on "libepoxy"
   depends_on "libpng"
   depends_on "libzip"
+  depends_on "lua"
   depends_on "qt@5"
   depends_on "sdl2"
-  depends_on "sqlite" # try to change to uses_from_macos after python is not a dependency
 
-  on_linux do
-    depends_on "gcc"
+  uses_from_macos "sqlite"
+
+  on_macos do
+    depends_on "libelf" => :build
   end
 
-  fails_with gcc: "5" # ffmpeg is compiled with GCC
+  on_linux do
+    depends_on "elfutils"
+  end
 
   def install
     # Install .app bundle into prefix, not prefix/Applications

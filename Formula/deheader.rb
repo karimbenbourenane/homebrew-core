@@ -3,8 +3,8 @@ class Deheader < Formula
 
   desc "Analyze C/C++ files for unnecessary headers"
   homepage "http://www.catb.org/~esr/deheader/"
-  url "http://www.catb.org/~esr/deheader/deheader-1.8.tar.gz"
-  sha256 "ebf144b441cc12ff5003e3e36c16e772382a153968c44334d5d6a892b44cab06"
+  url "http://www.catb.org/~esr/deheader/deheader-1.10.tar.gz"
+  sha256 "909d2683a3e62da54bfc660814b4d8af93f582e23858810cc41bfa081571f593"
   license "BSD-2-Clause"
 
   livecheck do
@@ -13,7 +13,7 @@ class Deheader < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "35fcae1dfb59ef0c9fce339453c212eabfc380c70b1820ca4b69275606cc2678"
+    sha256 cellar: :any_skip_relocation, all: "67fb3c4990162be0ba10c9c6a934d6826a43fcf17bcd876d91777e408ad7258c"
   end
 
   head do
@@ -21,7 +21,7 @@ class Deheader < Formula
     depends_on "xmlto" => :build
   end
 
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   def install
     if build.head?

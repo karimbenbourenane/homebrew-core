@@ -2,11 +2,10 @@ class PhpAT80 < Formula
   desc "General-purpose scripting language"
   homepage "https://www.php.net/"
   # Should only be updated if the new version is announced on the homepage, https://www.php.net/
-  url "https://www.php.net/distributions/php-8.0.23.tar.xz"
-  mirror "https://fossies.org/linux/www/php-8.0.23.tar.xz"
-  sha256 "65e474b6bd8cfc9d4a8a56268a755e2f9d3e7499e1687e6401a9f2b047600f87"
+  url "https://www.php.net/distributions/php-8.0.28.tar.xz"
+  mirror "https://fossies.org/linux/www/php-8.0.28.tar.xz"
+  sha256 "5e07278a1f315a67d36a676c01343ca2d4da5ec5bdb15d018e4248b3012bc0cd"
   license "PHP-3.01"
-  revision 1
 
   livecheck do
     url "https://www.php.net/downloads"
@@ -14,12 +13,13 @@ class PhpAT80 < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "081045f2adeb86a0242734ad32a41b6a6e23a166169d61010b9fccd1bb4f1501"
-    sha256 arm64_big_sur:  "461586f2c9dd9ea24b44b595c1287450f03d6916e10bcc323d176d697fe24f00"
-    sha256 monterey:       "7e8c9e139d174882a29e23cfb32406e663856097319b0c9cdb35db5e85e3cca6"
-    sha256 big_sur:        "9e4bbea35b23e76f0e27ebd08ce2d2627e1b0c44cdf7584efa71de0e87abae20"
-    sha256 catalina:       "10a0f73cb6d7b97ca42e964b1381a0f19bfa052a7382cd0b7475cf75ba6d78a8"
-    sha256 x86_64_linux:   "f8f17ed0daf3a01f006f239ae550aeb4022413dfbb709a445e5892534a4e9a29"
+    sha256 arm64_ventura:  "fdff1a7af1220afe62fca6cdc859ec00b72382b7ef14e3cad54cfea8628a5be8"
+    sha256 arm64_monterey: "ac70b3470662a904dde67afa5f6654cff8973934748f4fd5b672a1e93e459089"
+    sha256 arm64_big_sur:  "c45e7b5d578b1f362d3ae7df98e4ba917d49a1827f87e87c40387dd0aef054c0"
+    sha256 ventura:        "7b6beb6aca12e38da916415fa5c177e0550eb5889c966aecf4008057b4c9180a"
+    sha256 monterey:       "b4832a7ac8cdf8971f4c3fdf7d2a66c72b8b7b1786b6653c1b2800511ab91917"
+    sha256 big_sur:        "fcb68e6aefe4c38578da7877953736f370bbe38632c1acf3224861f596dfa053"
+    sha256 x86_64_linux:   "1f5077c5861cdc3d3ab7fab79f26fb235b616d4c47d65364e508a2b59a6c82e4"
   end
 
   keg_only :versioned_formula
@@ -313,7 +313,6 @@ class PhpAT80 < Formula
     EOS
   end
 
-  plist_options manual: "php-fpm"
   service do
     run [opt_sbin/"php-fpm", "--nodaemonize"]
     run_type :immediate

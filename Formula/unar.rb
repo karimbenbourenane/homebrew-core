@@ -4,25 +4,27 @@ class Unar < Formula
   url "https://github.com/MacPaw/XADMaster/archive/refs/tags/v1.10.7.tar.gz"
   sha256 "3d766dc1856d04a8fb6de9942a6220d754d0fa7eae635d5287e7b1cf794c4f45"
   license "LGPL-2.1-or-later"
+  revision 2
   head "https://github.com/MacPaw/XADMaster.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "5cedc1ed00cb1f638f6e7d7f026196c19aaf8e2ce9eacb7d9220b98cae2f0649"
-    sha256 cellar: :any,                 arm64_big_sur:  "16091256fd3c0d13a774fc1900b7b21584fb9eee669a65de56906e188fbcc665"
-    sha256 cellar: :any,                 monterey:       "2da5bda2a8ad54072fffd22e81c3b3b85320f8d68b993fdc4282dc6c87cec0e6"
-    sha256 cellar: :any,                 big_sur:        "a92a0fd33d7598591efa5dc01692221053cdc612bb218f46df422af0bd5082c6"
-    sha256 cellar: :any,                 catalina:       "6207848baad1fda03e3bdda9a8cd621ef2d226a02fcf4219fec64c9f418b9a0e"
-    sha256 cellar: :any,                 mojave:         "f09e3c1eb465cec023037048305b493e3ed57696a775eb121076951b8ae63e76"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7e82767f0456781aff87035e18d2062da86ed91863ac196f059f6e799ae3db3f"
+    sha256 cellar: :any,                 arm64_ventura:  "f54bbe066a64757abecc1f684f21210dd00a39fdc3d12c95ccb2fb6f177c1ebb"
+    sha256 cellar: :any,                 arm64_monterey: "a608dbbff3ba80cb81fd4c5c27a258bfd215cca26bfeab85039d4eab7bd1997e"
+    sha256 cellar: :any,                 arm64_big_sur:  "15c3334c72b2f110cceea2376cd7b29cc4b59bf230a996ea921db6ba5506ace2"
+    sha256 cellar: :any,                 ventura:        "f922d535c2c2121a8594ba2e69a8e2644ed07df79d187b0cfe98400df1cb0cdc"
+    sha256 cellar: :any,                 monterey:       "b249c2612975d145ae8fcc6267803a4252c3b9cad1b39047802beccc18838e09"
+    sha256 cellar: :any,                 big_sur:        "9c8f7c554d1fd798f4e1cc35e3137a330e9c31e0282143887fe1cef547392d33"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "eaea53f9babb998e847ea51e5a6b41ca910c5f9c2f14c0302fd999a0fbd8b0a0"
   end
 
   depends_on xcode: :build
 
-  uses_from_macos "llvm" => [:build, :test]
+  uses_from_macos "llvm" => :build
   uses_from_macos "bzip2"
 
   on_linux do
     depends_on "gnustep-base"
+    depends_on "icu4c"
     depends_on "wavpack"
   end
 

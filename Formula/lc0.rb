@@ -2,43 +2,50 @@ class Lc0 < Formula
   desc "Open source neural network based chess engine"
   homepage "https://lczero.org/"
   url "https://github.com/LeelaChessZero/lc0.git",
-      tag:      "v0.28.2",
-      revision: "fa5864bb5838e131d832ad63300517f4684913e7"
+      tag:      "v0.29.0",
+      revision: "afdd67c2186f1f29893d495750661a871f7aa9ac"
   license "GPL-3.0-or-later"
-  revision 2
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "2d8bfca5ebff386f71840281f15ec3c04e2436f1fcb3529ce1eb5d10facbc9db"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "bdc7f840a570db9c0f54a5055091fd16ab04399b68381d05e75071d5c61fd8e9"
-    sha256 cellar: :any_skip_relocation, monterey:       "97af5c15368b7ccc506055dd37a7dabefb3fa437eafe3326b7c9a094ae6583f1"
-    sha256 cellar: :any_skip_relocation, big_sur:        "981faff9f38f2d4d40ea716e837f8ba45ea63dc627f80078af043110074204b0"
-    sha256 cellar: :any_skip_relocation, catalina:       "bb01f65bcf9aa37e511b8235ffd2108dcc9176a4a6ab1c20eca909eb0f8146bd"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fbe3c6e9c3e92df13902470ddae27d1cc2cebc26d395b5be01a82465ec940575"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "89b183e7deea7ff39d8463e70fc1b5da7e3fc547f90e91bf43baf1c8a3d49f99"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "fdd6bfd76c58c7213d23bf1946340030701c6a57dbb171026c9213be6cd6be8d"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "9d8bd4640d5eeca48ddf2c88cc5f606504f59d66d17aec6dabcb7333863ed07d"
+    sha256 cellar: :any_skip_relocation, ventura:        "576652ad17704ee01de8a1637d56e58fa0d0a52ae00fbe512bb10a90d3386e0d"
+    sha256 cellar: :any_skip_relocation, monterey:       "87f1af61af279b1e06d96659d6b28f6eb6ef1accea4875e5fdb066ce2383219f"
+    sha256 cellar: :any_skip_relocation, big_sur:        "d353339a78402996038ae6938477da3f0f4e29c1edcd74bbe9617374d90ff062"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7aae4b4e1fd9587f3dc01724c83c364af205428342507617e20f3f7a6de7f774"
   end
 
   depends_on "cmake" => :build
   depends_on "meson" => :build
   depends_on "ninja" => :build
   depends_on "pkg-config" => :build
-  depends_on "python@3.10" => :build # required to compile .pb files
+  depends_on "python@3.11" => :build # required to compile .pb files
   depends_on "eigen"
 
   uses_from_macos "zlib"
 
   on_linux do
-    depends_on "gcc" # for C++17
     depends_on "openblas"
   end
 
-  fails_with gcc: "5"
+  fails_with gcc: "5" # for C++17
 
+  # We use "753723" network with 15 blocks x 192 filters (from release notes)
+  # Downloaded from https://training.lczero.org/networks/?show_all=0
   resource "network" do
-    url "https://training.lczero.org/get_network?sha=00af53b081e80147172e6f281c01daf5ca19ada173321438914c730370aa4267", using: :nounzip
-    sha256 "12df03a12919e6392f3efbe6f461fc0ff5451b4105f755503da151adc7ab6d67"
+    url "https://training.lczero.org/get_network?sha=3e3444370b9fe413244fdc79671a490e19b93d3cca1669710ffeac890493d198", using: :nounzip
+    sha256 "ca9a751e614cc753cb38aee247972558cf4dc9d82c5d9e13f2f1f464e350ec23"
   end
 
   def install
     args = ["-Dgtest=false"]
+
+    # Disable metal backend for older macOS
+    # Ref https://github.com/LeelaChessZero/lc0/issues/1814
+    args << "-Dmetal=disabled" if MacOS.version <= :big_sur
+
     if OS.linux?
       args << "-Dopenblas_include=#{Formula["openblas"].opt_include}"
       args << "-Dopenblas_libdirs=#{Formula["openblas"].opt_lib}"
@@ -56,8 +63,8 @@ class Lc0 < Formula
 
   test do
     assert_match "Creating backend [blas]",
-      shell_output("lc0 benchmark --backend=blas --nodes=1 --num-positions=1 2>&1")
+      shell_output("#{bin}/lc0 benchmark --backend=blas --nodes=1 --num-positions=1 2>&1")
     assert_match "Creating backend [eigen]",
-      shell_output("lc0 benchmark --backend=eigen --nodes=1 --num-positions=1 2>&1")
+      shell_output("#{bin}/lc0 benchmark --backend=eigen --nodes=1 --num-positions=1 2>&1")
   end
 end

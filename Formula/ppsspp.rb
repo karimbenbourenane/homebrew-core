@@ -2,24 +2,25 @@ class Ppsspp < Formula
   desc "PlayStation Portable emulator"
   homepage "https://ppsspp.org/"
   url "https://github.com/hrydgard/ppsspp.git",
-      tag:      "v1.13.1",
-      revision: "5083b206365a226fb51288e09424f8f5f5a3392a"
+      tag:      "v1.14.4",
+      revision: "cd535263c1ad65fd03869591a8bd706680cbf04b"
   license all_of: ["GPL-2.0-or-later", "BSD-3-Clause"]
   head "https://github.com/hrydgard/ppsspp.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "0f56c1b7d8006f006dcb52fa17da1dac70eb75b579f7ef4747720b444b55ab59"
-    sha256 cellar: :any,                 arm64_big_sur:  "675c479f19ef32ee316d7e40a46794d1892e59a39e0d0a4a2b2393864e97286b"
-    sha256 cellar: :any,                 monterey:       "25beafe716d6c84433141371a42ba7676d4a35262d3ca8963a62d605ac78eccf"
-    sha256 cellar: :any,                 big_sur:        "ca2231ca179fb88fa754e56dfc4cab9057edc2df4e040ffd0234ae79393fd740"
-    sha256 cellar: :any,                 catalina:       "784525d911a61aeb88364eb2b73db2e947448d204c37e29d0b2a7aa3d9b4c802"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "dd91c2958904e972ed4969072265bde06c9ec6a61ed44c6f87ba092eefe4c05e"
+    sha256 cellar: :any,                 arm64_ventura:  "12eb34a29c2d4dca85b14d53e0143315d9721f46eb48d2ca04b489fba7d546a1"
+    sha256 cellar: :any,                 arm64_monterey: "6c2e98b136aeac198bb244e74d14028d53931b1c1c0e411dbff4fa18c8c1ea69"
+    sha256 cellar: :any,                 arm64_big_sur:  "71257d8d85c12d5d095ce55f3465cb66ccc2dd9432b8b707c661766d45d0d7ed"
+    sha256 cellar: :any,                 ventura:        "a2ff1c001e74f000159f7cc2d2016c827dee9f5339eb3d43d1c91392238ffbe6"
+    sha256 cellar: :any,                 monterey:       "d6bddfb72e3568f424c3f0d4237fd444b52d03b921ecf292cd5cf62fe45a4863"
+    sha256 cellar: :any,                 big_sur:        "e3221b806f94a9a1d3cd447342d6862035075e1055eef040c47ddba6a7a31688"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "cfecd0667593b18ddcac5726a42e5ad6229d1e5ee1ebcacdc943241c5d028a5b"
   end
 
   depends_on "cmake" => :build
   depends_on "nasm" => :build
   depends_on "pkg-config" => :build
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => :build
   depends_on "libzip"
   depends_on "miniupnpc"
   depends_on "sdl2"

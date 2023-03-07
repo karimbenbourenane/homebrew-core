@@ -4,7 +4,7 @@ class Lgogdownloader < Formula
   url "https://github.com/Sude-/lgogdownloader/releases/download/v3.9/lgogdownloader-3.9.tar.gz"
   sha256 "d0b3b6198e687f811294abb887257c5c28396b5af74c7f3843347bf08c68e3d0"
   license "WTFPL"
-  revision 1
+  revision 3
   head "https://github.com/Sude-/lgogdownloader.git", branch: "master"
 
   livecheck do
@@ -13,12 +13,13 @@ class Lgogdownloader < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "6f4d4d64703557f1018cf4b0595c4f94cf20ca87c28ac1ef30ede297eb8496f7"
-    sha256 cellar: :any,                 arm64_big_sur:  "357f7864c9c768acf1fc99ed65c775aeec005ad8ceb54b749875f3aa2a27d658"
-    sha256 cellar: :any,                 monterey:       "5cea761f4140103dfe67cdaf9d0c1ed5a217b9cffe171526b4aed71a496bdafe"
-    sha256 cellar: :any,                 big_sur:        "267c486e488a1f0971c19d0ae47d2065447b2e247d842fa0fd4f46f03ec41462"
-    sha256 cellar: :any,                 catalina:       "42b18160dbc356cdeb0e6b92a91d664d35ad6a731cbaa1397e9e5787efda4613"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "aa1532fab8b7dc8c0b109f9e7140747fb53827bcfc4034fec6cd73771e4961ca"
+    sha256 cellar: :any,                 arm64_ventura:  "5b7309454be5bb9ebcf3d0e8406b7f443e7abb71f2b49bdc7e08bc5aa32e3d49"
+    sha256 cellar: :any,                 arm64_monterey: "cf59cafe7b2b7c27613daef308d55ccae6727cd71d2627bfdbb309bbfb244166"
+    sha256 cellar: :any,                 arm64_big_sur:  "e2b28d2bde8295b152315d22445fafc85eaebad79288d32340212909f2f8c598"
+    sha256 cellar: :any,                 ventura:        "0b31fd256677a4ebb84474367c3a8faaf6fee81e0d49148855daddb9707543af"
+    sha256 cellar: :any,                 monterey:       "21d77cf72d41e155c7afa10bd1907c611aee00c640c6bf37c2b11dec882d179e"
+    sha256 cellar: :any,                 big_sur:        "0bfd430cabfaeaa893e3a6733f7193832d61e34a991e346c0db8097347d9c181"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c9b780d368e3deeac346ed9e580fd9758bb3c897a5e93ff7b11f93111dedb659"
   end
 
   depends_on "cmake" => :build

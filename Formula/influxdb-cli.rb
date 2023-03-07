@@ -2,8 +2,8 @@ class InfluxdbCli < Formula
   desc "CLI for managing resources in InfluxDB v2"
   homepage "https://influxdata.com/time-series-platform/influxdb/"
   url "https://github.com/influxdata/influx-cli.git",
-      tag:      "v2.4.0",
-      revision: "5c7c34f16db858e1287cdfe162e6481a36f79145"
+      tag:      "v2.6.1",
+      revision: "61c5b4d5338321e46544f8810e44916b1bd071b6"
   license "MIT"
   head "https://github.com/influxdata/influx-cli.git", branch: "main"
 
@@ -13,12 +13,13 @@ class InfluxdbCli < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "f8ae8aef2a23d8629bceff829d677986fe60e75f5614bb533d1f9f561430b705"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "b9f84acce048d77e4db132fefffd1eade4b7d801b77ae4d6c6d4e732dd856068"
-    sha256 cellar: :any_skip_relocation, monterey:       "f0af336eccd554caa46b01e1cd6aad071e573e3ff4fb790dfe5fea36de256e02"
-    sha256 cellar: :any_skip_relocation, big_sur:        "01f723975010eb64195dd1c13f3692ab57f804d5b2ef4c373d8469ee8892914d"
-    sha256 cellar: :any_skip_relocation, catalina:       "7bb26bec31006ac6c46f56ae2f51700643eb8ed0cf080ee19d5697525bbec5b2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e61fb05c5e7020ff10f3eb32a2894ab8d4387a8c2cb50fb3cafc3426de4a2b1f"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "3b6f2900ae325a5d3238daddb954d30788b8960236b3765a398e0dc56f03bea3"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "72dfaae3242f8397542b3f7c37250545e61880bcf82d7a31e40908335ad43e2e"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "1ba45fae202013c6fedeb96aa42644ed0350ba702b5c60c6ecf01bc4c6038de9"
+    sha256 cellar: :any_skip_relocation, ventura:        "a82fb72eafcc5436863897a4903c9700d8c617dff59f2aded291d946f398bf01"
+    sha256 cellar: :any_skip_relocation, monterey:       "5ec721cf534147b5c3d6853e0839651fe020d8c80aebc32b8d7d6b2cb0f8d3a2"
+    sha256 cellar: :any_skip_relocation, big_sur:        "473bbdc71801ee522d36be7b75ec7d116fecb31e2d2cf622e356c336d2d809d2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "343770ba5ef18d28383b76fe9f0d80e094dfe5f4eae0cf773050118c9b5a95e4"
   end
 
   depends_on "go" => :build

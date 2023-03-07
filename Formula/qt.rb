@@ -3,10 +3,18 @@ class Qt < Formula
 
   desc "Cross-platform application and UI framework"
   homepage "https://www.qt.io/"
-  url "https://download.qt.io/official_releases/qt/6.3/6.3.1/single/qt-everywhere-src-6.3.1.tar.xz"
-  sha256 "51114e789485fdb6b35d112dfd7c7abb38326325ac51221b6341564a1c3cc726"
-  license all_of: ["GFDL-1.3-only", "GPL-2.0-only", "GPL-3.0-only", "LGPL-2.1-only", "LGPL-3.0-only"]
-  revision 3
+  url "https://download.qt.io/official_releases/qt/6.4/6.4.2/single/qt-everywhere-src-6.4.2.tar.xz"
+  mirror "https://qt.mirror.constant.com/archive/qt/6.4/6.4.2/single/qt-everywhere-src-6.4.2.tar.xz"
+  mirror "https://mirrors.ukfast.co.uk/sites/qt.io/archive/qt/6.4/6.4.2/single/qt-everywhere-src-6.4.2.tar.xz"
+  sha256 "689f53e6652da82fccf7c2ab58066787487339f28d1ec66a8765ad357f4976be"
+  license all_of: [
+    "BSD-3-Clause",
+    "GFDL-1.3-no-invariants-only",
+    "GPL-2.0-only",
+    { "GPL-3.0-only" => { with: "Qt-GPL-exception-1.0" } },
+    "LGPL-3.0-only",
+  ]
+  revision 2
   head "https://code.qt.io/qt/qt5.git", branch: "dev"
 
   # The first-party website doesn't make version information readily available,
@@ -17,21 +25,26 @@ class Qt < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "36c4e474154f473b62efa27cfd2faa4bff6bd272ab98d269895a22cdf0aca18b"
-    sha256 cellar: :any,                 arm64_big_sur:  "56059d69e3b7bc16d6cd85345223c1252c120d4addb11b15a36b42fc9875f08b"
-    sha256 cellar: :any,                 monterey:       "428722dfc8f286a0c6e516de2e118b025bb3998f9ee1346816a9549b7fe3c245"
-    sha256 cellar: :any,                 big_sur:        "dd48440698567224071ae0f5d9cdfadf6432872a9b3960b3d5e9fe830b2518ea"
-    sha256 cellar: :any,                 catalina:       "8ef3ab30892828319c72a54d4f3a3aa46608b9759179565aef5f72852e8a00e0"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b0fb8d42e129d6ee327c9c8e8e0f9827a5c8787b5cb7e64c9187f3d76de0791a"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_ventura:  "c3baece41853ddd1928f64a057eaeed59486a50f0a92456a3b97efd55ea858ce"
+    sha256 cellar: :any,                 arm64_monterey: "94718efac13eeebd0c07ff7015a36a67f3331a6c72c3721a4cad64f3fa21a057"
+    sha256 cellar: :any,                 arm64_big_sur:  "40ed1b9f974b9b55d9b0e4365884850137f119070dcf6b65ef7e1f73ac042a90"
+    sha256 cellar: :any,                 ventura:        "2d523d232f62d4c8075038975881d8914f8eb3de8972a5bcde6aab68259749bb"
+    sha256 cellar: :any,                 monterey:       "9260a401d7e42ac0a04532017d96582d74266b3989d0948dfc04daa1c4a7b697"
+    sha256 cellar: :any,                 big_sur:        "2e10b637e50bba986e030aacbea23613558e1e36a982d45fac3be73941c04ae8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a47d43bf6dbdd6bf03c432d07900a87ff6878b092f4356bab413424b69879108"
   end
 
   depends_on "cmake"      => [:build, :test]
   depends_on "ninja"      => :build
   depends_on "node"       => :build
   depends_on "pkg-config" => :build
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => :build
   depends_on "six" => :build
+  depends_on "vulkan-headers" => [:build, :test]
   depends_on xcode: :build
+
+  depends_on "vulkan-loader" => :test
 
   depends_on "assimp"
   depends_on "brotli"
@@ -39,6 +52,7 @@ class Qt < Formula
   depends_on "double-conversion"
   depends_on "freetype"
   depends_on "glib"
+  depends_on "harfbuzz"
   depends_on "hunspell"
   depends_on "icu4c"
   depends_on "jasper"
@@ -58,22 +72,25 @@ class Qt < Formula
   uses_from_macos "flex"  => :build
   uses_from_macos "gperf" => :build
   uses_from_macos "perl"  => :build
+  uses_from_macos "llvm" => :test # Our test relies on `clang++` in `PATH`.
 
   uses_from_macos "cups"
   uses_from_macos "krb5"
   uses_from_macos "libxslt"
   uses_from_macos "zlib"
 
+  on_macos do
+    depends_on "molten-vk" => [:build, :test]
+  end
+
   on_linux do
     depends_on "alsa-lib"
     depends_on "at-spi2-core"
     # TODO: depends_on "bluez"
-    # TODO: depends_on "ffmpeg"
+    depends_on "ffmpeg"
     depends_on "fontconfig"
-    depends_on "gcc"
     depends_on "gstreamer"
     # TODO: depends_on "gypsy"
-    depends_on "harfbuzz"
     depends_on "libdrm"
     depends_on "libevent"
     depends_on "libice"
@@ -104,12 +121,12 @@ class Qt < Formula
 
   fails_with gcc: "5"
 
-  resource("html5lib") do
+  resource "html5lib" do
     url "https://files.pythonhosted.org/packages/ac/b6/b55c3f49042f1df3dcd422b7f224f939892ee94f22abcf503a9b7339eaf2/html5lib-1.1.tar.gz"
     sha256 "b2e5b40261e20f354d198eae92afc10d750afb487ed5e50f9c4eaf07c184146f"
   end
 
-  resource("webencodings") do
+  resource "webencodings" do
     url "https://files.pythonhosted.org/packages/0b/02/ae6ceac1baeda530866a85075641cec12989bd8d31af6d5ab4a3e8c92f47/webencodings-0.5.1.tar.gz"
     sha256 "b36a1c245f2d304965eb4e0a82848379241dc04b865afcc4aab16748587e1923"
   end
@@ -122,13 +139,8 @@ class Qt < Formula
     directory "qtbase"
   end
 
-  # Apply patch to fix chromium build with glibc < 2.27. See here for details:
-  # https://libc-alpha.sourceware.narkive.com/XOENQFwL/add-fcntl-sealing-interfaces-from-linux-3-17-to-bits-fcntl-linux-h
-  # FIXME: Remove once migrated to glibc 2.35.
-  patch :DATA
-
   def install
-    python = "python3.10"
+    python = "python3.11"
     # Install python dependencies for QtWebEngine
     venv_root = buildpath/"venv"
     venv = virtualenv_create(venv_root, python)
@@ -167,6 +179,7 @@ class Qt < Formula
       -testsdir share/qt/tests
 
       -no-feature-relocatable
+      -system-harfbuzz
       -system-sqlite
 
       -no-sql-mysql
@@ -174,9 +187,7 @@ class Qt < Formula
       -no-sql-psql
     ]
 
-    cmake_args = std_cmake_args(install_prefix: HOMEBREW_PREFIX, find_framework: "FIRST") + %W[
-      -DCMAKE_OSX_DEPLOYMENT_TARGET=#{MacOS.version}
-
+    cmake_args = std_cmake_args(install_prefix: HOMEBREW_PREFIX, find_framework: "FIRST") + %w[
       -DINSTALL_MKSPECSDIR=share/qt/mkspecs
 
       -DFEATURE_pkg_config=ON
@@ -188,6 +199,7 @@ class Qt < Formula
     ]
 
     if OS.mac?
+      cmake_args << "-DCMAKE_OSX_DEPLOYMENT_TARGET=#{MacOS.version}.0"
       config_args << "-sysroot" << MacOS.sdk_path.to_s
       # NOTE: `chromium` should be built with the latest SDK because it uses
       # `___builtin_available` to ensure compatibility.
@@ -197,16 +209,13 @@ class Qt < Formula
       # that cmake does not think $HOMEBREW_PREFIX/lib is the install prefix.
       cmake_args << "-DQT_BUILD_INTERNALS_RELOCATABLE_INSTALL_PREFIX=#{prefix}"
 
-      # Currently we have to use vendored ffmpeg because the chromium copy adds a symbol not
-      # provided by the brewed version.
-      # See here for an explanation of why upstream ffmpeg does not want to add this:
-      # https://www.mail-archive.com/ffmpeg-devel@ffmpeg.org/msg124998.html
       # The vendored copy of libjpeg is also used instead of the brewed copy, because the build
       # fails due to a missing symbol otherwise.
       # On macOS chromium will always use bundled copies and the QT_FEATURE_webengine_system_*
       # arguments are ignored.
       cmake_args += %w[
         -DQT_FEATURE_webengine_system_alsa=ON
+        -DQT_FEATURE_webengine_system_ffmpeg=ON
         -DQT_FEATURE_webengine_system_icu=ON
         -DQT_FEATURE_webengine_system_libevent=ON
         -DQT_FEATURE_webengine_system_libpng=ON
@@ -218,12 +227,6 @@ class Qt < Formula
         -DQT_FEATURE_webengine_system_pulseaudio=ON
         -DQT_FEATURE_webengine_system_zlib=ON
       ]
-
-      # Change default mkspec for qmake on Linux to use brewed GCC
-      inreplace("qtbase/mkspecs/common/g++-base.conf") do |s|
-        s.change_make_var! "QMAKE_CC", ENV.cc
-        s.change_make_var! "QMAKE_CXX", ENV.cxx
-      end
     end
 
     system "./configure", *config_args, "--", *cmake_args
@@ -254,18 +257,6 @@ class Qt < Formula
     end
   end
 
-  def post_install
-    return if OS.mac?
-
-    # Ensure the hard-coded versioned `gcc` reference does not go stale.
-    ohai "Fixing up GCC references..."
-    gcc_version = Formula["gcc"].any_installed_version.major
-    inreplace(pkgshare/"mkspecs/common/g++-base.conf") do |s|
-      s.change_make_var! "QMAKE_CC", "gcc-#{gcc_version}"
-      s.change_make_var! "QMAKE_CXX", "g++-#{gcc_version}"
-    end
-  end
-
   test do
     (testpath/"CMakeLists.txt").write <<~EOS
       cmake_minimum_required(VERSION #{Formula["cmake"].version})
@@ -279,7 +270,7 @@ class Qt < Formula
       set(CMAKE_AUTORCC ON)
       set(CMAKE_AUTOUIC ON)
 
-      find_package(Qt6 COMPONENTS Core Widgets Sql Concurrent
+      find_package(Qt6 COMPONENTS Core Gui Widgets Sql Concurrent
         3DCore Svg Quick3D Network NetworkAuth REQUIRED)
 
       add_executable(test
@@ -288,18 +279,19 @@ class Qt < Formula
 
       target_link_libraries(test PRIVATE Qt6::Core Qt6::Widgets
         Qt6::Sql Qt6::Concurrent Qt6::3DCore Qt6::Svg Qt6::Quick3D
-        Qt6::Network Qt6::NetworkAuth
+        Qt6::Network Qt6::NetworkAuth Qt6::Gui
       )
     EOS
 
     (testpath/"test.pro").write <<~EOS
       QT       += core svg 3dcore network networkauth quick3d \
-        sql
+        sql gui widgets
       TARGET = test
       CONFIG   += console
       CONFIG   -= app_bundle
       TEMPLATE = app
       SOURCES += main.cpp
+      INCLUDEPATH += #{Formula["vulkan-headers"].opt_include}
     EOS
 
     (testpath/"main.cpp").write <<~EOS
@@ -312,11 +304,12 @@ class Qt < Formula
       #include <QtSql>
       #include <QtSvg>
       #include <QDebug>
+      #include <QVulkanInstance>
       #include <iostream>
 
       int main(int argc, char *argv[])
       {
-        QCoreApplication a(argc, argv);
+        QCoreApplication app(argc, argv);
         QSvgGenerator generator;
         auto *handler = new QOAuthHttpServerReplyHandler();
         delete handler; handler = nullptr;
@@ -324,6 +317,9 @@ class Qt < Formula
         delete root; root = nullptr;
         Q_ASSERT(QSqlDatabase::isDriverAvailable("QSQLITE"));
         const auto &list = QImageReader::supportedImageFormats();
+        QVulkanInstance inst;
+        // if (!inst.create())
+        //   qFatal("Failed to create Vulkan instance: %d", inst.errorCode());
         for(const char* fmt:{"bmp", "cur", "gif",
           #ifdef __APPLE__
             "heic", "heif",
@@ -337,6 +333,9 @@ class Qt < Formula
       }
     EOS
 
+    ENV["QT_VULKAN_LIB"] = Formula["vulkan-loader"].opt_lib/(shared_library "libvulkan")
+    ENV["QT_QPA_PLATFORM"] = "minimal" if OS.linux? && ENV["HOMEBREW_GITHUB_ACTIONS"]
+
     system "cmake", testpath
     system "make"
     system "./test"
@@ -347,25 +346,3 @@ class Qt < Formula
     system "./test"
   end
 end
-
-__END__
---- a/qtwebengine/src/3rdparty/chromium/base/macros.h
-+++ b/qtwebengine/src/3rdparty/chromium/base/macros.h
-@@ -36,6 +36,17 @@
- // work around this bug, wrap the entire expression in this macro...
- #define CR_EXPAND_ARG(arg) arg
-
-+// Add constants from linux/fcntl.h which were not copied to glibc
-+// bits/fcntl-linux.h until glibc 2.27.
-+#ifndef F_ADD_SEALS
-+#define F_ADD_SEALS 1033
-+#define F_GET_SEALS 1034
-+#define F_SEAL_SEAL 0x0001
-+#define F_SEAL_SHRINK 0x0002
-+#define F_SEAL_GROW 0x0004
-+#define F_SEAL_WRITE 0x0008
-+#endif
-+
- // Used to explicitly mark the return value of a function as unused. If you are
- // really sure you don't want to do anything with the return value of a function
- // that has been marked WARN_UNUSED_RESULT, wrap it with this. Example:

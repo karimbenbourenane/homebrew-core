@@ -1,8 +1,8 @@
 class BoostBcp < Formula
   desc "Utility for extracting subsets of the Boost library"
   homepage "https://www.boost.org/doc/tools/bcp/"
-  url "https://boostorg.jfrog.io/artifactory/main/release/1.79.0/source/boost_1_79_0.tar.bz2"
-  sha256 "475d589d51a7f8b3ba2ba4eda022b170e562ca3b760ee922c146b6c65856ef39"
+  url "https://boostorg.jfrog.io/artifactory/main/release/1.81.0/source/boost_1_81_0.tar.bz2"
+  sha256 "71feeed900fbccca04a3b4f2f84a7c217186f28a940ed8b7ed4725986baf99fa"
   license "BSL-1.0"
   head "https://github.com/boostorg/boost.git", branch: "master"
 
@@ -11,12 +11,13 @@ class BoostBcp < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "2554f876bdc8e1855fdd363317ecac0cad44fe347d7fa5d29f4b0266262b560e"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "143a1b99dc5026110ee64264382d9ff3ec6fdcb87dbfd51649b9d20f53547092"
-    sha256 cellar: :any_skip_relocation, monterey:       "bab5e2f23f461f1643b1c841cd59cbc77ad06f0aabd4b362d28c1cb29fa696a2"
-    sha256 cellar: :any_skip_relocation, big_sur:        "67002735a12b9bc625aeb01fce3f7308a2c14548b587501df29be73fe3c7da33"
-    sha256 cellar: :any_skip_relocation, catalina:       "453aebc4b61fbba898665ce83b95d298e3176c427df29199930f87d4996c756c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "1ebd56254dd815d37fcb539bbd160476628df6b67f6c2e4acd6eb019c49e726a"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "5f5b9d2eb8871f16281c40dc76f6f1de06a70df61197bbd940be344fd6238f29"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "aa2b79548f3c2fc7d0325bc52cfc3f2ea0ea8112473053796f4acbce8d3c7f05"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "62e51f3628c119b86b55001f229501378e8e0eb163ac4d7a2af37d17af22647e"
+    sha256 cellar: :any_skip_relocation, ventura:        "01b7a93e776c70aef0d53263ce253f38e2a48a9962da92e8cfda5f131c5035c2"
+    sha256 cellar: :any_skip_relocation, monterey:       "e9570d39b41564c3ee0c2ff2b84c2115267425fec9398ecb25f8501e3a661c47"
+    sha256 cellar: :any_skip_relocation, big_sur:        "abe3f37d5335d4076b86f3920d5f98ae8aa5aaac8c04fe241f8ee7eac371cea9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fa890a7502ce06488b2ab8fb1746fe52396813e86eacbcdfb55dd66c0f9f9fcc"
   end
 
   depends_on "boost-build" => :build

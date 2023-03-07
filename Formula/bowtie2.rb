@@ -1,18 +1,18 @@
 class Bowtie2 < Formula
   desc "Fast and sensitive gapped read aligner"
   homepage "https://bowtie-bio.sourceforge.io/bowtie2/"
-  url "https://github.com/BenLangmead/bowtie2/archive/v2.4.5.tar.gz"
-  sha256 "db101391b54a5e0eeed7469b05aee55ee6299558b38607f592f6b35a7d41dcb6"
+  url "https://github.com/BenLangmead/bowtie2/archive/v2.5.1.tar.gz"
+  sha256 "3fe00f4f89b5dd85fd9317e2168ec93f30dbb75d7950a08516c767d21eca7c27"
   license "GPL-3.0-or-later"
-  revision 1
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "495bc223b670a7e029315ce992dcc0811dc3f63e714c656b6cb84c2f789aa439"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "cf63043431156ed49e8034700900c508f32e02cd1830a8f815ed83735544dd5b"
-    sha256 cellar: :any_skip_relocation, monterey:       "bd2176ef8b56c77260602d72566a6ad85240f8c7def21317b31913995e0789d4"
-    sha256 cellar: :any_skip_relocation, big_sur:        "6f1d5777e5ec4d9aa9ffe38f18278f1a0aba3679d19d5a57a30343074ba25866"
-    sha256 cellar: :any_skip_relocation, catalina:       "03cd26ce1b340a37c66c1097c426a9e423d6f57bf809558bad577fb827e271d2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "46f6e5aa64fd0f9564d15f21aa0ac84d9960fb79424539599c284d0f7724e096"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "6a5f45f3bf45cffefc8598581d5547169d8e07f6e3c1efd31898e36582eebff0"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "60d96c890b137f91f46544d867f98186d03592848e2e77939c8af952c5b39047"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "8421e1f412403865337c4a9af25a7144ee89d691367864ff91440d7faa73a420"
+    sha256 cellar: :any_skip_relocation, ventura:        "594c8dcbfbb4acdc5628a75eca10e691dbf7fa52602a26295618d6291705c73d"
+    sha256 cellar: :any_skip_relocation, monterey:       "e59ed1f423747d14edd5cc80c1f5985f622e00b17babfd7343e7e2fd1e730468"
+    sha256 cellar: :any_skip_relocation, big_sur:        "f9e5eeb5344bc134741c981997984622105ee104e7bcdc301e86a289b98ba9b2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "825b7afefdf1fe78b37362eda6e6706e3c850c955fdd01fba714232ff187051d"
   end
 
   uses_from_macos "perl"

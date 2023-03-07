@@ -1,17 +1,18 @@
 class Sn0int < Formula
   desc "Semi-automatic OSINT framework and package manager"
   homepage "https://github.com/kpcyrd/sn0int"
-  url "https://github.com/kpcyrd/sn0int/archive/v0.24.2.tar.gz"
-  sha256 "bf89be11d09df2248df553c8f752722c9e9469956491aae391a52dfbb2233667"
+  url "https://github.com/kpcyrd/sn0int/archive/v0.25.0.tar.gz"
+  sha256 "1a0a65e22ebdea4cc9d876a794c4374354cbf4733e11427190e146d32db37d8b"
   license "GPL-3.0-or-later"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "cf50122ab97953746903daa429929f5431b7378b7bcf55c2fda11a3ad27d4801"
-    sha256 cellar: :any,                 arm64_big_sur:  "9a25d7c4617a9cae06ab6875b7fc176ac7382dddcf34c9f2da9cdadc2bae0b55"
-    sha256 cellar: :any,                 monterey:       "43329a5b327f03f639dba131e976e04133a121505f74190764befd39774d8dc1"
-    sha256 cellar: :any,                 big_sur:        "e5325d4a94add1e551d235212163b8c7328d7d411376b44ed68c0bd0876c0d25"
-    sha256 cellar: :any,                 catalina:       "1b15208ebdb969dcb7ddb177f5e1c725e01fc3abfe214e157cdc94faa02ee708"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "90ac3ed1be95895b48703463aeee1f1386a7d04ce1e1d910ccaa0fcdd2bc9808"
+    sha256 cellar: :any,                 arm64_ventura:  "b22a87efb37627da4ed66db2cab4b00211b372dc852a241cc60f0bfcd81ee5d8"
+    sha256 cellar: :any,                 arm64_monterey: "3fe7d506b479e8c415233f50d779cc5adf0dc74d789e83d7fc5096da0eeffce5"
+    sha256 cellar: :any,                 arm64_big_sur:  "ef3da3327700ce42227eb3b0bdcad1e00acb715c22caa46fe47950d31b0107ab"
+    sha256 cellar: :any,                 ventura:        "dcc44580bf31a965415715da2bf7cb3ad2d2d8445efe2267fccb6468d0852a93"
+    sha256 cellar: :any,                 monterey:       "a8f78088e4d82c0abc026a8e84015edcc9262534dbf9c03d551ac0fb9c4f4cc8"
+    sha256 cellar: :any,                 big_sur:        "387b9b03ae5a1950864d29a3e4cb63c7596138a7e53f90892f482e5f49588e5f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "618d7b14bc76a4a3511809d06c65da23df62cc97d40a008c64b3114ad89da628"
   end
 
   depends_on "pkg-config" => :build

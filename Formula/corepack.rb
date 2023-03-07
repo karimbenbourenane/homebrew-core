@@ -3,8 +3,8 @@ class Corepack < Formula
 
   desc "Package acting as bridge between Node projects and their package managers"
   homepage "https://github.com/nodejs/corepack"
-  url "https://registry.npmjs.org/corepack/-/corepack-0.14.0.tgz"
-  sha256 "fe9fde0ba9e492b8bf16ee84b99313c9af5344fa2141bab6addb46fa6ee5840c"
+  url "https://registry.npmjs.org/corepack/-/corepack-0.17.0.tgz"
+  sha256 "7793d52028081f5d861b0a12fed40a92841ba8ae5955630c4c7969cfcddc5c8b"
   license "MIT"
 
   livecheck do
@@ -13,11 +13,12 @@ class Corepack < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "028e8f1c9e0bd5e7a68c22a4445230f6d45a635a8a88e4ea2132a03776c9e52a"
+    sha256 cellar: :any_skip_relocation, all: "2d3631666b8fe005a720906e71ee705ecad611bc6ff5c078b5ad9edea721e684"
   end
 
   depends_on "node"
 
+  conflicts_with "hadoop", because: "both install `yarn` binaries"
   conflicts_with "yarn", because: "both install `yarn` and `yarnpkg` binaries"
   conflicts_with "pnpm", because: "both install `pnpm` and `pnpx` binaries"
 

@@ -1,8 +1,8 @@
 class Gmic < Formula
   desc "Full-Featured Open-Source Framework for Image Processing"
   homepage "https://gmic.eu/"
-  url "https://gmic.eu/files/source/gmic_3.0.1.tar.gz"
-  sha256 "6cc20a20e3ab53ce485ccf6e044a30141b3d62cf7743b83bb04906ff29453035"
+  url "https://gmic.eu/files/source/gmic_3.2.1.tar.gz"
+  sha256 "95881919b2e94de502abade0472d27535f7cfa9d17741d8dc0a6b13d4152c175"
   license "CECILL-2.1"
   head "https://github.com/dtschump/gmic.git", branch: "master"
 
@@ -12,27 +12,60 @@ class Gmic < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "c4695a687fe50770a04247de2b403f5baecb1ab1ce71646bdcf90483046377d8"
-    sha256 cellar: :any,                 arm64_big_sur:  "eae7c4b071fd61a508978708ded5ab272d43634122b7480566b369bee918e84b"
-    sha256 cellar: :any,                 monterey:       "e0360d49276b222dca348523b08f72406d57ae92085c8ad7240a905230bc60fd"
-    sha256 cellar: :any,                 big_sur:        "efe20f281b18e825d282c0672f9b4bd525cac7d6e2dd971213ab95c1db555ee5"
-    sha256 cellar: :any,                 catalina:       "864e83816816e75e1f39a7f448d5e1cc204073956806cdfcbc289a78f52ba220"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "4e61637e97caf2fdd854f10c685ef304731a607a8a4e0161d49b0dcfeeac08ef"
+    sha256 cellar: :any,                 arm64_ventura:  "e89d85e222c15aec44c7f0f546aa6c9566f2c56c5d07163535b81d2dc4803901"
+    sha256 cellar: :any,                 arm64_monterey: "a8262640bb75551c27335ea30abba607c4db7711fe7d23ad2954d894386326cb"
+    sha256 cellar: :any,                 arm64_big_sur:  "258c36f2c8831e02034b0184a38bba434db60b11067064023622169e545b3b09"
+    sha256 cellar: :any,                 ventura:        "522b4bfc280d09e97c800f4bf8af63ba079c8db97a72f418e8111b2cd9122759"
+    sha256 cellar: :any,                 monterey:       "6ef8093beb037c4a0f0709c7e72b19a1caeb6db6cefe6ff5a03ceed2ebeed3d7"
+    sha256 cellar: :any,                 big_sur:        "f154cbdaa8d2eb6f4d47525c273b3337109ecf9d236a5a02fa5bb0c26783a1dd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "2eaf722affb5afa812dd69fcdce9cb76d116b61096754cf6987e71934ac7abba"
   end
 
-  depends_on "cmake" => :build
+  depends_on "pkg-config" => :build
   depends_on "fftw"
-  depends_on "jpeg"
+  depends_on "jpeg-turbo"
   depends_on "libpng"
   depends_on "libtiff"
+  depends_on "openexr"
+
+  uses_from_macos "curl"
+  uses_from_macos "zlib"
+
+  on_macos do
+    depends_on "bash-completion"
+  end
+
+  # Use .dylibs instead of .so on macOS
+  patch do
+    on_macos do
+      url "https://raw.githubusercontent.com/macports/macports-ports/a859c5929c929548f5156f5cab13a2f341982e72/science/gmic/files/patch-src-Makefile.diff"
+      sha256 "5b4914a05135f6c137bb5980d0c3bf8d94405f03d4e12b6ee38bd0e0e004a358"
+      directory "src"
+    end
+  end
 
   def install
-    system "cmake", *std_cmake_args,
-                    "-DENABLE_FFMPEG=OFF",
-                    "-DENABLE_OPENCV=OFF",
-                    "-DENABLE_OPENEXR=OFF",
-                    "-DENABLE_X=OFF"
-    system "make", "install"
+    # The Makefile is not safe to run in parallel.
+    # Issue ref: https://github.com/dtschump/gmic/issues/406
+    ENV.deparallelize
+
+    # Use PLUGINDIR to avoid trying to create "/plug-ins" on Linux without GIMP.
+    # Disable X11 by using the values from Makefile when "/usr/X11" doesn't exist.
+    args = %W[
+      PLUGINDIR=#{buildpath}/plug-ins
+      USR=#{prefix}
+      X11_CFLAGS=-Dcimg_display=0
+      X11_LIBS=-lpthread
+      SOVERSION=#{version}
+    ]
+    system "make", "lib", "cli_shared", *args
+    system "make", "install", *args, "PREFIX=#{prefix}"
+    lib.install "src/libgmic.a"
+
+    # Need gmic binary to build completions
+    ENV.prepend_path "PATH", bin
+    system "make", "bashcompletion", *args
+    bash_completion.install "resources/gmic_bashcompletion.sh" => "gmic"
   end
 
   test do

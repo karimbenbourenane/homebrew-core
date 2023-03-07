@@ -3,18 +3,19 @@ require "language/node"
 class Lanraragi < Formula
   desc "Web application for archival and reading of manga/doujinshi"
   homepage "https://github.com/Difegue/LANraragi"
-  url "https://github.com/Difegue/LANraragi/archive/v.0.8.6.tar.gz"
-  sha256 "074c97568d75fb07ed0eb49c83639f2a7548a3f0a3714a854100637ea8891f68"
+  url "https://github.com/Difegue/LANraragi/archive/v.0.8.81.tar.gz"
+  sha256 "7f6698c1eeec8f5cd714381d4fdeb73bd6260c30316a59bd7a080a3f77edab3f"
   license "MIT"
   head "https://github.com/Difegue/LANraragi.git", branch: "dev"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "3efb2fda8a8547f615b03bb2f7f5a78b7b7eb3f931769e35845539b6aed4e0ad"
-    sha256 cellar: :any,                 arm64_big_sur:  "3ca636952c14c3161577028cd085dc17edce784f10f87fe99c4e9a8e08710b4c"
-    sha256 cellar: :any,                 monterey:       "02d32b961a0e07971d33795b8a5a3503ec81e34d2e783131351b82ea21452f7b"
-    sha256 cellar: :any,                 big_sur:        "2a39692c6a468c74f327171d12e70d842164a650cc2d99c710081923dbe0c94d"
-    sha256 cellar: :any,                 catalina:       "becc9bfc4a90b3098f2f1a9a5cf8c70d32fcaf67a454eb3f6616b809cd117b5e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "16bcdf6d1e5b378e3fa3ef8319f3af0c5081b5318adacba5dc3a0514779235f0"
+    sha256 cellar: :any,                 arm64_ventura:  "02799489c4bc1e48ae5c56b9a472d1148515b632be58d47280671a57a2a30c39"
+    sha256 cellar: :any,                 arm64_monterey: "d8a459c8954977fc7bc35b6103bfa5c62b672ac8dc3bfc346c360857ad0a25d1"
+    sha256 cellar: :any,                 arm64_big_sur:  "5eb21bf1fcb7183398dbc76228795c4e3d7bcc0e2944659ba0cd3a70eacba518"
+    sha256 cellar: :any,                 ventura:        "5e60860f4f869269ce7b504ce88b8d59f2d9032123820007c9ae1bbe0cccdda0"
+    sha256 cellar: :any,                 monterey:       "d800ed9911450346777fa69f6fe69fbb0bc0be84decb56df9cb7ef25a12ef1e9"
+    sha256 cellar: :any,                 big_sur:        "4d37418181606aa314ae1f85a9777f8b108ab393179adcfeca0d7697bb3c3121"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ac77cee4270fa19b961449d101ff9a7fc8e16a95255f4883e8c38bdc5aecdfc8"
   end
 
   depends_on "nettle" => :build
@@ -35,8 +36,8 @@ class Lanraragi < Formula
 
   resource "libarchive-headers" do
     on_macos do
-      url "https://opensource.apple.com/tarballs/libarchive/libarchive-83.100.2.tar.gz"
-      sha256 "e54049be1b1d4f674f33488fdbcf5bb9f9390db5cc17a5b34cbeeb5f752b207a"
+      url "https://github.com/apple-oss-distributions/libarchive/archive/refs/tags/libarchive-113.tar.gz"
+      sha256 "b422c37cc5f9ec876d927768745423ac3aae2d2a85686bc627b97e22d686930f"
     end
   end
 

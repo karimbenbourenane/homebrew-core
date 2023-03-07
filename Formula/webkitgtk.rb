@@ -1,24 +1,27 @@
 class Webkitgtk < Formula
   desc "GTK interface to WebKit"
   homepage "https://webkitgtk.org"
-  url "https://webkitgtk.org/releases/webkitgtk-2.36.3.tar.xz"
-  sha256 "732fcf8c4ec644b8ed28b46ebbd7c1ebab9d9e0afea9bdf5e5d12786afc478d1"
+  url "https://webkitgtk.org/releases/webkitgtk-2.38.5.tar.xz"
+  sha256 "40c20c43022274df5893f22b1054fa894c3eea057389bb08aee08c5b0bb0c1a7"
   license "GPL-3.0-or-later"
-  revision 1
+
+  livecheck do
+    url "https://webkitgtk.org/releases/"
+    regex(/webkitgtk[._-]v?(\d+\.\d*[02468](?:\.\d+)*)\.t/i)
+  end
 
   bottle do
-    sha256 x86_64_linux: "90f2c0014bd5314a458fcde137e51e1c398c21d539820b87f021799c676991b9"
+    sha256 x86_64_linux: "fa7f309762791e239d5ad1a28a73dc84351bb6cf4bb479e30c274024e623ffa2"
   end
 
   depends_on "cmake" => :build
   depends_on "gobject-introspection" => :build
-  depends_on "pkg-config" => :build
-  depends_on "python@3.10" => :build
+  depends_on "pkg-config" => [:build, :test]
+  depends_on "python@3.11" => :build
   depends_on "cairo"
   depends_on "enchant"
   depends_on "fontconfig"
   depends_on "freetype"
-  depends_on "gcc"
   depends_on "glib"
   depends_on "gst-plugins-base"
   depends_on "gstreamer"
@@ -46,26 +49,27 @@ class Webkitgtk < Formula
   uses_from_macos "perl" => :build
   uses_from_macos "ruby" => :build
   uses_from_macos "libxml2"
+  uses_from_macos "libxslt"
   uses_from_macos "sqlite"
   uses_from_macos "zlib"
 
   fails_with gcc: "5"
 
   def install
-    args = std_cmake_args + %w[
+    args = %w[
       -DPORT=GTK
+      -DENABLE_BUBBLEWRAP_SANDBOX=OFF
+      -DENABLE_DOCUMENTATION=OFF
       -DENABLE_GAMEPAD=OFF
-      -DENABLE_GTKDOC=OFF
       -DENABLE_MINIBROWSER=ON
       -DUSE_AVIF=ON
+      -DUSE_GSTREAMER_GL=OFF
       -DUSE_JPEGXL=ON
       -DUSE_LIBHYPHEN=OFF
       -DUSE_WPE_RENDERER=OFF
-      -DENABLE_BUBBLEWRAP_SANDBOX=OFF
-      -DUSE_GSTREAMER_GL=OFF
     ]
 
-    system "cmake", "-S", ".", "-B", "build", *args
+    system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
   end

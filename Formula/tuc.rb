@@ -1,18 +1,19 @@
 class Tuc < Formula
   desc "Text manipulation and cutting tool"
   homepage "https://github.com/riquito/tuc"
-  url "https://github.com/riquito/tuc/archive/refs/tags/v0.11.0.tar.gz"
-  sha256 "e8208e0cb92bd17b36e1d43f0ea9d45f4573222fa40ca576775b4ebbb6442adf"
+  url "https://github.com/riquito/tuc/archive/refs/tags/v1.0.0.tar.gz"
+  sha256 "47848b23268c5d22efcc9f7f6a6da73f27483b336005c2ace350bff575e51d67"
   license "GPL-3.0-or-later"
   head "https://github.com/riquito/tuc.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "c35d0097152baf416b76d4a86777d0ab9b48f9da0046c1a800874b3618adc03d"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "537ca7a98e77de6b5f4cfc1958fad85057ccda999304de0671d789a2ca169aa3"
-    sha256 cellar: :any_skip_relocation, monterey:       "56e293f4f47c68952f0e8c2fa7e627cfc32b38f1ea86f04f2422644aad972326"
-    sha256 cellar: :any_skip_relocation, big_sur:        "6fa9c63920893eda18123703506c11fe389c5223bb87d4ce86f921e8da30acd8"
-    sha256 cellar: :any_skip_relocation, catalina:       "c0bfaa86f7ff202b485e5eda4e391af965a18780bfd2876c80fa9426e3eab9c2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "26cf29e247aa014c052ecbd9e9a40a210a455c32ee97ba6ec6326da29c4be3c8"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "dd5483e0ed21ce3ea3b18578c98c47543f4b741043a06f1a7e21885387d2e02c"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "739f513a991ac172b5244dcd424390df770742e8919dc8508332f29cae3fc158"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "5cc23018bf7a230eacc43c7ee04c8c6c8a33de6c515500472d1aed089e789b6e"
+    sha256 cellar: :any_skip_relocation, ventura:        "e88c5ecb90e42a978f4ddceef9715495cb5380d2f65526a6d0d68fde04dcddf6"
+    sha256 cellar: :any_skip_relocation, monterey:       "a3bfaaf6eceea2e2c489bc7893ab7a17c09281cea45c124ce3910827fba3e45c"
+    sha256 cellar: :any_skip_relocation, big_sur:        "b5b110ad523193b0427466024fbcbf55ddef862278d42f87a3b75c053f1001f3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e098b815ab092bf5cc10908a8ee769d5084f3eb40207ad498b7046cec2ba8b7c"
   end
 
   depends_on "rust" => :build

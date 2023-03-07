@@ -1,8 +1,8 @@
 class Txr < Formula
   desc "Lisp-like programming language for convenient data munging"
   homepage "https://www.nongnu.org/txr/"
-  url "http://www.kylheku.com/cgit/txr/snapshot/txr-281.tar.bz2"
-  sha256 "a251c7c05f6e598a01e6130293c8e960f047277e87c6c1d7d8ce520c5ea5e2b3"
+  url "http://www.kylheku.com/cgit/txr/snapshot/txr-284.tar.bz2"
+  sha256 "76500e4e13b6b09b2991262647ddbb8aed77cb75d14a594819587bb9fbbc44e5"
   license "BSD-2-Clause"
 
   livecheck do
@@ -11,11 +11,12 @@ class Txr < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "3770324c3c26ca4c2f487d208e0e73beeca8d32cce8f329b962df0d87c2c9331"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "5dbce6d648a73417efd9d0212316f0b8c3f5d1140f93f69df6acc5c5adc39180"
-    sha256 cellar: :any_skip_relocation, monterey:       "bc7b985bc3a2d51fd7afcfc85264659ff181afcc95ef4851b948cc79253c392d"
-    sha256 cellar: :any_skip_relocation, big_sur:        "bf0443268662f009d7d81db2e86e9281deb369f99c033b77847efd1320552a28"
-    sha256 cellar: :any_skip_relocation, catalina:       "87399c2bdb2f7231d2a7ad9e39374f980eeff9955481578cce1e6ddf93764cf7"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "a26e3ff778e5e92e570ee2eb4fdecfe4c2ad7179ebaf4d3dd1e8d0c272be38de"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "f4fec1149a5053be5c7917e8cf58f36528486ea2a317826516efe478a1f3da6f"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "ed980f78ca1e8f5f2a8dc4a315cbdf095c75b8e41b6e347d464169b8c7f4ed58"
+    sha256 cellar: :any_skip_relocation, ventura:        "0fbe23e742120778f1a0807d1d0543d3b773d72b1d0a023663bdd6af7aa55262"
+    sha256 cellar: :any_skip_relocation, monterey:       "cb11faf6bf35676deba19dc868d4ad39622f70254d9f84164d934b76778aded2"
+    sha256 cellar: :any_skip_relocation, big_sur:        "29fa786bcd6955475b350f934be2977b72498da79e28b5cb89c60630101a651c"
   end
 
   depends_on "pkg-config" => :build

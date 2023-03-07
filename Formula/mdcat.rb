@@ -1,18 +1,20 @@
 class Mdcat < Formula
   desc "Show markdown documents on text terminals"
-  homepage "https://codeberg.org/flausch/mdcat"
-  url "https://codeberg.org/flausch/mdcat/archive/mdcat-0.28.0.tar.gz"
-  sha256 "5d7b4f4b4c1066a679cd171e7d784b4ab8cad37c44d1e1b4250a21683abff9ca"
+  homepage "https://github.com/swsnr/mdcat"
+  url "https://github.com/swsnr/mdcat/archive/refs/tags/mdcat-1.1.0.tar.gz"
+  sha256 "dff426fca44fd014b45fd5707f88f6f49a857f3806cf7793cfbc586058221d0a"
   license "MPL-2.0"
-  head "https://codeberg.org/flausch/mdcat.git", branch: "main"
+  head "https://github.com/swsnr/mdcat.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "38bb47f62f60185d96ed8e090b6f8435f5b9c79ad148fc7e32815b92c142a318"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "9d995836465f508f32369c2591f2bc8eb06cedec04e21e6870424c8d4fde4a42"
-    sha256 cellar: :any_skip_relocation, monterey:       "bf08c844a6e00ddf3e9cca6c4c910d03649e5137b89306307177c87c1bddf9a3"
-    sha256 cellar: :any_skip_relocation, big_sur:        "549679a1cdc92842720e7c8125c23a3c0f6723ca2ec3f7a0d534442ea93d1a9a"
-    sha256 cellar: :any_skip_relocation, catalina:       "c13df2045beb1db28147dae464666c8e135ea5245f535abcc5f3a52284561c6a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ee3096ae6e4464396196bcc26b26fd4edffed9f56b435788cbdc0a54caebcd2f"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "bee9efe9ba74ea48cf36b00dc39d6e7c396e6108e4a7c67ddb3a1d777dd60e85"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "90088aff36ec567afc4413cdef6b321866970ac167f724b6a0434156f19b67d9"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "8ed3dacc98600479e723d3e9d9a0754a0885fd104029c21e849ecce42b0553a4"
+    sha256 cellar: :any_skip_relocation, ventura:        "2041884d1b2356dcc72dfe7f8165a2bc71d9516bcef3e1975179c850e357ce95"
+    sha256 cellar: :any_skip_relocation, monterey:       "222c07357890923cdf3bf7905c7d23de2f19fd0e1c7383a305a942933f645a81"
+    sha256 cellar: :any_skip_relocation, big_sur:        "fad1d1bb9b6f4cf0d1071baf7d56071465d715c59d2baa8a7b7942acd6785ddd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c86e742fd8087deb1f026f08b07dea11108bf19a121b6e5a59b830ec73856963"
   end
 
   depends_on "cmake" => :build
@@ -20,6 +22,7 @@ class Mdcat < Formula
 
   on_linux do
     depends_on "pkg-config" => :build
+    depends_on "openssl@3"
   end
 
   def install

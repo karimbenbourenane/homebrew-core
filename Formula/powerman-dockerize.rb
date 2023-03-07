@@ -1,17 +1,18 @@
 class PowermanDockerize < Formula
   desc "Utility to simplify running applications in docker containers"
   homepage "https://github.com/powerman/dockerize"
-  url "https://github.com/powerman/dockerize/archive/refs/tags/v0.16.3.tar.gz"
-  sha256 "ada4a61a647983cefe180561d2f20563d8109af5b4b5d8d97ee5f90f481ecd15"
+  url "https://github.com/powerman/dockerize/archive/refs/tags/v0.19.0.tar.gz"
+  sha256 "192c142ab25893c7a1e8a135280d8e72f05f12b56c1e2b5d932946707ec68c6b"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "28c91477c53d3611dc0bb22f7f3fe461f4fb445dcb6011d909ee43f31e74373c"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "515ce36743d09a2034bab6bed1df3678f9fd70fc3abdbd2f2d77d098e460ca4d"
-    sha256 cellar: :any_skip_relocation, monterey:       "73477763fd39fff6c061c333e04c70fe267c8b306bf7f7706c50abd70070d59e"
-    sha256 cellar: :any_skip_relocation, big_sur:        "5c914aa27cd0c16785b3bf65a5aa6d96f0925fb722d19cf4d56ed49e0159a2f5"
-    sha256 cellar: :any_skip_relocation, catalina:       "4d21434bc01b0b7d09e4f46bf1ccf95008510a086d23e66c8a2ca3effe390e80"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f938e18cf762c6abf6afb4bbde384dfd03a27a0c34397736fb61008fe127a001"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "22a49e6780e8e00a054aaa35c6749d21095d374eac84c5c773ff549b38adae4a"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "22a49e6780e8e00a054aaa35c6749d21095d374eac84c5c773ff549b38adae4a"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "22a49e6780e8e00a054aaa35c6749d21095d374eac84c5c773ff549b38adae4a"
+    sha256 cellar: :any_skip_relocation, ventura:        "8ab1eff297eb25f14338b89b7bd198978b3541e619203fa92ef2450b0045e098"
+    sha256 cellar: :any_skip_relocation, monterey:       "8ab1eff297eb25f14338b89b7bd198978b3541e619203fa92ef2450b0045e098"
+    sha256 cellar: :any_skip_relocation, big_sur:        "8ab1eff297eb25f14338b89b7bd198978b3541e619203fa92ef2450b0045e098"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "02c820b472202d7146338d7c94989edf2ce8f8c6223abf57f688224a9f92cc0e"
   end
 
   depends_on "go" => :build

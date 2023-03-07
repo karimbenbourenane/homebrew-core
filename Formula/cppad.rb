@@ -1,8 +1,8 @@
 class Cppad < Formula
   desc "Differentiation of C++ Algorithms"
   homepage "https://www.coin-or.org/CppAD"
-  url "https://github.com/coin-or/CppAD/archive/20220000.4.tar.gz"
-  sha256 "0f4e11f20f8436b2d04522b1279f0ed335b28f454e71425ecf39106497363cb4"
+  url "https://github.com/coin-or/CppAD/archive/20230000.0.tar.gz"
+  sha256 "339018f18effe35e1d9845bb7c7070e726396f37244b1855fb242c8b89d0b623"
   license "EPL-2.0"
   version_scheme 1
   head "https://github.com/coin-or/CppAD.git", branch: "master"
@@ -13,12 +13,13 @@ class Cppad < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "d9fe769ca80a2465746ad4c0e0d9b99c7fe7ca1700c7c4640586e0a544319ce9"
-    sha256 cellar: :any,                 arm64_big_sur:  "cb35436f1604864c9581a48f1e58dc61a562372ef0a854a5a9e2228d248b59ec"
-    sha256 cellar: :any,                 monterey:       "59b2e26028516822d35aec82e4c47757c51707355f9624c34cc19bb1d5316c7a"
-    sha256 cellar: :any,                 big_sur:        "aa1e1ef7552393ebfdcc355965718953604c5189864767dc0b78988788535c39"
-    sha256 cellar: :any,                 catalina:       "ac0417c6878e5d85b0d6e57a0365879fb1e7114f1c127cf6193f1de599dd9a89"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fbb6af4db60abd7bc2d5141dcb1fa3e57cfc068a5b630d5dc865b0e4f742c841"
+    sha256 cellar: :any,                 arm64_ventura:  "efb3f9d3ee47b4aead9053c291c1dcb622087da77e4317fae18936d2f236bdb1"
+    sha256 cellar: :any,                 arm64_monterey: "6474f293884d23530c67b71a276feb0ab7a28a28c7e74f95cef17d9ec4edf74a"
+    sha256 cellar: :any,                 arm64_big_sur:  "995027e1db4e18c4983431bfeac145920b97cf62997c39aa009e32ce8a75a7f2"
+    sha256 cellar: :any,                 ventura:        "8bdf35cdde470e5497439d0e89ce9ec4a4393787323270414267faffa47c105f"
+    sha256 cellar: :any,                 monterey:       "df23caeb6ab7dc298a7183b0d8a9af0a5c676d6a21201bff97ed7d285fb6941e"
+    sha256 cellar: :any,                 big_sur:        "4fb224de37d1597cee9c62daed627104b53e0e8c670ca64909c8c3b4c9817798"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d48e01b6fd4db4bd9f6eb8b957924db439ff9c5dd2d2b5fc0be293b50e3a58de"
   end
 
   depends_on "cmake" => :build
@@ -26,11 +27,9 @@ class Cppad < Formula
   def install
     ENV.cxx11
 
-    mkdir "build" do
-      system "cmake", "..", *std_cmake_args,
-                      "-Dcppad_prefix=#{prefix}"
-      system "make", "install"
-    end
+    system "cmake", "-S", ".", "-B", "build", "-Dcppad_prefix=#{prefix}", *std_cmake_args
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
 
     pkgshare.install "example"
   end
@@ -38,6 +37,7 @@ class Cppad < Formula
   test do
     (testpath/"test.cpp").write <<~EOS
       #include <cassert>
+      #include <cppad/local/temp_file.hpp>
       #include <cppad/utility/thread_alloc.hpp>
 
       int main(void) {
@@ -49,6 +49,7 @@ class Cppad < Formula
     EOS
 
     system ENV.cxx, "#{pkgshare}/example/general/acos.cpp", "-std=c++11", "-I#{include}",
+                    "-L#{lib}", "-lcppad_lib",
                     "test.cpp", "-o", "test"
     system "./test"
   end

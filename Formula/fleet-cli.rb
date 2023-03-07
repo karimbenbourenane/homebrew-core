@@ -2,8 +2,8 @@ class FleetCli < Formula
   desc "Manage large fleets of Kubernetes clusters"
   homepage "https://github.com/rancher/fleet"
   url "https://github.com/rancher/fleet.git",
-      tag:      "v0.3.10",
-      revision: "093cee590dd64451b0de23925ea05a44df866fe2"
+      tag:      "v0.5.3",
+      revision: "b90a1d37a79da99a273ec67f7127eb657bf5f5ea"
   license "Apache-2.0"
   head "https://github.com/rancher/fleet.git", branch: "master"
 
@@ -13,12 +13,13 @@ class FleetCli < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "efa4426b36fd91d03cb9ced44929cff78094ee1c9a424e4a79710fdb333a9e99"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "80c192b5bc40a23d40ef51f4bbfcee7a292cbc836c4c5bf5545e3bbe7740de3f"
-    sha256 cellar: :any_skip_relocation, monterey:       "c1c75762096b92c8144f64c3dc6783ae1a245792743c08ab91d7c5ff5a8227e7"
-    sha256 cellar: :any_skip_relocation, big_sur:        "2059cf252073b4301e91ad6b8569c509536336f356857ec9c7ae58b615deaa17"
-    sha256 cellar: :any_skip_relocation, catalina:       "c089becae31676292cfe11b954f72cadc282b877ae64de52591ed0b68f664812"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "95a7b4cc2f8d36533465fcd9ed883ca45fde85ded4f2836ab1c7614acbba0677"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "752e257f208258ab3d66ae6c151ca9a80c15d1e46a423e9444d2c6b66ce0e693"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "81bbb2f39268eb89e9fd9bd50d91b69bbb46b86094d2483c9baca4d3884f0fae"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "6d65c26fa246ba4f7744315c3d02015bac07c023715ad983eb1e054ea6bf7c45"
+    sha256 cellar: :any_skip_relocation, ventura:        "929756fa39c7a422dc4ef2ad77b6ea7634516ae8516469468ca77d866c30a894"
+    sha256 cellar: :any_skip_relocation, monterey:       "aaec9d03f270e06be771c81cbd5adabee430ae9f643757c55366cd677b530bf6"
+    sha256 cellar: :any_skip_relocation, big_sur:        "8b43fbd5f9f2f2f65c62a5033cbd1e87398bfa3b8ddd8e2b6d468cc6cc4e75a0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f664c868548385d5c1862dc9af3fec363c0d869bed6e96080ea05b62548bad4a"
   end
 
   depends_on "go" => :build
@@ -29,6 +30,8 @@ class FleetCli < Formula
       -X github.com/rancher/fleet/pkg/version.GitCommit=#{Utils.git_short_head}
     ]
     system "go", "build", *std_go_args(output: bin/"fleet", ldflags: ldflags)
+
+    generate_completions_from_executable(bin/"fleet", "completion", base_name: "fleet")
   end
 
   test do

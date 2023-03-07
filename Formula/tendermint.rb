@@ -6,13 +6,21 @@ class Tendermint < Formula
   license "Apache-2.0"
   head "https://github.com/tendermint/tendermint.git", branch: "master"
 
+  livecheck do
+    url :stable
+    regex(/^v?(\d+(?:\.\d+)+)$/i)
+  end
+
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "2d0f6f119ae6ad63d371f13d02bb6a8e4be6c4024ba5a191a6529fed4160d780"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "2d0f6f119ae6ad63d371f13d02bb6a8e4be6c4024ba5a191a6529fed4160d780"
-    sha256 cellar: :any_skip_relocation, monterey:       "e4357081b48aa3b764e67d9e488c3c66268e6d525920ec25aef63fde5eca6032"
-    sha256 cellar: :any_skip_relocation, big_sur:        "e4357081b48aa3b764e67d9e488c3c66268e6d525920ec25aef63fde5eca6032"
-    sha256 cellar: :any_skip_relocation, catalina:       "e4357081b48aa3b764e67d9e488c3c66268e6d525920ec25aef63fde5eca6032"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "79001a0a19c1d8e54aa1bde15b331df64620d693ee6840f9b4a8db7ec65afd4c"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "fa03d9507cc713dc1d85b03a5374f52f0b1fa9a8bdeff7f04fabb0ce54158ac4"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "fa03d9507cc713dc1d85b03a5374f52f0b1fa9a8bdeff7f04fabb0ce54158ac4"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "fa03d9507cc713dc1d85b03a5374f52f0b1fa9a8bdeff7f04fabb0ce54158ac4"
+    sha256 cellar: :any_skip_relocation, ventura:        "c764c958d1586a5fcf8a8ba7ede5c8edd7f350dec38689c13fd61d6e00154a3d"
+    sha256 cellar: :any_skip_relocation, monterey:       "c764c958d1586a5fcf8a8ba7ede5c8edd7f350dec38689c13fd61d6e00154a3d"
+    sha256 cellar: :any_skip_relocation, big_sur:        "c764c958d1586a5fcf8a8ba7ede5c8edd7f350dec38689c13fd61d6e00154a3d"
+    sha256 cellar: :any_skip_relocation, catalina:       "c764c958d1586a5fcf8a8ba7ede5c8edd7f350dec38689c13fd61d6e00154a3d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fad00242ca40a9571b66d96a4f31268ee81fa317726834d82475630267d9ef13"
   end
 
   depends_on "go" => :build
@@ -20,6 +28,11 @@ class Tendermint < Formula
   def install
     system "make", "build", "VERSION=#{version}"
     bin.install "build/tendermint"
+
+    generate_completions_from_executable(bin/"tendermint", "completion",
+                                         shells: [:bash], shell_parameter_format: :none)
+    generate_completions_from_executable(bin/"tendermint", "completion", "--zsh",
+                                         shells: [:zsh], shell_parameter_format: :none)
   end
 
   test do

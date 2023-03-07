@@ -1,18 +1,19 @@
 class Subnetcalc < Formula
   desc "IPv4/IPv6 subnet calculator"
-  homepage "https://www.uni-due.de/~be0001/subnetcalc/"
-  url "https://www.uni-due.de/~be0001/subnetcalc/download/subnetcalc-2.4.19.tar.xz"
-  sha256 "13f35abc0782c7453da22602128eb93fa645039d92cd5ab3c528ae9e6032cd67"
+  homepage "https://www.nntb.no/~dreibh/subnetcalc/index.html"
+  url "https://github.com/dreibh/subnetcalc/archive/refs/tags/subnetcalc-2.4.21.tar.gz"
+  sha256 "43b5c162496529238e4261ac8f562f04965b4ee1956c508b6c1c78c7e7cc3ca2"
   license "GPL-3.0-or-later"
   head "https://github.com/dreibh/subnetcalc.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "530958e6e65c9ef4de865013c1cd937862d816ed87edfb888aa8bba38405f957"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "11b113fcb125a8da85e6c3e14866c06b0d7e09e83b439b200ec4721469248694"
-    sha256 cellar: :any_skip_relocation, monterey:       "a7663859c98118741370fedede62527215c11a2967dddc4235d059dc27082c09"
-    sha256 cellar: :any_skip_relocation, big_sur:        "2d81c3cb134879270acfc762ae17aa653acbba88cfc258bb8c1ec574952f28f7"
-    sha256 cellar: :any_skip_relocation, catalina:       "6becfcc6f881532d19dd0aa6b865fbbb9f88fc63329effa7e8e7bca8503c8f6c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e9583e8d925ec45ae6edece69a4154b30efd7a22ad69bb9d7aca0177442b86af"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "448c9a4cfd16b74b5d5736a9f79c41561a7a4ea64dc8aec70dc79be5dceed1a5"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "c43c3b341d1bccad74159860507d69fdd987c88c5bcb40a43ddd263804bdee55"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "fea19e5ea9b50c64964eea89d42cab6e73226a84edf902312d075e4221a024d4"
+    sha256 cellar: :any_skip_relocation, ventura:        "c4f1ea6cb8dc466cfe374dfe1c58e7e740c5c55d6c08c601fc8a787c995c4807"
+    sha256 cellar: :any_skip_relocation, monterey:       "041126a8a260f2be6a214276e300fb2ab1e50be90401b0c1e4c78d9f8ba7ad02"
+    sha256 cellar: :any_skip_relocation, big_sur:        "b74f11d72ddcdc25c3c6335681d0a42b6f234c8151517d835d41848f32bbac03"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e71dab73f979672019fb1aee85c4dbc38f6be8183355b3e9b14a95b465719295"
   end
 
   depends_on "cmake" => :build
@@ -24,6 +25,21 @@ class Subnetcalc < Formula
   end
 
   test do
-    system "#{bin}/subnetcalc", "::1"
+    expected = <<~EOS
+      Address       = 1.1.1.1
+                         \e[34m0\e[0m\e[34m0\e[0m\e[34m0\e[0m\e[34m0\e[0m\e[34m0\e[0m\e[34m0\e[0m\e[34m0\e[0m\e[34m1\e[0m . \e[34m0\e[0m\e[34m0\e[0m\e[34m0\e[0m\e[34m0\e[0m\e[34m0\e[0m\e[34m0\e[0m\e[34m0\e[0m\e[34m1\e[0m . \e[34m0\e[0m\e[34m0\e[0m\e[34m0\e[0m\e[34m0\e[0m\e[34m0\e[0m\e[34m0\e[0m\e[34m0\e[0m\e[34m1\e[0m . \e[34m0\e[0m\e[34m0\e[0m\e[34m0\e[0m\e[34m0\e[0m\e[34m0\e[0m\e[34m0\e[0m\e[34m0\e[0m\e[34m1\e[0m
+      Network       = 1.1.1.1 / 32
+      Netmask       = 255.255.255.255
+      Broadcast     = not needed on Point-to-Point links
+      Wildcard Mask = 0.0.0.0
+      Hosts Bits    = 0
+      Max. Hosts    = 1   (2^0 - 0)
+      Host Range    = { 1.1.1.1 - 1.1.1.1 }
+      Properties    =
+         - 1.1.1.1 is a NETWORK address
+         - Class A
+      Performing reverse DNS lookup ...\r\e[KDNS Hostname  = one.one.one.one
+    EOS
+    assert_equal expected, shell_output("#{bin}/subnetcalc 1.1.1.1/32")
   end
 end

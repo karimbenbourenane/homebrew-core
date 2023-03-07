@@ -1,10 +1,9 @@
 class RubyAT30 < Formula
   desc "Powerful, clean, object-oriented scripting language"
   homepage "https://www.ruby-lang.org/"
-  url "https://cache.ruby-lang.org/pub/ruby/3.0/ruby-3.0.4.tar.xz"
-  sha256 "8e22fc7304520435522253210ed0aa9a50545f8f13c959fe01a05aea06bef2f0"
+  url "https://cache.ruby-lang.org/pub/ruby/3.0/ruby-3.0.5.tar.xz"
+  sha256 "cf7cb5ba2030fe36596a40980cdecfd79a0337d35860876dc2b10a38675bddde"
   license "Ruby"
-  revision 1
 
   livecheck do
     url "https://www.ruby-lang.org/en/downloads/"
@@ -12,12 +11,13 @@ class RubyAT30 < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "ff52c7f1a50f9beac2caa2329dd7e63892f331e47dba8047e97f9e1fd5b6e180"
-    sha256 arm64_big_sur:  "2737c74c4efa38121c8ff72b8694fa04d4bd4987e5592c4d17872051bf261c16"
-    sha256 monterey:       "e3aca6cab3ba291170a3106bf8bd9fc5178792e77612459d5eea43ff848ccc3e"
-    sha256 big_sur:        "e83d09c3ce36f6d6853748b32cb28e76d26820061dbcec5ab5c47180eaebb899"
-    sha256 catalina:       "859609c8a9a8f182ade5d363810b20c96e81b4815d513138ba32568f6675eba3"
-    sha256 x86_64_linux:   "44c9ea43429a04b0931c372762bd5f5619963576ad46e5d3f1197956a795b299"
+    sha256 arm64_ventura:  "7c79af1c3008a6f73f3dd3a696488d7cbc86f64530e8341f5e42e247d895156a"
+    sha256 arm64_monterey: "dd27d5f6f9d3dbe0d0b742b9db51c61a5bb56352c376848215fa3e2522ed9e99"
+    sha256 arm64_big_sur:  "d941db797cc5d907c48e9f6db68eb44847c9bfae512daf662835d40638b4c0f8"
+    sha256 ventura:        "e8ac2fcc51edef52f25479eb0d245de0943ed3de5c47854cc87771f644de84bd"
+    sha256 monterey:       "f5a6f87f173276ffa19d59471ad744cf3ca27c053e041a31013f20ff9c439738"
+    sha256 big_sur:        "4875aa79081eed703482085a09f3041f54cf1ff398feccd6b50a36b657b13ff1"
+    sha256 x86_64_linux:   "87b44a4efb564b4f427d7228947c8a79f0d4d02221f064ffd322c09e18ac6cde"
   end
 
   keg_only :versioned_formula
@@ -34,8 +34,8 @@ class RubyAT30 < Formula
   # The exception is Rubygem security fixes, which mandate updating this
   # formula & the versioned equivalents and bumping the revisions.
   resource "rubygems" do
-    url "https://rubygems.org/rubygems/rubygems-3.2.22.tgz"
-    sha256 "368979ef8103b550a98fc6479543831f0d55c3567d5ee4622d5aa569ee17418b"
+    url "https://rubygems.org/rubygems/rubygems-3.3.26.tgz"
+    sha256 "9b17a53a000a599926cf1ef19e9d2a35f87b436ae6500225eebe55db320dc68c"
   end
 
   def api_version
@@ -93,16 +93,21 @@ class RubyAT30 < Formula
 
       system "#{bin}/ruby", "setup.rb", "--prefix=#{buildpath}/vendor_gem"
       rg_in = lib/"ruby/#{api_version}"
+      rg_gems_in = lib/"ruby/gems/#{api_version}"
 
       # Remove bundled Rubygem and Bundler
-      rm_rf rg_in/"bundler"
-      rm_rf rg_in/"rubygems"
-      rm_f rg_in/"rubygems.rb"
-      rm_f rg_in/"ubygems.rb"
-      rm_f bin/"gem"
+      rm_r rg_in/"bundler"
+      rm rg_in/"bundler.rb"
+      rm_r Dir[rg_gems_in/"gems/bundler-*"]
+      rm Dir[rg_gems_in/"specifications/default/bundler-*.gemspec"]
+      rm_r rg_in/"rubygems"
+      rm rg_in/"rubygems.rb"
+      rm bin/"gem"
 
       # Drop in the new version.
       rg_in.install Dir[buildpath/"vendor_gem/lib/*"]
+      (rg_gems_in/"gems").install Dir[buildpath/"vendor_gem/gems/*"]
+      (rg_gems_in/"specifications/default").install Dir[buildpath/"vendor_gem/specifications/default/*"]
       bin.install buildpath/"vendor_gem/bin/gem" => "gem"
       (libexec/"gembin").install buildpath/"vendor_gem/bin/bundle" => "bundle"
       (libexec/"gembin").install_symlink "bundle" => "bundler"
@@ -224,10 +229,10 @@ class RubyAT30 < Formula
 
     (testpath/"Gemfile").write <<~EOS
       source 'https://rubygems.org'
-      gem 'gemoji'
+      gem 'github-markup'
     EOS
     system bin/"bundle", "exec", "ls" # https://github.com/Homebrew/homebrew-core/issues/53247
     system bin/"bundle", "install", "--binstubs=#{testpath}/bin"
-    assert_predicate testpath/"bin/gemoji", :exist?, "gemoji is not installed in #{testpath}/bin"
+    assert_predicate testpath/"bin/github-markup", :exist?, "github-markup is not installed in #{testpath}/bin"
   end
 end

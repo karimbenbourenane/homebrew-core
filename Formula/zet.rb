@@ -1,8 +1,8 @@
 class Zet < Formula
   desc "CLI utility to find the union, intersection, and set difference of files"
   homepage "https://github.com/yarrow/zet"
-  url "https://github.com/yarrow/zet/archive/refs/tags/0.2.0.tar.gz"
-  sha256 "b001632ecff545411908a9b365dbac6f930e563233547a4cb0ad210d3066952b"
+  url "https://github.com/yarrow/zet/archive/refs/tags/v0.2.6.tar.gz"
+  sha256 "09480557797737155edee62c58dd02a7f634d351ea67d02aeb351bace75786bc"
   license any_of: ["Apache-2.0", "MIT"]
 
   livecheck do
@@ -11,13 +11,13 @@ class Zet < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "d1efc8a1c86b3f42944a27c67605171646b9305bab4e26c5952564f74b37ac09"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "c6e7d941904683befbbb15613f071a946a144add3cac297592c104d6928dc364"
-    sha256 cellar: :any_skip_relocation, monterey:       "c9e069a411e00ece8c19c3ce766d2bd86824cb08ab4dce3237b09ea5b46c90b1"
-    sha256 cellar: :any_skip_relocation, big_sur:        "4515a47a131a1cf5f99a142985563c852115ab85eb9930d763331295bc001c0c"
-    sha256 cellar: :any_skip_relocation, catalina:       "27a2d603392d8f3eb4334524a9806b8138c1ce6016be87c4c17536861e1b1343"
-    sha256 cellar: :any_skip_relocation, mojave:         "4aa63c78cb8fe11496f62fbbc3a8877640273c8171c28fa44be0fd0325b06a76"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5487a78a3b283e20c280db65537f0915d610a60a4ec91650eed85ebd71a9d420"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "cc228722ba580240273282e8618e7fb03f2eca3b542c05e7321dc37678224cba"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "cc5fa2a07d6bc08e8048c5083dc4ef39633372189325477e5272a065667fa851"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "d6ef9baabbc9a1446583e09deb230a26996fc5431b0c556bfdb3f851322db324"
+    sha256 cellar: :any_skip_relocation, ventura:        "8eb210bff369139d32fcf561352eb6d281dc024fcbcfc4f57264574047d3a48a"
+    sha256 cellar: :any_skip_relocation, monterey:       "ad97379bda46051f9f77395d2e41491e81c3c412e8cffbe1f59f9c172947dd68"
+    sha256 cellar: :any_skip_relocation, big_sur:        "b2783c89bf1a10e478e9b29df84207533afc9a01d58cd76dab0051942c273471"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e7d29ead5c171aa3741bf3728ae929705df5d1987570b08f928e6575af745bf6"
   end
 
   depends_on "rust" => :build

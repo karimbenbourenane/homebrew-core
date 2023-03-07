@@ -1,13 +1,15 @@
 class Snownews < Formula
   desc "Text mode RSS newsreader"
-  homepage "https://github.com/msharov/snownews"
-  url "https://github.com/msharov/snownews/archive/v1.9.tar.gz"
-  sha256 "d8ef0c7ef779771e2c8322231bdfa7246d495ba8f24c3c210c96f3b6bd3776a7"
+  homepage "https://sourceforge.net/projects/snownews/"
+  url "https://downloads.sourceforge.net/project/snownews/snownews-1.9.tar.gz"
+  sha256 "f5a16b92254848ca465d578db3ed98af2323b1800ff27bb8c410e20e521bf485"
   license "GPL-3.0-only"
 
   bottle do
+    sha256 arm64_ventura:  "76a8f61191b0267babf19c288256f5cc3c00d6f1da6aefa86f86d48ed96db82e"
     sha256 arm64_monterey: "f3f130a39bd4c89ba0c1315cc94bd631dcbcfb6de37670b5beefb12262d18c39"
     sha256 arm64_big_sur:  "e33470f154aa0ac91be4e22fc07fbe038109fe6e528f024b1886a21c09cb118d"
+    sha256 ventura:        "fa70cbbbc0b7bc2c2fff3995f01a38500ffe8afc6624b4a9027e7e5e76211e7b"
     sha256 monterey:       "0df289333512883cc93e2c314575f73f7a0d4099b67299f8942daf22611ba9f4"
     sha256 big_sur:        "ae91430f56cf66c0c9926bef6b0bd2134e68730cfacac0db1dd8456a976a53f7"
     sha256 catalina:       "bd3a4094a8b1e6a5ea21d0d1f3215d9b97480600b41b72278ca492f1b36ffd9c"

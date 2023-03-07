@@ -2,16 +2,15 @@ class Synfig < Formula
   desc "Command-line renderer"
   homepage "https://synfig.org/"
   license "GPL-3.0-or-later"
-  revision 2
 
   stable do
-    url "https://downloads.sourceforge.net/project/synfig/releases/1.4.2/synfig-1.4.2.tar.gz"
-    mirror "https://github.com/synfig/synfig/releases/download/v1.4.2/synfig-1.4.2.tar.gz"
-    sha256 "e66688b908ab2f05f87cc5a364f958a1351f101ccab3b3ade33a926453002f4e"
+    url "https://downloads.sourceforge.net/project/synfig/development/1.5.1/synfig-1.5.1.tar.gz"
+    mirror "https://github.com/synfig/synfig/releases/download/v1.5.1/synfig-1.5.1.tar.gz"
+    sha256 "aa91593c28a89f269be1be9c8bd9ecca6491f9e6af26744d1c160c6553ee2ced"
 
-    # Fix build with FFmpeg 5. Remove in the next release.
-    # Backport of upstream commit due to NULL -> nullptr changes.
-    # PR ref: https://github.com/synfig/synfig/pull/2734
+    # Apply upstream commit to fix build with ffmpeg:
+    # https://github.com/synfig/synfig/commit/f684b24f0db31ab8ea7aadc417fc23e3084b4138
+    # Removew with next release.
     patch :DATA
   end
 
@@ -21,12 +20,14 @@ class Synfig < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "920d6f73d8236b3559cf93465893931aaa929782f60e73107c53bb4e30a308e6"
-    sha256 arm64_big_sur:  "c6f2045f16807852b5973ad47c2f569bec472cd3057b16b81936c8f5cfd968b5"
-    sha256 monterey:       "be1fa009cdf23d70a48a1da1476f5ae76e42326a0411b349328fb8a7be370f22"
-    sha256 big_sur:        "92612f7abc22c970ba345e09c01a426fa2ffe7080c6a5ec251fca8ed8ecfd2e4"
-    sha256 catalina:       "0840206906aa67a5a26635465e96f5bc9578b7c8d5310d9052a10707726fa6ad"
-    sha256 x86_64_linux:   "719aaac98ecf68e066a771f39b70322eca878d5fcbab89b86e901d331eb5e03d"
+    sha256 arm64_ventura:  "4408911daf111c2cbf2aa10f4def2688b2b780435801a518b1cd6b5e2f7f4f9e"
+    sha256 arm64_monterey: "d6c3ff6f8ebaf3c51541374f0b002a7aa76276f654c2a1bfbb5832d1c58b23b7"
+    sha256 arm64_big_sur:  "129b75a9a6beea76d92b7b916f4a4353591abc1be63369e199fa80b8f626aff1"
+    sha256 ventura:        "24be7a2a17acd81188d5920da4af74e459ed95d531434e13c30aa1e0727c6b7e"
+    sha256 monterey:       "78df0036495eccaa6005cd853fa58ab48fd3027d866d7116295bb1b6d3be0391"
+    sha256 big_sur:        "117c2aaefa5db9dc9f8bb68e810aed6a83e19b6671c815d81d1cb8c9283aa2e8"
+    sha256 catalina:       "b78c0b2ff9a309a18e6220d15dc7b78642df81d1cd8f6e6a5331bee4af5448ef"
+    sha256 x86_64_linux:   "4563e1b18b9d2487a4286cf6dd2d1c41b2d837b76a01c1be7a950a93142b6aab"
   end
 
   head do
@@ -40,9 +41,11 @@ class Synfig < Formula
   depends_on "boost"
   depends_on "cairo"
   depends_on "etl"
+  depends_on "ffmpeg"
   depends_on "fftw"
   depends_on "freetype"
   depends_on "gettext"
+  depends_on "imagemagick"
   depends_on "libpng"
   depends_on "libsigc++@2"
   depends_on "libtool"
@@ -52,10 +55,6 @@ class Synfig < Formula
   depends_on "pango"
 
   uses_from_macos "perl" => :build
-
-  on_linux do
-    depends_on "gcc"
-  end
 
   fails_with gcc: "5"
 
@@ -100,7 +99,7 @@ class Synfig < Formula
     pixman = Formula["pixman"]
     flags = %W[
       -I#{cairo.opt_include}/cairo
-      -I#{etl.opt_include}
+      -I#{etl.opt_include}/ETL
       -I#{fontconfig.opt_include}
       -I#{freetype.opt_include}/freetype2
       -I#{gettext.opt_include}
@@ -152,33 +151,35 @@ class Synfig < Formula
 end
 
 __END__
+diff --git a/src/modules/mod_libavcodec/trgt_av.cpp b/src/modules/mod_libavcodec/trgt_av.cpp
+index 6baccb4..bea55cc 100644
 --- a/src/modules/mod_libavcodec/trgt_av.cpp
 +++ b/src/modules/mod_libavcodec/trgt_av.cpp
-@@ -41,6 +41,7 @@
+@@ -38,6 +38,7 @@
  extern "C"
  {
  #ifdef HAVE_LIBAVFORMAT_AVFORMAT_H
-+#	include <libavcodec/avcodec.h>
++#   include <libavcodec/avcodec.h>
  #	include <libavformat/avformat.h>
  #elif defined(HAVE_AVFORMAT_H)
  #	include <avformat.h>
-@@ -234,12 +235,14 @@ class Target_LibAVCodec::Internal
+@@ -232,12 +233,14 @@ public:
  		close();
-
+ 
  		if (!av_registered) {
 +#if LIBAVCODEC_VERSION_MAJOR < 59 // FFMPEG < 5.0
  			av_register_all();
 +#endif
  			av_registered = true;
  		}
-
+ 
  		// guess format
 -		AVOutputFormat *format = av_guess_format(NULL, filename.c_str(), NULL);
 +		const AVOutputFormat *format = av_guess_format(NULL, filename.c_str(), NULL);
  		if (!format) {
  			synfig::warning("Target_LibAVCodec: unable to guess the output format, defaulting to MPEG");
  			format = av_guess_format("mpeg", NULL, NULL);
-@@ -254,6 +257,7 @@ class Target_LibAVCodec::Internal
+@@ -252,6 +255,7 @@ public:
  		context = avformat_alloc_context();
  		assert(context);
  		context->oformat = format;
@@ -186,18 +187,18 @@ __END__
  		if (filename.size() + 1 > sizeof(context->filename)) {
  			synfig::error(
  				"Target_LibAVCodec: filename too long, max length is %d, filename is '%s'",
-@@ -263,6 +267,14 @@ class Target_LibAVCodec::Internal
+@@ -261,6 +265,14 @@ public:
  			return false;
  		}
  		memcpy(context->filename, filename.c_str(), filename.size() + 1);
 +#else
-+		context->url = av_strndup(filename.c_str(), filename.size());
-+		if (!context->url) {
-+			synfig::error("Target_LibAVCodec: cannot allocate space for filename");
-+			close();
-+			return false;
-+		}
++ 		context->url = av_strndup(filename.c_str(), filename.size());
++ 		if (!context->url) {
++ 			synfig::error("Target_LibAVCodec: cannot allocate space for filename");
++ 			close();
++ 			return false;
++ 		}
 +#endif
-
+ 
  		packet = av_packet_alloc();
  		assert(packet);

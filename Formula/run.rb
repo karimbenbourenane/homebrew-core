@@ -1,23 +1,24 @@
 class Run < Formula
   desc "Easily manage and invoke small scripts and wrappers"
   homepage "https://github.com/TekWizely/run"
-  url "https://github.com/TekWizely/run/archive/v0.9.0.tar.gz"
-  sha256 "f7bd2dbcf41b27f67797c2b51291245f64dcf4aef243df205aed22f6f321c4d7"
+  url "https://github.com/TekWizely/run/archive/v0.11.2.tar.gz"
+  sha256 "942427701caa99a9a3a6458a121b5c80b424752ea8701b26083841de5ae43ff6"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "8048f0c0b0672b58f87c1f62d82902cf2040436591f3fc69f0ca50f60c5257e1"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "8048f0c0b0672b58f87c1f62d82902cf2040436591f3fc69f0ca50f60c5257e1"
-    sha256 cellar: :any_skip_relocation, monterey:       "8fe61559884892ff9ac980ef6002d13ee1edc54de63045845dfd8532a81377a4"
-    sha256 cellar: :any_skip_relocation, big_sur:        "8fe61559884892ff9ac980ef6002d13ee1edc54de63045845dfd8532a81377a4"
-    sha256 cellar: :any_skip_relocation, catalina:       "8fe61559884892ff9ac980ef6002d13ee1edc54de63045845dfd8532a81377a4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b5a91284adc9fb7d1a2b67cd30dc365f37ef420b1f53e050426f7fe3a3a1f038"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "9047620f1da5c223c4c7aa7ea33861ca346fd33335515a553fb11aa12f9505f2"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "9047620f1da5c223c4c7aa7ea33861ca346fd33335515a553fb11aa12f9505f2"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "9047620f1da5c223c4c7aa7ea33861ca346fd33335515a553fb11aa12f9505f2"
+    sha256 cellar: :any_skip_relocation, ventura:        "7b9ad23183cb19b835add35b5e65768ea6bd5295181c03d9ab1372996ff75fcb"
+    sha256 cellar: :any_skip_relocation, monterey:       "7b9ad23183cb19b835add35b5e65768ea6bd5295181c03d9ab1372996ff75fcb"
+    sha256 cellar: :any_skip_relocation, big_sur:        "7b9ad23183cb19b835add35b5e65768ea6bd5295181c03d9ab1372996ff75fcb"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ab579ac93d7c9474a761d9b51e1fb347119b8f990af87d0bcd03043aa388dbe8"
   end
 
   depends_on "go" => :build
 
   def install
-    system "go", "build", "-trimpath", "-ldflags", "-w -s", "-o", bin/name
+    system "go", "build", *std_go_args(ldflags: "-s -w")
   end
 
   test do

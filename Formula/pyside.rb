@@ -3,8 +3,8 @@ class Pyside < Formula
 
   desc "Official Python bindings for Qt"
   homepage "https://wiki.qt.io/Qt_for_Python"
-  url "https://download.qt.io/official_releases/QtForPython/pyside6/PySide6-6.3.1-src/pyside-setup-opensource-src-6.3.1.tar.xz"
-  sha256 "e5a85ed68834eb8324e3486283a9451b030d7221809e2a9533162e6b93899977"
+  url "https://download.qt.io/official_releases/QtForPython/pyside6/PySide6-6.4.2-src/pyside-setup-opensource-src-6.4.2.tar.xz"
+  sha256 "1ec9d0936332efd229650cf10fed36cadddff7a613a2ea6e897de4d504c1b505"
   license all_of: ["GFDL-1.3-only", "GPL-2.0-only", "GPL-3.0-only", "LGPL-3.0-only"]
 
   livecheck do
@@ -13,43 +13,39 @@ class Pyside < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "5f207f24999088a15edb49144bede2c6705696da137d1ac181bd515eefebdebd"
-    sha256 cellar: :any,                 arm64_big_sur:  "38807029895b75f2b2d46c8a8dbf654322d979b7def4cad145e7de07640a8321"
-    sha256 cellar: :any,                 monterey:       "3370e4d2b38f920f86cd078ab5ca6e73a24f7f025afd3bff43304c0700fdac60"
-    sha256 cellar: :any,                 big_sur:        "b22f2a0e29d965cadff00e10a2ab99ace697fa6aabdb67c527c2d76b8439cd7a"
-    sha256 cellar: :any,                 catalina:       "f2d104fa3ac546bedfbe7c152584baba95fbbf15812fffdef1f51057f15e3fa4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6c619b6a6b16686dcaf56c6298fada03ca42c574a70dc429983dd859d7c1ea33"
+    sha256 cellar: :any, arm64_ventura:  "a5ba0279810f7f827cc713b08b46ff7ec6b223b2e5888df1ecbf5fdc73b85c32"
+    sha256 cellar: :any, arm64_monterey: "632ca9e007e0a5f7597e8573d8d46352dadbe17624f00b6421a49fa3a6a662d4"
+    sha256 cellar: :any, arm64_big_sur:  "66002cffac46a0a027f2fe3e4fef79d1084cd06ec84d54badcf8a5962fe82d30"
+    sha256 cellar: :any, ventura:        "612319efea821f1c6bdbcbca5793e6bb4bb85ecefde0138476b209662b721735"
+    sha256 cellar: :any, monterey:       "8aae58fe85d5c70fbe3c77f76bf2051cc2470ec79dd00121d7be83a8edc78d8c"
+    sha256 cellar: :any, big_sur:        "4f17b94ea0868a89eab2b7a4a0834ed388f0d2d875e32da41ce7af7c893d6799"
   end
 
   depends_on "cmake" => :build
   depends_on "ninja" => :build
   depends_on xcode: :build
   depends_on "llvm"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
   depends_on "qt"
 
   uses_from_macos "libxml2"
   uses_from_macos "libxslt"
 
   on_linux do
-    depends_on "gcc"
     depends_on "mesa"
   end
 
   fails_with gcc: "5"
 
+  def python3
+    "python3.11"
+  end
+
   def install
     ENV.append_path "PYTHONPATH", buildpath/"build/sources"
 
     extra_include_dirs = [Formula["qt"].opt_include]
-    unless OS.mac?
-      gcc_version = Formula["gcc"].version.major
-      extra_include_dirs += [
-        Formula["gcc"].opt_include/"c++"/gcc_version,
-        Formula["gcc"].opt_include/"c++"/gcc_version/"x86_64-pc-linux-gnu",
-        Formula["mesa"].opt_include,
-      ]
-    end
+    extra_include_dirs << Formula["mesa"].opt_include if OS.linux?
 
     # upstream issue: https://bugreports.qt.io/browse/PYSIDE-1684
     inreplace "sources/pyside6/cmake/Macros/PySideModules.cmake",
@@ -63,26 +59,28 @@ class Pyside < Formula
               "in_build = Path(\"@CMAKE_BINARY_DIR@\") in location.parents",
               "in_build = Path(\"@CMAKE_BINARY_DIR@\").resolve() in location.parents"
 
-    args = std_cmake_args + [
-      "-DCMAKE_PREFIX_PATH=#{Formula["qt"].opt_lib}",
-      "-DPYTHON_EXECUTABLE=#{Formula["python@3.10"].opt_bin}/python3",
-      "-DBUILD_TESTS=OFF",
-      "-DNO_QT_TOOLS=yes",
-      "-DCMAKE_INSTALL_RPATH=#{lib}",
-      "-DFORCE_LIMITED_API=yes",
-    ]
+    # Install python scripts into pkgshare rather than bin
+    inreplace "sources/pyside-tools/CMakeLists.txt", "DESTINATION bin", "DESTINATION #{pkgshare}"
 
-    system "cmake", "-S", ".", "-B", "build", *args
+    # Avoid shim reference
+    inreplace "sources/shiboken6/ApiExtractor/CMakeLists.txt", "${CMAKE_CXX_COMPILER}", ENV.cxx
+
+    system "cmake", "-S", ".", "-B", "build",
+                     "-DCMAKE_INSTALL_RPATH=#{lib}",
+                     "-DCMAKE_PREFIX_PATH=#{Formula["qt"].opt_lib}",
+                     "-DPYTHON_EXECUTABLE=#{which(python3)}",
+                     "-DBUILD_TESTS=OFF",
+                     "-DNO_QT_TOOLS=yes",
+                     "-DFORCE_LIMITED_API=yes",
+                     *std_cmake_args
+
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
-
-    mv bin/"metaobjectdump.py", pkgshare
-    mv bin/"project.py", pkgshare
   end
 
   test do
-    system Formula["python@3.10"].opt_bin/"python3", "-c", "import PySide6"
-    system Formula["python@3.10"].opt_bin/"python3", "-c", "import shiboken6"
+    system python3, "-c", "import PySide6"
+    system python3, "-c", "import shiboken6"
 
     modules = %w[
       Core
@@ -94,14 +92,19 @@ class Pyside < Formula
       Widgets
       Xml
     ]
-
     modules << "WebEngineCore" if OS.linux? || (DevelopmentTools.clang_build_version > 1200)
+    modules.each { |mod| system python3, "-c", "import PySide6.Qt#{mod}" }
 
-    modules.each { |mod| system Formula["python@3.10"].opt_bin/"python3", "-c", "import PySide6.Qt#{mod}" }
+    pyincludes = shell_output("#{python3}-config --includes").chomp.split
+    pylib = shell_output("#{python3}-config --ldflags --embed").chomp.split
 
-    pyincludes = shell_output("#{Formula["python@3.10"].opt_bin}/python3-config --includes").chomp.split
-    pylib = shell_output("#{Formula["python@3.10"].opt_bin}/python3-config --ldflags --embed").chomp.split
-    pylib << "-Wl,-rpath,#{Formula["python@3.10"].opt_lib}" unless OS.mac?
+    if OS.linux?
+      pyver = Language::Python.major_minor_version python3
+      pylib += %W[
+        -Wl,-rpath,#{Formula["python@#{pyver}"].opt_lib}
+        -Wl,-rpath,#{lib}
+      ]
+    end
 
     (testpath/"test.cpp").write <<~EOS
       #include <shiboken.h>
@@ -114,9 +117,9 @@ class Pyside < Formula
       }
     EOS
     system ENV.cxx, "-std=c++17", "test.cpp",
-           "-I#{include}/shiboken6",
-           "-L#{lib}", "-lshiboken6.abi3",
-           *pyincludes, *pylib, "-o", "test"
+                    "-I#{include}/shiboken6",
+                    "-L#{lib}", "-lshiboken6.abi3",
+                    *pyincludes, *pylib, "-o", "test"
     system "./test"
   end
 end

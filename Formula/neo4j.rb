@@ -1,8 +1,8 @@
 class Neo4j < Formula
   desc "Robust (fully ACID) transactional property graph database"
   homepage "https://neo4j.com/"
-  url "https://neo4j.com/artifact.php?name=neo4j-community-4.4.10-unix.tar.gz"
-  sha256 "869ecb89ce36fe457b4d4c4fcaa48fdf2f2d739c45323bd2c8ccdf09aa11abbf"
+  url "https://neo4j.com/artifact.php?name=neo4j-community-5.5.0-unix.tar.gz"
+  sha256 "3834cf8393f11d02e96e37b15ceeb4319f56cf1d323076ca242a35750c94bd99"
   license "GPL-3.0-or-later"
 
   livecheck do
@@ -12,14 +12,20 @@ class Neo4j < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "7608f0866129ba0295c59e12e84bea97dfa9613771d29e23d336a81dd06fb309"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "a359114c1418043eb8bc6303890cdbe616bde469a4de9a3d667cc3da9267f8d7"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "a359114c1418043eb8bc6303890cdbe616bde469a4de9a3d667cc3da9267f8d7"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "a359114c1418043eb8bc6303890cdbe616bde469a4de9a3d667cc3da9267f8d7"
+    sha256 cellar: :any_skip_relocation, ventura:        "260eb47ae00c3f6fdd95fb1b2e9acffaa548149b3f16f73c5de966a6bad4a155"
+    sha256 cellar: :any_skip_relocation, monterey:       "260eb47ae00c3f6fdd95fb1b2e9acffaa548149b3f16f73c5de966a6bad4a155"
+    sha256 cellar: :any_skip_relocation, big_sur:        "260eb47ae00c3f6fdd95fb1b2e9acffaa548149b3f16f73c5de966a6bad4a155"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a359114c1418043eb8bc6303890cdbe616bde469a4de9a3d667cc3da9267f8d7"
   end
 
-  depends_on "openjdk@11"
+  depends_on "openjdk"
 
   def install
     env = {
-      JAVA_HOME:  Formula["openjdk@11"].opt_prefix,
+      JAVA_HOME:  Formula["openjdk"].opt_prefix,
       NEO4J_HOME: libexec,
     }
     # Remove windows files
@@ -60,6 +66,6 @@ class Neo4j < Formula
     ENV["NEO4J_LOG"] = testpath/"libexec/data/log/neo4j.log"
     ENV["NEO4J_PIDFILE"] = testpath/"libexec/data/neo4j-service.pid"
     mkpath testpath/"libexec/data/log"
-    assert_match(/Neo4j .*is not running/i, shell_output("#{bin}/neo4j status", 3))
+    assert_match(/Neo4j .*is not running/i, shell_output("#{bin}/neo4j status 2>&1", 3))
   end
 end

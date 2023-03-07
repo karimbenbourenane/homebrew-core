@@ -1,17 +1,18 @@
 class Hubble < Formula
   desc "Network, Service & Security Observability for Kubernetes using eBPF"
   homepage "https://github.com/cilium/hubble"
-  url "https://github.com/cilium/hubble/archive/refs/tags/v0.10.0.tar.gz"
-  sha256 "4b113cd0b89b57d6e59d3596ede6c04a731c00b3fbff8c2641808bcb31b5faa9"
+  url "https://github.com/cilium/hubble/archive/refs/tags/v0.11.2.tar.gz"
+  sha256 "f5111aedbf967b8953bbaf1d64a764093ff14cc62bdb803a879a393da22be74d"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "9951a81a642354bd455e52e373e05357721b2bf88c83f143163d84c337fd3688"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "1f1a4a5f613c7a9e5b08d9d973a1123abce1d00f9c4a9488b3eea1b4af9147eb"
-    sha256 cellar: :any_skip_relocation, monterey:       "af33f9f06d83688c492f4d39ddab38fd62804d571591c41a7b9f42d04fc238ee"
-    sha256 cellar: :any_skip_relocation, big_sur:        "88c9ec5cd0ae74188b81265bc7aa0280a591485f83633ee347ea3a21293ef36a"
-    sha256 cellar: :any_skip_relocation, catalina:       "c080bc80f4b0054623252480a8432d146ae065bf12b57e96323d1ca9c15eb41c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e4dbc77d9cae59b29a3a503298be9cf3799fbc678d5c35f9732554d0a3246045"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "5ac047de0f2b158136718f36522fc3e9b10c5fa8882bce9644e8e305a27316be"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "e576333fd18f315702afafa419b4cf917a5f37f4a78a0c653f327bc78e761b40"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "2e9b3552cca173dc906f8db6150ce4ee92d70345d1713221bad54e1696c0daf4"
+    sha256 cellar: :any_skip_relocation, ventura:        "163a135af82aa9e2135f089ad56b6d3e130416a14fe7d646aad5be63f6ddf4ea"
+    sha256 cellar: :any_skip_relocation, monterey:       "c0c987599d901fb489461058acfcfa3fb315a56181a7664a51d4cc794e320602"
+    sha256 cellar: :any_skip_relocation, big_sur:        "799d3a6f1eaf7e434092b610ea2aea4b320ba3aea3ffb40e43619725c784dd61"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5f9e782b8602c1242b8c3590276e9a3d0388b2e5e0fbc51515999dbb93a36f5d"
   end
 
   depends_on "go" => :build

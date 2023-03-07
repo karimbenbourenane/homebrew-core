@@ -1,21 +1,24 @@
 class KtConnect < Formula
   desc "Toolkit for integrating with kubernetes dev environment more efficiently"
   homepage "https://alibaba.github.io/kt-connect"
-  url "https://github.com/alibaba/kt-connect/archive/refs/tags/v0.3.6.tar.gz"
-  sha256 "c29d4d9a18defdd8485adfe3a75b2887b42544fedd404073844629666bb28c9f"
+  url "https://github.com/alibaba/kt-connect/archive/refs/tags/v0.3.7.tar.gz"
+  sha256 "f32a9eebb65bd6c43caaf7219a0424dcf9e70389c9a471dad7dc6c64260f3194"
   license "GPL-3.0-or-later"
   head "https://github.com/alibaba/kt-connect.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "201a9bc8a61ee90706957c3fccf6ae1623639bda3820fb50ff1a80648935bedf"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "c8c5c2566756210068ffbd9de28df50a18509e9139089626d739a31a16ea01b9"
-    sha256 cellar: :any_skip_relocation, monterey:       "5121833c6caae40c1feab413ca5ee4df9d8148ec4bc4135eb94d2beeadf3dff2"
-    sha256 cellar: :any_skip_relocation, big_sur:        "f34314cfc0ea7d23bb903b074d55b1694c8ec001b037051c5622cbc2e8262654"
-    sha256 cellar: :any_skip_relocation, catalina:       "0de5ef15714fffa9cbddf23e60afd497e2fbf3a39f29b0f8f062f92aa26fb031"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "42feffd67e8c7bad19c91931a73802e3f65321ddbde2b405fa225221d00cdc31"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "5774ca3a0f1d79dc09389bb90a27b34f7c41521f77f834995db7b6e3ad325364"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "e9512325d69b9c0894706ea7f328ab385e707357127db8d55445119ed24891e7"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "8a4ac7a4168713b0571a261a19c63bacf773098a4aa1740d8ba6af11ea45ac78"
+    sha256 cellar: :any_skip_relocation, ventura:        "fe2ab936924603f41a8e57c108006002ec83bec88e2e8bdb2b26f0bf83c693b0"
+    sha256 cellar: :any_skip_relocation, monterey:       "dffdfcff2dea1eab76dabc61a48edc7a41ba08bfcdddb53f94c1e2e750111555"
+    sha256 cellar: :any_skip_relocation, big_sur:        "6b9f8b923ec3fef27e04e07785d0b2dfc837ff3daf944063a8f2a8990fe213b9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6ac819a53007214f4d5e59877c0e5caacb17bd4e777993a89cbdd6383884ed45"
   end
 
-  depends_on "go" => :build
+  # https://github.com/alibaba/kt-connect/issues/398
+  depends_on "go@1.19" => :build
 
   def install
     ldflags = "-s -w -X main.version=#{version}"

@@ -1,21 +1,24 @@
 class Libtensorflow < Formula
   desc "C interface for Google's OS library for Machine Intelligence"
   homepage "https://www.tensorflow.org/"
-  url "https://github.com/tensorflow/tensorflow/archive/refs/tags/v2.9.1.tar.gz"
-  sha256 "6eaf86ead73e23988fe192da1db68f4d3828bcdd0f3a9dc195935e339c95dbdc"
+  url "https://github.com/tensorflow/tensorflow/archive/refs/tags/v2.11.0.tar.gz"
+  sha256 "99c732b92b1b37fc243a559e02f9aef5671771e272758aa4aec7f34dc92dac48"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any, arm64_monterey: "d0666662fade1b176466f2696d674e64b58e28a4c5f16ced14ec04721879d155"
-    sha256 cellar: :any, arm64_big_sur:  "65ae3afd999c190dd05ece1860c2230f4d8475d2afd3ade96bbee29c4cee0de1"
-    sha256 cellar: :any, monterey:       "e74debe1b0e759ed782e5d716f132ee66c2c2377c28a0380866c048e2eeb214a"
-    sha256 cellar: :any, big_sur:        "7cc7cff84b0b6012b607c6c57c3bfdec11ed0c2dd3951fa2e0ce96c5e1493fa0"
-    sha256 cellar: :any, catalina:       "314b2dd058121bbf407bba429f48e07fb712d1afddc10ab7b5dab2f8c3578790"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_ventura:  "9e529d7a13f5b604f78eacb99295e390df2042f9c0d3dbe8936b772f67847736"
+    sha256 cellar: :any,                 arm64_monterey: "9e529d7a13f5b604f78eacb99295e390df2042f9c0d3dbe8936b772f67847736"
+    sha256 cellar: :any,                 arm64_big_sur:  "8736eb09a4815c18d72b08205ed295dda74387506fbeb6f1fe52ebe825b3ea33"
+    sha256 cellar: :any,                 ventura:        "885aba0f397b266ae566323f4a9e7b1cc3520111f034d25c1295a1882dc2016f"
+    sha256 cellar: :any,                 monterey:       "885aba0f397b266ae566323f4a9e7b1cc3520111f034d25c1295a1882dc2016f"
+    sha256 cellar: :any,                 big_sur:        "82590c6f06fdfbc42c5b3fcc3885a748af608b34da5f74145265c8d253e31cd5"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a22557d1a7275ba52068c22de3e72354962e8e849f005b15c416be6621171069"
   end
 
   depends_on "bazelisk" => :build
   depends_on "numpy" => :build
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => :build
 
   resource "homebrew-test-model" do
     url "https://github.com/tensorflow/models/raw/v1.13.0/samples/languages/java/training/model/graph.pb"
@@ -23,6 +26,7 @@ class Libtensorflow < Formula
   end
 
   def install
+    python3 = "python3.11"
     optflag = if Hardware::CPU.arm? && OS.mac?
       "-mcpu=apple-m1"
     elsif build.bottle?
@@ -31,7 +35,7 @@ class Libtensorflow < Formula
       "-march=native"
     end
     ENV["CC_OPT_FLAGS"] = optflag
-    ENV["PYTHON_BIN_PATH"] = Formula["python@3.10"].opt_bin/"python3"
+    ENV["PYTHON_BIN_PATH"] = which(python3)
     ENV["TF_IGNORE_MAX_BAZEL_VERSION"] = "1"
     ENV["TF_NEED_JEMALLOC"] = "1"
     ENV["TF_NEED_GCP"] = "0"
@@ -60,6 +64,14 @@ class Libtensorflow < Formula
       --linkopt=-Wl,-rpath,#{rpath}
       --verbose_failures
     ]
+    if OS.linux?
+      pyver = Language::Python.major_minor_version python3
+      env_path = "#{Formula["python@#{pyver}"].opt_libexec}/bin:#{HOMEBREW_PREFIX}/bin:/usr/bin:/bin"
+      bazel_args += %W[
+        --action_env=PATH=#{env_path}
+        --host_action_env=PATH=#{env_path}
+      ]
+    end
     targets = %w[
       tensorflow:libtensorflow.so
       tensorflow:install_headers
@@ -94,7 +106,7 @@ class Libtensorflow < Formula
         printf("%s", TF_Version());
       }
     EOS
-    system ENV.cc, "-L#{lib}", "-ltensorflow", "-o", "test_tf", "test.c"
+    system ENV.cc, "test.c", "-L#{lib}", "-ltensorflow", "-o", "test_tf"
     assert_equal version, shell_output("./test_tf")
 
     resource("homebrew-test-model").stage(testpath)

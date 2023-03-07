@@ -2,8 +2,8 @@ class Dumpling < Formula
   desc "Creating SQL dump from a MySQL-compatible database"
   homepage "https://github.com/pingcap/tidb"
   url "https://github.com/pingcap/tidb.git",
-      tag:      "v6.2.0",
-      revision: "daf2b17cdfe30c02ce282361009fb5bdb05f2b0e"
+      tag:      "v6.6.0",
+      revision: "f4ca0821fb96a2bdd37d2fb97eb26c07fc58d4e4"
   license "Apache-2.0"
   head "https://github.com/pingcap/tidb.git", branch: "master"
 
@@ -13,12 +13,13 @@ class Dumpling < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "89785d4db17432195bd49b946a7a2e50d256cc48321bdf7f23720f11ef9b0c0b"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "6fe907de32dfd23eca7a07ca3a8636c19688e7423527e7dc4362a6e745984d59"
-    sha256 cellar: :any_skip_relocation, monterey:       "e63f8042accd4e543d1b830f7f4dad74b7fe007c7eabf14c5020a56bc1c78297"
-    sha256 cellar: :any_skip_relocation, big_sur:        "b6c305e7415f33e90328c60a19239ee1d95bef982a2a122e52cb31bb6c2af154"
-    sha256 cellar: :any_skip_relocation, catalina:       "b52f7ce5a049069f6534bd3a7a6ad89592e28504e13b7d52c91920a0652d8efe"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7fefc699fe136040b68cb18c8c8ec5cb13c9b970cb469d3af5c49b2a022b054f"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "c168394774259627b11b09f66e7a2be6f21b648c3326e977341f411f45127a3b"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "077e761679c1d7b3301976a983637fb235043d31fdcef47669d447c90c03ca71"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "5b38a71890d7814187dd891dd51e99755fc40de054f9930f13835588bbb3caf7"
+    sha256 cellar: :any_skip_relocation, ventura:        "fca3705bdd2355d12623351b6867c4537d8977b824826eea9f29fec6fba21b16"
+    sha256 cellar: :any_skip_relocation, monterey:       "cc3224da5fed206aa7625bcde656d9f4a9c272cb7ecd40a546d5d48aa7d323d6"
+    sha256 cellar: :any_skip_relocation, big_sur:        "391b960893f9c89d73f68201576fbd47356fafd850bed23a57dcc6982fb00b30"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b03b5cc3aee82f00d634bf9e18d4b00170681cee8462e271b014c7ee6b7dd2fb"
   end
 
   depends_on "go" => :build

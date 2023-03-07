@@ -1,18 +1,19 @@
 class SwaggerCodegen < Formula
   desc "Generate clients, server stubs, and docs from an OpenAPI spec"
   homepage "https://swagger.io/swagger-codegen/"
-  url "https://github.com/swagger-api/swagger-codegen/archive/v3.0.35.tar.gz"
-  sha256 "dd041dba3de05c2c2cce6c69f6ed861168f127eed2e375b8f2080fd07b89bddc"
+  url "https://github.com/swagger-api/swagger-codegen/archive/v3.0.41.tar.gz"
+  sha256 "b0c07cfe36b434c2c0b067a44f6604d4bad19016cbef20fdbecbd88c9b702863"
   license "Apache-2.0"
   head "https://github.com/swagger-api/swagger-codegen.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "4ca0829d3e3796ec035be8df87dbe64a52845f35cb6e76c5640d0907affa17ba"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "92278b1722babad53fdecb654977dfae35e607e5ce4a4406bd0e089168a4f25f"
-    sha256 cellar: :any_skip_relocation, monterey:       "f5f3de0de1a42d99d4ad3044cbe13926e4860792bb8d650892c0fc579c552dbc"
-    sha256 cellar: :any_skip_relocation, big_sur:        "993d49ca3fa816a2e67f49f5f57bfa730dd01df739b9b67c71b407e49dc8a1a4"
-    sha256 cellar: :any_skip_relocation, catalina:       "66ffbc0f1a75815c14b42170626df2c3de0e4c9c07a73cf4049fe86ff261e287"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "20f5690eacaca68437e6da012e70861e01d0fd3a293e0475122d9fd480070e61"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "72740a4a2ae54f45500d5ea30a8e185740e715d757d4bcb23b5d6c134b0fab5b"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "36129a010404c6644c1a3381d693240d27c611950f1437cdb7db533d18f0dbda"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "4540eb7ded1db391f47faf97cec315055b943f8f8c718f377defb795367fe702"
+    sha256 cellar: :any_skip_relocation, ventura:        "3544f4f0f80efafaeb8d536b8e201f9ce354c684ba8a273ccd0f7cd4f7a1f954"
+    sha256 cellar: :any_skip_relocation, monterey:       "b45856211ef26ac278c5c7334e15dd7510a95b2f4325a12b4e96c1174176d754"
+    sha256 cellar: :any_skip_relocation, big_sur:        "40a034ba1fe88e1410f7793d7108f3c98f228e1a53430300d6a90afaf5f846f5"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7dfd0cc77b0bd396f435dc03b4494319a1d2000b6dc7c37102b4f612dc809dc5"
   end
 
   depends_on "maven" => :build

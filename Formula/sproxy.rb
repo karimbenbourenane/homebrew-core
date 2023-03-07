@@ -1,18 +1,21 @@
 class Sproxy < Formula
   desc "HTTP proxy server collecting URLs in a 'siege-friendly' manner"
   homepage "https://www.joedog.org/sproxy-home/"
-  url "http://download.joedog.org/sproxy/sproxy-1.02.tar.gz"
+  url "https://download.joedog.org/sproxy/sproxy-1.02.tar.gz"
   sha256 "29b84ba66112382c948dc8c498a441e5e6d07d2cd5ed3077e388da3525526b72"
+  license "GPL-2.0-or-later"
 
   livecheck do
-    url "http://download.joedog.org/sproxy/"
+    url "https://download.joedog.org/sproxy/"
     regex(/href=.*?sproxy[._-]v?(\d+(?:\.\d+)+)\.t/i)
   end
 
   bottle do
     rebuild 2
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "8265d1a1a4f6eb021aac708b5d9b68b470c618389a6cc71131752e40da0f6123"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "73f13338cbd96aee85706f30ab752d6c7ea338b9876eb43444fbaf2c8523a09e"
     sha256 cellar: :any_skip_relocation, arm64_big_sur:  "2558b7f1308c8bc08667c8e51d40b1c8df05280fa8c5f003f6dec07561089c2e"
+    sha256 cellar: :any_skip_relocation, ventura:        "80c73db42dd8c97ae2513f9965295f62f5eb8bcabeacfa8ab2d55d2df89fc9b3"
     sha256 cellar: :any_skip_relocation, monterey:       "f810e4c841a81313b77f81dec82b1cdd1b4952d6625d8590aadb581e388edafb"
     sha256 cellar: :any_skip_relocation, big_sur:        "0feb23f8381e7e40ce846974be822ba97d42658a721582320468355193dc4851"
     sha256 cellar: :any_skip_relocation, catalina:       "ee0bff8062b0d007a9b762d35af1879e8abcf7203dae265d1a70ade53047af90"
@@ -117,7 +120,9 @@ class Sproxy < Formula
     # configure, though, as a result of this change, that flag would be honored.
     # Reported 10th May 2016 to https://www.joedog.org/support/
     inreplace "doc/Makefile.am", "$(prefix)/man", "$(mandir)"
-    inreplace "lib/Makefile.am", "Makefile.PL", "Makefile.PL PREFIX=$(prefix)"
+    inreplace "lib/Makefile.am",
+              "Makefile.PL",
+              "Makefile.PL PREFIX=$(prefix) INSTALLSITEMAN3DIR=$(mandir)/man3"
 
     # Only needed due to the change to "Makefile.am"
     system "autoreconf", "-fiv"

@@ -1,10 +1,9 @@
 class GstPluginsBad < Formula
   desc "GStreamer plugins less supported, not fully tested"
   homepage "https://gstreamer.freedesktop.org/"
-  url "https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.20.3.tar.xz"
-  sha256 "7a11c13b55dd1d2386dd902219e41cbfcdda8e1e0aa3e738186c95074b35da4f"
+  url "https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.22.0.tar.xz"
+  sha256 "3c9d9300f5f4fb3e3d36009379d1fb6d9ecd79c1a135df742b8a68417dd663a1"
   license "LGPL-2.0-or-later"
-  revision 1
   head "https://gitlab.freedesktop.org/gstreamer/gst-plugins-bad.git", branch: "master"
 
   livecheck do
@@ -13,12 +12,13 @@ class GstPluginsBad < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "883e428e0916301e1ee4b21e041372a2b523f5e66ec649f6e1a7d073639878f9"
-    sha256 arm64_big_sur:  "bdd8b41d13f8c98b863f0ca559881c7e4532e9845ac4aaf8a4951d9259f5117b"
-    sha256 monterey:       "19fb8cc5efdccea94dd4574eac1e35da2a46b2ca6f48278b3a06d01385c0b8aa"
-    sha256 big_sur:        "92107bb45bd7256d49cd09f2bcd56906f2942c8ff29728ced7ff50963030e84b"
-    sha256 catalina:       "c2f67922be2cb4bea0c6606b9a4a144d2deba28277fdc47a1a1aabe2cc80dacd"
-    sha256 x86_64_linux:   "669d27f5ea32b0cb17da5ca723e537ef0c68110bc5300140e158d3d386eb158e"
+    sha256 arm64_ventura:  "da24f02ddefa2a782816c9d548f3105aabd048752e845d03cdb01e8e9f236ae2"
+    sha256 arm64_monterey: "5d1562a4d0c2ee784434dd24c7cdf091e5425277bc13354b9d50f750d8c77392"
+    sha256 arm64_big_sur:  "3a122b127e1c1af4e093fbb937ae9bb90900e332f9ef95de0cf49c8206f7e294"
+    sha256 ventura:        "08e833950120afbd48f03baeba86e2e82bb8b97ac845fc23610833019cf5514e"
+    sha256 monterey:       "1f294a19d4398027ed47db49f3778984e9d32424a9d79cadcd6b421782c047b2"
+    sha256 big_sur:        "1a48a2a49831cd0566f9ddbb73e469b87d49bef8f719e05b4fb9149121eba3b3"
+    sha256 x86_64_linux:   "575b25a7fb0011521bb80b67b3c5b0ddc70486023c99164cb08519538f6b4ee1"
   end
 
   depends_on "gobject-introspection" => :build
@@ -27,6 +27,7 @@ class GstPluginsBad < Formula
   depends_on "pkg-config" => :build
   depends_on "faac"
   depends_on "faad2"
+  depends_on "fdk-aac"
   depends_on "gettext"
   depends_on "gst-plugins-base"
   depends_on "jpeg-turbo"
@@ -64,6 +65,8 @@ class GstPluginsBad < Formula
   test do
     gst = Formula["gstreamer"].opt_bin/"gst-inspect-1.0"
     output = shell_output("#{gst} --plugin dvbsuboverlay")
+    assert_match version.to_s, output
+    output = shell_output("#{gst} --plugin fdkaac")
     assert_match version.to_s, output
   end
 end

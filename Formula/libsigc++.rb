@@ -1,36 +1,32 @@
 class Libsigcxx < Formula
   desc "Callback framework for C++"
   homepage "https://libsigcplusplus.github.io/libsigcplusplus/"
-  url "https://download.gnome.org/sources/libsigc++/3.2/libsigc++-3.2.0.tar.xz"
-  sha256 "8cdcb986e3f0a7c5b4474aa3c833d676e62469509f4899110ddf118f04082651"
+  url "https://download.gnome.org/sources/libsigc++/3.4/libsigc++-3.4.0.tar.xz"
+  sha256 "02e2630ffb5ce93cd52c38423521dfe7063328863a6e96d41d765a6116b8707e"
   license "LGPL-3.0-or-later"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "ca2d52fb1e24a8e35968a9bb718a3917bb5c2f1aa1eaa7123095bf4e3fe73687"
-    sha256 cellar: :any,                 arm64_big_sur:  "40565951d84f79588d1f5cd4fc49b1cd4cd1316f6f3159d3a3f2ed9b30b36546"
-    sha256 cellar: :any,                 monterey:       "45dac0e6b63ceb87a02908dbc4d14bdd16d2ff6b1014df11de79b6331bfcef80"
-    sha256 cellar: :any,                 big_sur:        "56de0ae0560072d9a069ce201f423906611eedbc971ca4e1fca9fb8a13efd22d"
-    sha256 cellar: :any,                 catalina:       "d6b8cc8271b05ef6c7048e1344ee93f931469f05859ddde2bc67a112285da45d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "42bd65e6dd5d9a3b0126e8213e368e7b06cb9894991d25fff6b0d598ec6ae8cd"
+    sha256 cellar: :any,                 arm64_ventura:  "4a37ac08451ee4f8800a22535aad6c71ef0c1ce11cc3e0c03cfb38d6b2c3e946"
+    sha256 cellar: :any,                 arm64_monterey: "4a48debb678cfe3cd37b1252a1f49611b2388626efa5571d82b71039af93f42c"
+    sha256 cellar: :any,                 arm64_big_sur:  "7d0cb8f96273a8d0a322b386bbd790bb354c510a2755f2dd49d061a08d8222be"
+    sha256 cellar: :any,                 ventura:        "fb6d56a43b68ac039b5f9a54bccae5b40800f597ad106d53f5ead0e0fda0cb7b"
+    sha256 cellar: :any,                 monterey:       "cec86624a9048448189a4c42aab0486eb26483d5edd335518c4d976020a417ed"
+    sha256 cellar: :any,                 big_sur:        "027a7496473703fe38480c3fa1d773fec1265211f237c55aa10be53bdd1cf860"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d5762b879dc561dd61ca5f7744d977dbe2f2294406dd1b4432e23974f9a0469a"
   end
 
   depends_on "meson" => :build
   depends_on "ninja" => :build
   depends_on macos: :high_sierra # needs C++17
 
-  on_linux do
-    depends_on "m4" => :build
-    depends_on "gcc"
-  end
+  uses_from_macos "m4" => :build
 
   fails_with gcc: "5"
 
   def install
-    mkdir "build" do
-      system "meson", *std_meson_args, ".."
-      system "ninja"
-      system "ninja", "install"
-    end
+    system "meson", "setup", "build", "-Dbuild-examples=false", "-Dbuild-tests=false", *std_meson_args
+    system "meson", "compile", "-C", "build", "--verbose"
+    system "meson", "install", "-C", "build"
   end
 
   test do

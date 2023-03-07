@@ -2,8 +2,8 @@ class Colima < Formula
   desc "Container runtimes on MacOS (and Linux) with minimal setup"
   homepage "https://github.com/abiosoft/colima/blob/main/README.md"
   url "https://github.com/abiosoft/colima.git",
-      tag:      "v0.4.4",
-      revision: "8bb1101a861a8b6d2ef6e16aca97a835f65c4f8f"
+      tag:      "v0.5.4",
+      revision: "feef4176f56a7dea487d43689317a9d7fe9de27e"
   license "MIT"
   head "https://github.com/abiosoft/colima.git", branch: "main"
 
@@ -13,22 +13,22 @@ class Colima < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "f28fc747423e8c5679fdba280c6cc7a3816b59dc9a8b77369b23abe1c09afe37"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "1eaa675ae8556fcde77ac19e6ff531e05d45dc4f1ad26b9b4d025ad71ee60ae7"
-    sha256 cellar: :any_skip_relocation, monterey:       "a1bbfe934659a9f6f24d08009d06e42f0f97bd07453e035b8a11e6a5f00ac8d9"
-    sha256 cellar: :any_skip_relocation, big_sur:        "d673a769d5008e95513cdbe27e9191cd6d511762f4d8a33ee171b9b5bb7489e4"
-    sha256 cellar: :any_skip_relocation, catalina:       "e4891f258ec55835e4474cc7a988891057d20cd36ad6d20c697a2a35eaa42c79"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "16a92215d353ae0e2550ec2272edbb68bde22dc1d2e35d15b3c0bb12efabc328"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "2bde6ac857fe458f6fb23c57059946a3cbf746edabb9448f988889d5f5c1a297"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "c309adaf842a70bad694a5cd0293aaaa346ae14b19dc021239a62c555ce2c947"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "c309adaf842a70bad694a5cd0293aaaa346ae14b19dc021239a62c555ce2c947"
+    sha256 cellar: :any_skip_relocation, ventura:        "cd4dd2c9b0b6e5e927bfbbb814c4b54a16078354b9588ed70545bb31f444809b"
+    sha256 cellar: :any_skip_relocation, monterey:       "61a93b82311163b2b73f9ace3a408428a7ac1a8c745012d56c7bb69f8ec084cf"
+    sha256 cellar: :any_skip_relocation, big_sur:        "61a93b82311163b2b73f9ace3a408428a7ac1a8c745012d56c7bb69f8ec084cf"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c0a684b14326fc01cc9a5d8b7b6321f9b3a00d0f9ed0d0d7cff98adf4b76400c"
   end
 
-  # Required latest gvisor.dev/gvisor/pkg/gohacks
-  # Try to switch to the latest go on the next release
-  depends_on "go@1.18" => :build
+  depends_on "go" => :build
   depends_on "lima"
 
   def install
     project = "github.com/abiosoft/colima"
     ldflags = %W[
+      -s -w
       -X #{project}/config.appVersion=#{version}
       -X #{project}/config.revision=#{Utils.git_head}
     ]

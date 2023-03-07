@@ -1,26 +1,23 @@
 class Quill < Formula
   desc "C++17 Asynchronous Low Latency Logging Library"
   homepage "https://github.com/odygrd/quill"
-  url "https://github.com/odygrd/quill/archive/v2.1.0.tar.gz"
-  sha256 "66c59501ad827207e7d4682ccba0f1c33ca215269aa13a388df4d59ca195ee76"
+  url "https://github.com/odygrd/quill/archive/refs/tags/v2.7.0.tar.gz"
+  sha256 "10b8912e4c463a3a86b809076b95bec49aa08393d9ae6b92196cd46314236b87"
   license "MIT"
   head "https://github.com/odygrd/quill.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "c1cc82aa7d85b91e69de1abfa049db94d3e0ee5a89d826fe4b5184b9ea9677dc"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "40ea9265eea1e8daefe213171b1343870adfe15701eed2c63455ebde2fc51dea"
-    sha256 cellar: :any_skip_relocation, monterey:       "eb647974436749da7d6c4d7b28dda1ee563ccba93c3ada81c0ab4d7f0e91f9f9"
-    sha256 cellar: :any_skip_relocation, big_sur:        "e6451e2a31e352b52f68d465953dd162c52daae87957cb47d16af6c043a22bc9"
-    sha256 cellar: :any_skip_relocation, catalina:       "fb8b121919848c7b0e56e8c6fdcabac2d455c518c5860260c6e24106acb97957"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b62d4908f033f0c91343ef7399f1e7b7406c57c155d28b26f1291805a89554b5"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "ec474fcf3f8632d844e49d18cd75832a0216770a6fd31c300a9e7210ca963fd0"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "3b443b9da056a57e35b6282292098759bb61f4ab6e5f183f04df4cfe55e01b81"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "f4abd2e2295a479e626e0cdbdff23aab77be58e345cff6a18b4f82a443805d56"
+    sha256 cellar: :any_skip_relocation, ventura:        "8f17a6fd1271d5a1b93d4d64d5c0a20c9d20fd58319c7c3384b285f3ea7bdd8a"
+    sha256 cellar: :any_skip_relocation, monterey:       "bf441cdd5e415b432d1df767461becc228194bd4f2d23b4fd6735658b9fb92f9"
+    sha256 cellar: :any_skip_relocation, big_sur:        "5769ce2aa6deedea4bf6c4935f84933d408b18d66d739f2173ab5eb5cf877cf9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "326dd6450340908ed3b45e28f86f8d9fe4dcfed6c9dbebafba01e9fe32f9c1cd"
   end
 
   depends_on "cmake" => :build
   depends_on macos: :catalina
-
-  on_linux do
-    depends_on "gcc"
-  end
 
   fails_with gcc: "5"
 

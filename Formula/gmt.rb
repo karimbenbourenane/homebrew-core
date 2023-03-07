@@ -5,15 +5,17 @@ class Gmt < Formula
   mirror "https://mirrors.ustc.edu.cn/gmt/gmt-6.4.0-src.tar.xz"
   sha256 "b46effe59cf96f50c6ef6b031863310d819e63b2ed1aa873f94d70c619490672"
   license "LGPL-3.0-or-later"
+  revision 5
   head "https://github.com/GenericMappingTools/gmt.git", branch: "master"
 
   bottle do
-    sha256 arm64_monterey: "049f3bbd857920614205a7680206e97fe757e2d3ee3f69e3a84c833abc7b6a7a"
-    sha256 arm64_big_sur:  "4034c75ff52c4b2c539339a2e2129f80a4b841aa65169831d24b6de81747272e"
-    sha256 monterey:       "fcd2a33c09b6c4f30b208f658ec5edf9036f54c7dc7ef5fb0ea9d68610930660"
-    sha256 big_sur:        "b0187d3a3888c19665c0747a1e2d0dc3fafdc3600ac5a0b5b82d3e57c5907821"
-    sha256 catalina:       "49b528a8402984592297ba31dbbf3c6c2a2fb214d18f67cfbb464aee5a963025"
-    sha256 x86_64_linux:   "1dedbccfceb6e6e01a68f9725360cb5cd0d368ae02759ee06392e26991f1980b"
+    sha256 arm64_ventura:  "fef46f4de1c3f752d063310d346eb609479fea6cd04d6727533734f703aae778"
+    sha256 arm64_monterey: "630974184d2ae106d0c3cbca312086a6ecfb3f716988a006422d454f541d6d41"
+    sha256 arm64_big_sur:  "f701e8d961581f7fc71ea2e1fd944fca6e7d0fb40006c6631c161fdef105978a"
+    sha256 ventura:        "909621edde7e0269f38d195b4f85a190b91f0f2aafeb5eb9ef76aaf62d9e2932"
+    sha256 monterey:       "f36d0d0ff4c70b7f2d8a6adcb2061b687187620839350ef58b9f4758763f8c67"
+    sha256 big_sur:        "594113edd85dc420fe01d2dc5ac69a9e0902e70db918bd921024ae329198a5aa"
+    sha256 x86_64_linux:   "c788ac81e850a5431399b58095cc35fb3bf5036709b455bbdda2d64aab66c3c7"
   end
 
   depends_on "cmake" => :build
@@ -39,28 +41,27 @@ class Gmt < Formula
     (buildpath/"dcw").install resource("dcw")
 
     # GMT_DOCDIR and GMT_MANDIR must be relative paths
-    args = std_cmake_args.concat %W[
-      -DCMAKE_INSTALL_PREFIX=#{prefix}
+    args = %W[
       -DGMT_DOCDIR=share/doc/gmt
       -DGMT_MANDIR=share/man
       -DGSHHG_ROOT=#{buildpath}/gshhg
       -DCOPY_GSHHG:BOOL=TRUE
       -DDCW_ROOT=#{buildpath}/dcw
       -DCOPY_DCW:BOOL=TRUE
+      -DPCRE_ROOT=FALSE
       -DFFTW3_ROOT=#{Formula["fftw"].opt_prefix}
       -DGDAL_ROOT=#{Formula["gdal"].opt_prefix}
       -DNETCDF_ROOT=#{Formula["netcdf"].opt_prefix}
-      -DPCRE_ROOT=#{Formula["pcre2"].opt_prefix}
+      -DPCRE2_ROOT=#{Formula["pcre2"].opt_prefix}
       -DFLOCK:BOOL=TRUE
       -DGMT_INSTALL_MODULE_LINKS:BOOL=FALSE
       -DGMT_INSTALL_TRADITIONAL_FOLDERNAMES:BOOL=FALSE
       -DLICENSE_RESTRICTED:BOOL=FALSE
     ]
 
-    mkdir "build" do
-      system "cmake", "..", *args
-      system "make", "install"
-    end
+    system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
     inreplace bin/"gmt-config", Superenv.shims_path/ENV.cc, DevelopmentTools.locate(ENV.cc)
   end
 

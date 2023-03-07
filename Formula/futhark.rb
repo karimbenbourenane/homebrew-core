@@ -1,22 +1,23 @@
 class Futhark < Formula
   desc "Data-parallel functional programming language"
   homepage "https://futhark-lang.org/"
-  url "https://github.com/diku-dk/futhark/archive/v0.22.1.tar.gz"
-  sha256 "f28b50a7bdc4d8b5b42e0e1bfe3211f8c1b51cd8ced204977c415f60e01f916c"
+  url "https://github.com/diku-dk/futhark/archive/v0.23.1.tar.gz"
+  sha256 "e6be2bb84ac655fd060f9c7a8625880ce8d72087ada6dfe349584a320974d6d1"
   license "ISC"
   head "https://github.com/diku-dk/futhark.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "14abb3ff8aa6023dd6d78b895b025e94821e829ea07188d1cef5f5722e4f5d49"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "41b3b4739ea0369e9609bb16ecc472efca87ef806da82d3f3a8c348050e5f58a"
-    sha256 cellar: :any_skip_relocation, monterey:       "02640b41689c8ebbd82ff7dc960b7c82a6ee32c87b510e26eba14cb6463e1b6b"
-    sha256 cellar: :any_skip_relocation, big_sur:        "7151bda663eb081167abbe0768c3cbf039dce1a7fefc05ec2a2d85723a6810df"
-    sha256 cellar: :any_skip_relocation, catalina:       "1d085b13cc2d222a2d1a8fb070b0a9ba136e0e940e9fb3114d61afe20e0441bf"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "09c48d4c56104bb55486251a9e554be94cd393ef1cc2e2fa20850d4fb5bead4e"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "9f22ed7743b8626c7f28b238a28a3e90e5aaa1dfbc7398e8f959bb4a5d5bb7d0"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "4b05698fd66729cfaf8a7abbab96a1d8b4c2622ee00dc1de04f090dc443bacc5"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "b6585901ca2aa73bdfdec71145e0f74971ae696677bf196d18a0de5fd2270a92"
+    sha256 cellar: :any_skip_relocation, ventura:        "2281a0f86330b5f5c16fb62c1b820b8cc3f5e96334fb6ce30bc23bb8184a9779"
+    sha256 cellar: :any_skip_relocation, monterey:       "997434fd4f09cb564d46c470607ecc99e5dfb0c2b7aa8e460bc9f33d6c6e7e05"
+    sha256 cellar: :any_skip_relocation, big_sur:        "220cfea50807cdba9d9c853f53f12b708b0447ed8a4af14b77f65e37d3f3b97f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f2a57e65c1e87fa04a828431ad1785cf51feb6af1c62f498056d13ba828c72fa"
   end
 
   depends_on "cabal-install" => :build
-  depends_on "ghc@9" => :build
+  depends_on "ghc" => :build
   depends_on "sphinx-doc" => :build
 
   uses_from_macos "ncurses"

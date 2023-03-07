@@ -1,8 +1,8 @@
 class Postgis < Formula
   desc "Adds support for geographic objects to PostgreSQL"
   homepage "https://postgis.net/"
-  url "https://download.osgeo.org/postgis/source/postgis-3.2.3.tar.gz"
-  sha256 "1b4d8b5c756e5aba59efbc1833b22efe4d6562778eeca56fa497feb2eb13668c"
+  url "https://download.osgeo.org/postgis/source/postgis-3.3.2.tar.gz"
+  sha256 "9a2a219da005a1730a39d1959a1c7cec619b1efb009b65be80ffc25bad299068"
   license "GPL-2.0-or-later"
   revision 2
 
@@ -12,12 +12,13 @@ class Postgis < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "7e7dacce81ec0d01e3c27b58bdb1b8c42f3a7c6953d4fb315cddb51d9d5426d0"
-    sha256 cellar: :any,                 arm64_big_sur:  "7a6bc4986c959ef5572daf43041485c0c2243b8f4b5f0950b18f398ac4ee640e"
-    sha256 cellar: :any,                 monterey:       "d41db5cc7ccc7b939851b1aa19f63a9d84861a1f6f53323c1bc6aa13b2c064a7"
-    sha256 cellar: :any,                 big_sur:        "f3f4a30d31cbc8d039d82c8ccb5fd20be9dc9f71af90ab00bcdacc12582cb060"
-    sha256 cellar: :any,                 catalina:       "09c2e0581a7ecc738e9c0b884600ec733df8a00281a09e1c43489d74c1b3b8ab"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "04d5d88eb85e726579b5b01314af1bbf4bece5f474d1759658b19007ad10c72d"
+    sha256 cellar: :any,                 arm64_ventura:  "3cde54b37a9a7c3c7d9aab6f259111465c6388e2cbccc062063e967d3cef9412"
+    sha256 cellar: :any,                 arm64_monterey: "aec65ddab5eaacc23dda2ce0907fc3948acf850b4a0dad038ed95cb7d64f2726"
+    sha256 cellar: :any,                 arm64_big_sur:  "38af4aaa34598c8ec54e61bef27dda8c669276e3e123535bfc269488f54b40a9"
+    sha256 cellar: :any,                 ventura:        "8cdcaa0e88d765ccc73f589d845dbe80e43f5bf04a47d48b705539c414d83b3b"
+    sha256 cellar: :any,                 monterey:       "4885236a19f3ce94d92f9f5479d00c5d2dd3b30e356abe15a499ad812674cccf"
+    sha256 cellar: :any,                 big_sur:        "869fcfdc0e6b24ccd18712cc6a8f34eafc4d74b7d1bf479258c872c7c0d1bd3e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "2fa798268a282ddd7dec8b2dfe090a2e19877c4cfcde31206ee1ac2fa159ba1f"
   end
 
   head do
@@ -38,10 +39,6 @@ class Postgis < Formula
   depends_on "proj"
   depends_on "protobuf-c" # for MVT (map vector tiles) support
   depends_on "sfcgal" # for advanced 2D/3D functions
-
-  on_linux do
-    depends_on "gcc"
-  end
 
   fails_with gcc: "5"
 
@@ -67,6 +64,12 @@ class Postgis < Formula
     ]
 
     system "./autogen.sh" if build.head?
+    # Fixes config/install-sh: No such file or directory
+    # This is caused by a misalignment between ./configure in postgres@14 and postgis
+    mv "build-aux", "config"
+    inreplace %w[configure utils/Makefile.in] do |s|
+      s.gsub! "build-aux", "config"
+    end
     system "./configure", *args
     system "make"
 
@@ -91,7 +94,7 @@ class Postgis < Formula
     # Extension scripts
     bin.install %w[
       utils/create_undef.pl
-      utils/postgis_proc_upgrade.pl
+      utils/create_upgrade.pl
       utils/postgis_restore.pl
       utils/profile_intersects.pl
       utils/test_estimation.pl

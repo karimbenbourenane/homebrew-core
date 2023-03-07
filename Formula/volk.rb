@@ -3,27 +3,25 @@ class Volk < Formula
 
   desc "Vector Optimized Library of Kernels"
   homepage "https://www.libvolk.org/"
-  url "https://github.com/gnuradio/volk/releases/download/v2.5.2/volk-2.5.2.tar.gz"
-  sha256 "ead6d39d390a03cec0d65d474b5222654103b304f7f00c730d69ea54a2ca7006"
-  license "GPL-3.0-or-later"
+  url "https://github.com/gnuradio/volk/releases/download/v3.0.0/volk-3.0.0.tar.gz"
+  sha256 "797c208bd449f77186684c9fa368cc8577fb98ce3763db5de526e6809de32d28"
+  license "LGPL-3.0-or-later"
 
   bottle do
-    sha256 arm64_monterey: "da9599f4d5011bd2b77442d72e2310114da8333bb50199ba6cb250ff4004c0b7"
-    sha256 arm64_big_sur:  "aaa8e8718a34c2c0f63fae59451f819ed2b05fd236c6030a3ee9ea097d92eaad"
-    sha256 monterey:       "7bc78a7916cca7a07c8465566a7d44d5e6d6ba2d458e6f93939960c0ea1c8846"
-    sha256 big_sur:        "216eaf5b947e2c67bd35ad5775cc6b62c917937829e76d76234d7ae986f59748"
-    sha256 catalina:       "dcb073b744df9431a99d0ef1c9fa3662d9788497b9253a2c11433e75af61a14c"
-    sha256 x86_64_linux:   "67a28b60dce85baaac4a4d750fda3ae329918ee65e2f9f6086d891648bef050d"
+    sha256 arm64_ventura:  "52ff9a4b5c47a0dc1f19db0058c4fafcc26b8163f28bbbf1b926efd782e5ab02"
+    sha256 arm64_monterey: "ff09e450bf0ae32fcd0562397c9a45839450f32f96d3559da7fafb61a3cb03c8"
+    sha256 arm64_big_sur:  "f38aebc5c6ad1163e5ebc1791ccebfe5c269a1319aa06676bc5d295cfe01dd4d"
+    sha256 ventura:        "79fcfa93cd4f681fe8af9e515e264608162cef5d8498fede1829bb6616e6878d"
+    sha256 monterey:       "435296319b6a65ae72d6a5dd24e1df94552ca2ee3d6985c433b0be9cb42604fe"
+    sha256 big_sur:        "943932be7a0e7fb6cc7d146ead74a6069cf014d4a30dca8167520ae7cb5d82d4"
+    sha256 x86_64_linux:   "1432bc5c4b8ed803de9b2171a26ed1e5bb7735d6e8f137bed5e689c7888320d2"
   end
 
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
   depends_on "orc"
-  depends_on "python@3.10"
-
-  on_linux do
-    depends_on "gcc"
-  end
+  depends_on "pygments"
+  depends_on "python@3.11"
 
   on_intel do
     depends_on "cpu_features"
@@ -32,8 +30,8 @@ class Volk < Formula
   fails_with gcc: "5" # https://github.com/gnuradio/volk/issues/375
 
   resource "Mako" do
-    url "https://files.pythonhosted.org/packages/6d/f2/8ad2ec3d531c97c4071572a4104e00095300e278a7449511bee197ca22c9/Mako-1.2.2.tar.gz"
-    sha256 "3724869b363ba630a272a5f89f68c070352137b8fd1757650017b7e06fda163f"
+    url "https://files.pythonhosted.org/packages/05/5f/2ba6e026d33a0e6ddc1dddf9958677f76f5f80c236bd65309d280b166d3e/Mako-1.2.4.tar.gz"
+    sha256 "d60a3903dc3bb01a18ad6a89cdbe2e4eadc69c0bc8ef1e3773ba53d44c3f7a34"
   end
 
   resource "MarkupSafe" do
@@ -41,13 +39,8 @@ class Volk < Formula
     sha256 "7f91197cc9e48f989d12e4e6fbc46495c446636dfc81b9ccf50bb0ec74b91d4b"
   end
 
-  resource "Pygments" do
-    url "https://files.pythonhosted.org/packages/e0/ef/5905cd3642f2337d44143529c941cc3a02e5af16f0f65f81cbef7af452bb/Pygments-2.13.0.tar.gz"
-    sha256 "56a8508ae95f98e2b9bdf93a6be5ae3f7d8af858b43e02c5a2ff083726be40c1"
-  end
-
   def install
-    python = "python3.10"
+    python = "python3.11"
 
     # Set up Mako
     venv_root = libexec/"venv"

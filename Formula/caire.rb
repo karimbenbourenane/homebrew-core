@@ -1,18 +1,19 @@
 class Caire < Formula
   desc "Content aware image resize tool"
   homepage "https://github.com/esimov/caire"
-  url "https://github.com/esimov/caire/archive/v1.4.4.tar.gz"
-  sha256 "2786ab0af06aeb8357ae835340b96f30ad1b134280faa346f0f250df5c7567b1"
+  url "https://github.com/esimov/caire/archive/v1.4.6.tar.gz"
+  sha256 "91af988656924387c1c2c7ccf0c263c2df2843bbfca58d28c5ea239cee4861af"
   license "MIT"
   head "https://github.com/esimov/caire.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "4dd11795109c0ee09d0ab81c1a35861215b8a7afedb6fa7d4148535ffb23a8b4"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "a35ffdc4052f39ff43b89c2cac5b55385d46ecf0501b014ba5cad3b3f96b4249"
-    sha256 cellar: :any_skip_relocation, monterey:       "1ad74bdcdc3786d799e8394748683aa78137f97a7ed98c10cc6d287cf9be2fe5"
-    sha256 cellar: :any_skip_relocation, big_sur:        "8754892375d921d9700607d68d85ac0a430f0e98759a787b76bc20586490faf5"
-    sha256 cellar: :any_skip_relocation, catalina:       "58836775c2ee4ac9a78747499daf4582cbb193461a280cd798beb0dcba7e7291"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f80998cf1355ffaf5939ae34b17b747c999132b18b5efeffee2dc945b72cdd41"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "de8d5498c8a7225927089e78b74262da38c07c25676149e254ed2f51dca071b3"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "bc8a8ce5ea3d3f5641ea6d92fb82e49c4eba64d6d3396740de5b49afedd666c2"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "55bf8972c5e39debec946d4dc49bb0d100368477fab2ef191faeff14b762420e"
+    sha256 cellar: :any_skip_relocation, ventura:        "02e2bb7f928fdf07be538502c77b1f5d23d9e5955479085c69273f8f8522b268"
+    sha256 cellar: :any_skip_relocation, monterey:       "c22d0b1082028816b15909d23ed4fe75e15c18adbdcb59031d26670c193b2ab8"
+    sha256 cellar: :any_skip_relocation, big_sur:        "0a1114072957e1012c78d2457d5f365cca2ca1c4af69a4ce8d7849dee0753398"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "4c03ecc2961e471b765435ca1ece10bce69f77a592ef683ab75138b52e132f7f"
   end
 
   depends_on "go" => :build

@@ -1,10 +1,9 @@
 class NodeAT16 < Formula
   desc "Platform built on V8 to build network applications"
   homepage "https://nodejs.org/"
-  url "https://nodejs.org/dist/v16.17.0/node-v16.17.0.tar.xz"
-  sha256 "1d28c285685e446985921bc963565ca9c0c5f4fda9755e489c06808ea9795645"
+  url "https://nodejs.org/dist/v16.19.1/node-v16.19.1.tar.xz"
+  sha256 "17fb716406198125b30c94dd3d1756207b297705626afe16d8dc479a65a1d8b5"
   license "MIT"
-  revision 1
 
   livecheck do
     url "https://nodejs.org/dist/"
@@ -12,18 +11,22 @@ class NodeAT16 < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "56e512bb38482020c36e5c6b2ef202f6ff23c97b5911a281c0fedfef0ed54a5e"
-    sha256 cellar: :any,                 arm64_big_sur:  "3c967cb307c6fc6e3e1dd1e30c0a387faa47bb498f02504c771d49f9d8d9a4c8"
-    sha256 cellar: :any,                 monterey:       "72a8dc456899f9f214fb72e0ca0059e627ebf1f65dcce8e273a11b5a1a3da648"
-    sha256 cellar: :any,                 big_sur:        "f9dc6649269ba5bd75b1e339c366c7ec5ed82db21f127b34e6038665c350b497"
-    sha256 cellar: :any,                 catalina:       "b819d47362ad60b47c3d3453fbd223b5f245257b80118f3438ba3d3c258dff85"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "1e3d50c00f504778ca9afe4be283b4f974713d3e7912a50a1be594f9c9acb9bc"
+    sha256 cellar: :any,                 arm64_ventura:  "f58aff3deda91093e2f5c240ba9c888a37c759e85156fdc4dda73abbd5e8fc2b"
+    sha256 cellar: :any,                 arm64_monterey: "4cc5889fb689a3b73e001aa4b08747e6ea3db52619886e60f76cfd16c171ab1f"
+    sha256 cellar: :any,                 arm64_big_sur:  "45c2c4055a56808c95ee4e7cc2f8674b512fd646f2c72fae94d06367989535af"
+    sha256 cellar: :any,                 ventura:        "e85fd70a25422f067e9dec4425b0a16a9d6afdd661bcedba110f315d42dacaaf"
+    sha256 cellar: :any,                 monterey:       "f74dd23e22b3ac428f0d3f8abb73dd84afe8767675aa646dfe3acc3a37015c9b"
+    sha256 cellar: :any,                 big_sur:        "b0e8bffee8f402f4bc5fe56906607fec414f610f2e72ba229d9f8e2d6611ed1d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "34b37dcacb982c2cf907b61c20a914ae2465f7b50870dceb8f4620ddad30a94b"
   end
 
   keg_only :versioned_formula
 
+  # https://nodejs.org/en/about/releases/
+  # disable! date: "2023-09-11", because: :unsupported
+
   depends_on "pkg-config" => :build
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => :build
   depends_on "brotli"
   depends_on "c-ares"
   depends_on "icu4c"
@@ -34,10 +37,6 @@ class NodeAT16 < Formula
   uses_from_macos "python", since: :catalina
   uses_from_macos "zlib"
 
-  on_linux do
-    depends_on "gcc"
-  end
-
   fails_with :clang do
     build 1099
     cause "Node requires Xcode CLT 11+"
@@ -46,8 +45,9 @@ class NodeAT16 < Formula
   fails_with gcc: "5"
 
   def install
+    python3 = "python3.11"
     # make sure subprocesses spawned by make are using our Python 3
-    ENV["PYTHON"] = which("python3")
+    ENV["PYTHON"] = which(python3)
 
     args = %W[
       --prefix=#{prefix}
@@ -70,7 +70,7 @@ class NodeAT16 < Formula
       --shared-cares-libpath=#{Formula["c-ares"].lib}
       --openssl-use-def-ca-store
     ]
-    system "python3", "configure.py", *args
+    system python3, "configure.py", *args
     system "make", "install"
   end
 

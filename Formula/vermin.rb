@@ -3,28 +3,30 @@ class Vermin < Formula
 
   desc "Concurrently detect the minimum Python versions needed to run code"
   homepage "https://github.com/netromdk/vermin"
-  url "https://github.com/netromdk/vermin/archive/v1.4.2.tar.gz"
-  sha256 "c9a69420b610bfb25d5a2abd7da6edf0ae4329481a857ef6c5d71f602ed5c63d"
+  url "https://github.com/netromdk/vermin/archive/v1.5.1.tar.gz"
+  sha256 "2d1c7601d054da9fa5c5eb6c817c714235f9d484b74011f7f86c98f0a25e93ea"
   license "MIT"
   head "https://github.com/netromdk/vermin.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "c0b072725c7837319e3a0136a4ee56610ff734d2e4b21cd113de011412bb9067"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "c0b072725c7837319e3a0136a4ee56610ff734d2e4b21cd113de011412bb9067"
-    sha256 cellar: :any_skip_relocation, monterey:       "b3010a816194fab5d82a519b82855a5a99e161355483c98361fc27b9bddd9f21"
-    sha256 cellar: :any_skip_relocation, big_sur:        "b3010a816194fab5d82a519b82855a5a99e161355483c98361fc27b9bddd9f21"
-    sha256 cellar: :any_skip_relocation, catalina:       "b3010a816194fab5d82a519b82855a5a99e161355483c98361fc27b9bddd9f21"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "42de1cb7e7aeca2c0e28a507212f4ed1984ad594ad5d118449151d3f50caa478"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "32a1245cb6854bc8fc762674d5df6db54f2e667c65f240f4f2a9377472f4b315"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "32a1245cb6854bc8fc762674d5df6db54f2e667c65f240f4f2a9377472f4b315"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "32a1245cb6854bc8fc762674d5df6db54f2e667c65f240f4f2a9377472f4b315"
+    sha256 cellar: :any_skip_relocation, ventura:        "18b4b98c45bc7cd0d574368764fd68f052ea7ff768ed14f39079ef11310a8d5a"
+    sha256 cellar: :any_skip_relocation, monterey:       "18b4b98c45bc7cd0d574368764fd68f052ea7ff768ed14f39079ef11310a8d5a"
+    sha256 cellar: :any_skip_relocation, big_sur:        "18b4b98c45bc7cd0d574368764fd68f052ea7ff768ed14f39079ef11310a8d5a"
+    sha256 cellar: :any_skip_relocation, catalina:       "18b4b98c45bc7cd0d574368764fd68f052ea7ff768ed14f39079ef11310a8d5a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "97edc1e04378aab27f23a0a0f51ddafd8d10b2d1a623516eccc678db5ba7a7ab"
   end
 
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   def install
     virtualenv_install_with_resources
   end
 
   test do
-    path = libexec/Language::Python.site_packages("python3.10")/"vermin"
+    path = libexec/Language::Python.site_packages("python3.11")/"vermin"
     assert_match "Minimum required versions: 2.7, 3.0", shell_output("#{bin}/vermin #{path}")
   end
 end

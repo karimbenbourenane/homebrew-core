@@ -1,26 +1,31 @@
 class Cppcheck < Formula
   desc "Static analysis of C and C++ code"
   homepage "https://sourceforge.net/projects/cppcheck/"
-  url "https://github.com/danmar/cppcheck/archive/2.9.tar.gz"
-  sha256 "56aee8b5bdf936ab7adc9ab43903ba2052f088695c80f047682024a1ed0ef3f3"
+  url "https://github.com/danmar/cppcheck/archive/2.10.2.tar.gz"
+  sha256 "915785d01fa6f5571e9d450102056466222b554525ce3ad67c61b75508a7a451"
   license "GPL-3.0-or-later"
   head "https://github.com/danmar/cppcheck.git", branch: "main"
 
   bottle do
-    sha256 arm64_monterey: "c234a9c49d1ae7ceb95d8181332f8287488d03d309f73be4ca5863f7729d4099"
-    sha256 arm64_big_sur:  "030e44bec7a1e6385a5f8c662708d05f5cc583a6319aadab89c9d23e4fbb7c11"
-    sha256 monterey:       "7546b0d85e6002e742660b17c771f003a1f422767a13bf964168b1d1051f9a33"
-    sha256 big_sur:        "cfc01dbc5f45f9f1c820a3f2b347fdd0c07add03a6928848c1607723ffd0a2fe"
-    sha256 catalina:       "ac86c2859cba86144bb4a522f64c05a711da0112fd311af4bdcdbf3acd0871d0"
-    sha256 x86_64_linux:   "d7d11096c896ffee7b6e2ffba4cea90b27fd6a70e7106e50fe1ef58d4e04effc"
+    sha256 arm64_ventura:  "890a93811103e0a793f24cd140587cc64647cae1dc9d0f0661b325eb53dcfe8c"
+    sha256 arm64_monterey: "01de6052670ab6aea95aa490adb137df0c57557546fa2ae9f255a9eab11e47ea"
+    sha256 arm64_big_sur:  "b662c0bbd8bde54d8a40e2750dd2bcaac26c92916c3c9abadcd8f7faa9b77db8"
+    sha256 ventura:        "cf6c3ec41463859b875907c097f8566acc49af2942a3fe17a78279d57e6490dd"
+    sha256 monterey:       "eb407e2a7c426795f9464c5c76bda0b4ff9f30b94ee695b8e4298bb58509f550"
+    sha256 big_sur:        "b69ae2c4a271d022a611089444cb1f7ac1cb62411cae0d0f2a6f72aba700fc2c"
+    sha256 x86_64_linux:   "a8ef05b44536938433bfcc9458b7abefc736357790227abff9dadb6c9513feef"
   end
 
   depends_on "cmake" => :build
-  depends_on "python@3.10" => [:build, :test]
+  depends_on "python@3.11" => [:build, :test]
   depends_on "pcre"
   depends_on "tinyxml2"
 
   uses_from_macos "libxml2"
+
+  def python3
+    which("python3.11")
+  end
 
   def install
     args = std_cmake_args + %W[
@@ -28,7 +33,7 @@ class Cppcheck < Formula
       -DUSE_MATCHCOMPILER=ON
       -DUSE_BUNDLED_TINYXML2=OFF
       -DENABLE_OSS_FUZZ=OFF
-      -DPYTHON_EXECUTABLE=#{Formula["python@3.10"].opt_bin}/python3
+      -DPYTHON_EXECUTABLE=#{python3}
     ]
     system "cmake", "-S", ".", "-B", "build", *args
     system "cmake", "--build", "build"
@@ -91,7 +96,7 @@ class Cppcheck < Formula
 
     sample_addon_file = testpath/"sampleaddon.py"
     sample_addon_file.write <<~EOS
-      #!/usr/bin/env #{Formula["python@3.10"].opt_bin}/python3
+      #!/usr/bin/env #{python3}
       """A simple test addon for #{name}, prints function names and token count"""
       import sys
       from importlib import machinery, util
@@ -116,7 +121,7 @@ class Cppcheck < Formula
     system "#{bin}/cppcheck", "--dump", test_cpp_file
     test_cpp_file_dump = "#{test_cpp_file}.dump"
     assert_predicate testpath/test_cpp_file_dump, :exist?
-    output = shell_output(Formula["python@3.10"].opt_bin/"python3 #{sample_addon_file} #{test_cpp_file_dump}")
+    output = shell_output("#{python3} #{sample_addon_file} #{test_cpp_file_dump}")
     assert_match "#{expect_function_names}\n#{expect_token_count}", output
   end
 end

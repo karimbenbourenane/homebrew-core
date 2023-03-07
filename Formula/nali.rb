@@ -1,18 +1,19 @@
 class Nali < Formula
   desc "Tool for querying IP geographic information and CDN provider"
   homepage "https://github.com/zu1k/nali"
-  url "https://github.com/zu1k/nali/archive/v0.5.3.tar.gz"
-  sha256 "e47c330bd66f6969b625571843451913f5667a25b2852e254ab028b3f3ed575b"
+  url "https://github.com/zu1k/nali/archive/refs/tags/v0.7.1.tar.gz"
+  sha256 "443bb5d938c2abafd74a0e1d932eb5966b0f6d2aae7a784e4899c152efb818a1"
   license "MIT"
   head "https://github.com/zu1k/nali.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "14f512b35424185762a13b4530c21670019f13cec57d010c627c779115f4d4dd"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "2b75b5a25571a4bad4cb7222ecdf7414cb656ecb1f8a147bc6c69e38fb40ee80"
-    sha256 cellar: :any_skip_relocation, monterey:       "5727378720de8ee209ddb413d9431c1eae775f7ea6abf7588fb9341b7d665269"
-    sha256 cellar: :any_skip_relocation, big_sur:        "b5b5912bbad0cd1f51dc017ced4905e422b8408846424fe9bf1dbf4b5c34be2e"
-    sha256 cellar: :any_skip_relocation, catalina:       "0f35d78a2eeac2ff6c2cf27644ce093ba0ad2777251174525f6a31c01b2e4f9f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "669b5c4bbfebbc8570ff49c5b6b611cb1d426d2ff9d80bcaa70846588f83d9e6"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "e4ae190e3e81513255adf174d6f916118ce86bea0d4022e280c5d93e110b8183"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "8d65055c352867a960b13d35d79e551ec8bd97154c615f7b68d245e771ab5aa3"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "caeed481c2cf84e4a791dddc197863d0348382211284aa81bed8d750b66badcf"
+    sha256 cellar: :any_skip_relocation, ventura:        "69e72992bda65827fd2e4576e5eac0024b8d1ecc0acb56829a707cb23228d1a8"
+    sha256 cellar: :any_skip_relocation, monterey:       "90e9db3f4407880232c09555836bb88760557303bd5c998605ed17011b4ab10a"
+    sha256 cellar: :any_skip_relocation, big_sur:        "400b8d5a4b00c6b275918a588c33094b0e699d56ab149bcfc9771e514741f725"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "eaa5207552ac35a6a1a2a7386f5fed9efc08eaa3089e3df569a16a53121bb78d"
   end
 
   depends_on "go" => :build

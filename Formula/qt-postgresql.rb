@@ -1,31 +1,28 @@
 class QtPostgresql < Formula
   desc "Qt SQL Database Driver"
   homepage "https://www.qt.io/"
-  url "https://download.qt.io/official_releases/qt/6.3/6.3.1/submodules/qtbase-everywhere-src-6.3.1.tar.xz"
-  sha256 "0a64421d9c2469c2c48490a032ab91d547017c9cc171f3f8070bc31888f24e03"
-  license all_of: ["GFDL-1.3-only", "GPL-2.0-only", "GPL-3.0-only", "LGPL-2.1-only", "LGPL-3.0-only"]
-  revision 1
+  url "https://download.qt.io/official_releases/qt/6.4/6.4.2/submodules/qtbase-everywhere-src-6.4.2.tar.xz"
+  sha256 "a88bc6cedbb34878a49a622baa79cace78cfbad4f95fdbd3656ddb21c705525d"
+  license any_of: ["GPL-2.0-only", "GPL-3.0-only", "LGPL-3.0-only"]
 
   livecheck do
     formula "qt"
   end
 
   bottle do
-    sha256 cellar: :any, arm64_monterey: "04287a1cb16a674c9201e5e2d566fb82f32154708a4442a697e130c13db708da"
-    sha256 cellar: :any, arm64_big_sur:  "25722b12d564c57701067aea781e14d1ddf3481e1749d7daaeb13a4784a7b42c"
-    sha256 cellar: :any, monterey:       "db1ccf0327f8fb3e259d8bffaa529c6143228130cf95e278921b902a35be5630"
-    sha256 cellar: :any, big_sur:        "eb0aec2a32e84eb4061c8f2af114ef0cb4296ad66a28d1026753bc13e992e093"
-    sha256 cellar: :any, catalina:       "30bc980bfa86ce6a5f15d4e4400a912d7a63eeedd41622b6f25635b0d5aa5e78"
+    sha256 cellar: :any,                 arm64_ventura:  "4f7adfadbbd008639b7f165be4d224a0ab12fdcb52877c268577b9e40c87bd47"
+    sha256 cellar: :any,                 arm64_monterey: "342fa58e05477919d5a85bd7261f4e05059f97049867decc17cc31a878117809"
+    sha256 cellar: :any,                 arm64_big_sur:  "31d5a603cab4a589ad824b292baf0c186a18f2ffbce4db7f5a8916a5d64e4aef"
+    sha256 cellar: :any,                 ventura:        "5a0272e2af095507a0cf3e18bfb58a50f8123a3a75cc9580379bc8652ccf6f18"
+    sha256 cellar: :any,                 monterey:       "c0c9da0bf33fac4b26130e7e2f60d4ba7c919460f38d96bf6828420a5871a3f7"
+    sha256 cellar: :any,                 big_sur:        "1d73a634cb50c079e607caa855c474e6b49dc10c529cb743468307a1ca4700b1"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "3312296993e06625c77b36b6f22f70eb8ae65252406558e3f1b2500039fd82d6"
   end
 
   depends_on "cmake" => [:build, :test]
 
   depends_on "libpq"
   depends_on "qt"
-
-  on_linux do
-    depends_on "gcc"
-  end
 
   fails_with gcc: "5"
 

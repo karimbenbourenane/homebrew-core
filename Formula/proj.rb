@@ -1,18 +1,19 @@
 class Proj < Formula
   desc "Cartographic Projections Library"
   homepage "https://proj.org/"
-  url "https://github.com/OSGeo/PROJ/releases/download/9.1.0/proj-9.1.0.tar.gz"
-  sha256 "81b2239b94cad0886222cde4f53cb49d34905aad2a1317244a0c30a553db2315"
+  url "https://github.com/OSGeo/PROJ/releases/download/9.2.0/proj-9.2.0.tar.gz"
+  sha256 "dea816f5aa732ae6b2ee3977b9bdb28b1d848cf56a1aad8faf6708b89f0ed50e"
   license "MIT"
   head "https://github.com/OSGeo/proj.git", branch: "master"
 
   bottle do
-    sha256 arm64_monterey: "c2fc067271d23d5251a8448f9980e58abdcc901469d869a84800ec9047c9ff3e"
-    sha256 arm64_big_sur:  "f599eb7a880fa923ab464eedb1a57b84ef7b72355893a67d4fd008eb8869176a"
-    sha256 monterey:       "bac994a37c6330d1c446b6ff817cd6a5abb041fb239a5d45a7cf940aa0c56058"
-    sha256 big_sur:        "b8b0f822096fae82ec8ee81d31a78c5f58834b63f0e20da99223f8f051ebff01"
-    sha256 catalina:       "fefdbbbd06bb34124d4c5475c4a1acb426aa575fa0b6dc9140f6c2a5da41efff"
-    sha256 x86_64_linux:   "d261b008621c4a7362ecb4d62ae64dca94f38ab924be673091ed8fd754690acc"
+    sha256 arm64_ventura:  "b8bda6c6df144eab4b7f8240da2eab263368b736c79e2cac9412cb0021a17da5"
+    sha256 arm64_monterey: "10413961f58a8f1403c75eedc0866cae7038985df89ad8180b176e6a33e2cb1b"
+    sha256 arm64_big_sur:  "4e59238791d459604f4900722de97e138b4ca6b85f45a1f29c52f30a62261060"
+    sha256 ventura:        "679b24c831253da61787a251be04438e268916edbce18e91411845ee05b003f2"
+    sha256 monterey:       "cf4be54fadf8f7d807562cd3dcab8668104afa9c656fb77eaff2deec0b3dbffe"
+    sha256 big_sur:        "d6ba29403239a36dc10ea20737cff918e304cada1f893b7a3edc9819794c00f4"
+    sha256 x86_64_linux:   "448c7cacb51fa79ac7b3eed95b45a1541833b7963b9ae4ce45595e9d77e732aa"
   end
 
   depends_on "cmake" => :build
@@ -29,8 +30,8 @@ class Proj < Formula
 
   # The datum grid files are required to support datum shifting
   resource "proj-data" do
-    url "https://download.osgeo.org/proj/proj-data-1.11.tar.gz"
-    sha256 "a67b7ce4622c30be6bce3a43461e8d848da153c3b171beebbbea28f64d4ef363"
+    url "https://download.osgeo.org/proj/proj-data-1.13.tar.gz"
+    sha256 "f1e5e42ba15426d01d1970be727af77ac9b88c472215497a5a433d0a16dd105b"
   end
 
   def install

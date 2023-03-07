@@ -4,42 +4,38 @@ class ArcadeLearningEnvironment < Formula
   desc "Platform for AI research"
   homepage "https://github.com/mgbellemare/Arcade-Learning-Environment"
   url "https://github.com/mgbellemare/Arcade-Learning-Environment.git",
-      tag:      "v0.7.5",
-      revision: "db3728264f382402120913d76c4fa0dc320ef59f"
+      tag:      "v0.8.1",
+      revision: "ba84c1480008aa606ebc1efd7a04a7a7729796d4"
   license "GPL-2.0-only"
-  revision 1
   head "https://github.com/mgbellemare/Arcade-Learning-Environment.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "f44aa61c351794dacdd3156f3e9747d2d0c6af6ef6e24daad37d3088f11b778c"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "3fd32b01bfd47208e8c915d7a7f1d72a7508834a67a34a470319c9667f23ba75"
-    sha256 cellar: :any_skip_relocation, monterey:       "4da8b46caf13dd98f1ed7154dee2db9cbe9747dfde30e6e597fbe5455ccb93aa"
-    sha256 cellar: :any_skip_relocation, big_sur:        "d533c3f619efa49e2b9f4c45f8b7f7d16186dababb36ce2aad167741156c9b6a"
-    sha256 cellar: :any_skip_relocation, catalina:       "e2d34a7ce0ed9c85cc3e77df1aac73df83b1e68df5ad2b3ad3cce8eccce2d7d5"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "31838cbb634a1cc7803fccf6b454bd9437b72a9e92e72f9541fe81615174093a"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "287d60790b07e38192dfebfb30e7610d8b78713cf034b83758d665377d215e25"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "aaff14df45237f951184d547b292c4ac81c44b58365847d7b5ea4ffe2d6fbca7"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "2bdda57bca0c681578ea6ab983795e089c4f81cb09c5e80cad264f07923dd3c4"
+    sha256 cellar: :any_skip_relocation, ventura:        "db6349ef4ab6ae4cd2a0b47a68e8c0e41644677a1f3db6995a9693a337695ce7"
+    sha256 cellar: :any_skip_relocation, monterey:       "ba9280f972eb5ab2a305b29c5c0ba8f409e1236f2b570097ecdf5e44b7cf4ad4"
+    sha256 cellar: :any_skip_relocation, big_sur:        "b136f842d9edc8ace1844242642d4b797551b0d0bd2b3fde07bf5269153247ce"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "64f5f513b6373d1d7045d52e607c18bbb9eff0a8afe722322642f17b301877ad"
   end
 
   depends_on "cmake" => :build
   depends_on macos: :catalina # requires std::filesystem
   depends_on "numpy"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
   depends_on "sdl2"
 
   uses_from_macos "zlib"
 
-  on_linux do
-    depends_on "gcc" # for C++17
-  end
-
   fails_with gcc: "5"
 
   resource "importlib-resources" do
-    url "https://files.pythonhosted.org/packages/07/3c/4e27ef7d4cea5203ed4b52b7fe96ddd08559d9f147a2a4307e7d6d98c035/importlib_resources-5.7.1.tar.gz"
-    sha256 "b6062987dfc51f0fcb809187cffbd60f35df7acb4589091f154214af6d0d49d3"
+    url "https://files.pythonhosted.org/packages/4e/a2/3cab1de83f95dd15297c15bdc04d50902391d707247cada1f021bbfe2149/importlib_resources-5.12.0.tar.gz"
+    sha256 "4be82589bf5c1d7999aedf2a45159d10cb3ca4f19b2271f8792bc8e6da7b22f6"
   end
 
   def python3
-    "python3.10"
+    "python3.11"
   end
 
   def install
@@ -59,7 +55,8 @@ class ArcadeLearningEnvironment < Formula
 
     # `venv.pip_install_and_link buildpath` fails to install scripts, so manually run setup.py instead
     bin_before = (libexec/"bin").children.to_set
-    system libexec/"bin/python", *Language::Python.setup_install_args(libexec)
+    venv_python = libexec/"bin/python"
+    system venv_python, *Language::Python.setup_install_args(libexec, venv_python)
     bin.install_symlink ((libexec/"bin").children.to_set - bin_before).to_a
 
     site_packages = Language::Python.site_packages(python3)

@@ -1,23 +1,24 @@
 class Bullet < Formula
   desc "Physics SDK"
   homepage "https://bulletphysics.org/"
-  url "https://github.com/bulletphysics/bullet3/archive/3.24.tar.gz"
-  sha256 "6b1e987d6f8156fa8a6468652f4eaad17b3e11252c9870359e5bca693e35780b"
+  url "https://github.com/bulletphysics/bullet3/archive/3.25.tar.gz"
+  sha256 "c45afb6399e3f68036ddb641c6bf6f552bf332d5ab6be62f7e6c54eda05ceb77"
   license "Zlib"
   head "https://github.com/bulletphysics/bullet3.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "e62ed2decd835f7a0170558ff9823e1cd409af8718f171e909ba1d026b5b1857"
-    sha256 cellar: :any,                 arm64_big_sur:  "791078c5f49a76ab5ecfb1c0dec290ea4ba048c578d7fe49deee1ae2c108d9ee"
-    sha256 cellar: :any,                 monterey:       "4f025cbf5fb191f35fdfa59c663146265c4ad5789238e480b71f3422013aed72"
-    sha256 cellar: :any,                 big_sur:        "e53efaacaf22922dbd1280786f5d75b670a765ea105f9c6cc706aa0f0fdd3861"
-    sha256 cellar: :any,                 catalina:       "0d0863190a55bef157fb7955a4f2c9618ebae828f3661bf6c4d9ac7c5676d14a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ec9a230902ea3638a673b810a67a00f0aa5be9b577a4a8947d8bed8519fb33b5"
+    sha256 cellar: :any,                 arm64_ventura:  "5203e3c85c52a73d7966beb7a17964a9f28c3e2dd9dd13860f42fb3612b82ff6"
+    sha256 cellar: :any,                 arm64_monterey: "1428752eba3082f8c3e609b0f10a65231d8f8383c490e232e911e2a3bc13804f"
+    sha256 cellar: :any,                 arm64_big_sur:  "9451605fb3e7bbefb0c9b09233c79d5d291dd605c8cd78f664091ec72fdd9534"
+    sha256 cellar: :any,                 ventura:        "a91743f519ed3f92204459cc874444207bd276310364e44c177d5e606e9e756e"
+    sha256 cellar: :any,                 monterey:       "5e4cefb168bddf4ca6d8cf6d7775805b27fe5b5ede0a1fae995d5a3b8aa1c672"
+    sha256 cellar: :any,                 big_sur:        "1869670cc9f22ff4dcb44ae6490d486c5611e650657ec18529fb6f9dff6b799e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "17411a4bc7ea80de76276fe437acbd2b1bc58747d38891dfe48d74fe0798bc0d"
   end
 
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => :build
 
   def install
     # C++11 for nullptr usage in examples. Can remove when fixed upstream.

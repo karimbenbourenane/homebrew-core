@@ -1,21 +1,21 @@
 class Kubergrunt < Formula
   desc "Collection of commands to fill in the gaps between Terraform, Helm, and Kubectl"
   homepage "https://github.com/gruntwork-io/kubergrunt"
-  url "https://github.com/gruntwork-io/kubergrunt/archive/v0.9.2.tar.gz"
-  sha256 "7e7ec360c78ebfc672593d66766e387f95d5a7807e79d13298efb9e0128feb61"
+  url "https://github.com/gruntwork-io/kubergrunt/archive/v0.10.2.tar.gz"
+  sha256 "837442e40827831599429f2006f46cab3b48e2e4fad96ad887a2a2a6443bceb2"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "68effe374818b5c91daf501d1c32fd985d2fdec644e7d8bb9a3d1fb9c0144f86"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "7810095334d4947510d6df76df7d3c9410c78c5d66b218afe38b7c153f244abe"
-    sha256 cellar: :any_skip_relocation, monterey:       "adb10fb31cbb38e99a9808f94a82c4cd73e115dd9f5eb0ca72f9d077ef6dbf72"
-    sha256 cellar: :any_skip_relocation, big_sur:        "03c1017e5d3e1490e40a140167b5eed305728179d16fc10ae0bd69e09d5e1959"
-    sha256 cellar: :any_skip_relocation, catalina:       "d4f173ddb23848a1206eec66de95471177c7b4212780611c14d46d43ca8d6a86"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "782d0bfff784c40ec147bad45fd5bc4c912509d87ef9e6a9543353274e5dd85c"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "5881d734fcd146a5e38c7f9b46f93bf0b43f9b11e6d14ff6c28f3133f36d82a3"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "131537fab553c8445633ecf4f8e65ef0421eaaabb8371e7add86ae4ae099e9ec"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "3e0b5ede1490ce0e0a76ad53fdc7dc6af6328c2c6ede58e211952301a8a9767a"
+    sha256 cellar: :any_skip_relocation, ventura:        "db5086501e719769345ccfd79226a3579c28ab5258531c0466bee4cb51a730e5"
+    sha256 cellar: :any_skip_relocation, monterey:       "6925c607220df36e491eeaf3f5d666eaea6f1e41c05661a76b7b03fe6b8b4a19"
+    sha256 cellar: :any_skip_relocation, big_sur:        "37daf452e0833dd0238dec82b0e418c6ef9fc8531251e3e912252b737a4b6843"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "2ba45cba8901ba83eef1bff7d00a13500d889e2900ed876a6197b6b50970d61b"
   end
 
-  # Bump to 1.18 on the next release, if possible.
-  depends_on "go@1.17" => :build
+  depends_on "go" => :build
 
   def install
     system "go", "build", *std_go_args(ldflags: "-s -w -X main.VERSION=v#{version}"), "./cmd"

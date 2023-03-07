@@ -12,18 +12,26 @@ class Hatari < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "6ccf45a0e90172a9dbbb1a6b09e079dad598c1671fe8224ff9e6320d397455b0"
-    sha256 cellar: :any,                 arm64_big_sur:  "a55c6f1ea1139372de6b1f1b2214188b4fb30585a9deb14b3cc66920e2c78933"
-    sha256 cellar: :any,                 monterey:       "616d67a6b4d33a440d721903d7e7528782befcfd685727ff221b8039953798b5"
-    sha256 cellar: :any,                 big_sur:        "3204a6a4c8d2a852beaa269ab21d527b4b05668c80d373a1738d27f46bd49161"
-    sha256 cellar: :any,                 catalina:       "5f68491c5dcd1a45e398cdf3124819d16d9adb4503c576c3085aecbea1ee4748"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ebf8ef00b8149b1e0e778d5fc7200f5258494a907ff4bcdf546370891a16aa27"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_ventura:  "e07bbcf4adbb8d5d79cf789d689d4fedc1ddebe9863ed8339825e3e904565177"
+    sha256 cellar: :any,                 arm64_monterey: "667e12e353a24d45995f336f687a23b44d6bfc6deca23f84e966e32e1e978571"
+    sha256 cellar: :any,                 arm64_big_sur:  "b193a4d9e107c34a4a07a1aeef77786953e8d328ee085ca242342a6d107312fe"
+    sha256 cellar: :any,                 ventura:        "4e343b2fc064affbd0d39b6f4d7460d71d9b18eaedf3c9b76b7ff6a0e7547bc0"
+    sha256 cellar: :any,                 monterey:       "a3257660008936e85dbcc3227ddeb5014c39aa04e0a08e5f1ef5214abfd4c0e6"
+    sha256 cellar: :any,                 big_sur:        "44257d9e4a6cf65ce62aec936a36dbcabee429d66341376f0749454e14c7d247"
+    sha256 cellar: :any,                 catalina:       "95d8de415e6c641dc64dd92636b4aee0ff8c0d3a0b7fc60cab57406868b9fb7f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9f2c1ce5731913973b4d8caab05d82c893a85260ee47d95cea565526a4404c1d"
   end
 
   depends_on "cmake" => :build
   depends_on "libpng"
-  depends_on "python@3.10"
   depends_on "sdl2"
+
+  uses_from_macos "zlib"
+
+  on_linux do
+    depends_on "readline"
+  end
 
   # Download EmuTOS ROM image
   resource "emutos" do
@@ -34,21 +42,17 @@ class Hatari < Formula
   def install
     # Set .app bundle destination
     inreplace "src/CMakeLists.txt", "/Applications", prefix
-    system "cmake", "-S", ".", "-B", "build", *std_cmake_args,
-      "-DPYTHON_EXECUTABLE=#{Formula["python@3.10"].opt_bin}/python3"
+    system "cmake", "-S", ".", "-B", "build", *std_cmake_args
     system "cmake", "--build", "build"
     if OS.mac?
       prefix.install "build/src/Hatari.app"
-      bin.write_exec_script "#{prefix}/Hatari.app/Contents/MacOS/hatari"
+      bin.write_exec_script prefix/"Hatari.app/Contents/MacOS/hatari"
     else
       system "cmake", "--install", "build"
     end
     resource("emutos").stage do
-      if OS.mac?
-        (prefix/"Hatari.app/Contents/Resources").install "etos1024k.img" => "tos.img"
-      else
-        pkgshare.install "etos1024k.img" => "tos.img"
-      end
+      datadir = OS.mac? ? prefix/"Hatari.app/Contents/Resources" : pkgshare
+      datadir.install "etos1024k.img" => "tos.img"
     end
   end
 

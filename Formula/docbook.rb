@@ -12,8 +12,10 @@ class Docbook < Formula
   end
 
   bottle do
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "dcab543bb0e0ae56e0aa106b61f77a111d52aa002c0418aae93f9fe6ac3cb332"
     sha256 cellar: :any_skip_relocation, arm64_monterey: "dcab543bb0e0ae56e0aa106b61f77a111d52aa002c0418aae93f9fe6ac3cb332"
     sha256 cellar: :any_skip_relocation, arm64_big_sur:  "53a9dc79db8b2d06dc75009d5d09fc797ddcd5eb4ca040d606efd35ae4fa3829"
+    sha256 cellar: :any_skip_relocation, ventura:        "dcab543bb0e0ae56e0aa106b61f77a111d52aa002c0418aae93f9fe6ac3cb332"
     sha256 cellar: :any_skip_relocation, monterey:       "dcab543bb0e0ae56e0aa106b61f77a111d52aa002c0418aae93f9fe6ac3cb332"
     sha256 cellar: :any_skip_relocation, big_sur:        "2c4e8398b5548cef2830169aadaf6221ac9ee7e6733547642ccee1ea81e07e99"
     sha256 cellar: :any_skip_relocation, catalina:       "8152e5356c47a7b8282f3ed84ee3f29565e8ce620bddeaeaf23dfd1f5ef111a3"
@@ -84,16 +86,19 @@ class Docbook < Formula
     etc_catalog = etc/"xml/catalog"
     ENV["XML_CATALOG_FILES"] = etc_catalog
 
+    # We use `/usr/bin/xmlcatalog` on macOS, but libxml2's `xmlcatalog` on Linux.
+    xmlcatalog = DevelopmentTools.locate("xmlcatalog")
+
     # only create catalog file if it doesn't exist already to avoid content added
     # by other formulae to be removed
-    system "xmlcatalog", "--noout", "--create", etc_catalog unless File.file?(etc_catalog)
+    system xmlcatalog, "--noout", "--create", etc_catalog unless etc_catalog.file?
 
     %w[4.2 4.1.2 4.3 4.4 4.5 5.0 5.1].each do |version|
       catalog = opt_prefix/"docbook/xml/#{version}/catalog.xml"
 
-      system "xmlcatalog", "--noout", "--del",
+      system xmlcatalog, "--noout", "--del",
              "file://#{catalog}", etc_catalog
-      system "xmlcatalog", "--noout", "--add", "nextCatalog",
+      system xmlcatalog, "--noout", "--add", "nextCatalog",
              "", "file://#{catalog}", etc_catalog
     end
   end

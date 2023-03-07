@@ -1,42 +1,49 @@
 class Libproxy < Formula
   desc "Library that provides automatic proxy configuration management"
   homepage "https://libproxy.github.io/libproxy/"
-  url "https://github.com/libproxy/libproxy/archive/0.4.17.tar.gz"
-  sha256 "88c624711412665515e2800a7e564aabb5b3ee781b9820eca9168035b0de60a9"
+  url "https://github.com/libproxy/libproxy/archive/refs/tags/0.4.18.tar.gz"
+  sha256 "0b4a9218d88f6cf9fa25996a3f38329a11f688a9d026141d9d0e966d8fa63837"
   license "LGPL-2.1-or-later"
-  revision 1
   head "https://github.com/libproxy/libproxy.git", branch: "master"
 
   bottle do
-    sha256 arm64_monterey: "ea29465d14b64ce0efdd879f98ecfad0731ba1bafff27aae5e257d78f4ddc84f"
-    sha256 arm64_big_sur:  "535133b549c369ced715e3e017d0ddeec32376a4b29469d2b18cef030b50fbe0"
-    sha256 monterey:       "22ef963f09431f28e2a50eb716cbff03a5369992640302fe4da3219674fbaab2"
-    sha256 big_sur:        "b2d8852168ed2484cadb96d11dc3e69126822dcd544ec7e5c66d0694287ad451"
-    sha256 catalina:       "c4811050c47e7178cb3ae6a5e675925d0448a39883a4a76b9d0f2d63e6ea1d53"
-    sha256 mojave:         "9e6c0ba9fb2215eb447b9613bdc62c18fc95fb0f3e681c44c794671189a20b56"
-    sha256 x86_64_linux:   "68c92b8f108d46bd729293dcf26294c030c71dcef6f9ab29c3d280017bf8e149"
+    sha256 arm64_ventura:  "6246d732f961d77005bd78e3e26dcb17ca6e30db717ff15153e318567e2d50d2"
+    sha256 arm64_monterey: "443454cdeda3546c1d04c36f51d1c71312806abd99ac968dfa22ee6dd3ac6119"
+    sha256 arm64_big_sur:  "00438a3c641cdb2326ad06e45f446ec78bd247740415d5f969cd14875c6f6902"
+    sha256 ventura:        "1dfa2bf3dec13e70f0a4af42f131cddea3016de6e0a3c12bcf9e595f2e13c911"
+    sha256 monterey:       "b1de5bf78ffc1fc870d383cd713c438e181d037506d11c95c9dafffe302e05e1"
+    sha256 big_sur:        "b22d402e7747a6a4f725c0cef38256d29292544b6117be5f761627182be3b585"
+    sha256 x86_64_linux:   "9e610ba5049b018c45b4c2a8eeae8f01391227dc30189d54ecd476496d6fdbba"
   end
 
   depends_on "cmake" => :build
-  depends_on "python@3.10"
+  depends_on "pkg-config" => :build
+  depends_on "python@3.11"
 
   on_linux do
     depends_on "dbus"
     depends_on "glib"
   end
 
+  # patch for `Unknown CMake command "px_check_modules"`
+  # remove in next release
+  patch do
+    url "https://github.com/libproxy/libproxy/commit/8fec01ed4b95afc71bf7710bf5b736a5de03b343.patch?full_index=1"
+    sha256 "af7f90c68f3807fefb3d8502a5180f9d71b749f21c956fc5be8a1c049ce88d05"
+  end
+
   def install
-    args = std_cmake_args + %W[
-      ..
-      -DPYTHON3_SITEPKG_DIR=#{prefix/Language::Python.site_packages("python3")}
+    ENV.cxx11
+
+    args = %W[
+      -DPYTHON3_SITEPKG_DIR=#{prefix/Language::Python.site_packages("python3.11")}
       -DWITH_PERL=OFF
       -DWITH_PYTHON2=OFF
     ]
 
-    mkdir "build" do
-      system "cmake", *args
-      system "make", "install"
-    end
+    system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
   end
 
   test do

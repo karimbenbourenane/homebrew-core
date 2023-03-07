@@ -1,18 +1,47 @@
 class Singular < Formula
   desc "Computer algebra system for polynomial computations"
   homepage "https://www.singular.uni-kl.de/"
-  url "https://www.singular.uni-kl.de/ftp/pub/Math/Singular/SOURCES/4-3-1/singular-4.3.1p1.tar.gz"
-  version "4.3.1p1"
-  sha256 "1f1cba3ffd612b26d056859ca7f4cbeef5ce95cabd5782b035acd1c58ff01d30"
+  url "https://www.singular.uni-kl.de/ftp/pub/Math/Singular/SOURCES/4-3-2/singular-4.3.2.tar.gz"
+  sha256 "3fd565d1bd4265fa8ba7cc189137a36d9daf9939b5bb411466c2028d9191f6db"
   license "GPL-2.0-or-later"
 
+  livecheck do
+    url "https://www.singular.uni-kl.de/ftp/pub/Math/Singular/SOURCES/"
+    regex(%r{href=["']?v?(\d+(?:[.-]\d+)+)/?["' >]}i)
+    strategy :page_match do |page, regex|
+      # Match versions from directories
+      versions = page.scan(regex)
+                     .flatten
+                     .uniq
+                     .map { |v| Version.new(v.tr("-", ".")) }
+                     .reject { |v| v.patch >= 90 }
+                     .sort
+      next versions if versions.blank?
+
+      # Assume the last-sorted version is newest
+      newest_version = versions.last
+
+      # Fetch the page for the newest version directory
+      dir_page = Homebrew::Livecheck::Strategy.page_content(
+        URI.join(@url, "#{newest_version.to_s.tr(".", "-")}/"),
+      )
+      next versions if dir_page[:content].blank?
+
+      # Identify versions from files in the version directory
+      dir_versions = dir_page[:content].scan(/href=.*?singular[._-]v?(\d+(?:\.\d+)+(?:p\d+)?)\.t/i).flatten
+
+      dir_versions || versions
+    end
+  end
+
   bottle do
-    sha256 arm64_monterey: "318d66e582a30a56b3174e2d951440ab97fa9258b3f45eb8a4ca2a15a6ae7a1e"
-    sha256 arm64_big_sur:  "f23f081cc23770bf1e6552201c34d77962e59129fa8ac16ae1eea150fe5a8439"
-    sha256 monterey:       "e2fe2989761b0d791ebedd0907db6dd53ce44056a1cda170bc83661410ef3563"
-    sha256 big_sur:        "00997a197b4579071d8d9e6e11e70a28668ae760b7de5629ef671b7ad4a8e6bf"
-    sha256 catalina:       "fc24449c1479823c71e7bbcf8debb4fbd69d32e8e9fef220fb6676ae0643f4b6"
-    sha256 x86_64_linux:   "49b4654b7bb7aa4a26d5c7e81a5e9ec919664566de4d7c777e0a6f89128e5d35"
+    sha256 arm64_ventura:  "a09bbe11e96ea0ede75ccce6e27ee298eb93084e3bb65e4775cfca76e03a923c"
+    sha256 arm64_monterey: "a4979fab796c8db15f9a9387560c3ced01ed6fa892796fb1795bf07fcfb2ea88"
+    sha256 arm64_big_sur:  "adb7c53e6492ae1fb270dbb63c09df102d295ffd651a989bf1ec763fdbbd896f"
+    sha256 ventura:        "105352f402f24a014a5ff9817154b803cc2f222e02e60277fa2f182ce5bd4a38"
+    sha256 monterey:       "b3ac765755f9181cf2e75f40905d17c8229de0834d16447074ccf278c30a60c5"
+    sha256 big_sur:        "eb5ab8271b4810247dd58d44951b6611610f7d805973541a72869298e9a8a99f"
+    sha256 x86_64_linux:   "7d8a9346480d55af00fb1bf2290cefc06643b5d11e187970dd5ecc59ab604966"
   end
 
   head do
@@ -26,7 +55,7 @@ class Singular < Formula
   depends_on "gmp"
   depends_on "mpfr"
   depends_on "ntl"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   on_macos do
     depends_on "autoconf" => :build
@@ -41,7 +70,7 @@ class Singular < Formula
                           "--disable-dependency-tracking",
                           "--disable-silent-rules",
                           "--prefix=#{prefix}",
-                          "--with-python=#{Formula["python@3.10"].opt_bin}/python3",
+                          "--with-python=#{which("python3.11")}",
                           "CXXFLAGS=-std=c++11"
     system "make", "install"
   end

@@ -1,12 +1,12 @@
 class Onedrive < Formula
   desc "Folder synchronization with OneDrive"
   homepage "https://github.com/abraunegg/onedrive"
-  url "https://github.com/abraunegg/onedrive/archive/v2.4.20.tar.gz"
-  sha256 "116ebb0e4451cbeba4249635d8f74973c18874eae907c886dc5ed144f1f8a615"
+  url "https://github.com/abraunegg/onedrive/archive/v2.4.23.tar.gz"
+  sha256 "fb57b9683302a53958671d1c74eb9b8f89ac229055647adce093e8a49ad846e0"
   license "GPL-3.0-only"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "9ffa990cb3eafb483940a6610873e2129621dc85d33a4d098a68d4922d045d42"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "00ba2f4255b93fa6d90eab0969aca595385cfad98fad1e125484c1d301bf6814"
   end
 
   depends_on "ldc" => :build
@@ -34,7 +34,7 @@ class Onedrive < Formula
 
   test do
     assert_match <<~EOS, pipe_output("#{bin}/onedrive 2>&1", "")
-      Enter the response uri: Invalid uri
+      Enter the response uri: Invalid response uri entered
       Could not initialize the OneDrive API
     EOS
   end

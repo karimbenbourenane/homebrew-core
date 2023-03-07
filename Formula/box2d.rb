@@ -7,32 +7,37 @@ class Box2d < Formula
   head "https://github.com/erincatto/Box2D.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, monterey:     "ce38e11785a57c7cd416fd4cb6a9cd2567363e1f1bc4938d010b13e0b2eefc34"
-    sha256 cellar: :any_skip_relocation, big_sur:      "bec33552a3bf184fd75f6adbb193b15595c7729dd7f457c833b7826c6253c28d"
-    sha256 cellar: :any_skip_relocation, catalina:     "5c6508a2d661409273a28ac5f0495d7d7c506b5d1bc7ceeb9ab90298db225178"
-    sha256 cellar: :any_skip_relocation, mojave:       "51709abf7cf22ce487b7fb543c2760add5f6935459b00163567448f47ab6d86c"
-    sha256 cellar: :any_skip_relocation, high_sierra:  "0312b876dd91ae896fc127fa6afe21736b7dd1d55569389a6cfc20af90f83cd6"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "a36a72d0a0d92cc4c981ad6950fcaa106ad23c273e573dd82bdc971379e0ea70"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "2971d7cf8b4c8783fc26b4df34b62c18154ee2ab30a23fa60b2161b6f86952d1"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "32f5c7935fad82f881fb7871a1e3460918ff77d7af747f4a2fce8c3f0e3e3e4c"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "6474e67e155044f94bd27f589a4ce3789723b87916c05a83fea19b9f5afc7a41"
+    sha256 cellar: :any_skip_relocation, ventura:        "85eabab92c7555fd7e1ad23e8fd78b7b01ba3bf5819f8dc743bf6a9ccbffeedd"
+    sha256 cellar: :any_skip_relocation, monterey:       "501b55a5647ee9ce43457ca9df4661069fb915de9f146a77bbac0b856d56f417"
+    sha256 cellar: :any_skip_relocation, big_sur:        "752a3bae8af1fbcd90d9d27a42ba5a5f32006ae6673bbeeb0479de7bf53d833c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ae074d4d7908a32096b8dc093636e0323e9bd94f36d9ee7290a60dd5199fa234"
   end
 
   depends_on "cmake" => :build
+  depends_on "doctest" => :test
 
   def install
-    args = std_cmake_args + %w[
+    args = %w[
       -DBOX2D_BUILD_UNIT_TESTS=OFF
       -DBOX2D_BUILD_TESTBED=OFF
       -DBOX2D_BUILD_EXAMPLES=OFF
     ]
 
-    system "cmake", ".", *args
+    system "cmake", ".", *args, *std_cmake_args
     system "cmake", "--build", "."
     system "cmake", "--install", "."
-    pkgshare.install "unit-test/hello_world.cpp", "unit-test/doctest.h"
+    pkgshare.install "unit-test/hello_world.cpp"
   end
 
   test do
-    system ENV.cxx, pkgshare/"hello_world.cpp", "-L#{lib}", "-lbox2d",
-      "-std=c++11", "-o", testpath/"test"
+    system ENV.cxx, pkgshare/"hello_world.cpp",
+                    "-I#{Formula["doctest"].opt_include}/doctest",
+                    "-L#{lib}", "-lbox2d",
+                    "-std=c++11", "-o", testpath/"test"
     assert_match "[doctest] Status: SUCCESS!", shell_output("./test")
   end
 end

@@ -1,26 +1,23 @@
 class Codequery < Formula
   desc "Code-understanding, code-browsing or code-search tool"
   homepage "https://github.com/ruben2020/codequery"
-  url "https://github.com/ruben2020/codequery/archive/refs/tags/v0.25.0.tar.gz"
-  sha256 "200bed981e89fe02770a7a76516714d6d6345021d6ae89e68341b6af39728407"
+  url "https://github.com/ruben2020/codequery/archive/refs/tags/v0.26.0.tar.gz"
+  sha256 "5972a5778159835e37f5c9114a90f1be4756f27487d9074d2fb3464625a0ced2"
   license "MPL-2.0"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "24a4898739d208f8dfda2bf7f02eed21dfe82bc4c8a938cef94c314c5658b97f"
-    sha256 cellar: :any,                 arm64_big_sur:  "3f80c4407314da08b4a576c3434c7e4ad29479752d6b45bf9572d3bd4010657d"
-    sha256 cellar: :any,                 monterey:       "0c9479b9d18664bedef6d9d9ac4582b536616b3fa87c64a6e0c75826a94fe50c"
-    sha256 cellar: :any,                 big_sur:        "1b660bfc8bc5dbe29ee1572d4f23ff97e8d0ce0f7010bdb9ee709ac87a323bde"
-    sha256 cellar: :any,                 catalina:       "78858d75d1980b20a592a04321fe552a3358155ed9f21b4b1a6ca15f10a9a50a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d9838cc9f35121d8391d6ce91b60119d61c412bfe55f48e520014ca5888fe769"
+    sha256 cellar: :any,                 arm64_ventura:  "bb8601cb33c79b6fa462b4279138e60901a5bf4828441e6eb2c3ef0b7969bfcf"
+    sha256 cellar: :any,                 arm64_monterey: "6dfb4a9564a48f8e371194fee1cc66850804dbe05304fac055f1238c4c16af32"
+    sha256 cellar: :any,                 arm64_big_sur:  "8e61eb2e4bda1efe140f20516772ed6e192b6f932df86c3401c9de5e2f6dc39b"
+    sha256 cellar: :any,                 ventura:        "b97d3a2af1846992e6594d2ad553c7c72ff218fed7fcc4c6a9457a36fb7538b5"
+    sha256 cellar: :any,                 monterey:       "8f07b88f92a60578753b89cd5202a41e908faf36b4ac73d5ff73fa2aab628589"
+    sha256 cellar: :any,                 big_sur:        "f2ddf6373596c5c563c4d0d120bb45b50c0a4f94865be50410f3a57b3b303338"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c42a8a16ffec8983454e4f8c5485efb10f936781a1afdc683ed899c8deab558b"
   end
 
   depends_on "cmake" => :build
   depends_on "ninja" => :build
   depends_on "qt@5"
-
-  on_linux do
-    depends_on "gcc"
-  end
 
   fails_with gcc: "5"
 

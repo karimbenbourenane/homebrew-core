@@ -1,8 +1,8 @@
 class Uuu < Formula
   desc "Universal Update Utility, mfgtools 3.0. NXP I.MX Chip image deploy tools"
   homepage "https://github.com/NXPmicro/mfgtools"
-  url "https://github.com/NXPmicro/mfgtools/releases/download/uuu_1.4.193/uuu_source-1.4.193.tar.gz"
-  sha256 "a9b8b74e32e6718d591c66951b8b52276df7862db80ee943e046947f7313e57f"
+  url "https://github.com/NXPmicro/mfgtools/releases/download/uuu_1.5.21/uuu_source-1.5.21.tar.gz"
+  sha256 "e89d3665af499ab71360d948176cf64619b082f8272a994d1fbfc000e67c0f14"
   license "BSD-3-Clause"
   head "https://github.com/NXPmicro/mfgtools.git", branch: "master"
 
@@ -13,12 +13,13 @@ class Uuu < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "a44aa408d7a07a11cbeb20c642dd276b51eb4574858d1a7479df0e180126e33b"
-    sha256 arm64_big_sur:  "bdf2b936c008aaf09c4a2f819a3c030beb51097aef6f7b29963d03ef885b1de8"
-    sha256 monterey:       "f5b631847fc6d9339e73639d94f44f54ffd7e8f53c766372efdcdc5aa7ba3028"
-    sha256 big_sur:        "2b5b9e290dea1d298e8fda32f7c9cb31866a58603ebd372073e38a8434afe863"
-    sha256 catalina:       "c5bf3f74dd5c610b5a340bced3b71fd18af0b6972cb7491e431b793224d46fac"
-    sha256 x86_64_linux:   "27bf7f8fcb8200129bc7a01b6450e548bac6449ddc4660a1dc5929740f5ebf73"
+    sha256 arm64_ventura:  "e13a2b32c07ba4a37b105ba11005ef441af6ab12c9f14c35f639eba205a282dd"
+    sha256 arm64_monterey: "764c2c55a738f4c735f08796bd806769b5c04f22d63d4fbc954436ca8f528aa4"
+    sha256 arm64_big_sur:  "0e139f269042a96f3dec0fdcba77901288aa0076156f29c409ad82d1ad0a4dd1"
+    sha256 ventura:        "8aa2876a1425782f0f2f0416f608d50e40ee0dd7364a1de00e1e0a713af930dd"
+    sha256 monterey:       "3cb5096a3e79451f8295bf2d48f294073673e3559becbdd923858f4da7c10337"
+    sha256 big_sur:        "e9ce4cccfce96d7e18d358fbbf4acfa346d95ff79f28a78f6a18f835ffef196c"
+    sha256 x86_64_linux:   "7ab6929cdcdf23fd790d5acd4637917e2498b2c776af76fcaec6ec2903d87444"
   end
 
   depends_on "cmake" => :build
@@ -26,7 +27,7 @@ class Uuu < Formula
 
   depends_on "libusb"
   depends_on "libzip"
-  depends_on "openssl@1.1"
+  depends_on "openssl@3"
 
   def install
     system "cmake", "-S", ".", "-B", "build", *std_cmake_args

@@ -1,23 +1,37 @@
 class OpenjdkAT8 < Formula
   desc "Development kit for the Java programming language"
   homepage "https://openjdk.java.net/"
-  url "https://openjdk-sources.osci.io/openjdk8/openjdk8u345-ga.tar.xz"
-  version "1.8.0+345"
-  sha256 "d3e8b554e519c53454a6c6ef1680b18d3f77ea90f3cd2c853598cb3970004ee2"
+  url "https://github.com/openjdk/jdk8u/archive/refs/tags/jdk8u362-ga.tar.gz"
+  version "1.8.0+362"
+  sha256 "dd3606bd274d25c96f2dc2e63b7cab36a2b03d82b0ce4f312cfb53056f758d9f"
   license "GPL-2.0-only"
 
+  livecheck do
+    url :stable
+    regex(/^jdk(8u\d+)-ga$/i)
+    strategy :git do |tags, regex|
+      tags.map { |tag| tag[regex, 1]&.gsub("8u", "1.8.0+") }.compact
+    end
+  end
+
   bottle do
-    sha256 cellar: :any,                 monterey:     "31428d384001e26d2a3a981cb1f2df4cb19324aa0a27db2fe00481f5eb4e59cd"
-    sha256 cellar: :any,                 big_sur:      "a8fedd63b9a5b1f2a4a0c307fc2421e4e7114600fa1798ffd57bb0b607071e30"
-    sha256 cellar: :any,                 catalina:     "bfb061ab78dcf5841c573376706e827346d5838e9afda6f5bca2e2c9649f7c94"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "424adf253049f1628bf80cc536b4027f455300626d31b214ec8f6bcf65dc855d"
+    sha256 cellar: :any,                 ventura:      "7b7a6aaf42fd84b6d0a044ad04d091106b38e535de6f62ebd1c82aa41f113a28"
+    sha256 cellar: :any,                 monterey:     "c9783575b8fc507d5aaaf5b67ba87766f75a888de0e1b40b1e6a5ddabde79c4f"
+    sha256 cellar: :any,                 big_sur:      "d946fddedabf49b3fa36398c9f83b2a163b25f8d9e5c9e5b6941f55b24e285bb"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "ee61938b32c3738c41505d610d5ee32536ffc09ede48cd72711aded055af3168"
   end
 
   keg_only :versioned_formula
 
   depends_on "autoconf" => :build
   depends_on "pkg-config" => :build
+  depends_on arch: :x86_64
   depends_on "freetype"
+  depends_on "giflib"
+
+  uses_from_macos "cups"
+  uses_from_macos "unzip"
+  uses_from_macos "zip"
 
   on_monterey :or_newer do
     depends_on "gawk" => :build
@@ -25,7 +39,6 @@ class OpenjdkAT8 < Formula
 
   on_linux do
     depends_on "alsa-lib"
-    depends_on "cups"
     depends_on "fontconfig"
     depends_on "libx11"
     depends_on "libxext"
@@ -33,13 +46,10 @@ class OpenjdkAT8 < Formula
     depends_on "libxrender"
     depends_on "libxt"
     depends_on "libxtst"
-    depends_on "unzip"
-    depends_on "zip"
-
-    ignore_missing_libraries %w[libjvm.so libawt_xawt.so]
   end
 
-  # Oracle doesn't serve JDK 7 downloads anymore, so use Zulu JDK 7 for bootstrapping.
+  # Oracle doesn't serve JDK 7 downloads anymore, so we use Zulu JDK 7 for bootstrapping.
+  # https://www.azul.com/downloads/?version=java-7-lts&package=jdk
   resource "boot-jdk" do
     on_macos do
       url "https://cdn.azul.com/zulu/bin/zulu7.56.0.11-ca-jdk7.0.352-macosx_x64.tar.gz"
@@ -53,10 +63,9 @@ class OpenjdkAT8 < Formula
 
   def install
     _, _, update = version.to_s.rpartition("+")
-    java_options = ENV.delete("_JAVA_OPTIONS")
-
     boot_jdk = buildpath/"boot-jdk"
-    resource("boot-jdk").stage(boot_jdk)
+    resource("boot-jdk").stage boot_jdk
+    java_options = ENV.delete("_JAVA_OPTIONS")
 
     # Work around clashing -I/usr/include and -isystem headers,
     # as superenv already handles this detail for us.
@@ -78,10 +87,8 @@ class OpenjdkAT8 < Formula
       # Fix Xcode 13 detection.
       inreplace "common/autoconf/toolchain.m4",
                 "if test \"${XC_VERSION_PARTS[[0]]}\" != \"6\"",
-                "if test \"${XC_VERSION_PARTS[[0]]}\" != \"13\""
-    end
-
-    if OS.linux?
+                "if test \"${XC_VERSION_PARTS[[0]]}\" != \"#{MacOS::Xcode.version.major}\""
+    else
       # Fix linker errors on brewed GCC
       inreplace "common/autoconf/flags.m4", "-Xlinker -O1", ""
       inreplace "hotspot/make/linux/makefiles/gcc.make", "-Xlinker -O1", ""
@@ -100,32 +107,43 @@ class OpenjdkAT8 < Formula
       --with-vendor-name=#{tap.user}
       --with-vendor-url=#{tap.issues_url}
       --with-vendor-vm-bug-url=#{tap.issues_url}
+      --with-giflib=system
     ]
 
+    ldflags = ["-Wl,-rpath,#{loader_path.gsub("$", "\\$$$$")}/server"]
     if OS.mac?
-      args << "--with-toolchain-type=clang"
+      args += %w[
+        --with-toolchain-type=clang
+        --with-zlib=system
+      ]
 
       # Work around SDK issues with JavaVM framework.
       if MacOS.version <= :catalina
         sdk_path = MacOS::CLT.sdk_path(MacOS.version)
         ENV["SDKPATH"] = ENV["SDKROOT"] = sdk_path
         javavm_framework_path = sdk_path/"System/Library/Frameworks/JavaVM.framework/Frameworks"
-        args += %W[--with-extra-cflags=-F#{javavm_framework_path}
-                   --with-extra-cxxflags=-F#{javavm_framework_path}
-                   --with-extra-ldflags=-F#{javavm_framework_path}]
+        args += %W[
+          --with-extra-cflags=-F#{javavm_framework_path}
+          --with-extra-cxxflags=-F#{javavm_framework_path}
+        ]
+        ldflags << "-F#{javavm_framework_path}"
       end
     else
-      args += %W[--with-toolchain-type=gcc
-                 --x-includes=#{HOMEBREW_PREFIX}/include
-                 --x-libraries=#{HOMEBREW_PREFIX}/lib
-                 --with-cups=#{HOMEBREW_PREFIX}
-                 --with-fontconfig=#{HOMEBREW_PREFIX}]
+      args += %W[
+        --with-toolchain-type=gcc
+        --x-includes=#{HOMEBREW_PREFIX}/include
+        --x-libraries=#{HOMEBREW_PREFIX}/lib
+        --with-cups=#{HOMEBREW_PREFIX}
+        --with-fontconfig=#{HOMEBREW_PREFIX}
+        --with-stdc++lib=dynamic
+      ]
+      extra_rpath = rpath(source: libexec/"lib/amd64", target: libexec/"jre/lib/amd64")
+      ldflags << "-Wl,-rpath,#{extra_rpath.gsub("$", "\\$$$$")}"
     end
+    args << "--with-extra-ldflags=#{ldflags.join(" ")}"
 
-    chmod 0755, %w[configure common/autoconf/autogen.sh]
-
-    system "common/autoconf/autogen.sh"
-    system "./configure", *args
+    system "bash", "common/autoconf/autogen.sh"
+    system "bash", "configure", *args
 
     ENV["MAKEFLAGS"] = "JOBS=#{ENV.make_jobs}"
     system "make", "bootcycle-images", "CONF=release"

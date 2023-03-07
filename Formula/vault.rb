@@ -1,12 +1,9 @@
-# Please don't update this formula until the release is official via
-# mailing list or blog post. There's a history of GitHub tags moving around.
-# https://github.com/hashicorp/vault/issues/1051
 class Vault < Formula
   desc "Secures, stores, and tightly controls access to secrets"
   homepage "https://vaultproject.io/"
   url "https://github.com/hashicorp/vault.git",
-      tag:      "v1.11.3",
-      revision: "17250b25303c6418c283c95b1d5a9c9f16174fe8"
+      tag:      "v1.13.0",
+      revision: "a4cf0dc4437de35fce4860857b64569d092a9b5a"
   license "MPL-2.0"
   head "https://github.com/hashicorp/vault.git", branch: "main"
 
@@ -16,25 +13,26 @@ class Vault < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "e7ba293887a946efb82796307e32b68c755e9f46372405a3c09ce638368c89bd"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "ae1379cfe9e27825f237c253d6bae76d752685b46aab313aa7e20d987023b42b"
-    sha256 cellar: :any_skip_relocation, monterey:       "0d0b0519de19c34b2e38c6e8fe05d0723df0664b2e31019631ed3a98bed45fcd"
-    sha256 cellar: :any_skip_relocation, big_sur:        "8acab5c16fa3d555625963976f13ce57412af4bf71fae0e6184ef734b204ed19"
-    sha256 cellar: :any_skip_relocation, catalina:       "f9c51c292a85f52618453445dea925c9f86d835f9958e61d70645cf2293272d9"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8493da41d5a645a9b23e9f6f68c7d7b0b9fe9aeb00a29cb7f9c62d79daec68c2"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "5e2a661e9fb868ab767d7d27f86e8ff42e39e93d44b994f92970d208f7459623"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "6337f6e8569b48c355ef041835892cd3bf3cccf424fe126334b8dcab9bb41e73"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "d15325982de1b160d41167707aca87366ee0d46c08ee78f1e79cc929d83a304c"
+    sha256 cellar: :any_skip_relocation, ventura:        "559e4e520dff5044784a9702ad88114882b4b20e54e234872ecc1bc7ef33421c"
+    sha256 cellar: :any_skip_relocation, monterey:       "03bcf2dfcb60960643cefa2bcda303893f6ffa18473e1387de66789e204ac671"
+    sha256 cellar: :any_skip_relocation, big_sur:        "76864e7f2620eaa6e13aeacc278d16756cd9feadba4232f7cac1fec3a88e8af8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "2725d3a2a5928ff094d09742a446da13ad8d067bdf91206c056d6687ff470235"
   end
 
   depends_on "go" => :build
   depends_on "gox" => :build
-  depends_on "node" => :build
-  depends_on "python@3.10" => :build
+  depends_on "node@18" => :build
+  depends_on "python@3.11" => :build
   depends_on "yarn" => :build
 
   def install
     # Needs both `npm` and `python` in PATH
-    ENV.prepend_path "PATH", Formula["node"].opt_libexec/"bin"
-    ENV.prepend_path "PATH", Formula["python@3.10"].opt_libexec/"bin" if OS.mac?
+    ENV.prepend_path "PATH", Formula["node@18"].opt_libexec/"bin"
     ENV.prepend_path "PATH", "#{ENV["GOPATH"]}/bin"
+    ENV["PYTHON"] = "python3.10"
     system "make", "bootstrap", "static-dist", "dev-ui"
     bin.install "bin/vault"
   end

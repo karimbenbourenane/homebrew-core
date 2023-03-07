@@ -2,10 +2,9 @@ class Wownero < Formula
   desc "Official wallet and node software for the Wownero cryptocurrency"
   homepage "https://wownero.org"
   url "https://git.wownero.com/wownero/wownero.git",
-      tag:      "v0.10.1.0",
-      revision: "8ab87421d9321d0b61992c924cfa6e3918118ad0"
+      tag:      "v0.11",
+      revision: "6b28de1cdc020493dee2bf20b62c6d9227140ef2"
   license "BSD-3-Clause"
-  revision 3
 
   # The `strategy` code below can be removed if/when this software exceeds
   # version 10.0.0. Until then, it's used to omit a malformed tag that would
@@ -24,19 +23,22 @@ class Wownero < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "0646ba9aeaef3204b5e26d0879f7e98026e61e43bd17cafa41103b41a4ce15e2"
-    sha256 cellar: :any,                 arm64_big_sur:  "c1ad435035722aecd7a6fe0638f0c9b0422dc3012e264e0e2f08384cdb5a689c"
-    sha256 cellar: :any,                 monterey:       "482dffad2aa48520403a157ea6ec528efb5b6717f3575873f21377fd470fac60"
-    sha256 cellar: :any,                 big_sur:        "58e407effcf1443a4c57e4f2c940aaf9435680cbcc8514601d2899002aa31f8f"
-    sha256 cellar: :any,                 catalina:       "615bd23d5418a2e1619fa33eb17f40736771b83a22e60f378d28a09047a09267"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "bb8eb6d58f4bb2824323831665bcf16a247a5b7b7c3bf855a80267e572966fdb"
+    sha256 cellar: :any,                 arm64_ventura:  "e51edda9a4e99b86db62f75f34a13a63298d67eba666d5236b00d3d9a8e34a00"
+    sha256 cellar: :any,                 arm64_monterey: "99020211fdfc9418d549db6d01e04cea5d7c81c14ab91908acc3c27b9aefcb97"
+    sha256 cellar: :any,                 arm64_big_sur:  "7a87c7cccf3f20b832b9adbc2dc1c6954f799b5ddb21b6810c0b8b191cf4c8a8"
+    sha256 cellar: :any,                 ventura:        "cfbe64894310128c156a8c6238bcd5bf7672e510648fd3ce03132402cde34332"
+    sha256 cellar: :any,                 monterey:       "8870663fb1727385e2c3f44732a5f165e91bb986694510c017f22d6046ce7055"
+    sha256 cellar: :any,                 big_sur:        "0333fc125862694ef21877f86a719526b90b1e41ca1175f19d4a86af5644f338"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ea5fa75bd9971927f759140c85657a2f4c0ca26d27ea8e3678d545bb5191a351"
   end
 
   depends_on "cmake" => :build
+  depends_on "miniupnpc" => :build
   depends_on "pkg-config" => :build
   depends_on "boost"
   depends_on "hidapi"
   depends_on "libsodium"
+  depends_on "libusb"
   depends_on "openssl@1.1"
   depends_on "protobuf"
   depends_on "readline"
@@ -45,18 +47,18 @@ class Wownero < Formula
 
   conflicts_with "monero", because: "both install a wallet2_api.h header"
 
-  # Boost 1.76 compatibility
-  # https://github.com/loqs/monero/commit/5e902e5e32c672661dfe5677c4a950c4dd409198
-  patch :DATA
-
   def install
-    # Need to help CMake find `readline` when not using /usr/local prefix
-    system "cmake", ".", *std_cmake_args, "-DReadline_ROOT_DIR=#{Formula["readline"].opt_prefix}"
-    system "make", "install"
+    args = std_cmake_args
 
-    # Fix conflict with miniupnpc.
-    # This has been reported at https://github.com/monero-project/monero/issues/3862
-    rm lib/"libminiupnpc.a"
+    # Need to help CMake find `readline` when not using /usr/local prefix
+    args << "-DReadline_ROOT_DIR=#{Formula["readline"].opt_prefix}"
+
+    # Build a portable binary (don't set -march=native)
+    args << "-DARCH=default"
+
+    system "cmake", "-S", ".", "-B", "build", *args
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
   end
 
   service do
@@ -74,18 +76,3 @@ class Wownero < Formula
     assert_equal address, shell_output(cmd).lines.last.split[1]
   end
 end
-
-__END__
-diff --git a/contrib/epee/include/storages/portable_storage.h b/contrib/epee/include/storages/portable_storage.h
-index f77e89cb6..066e12878 100644
---- a/contrib/epee/include/storages/portable_storage.h
-+++ b/contrib/epee/include/storages/portable_storage.h
-@@ -39,6 +39,8 @@
- #include "span.h"
- #include "int-util.h"
-
-+#include <boost/mpl/contains.hpp>
-+
- namespace epee
- {
-   class byte_slice;

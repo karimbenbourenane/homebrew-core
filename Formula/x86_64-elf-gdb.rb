@@ -1,9 +1,9 @@
 class X8664ElfGdb < Formula
   desc "GNU debugger for x86_64-elf cross development"
   homepage "https://www.gnu.org/software/gdb/"
-  url "https://ftp.gnu.org/gnu/gdb/gdb-12.1.tar.xz"
-  mirror "https://ftpmirror.gnu.org/gdb/gdb-12.1.tar.xz"
-  sha256 "0e1793bf8f2b54d53f46dea84ccfd446f48f81b297b28c4f7fc017b818d69fed"
+  url "https://ftp.gnu.org/gnu/gdb/gdb-13.1.tar.xz"
+  mirror "https://ftpmirror.gnu.org/gdb/gdb-13.1.tar.xz"
+  sha256 "115ad5c18d69a6be2ab15882d365dda2a2211c14f480b3502c6eba576e2e95a0"
   license "GPL-3.0-or-later"
   head "https://sourceware.org/git/binutils-gdb.git", branch: "master"
 
@@ -12,21 +12,25 @@ class X8664ElfGdb < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "054449618f9e658d1502a3ffb3dcdf3d8f55e1d19ffde152e52b2ed5887faf84"
-    sha256 arm64_big_sur:  "5eebf4b0ccf95ac324212f34509b6f63bbde83b48664abef093058090322b132"
-    sha256 monterey:       "afaa638b4875f3e7a09e4ca7c0dae4d09ab606e7fdc2c17703075226441dbced"
-    sha256 big_sur:        "bc816667d3bb402ec66316afa4b4b7ebd5972353a06d9ac34b38f82a514a5a52"
-    sha256 catalina:       "44ee92bc25f8ea4fc9179dbf9fb0c94fb1c3f9db6a17003c2d961cda2053228e"
-    sha256 x86_64_linux:   "99c96d3a5aba8289446082e8dd9e7b931b79d5eea945ba2b2516cd398c966b03"
+    sha256 arm64_ventura:  "199da403970bc0baf0bed60df15a49cb0d64a7eea85766f0760416a1ed2c2f85"
+    sha256 arm64_monterey: "ce87fbda3e4af46e528f0ff95c3d01c808071feeb7292339d031f9f3b03ca1df"
+    sha256 arm64_big_sur:  "54cee2a6c6de575a10034f0899fdbf0b45baa9ffc29dbb9093bb234ba222e3c0"
+    sha256 ventura:        "ca8dd58e837408a295202e214efdaa5d4d16debeaab70981d8a00e04ff3588a9"
+    sha256 monterey:       "5b6bfec110bb9ca1d9dda2b62e641c0c3bb68d6f246732ca12e3a1773a9012a4"
+    sha256 big_sur:        "12f9a5e92158320dd6328c0405d1a4d8ae15e0b249d6b120d23a6047deeb6605"
+    sha256 x86_64_linux:   "3f6c92261890700f213ad3e687102d6c61c25ac0814bc0b64b2d25ed898c7991"
   end
 
   depends_on "x86_64-elf-gcc" => :test
   depends_on "gmp"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
   depends_on "xz" # required for lzma support
 
-  uses_from_macos "texinfo" => :build
   uses_from_macos "zlib"
+
+  on_system :linux, macos: :ventura_or_newer do
+    depends_on "texinfo" => :build
+  end
 
   def install
     target = "x86_64-elf"
@@ -40,7 +44,7 @@ class X8664ElfGdb < Formula
       --disable-debug
       --disable-dependency-tracking
       --with-lzma
-      --with-python=#{Formula["python@3.10"].opt_bin}/python3
+      --with-python=#{Formula["python@3.11"].opt_bin}/python3.11
       --with-system-zlib
       --disable-binutils
     ]

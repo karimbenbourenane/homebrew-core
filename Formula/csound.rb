@@ -2,10 +2,10 @@ class Csound < Formula
   desc "Sound and music computing system"
   homepage "https://csound.com"
   url "https://github.com/csound/csound.git",
-      tag:      "6.17.0",
-      revision: "f5b4258794a82c99f7d85f1807c6638f2e80ccac"
+      tag:      "6.18.1",
+      revision: "a1580f9cdf331c35dceb486f4231871ce0b00266"
   license "LGPL-2.1-or-later"
-  revision 6
+  revision 1
   head "https://github.com/csound/csound.git", branch: "master"
 
   livecheck do
@@ -14,12 +14,13 @@ class Csound < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "c6e353b4f8be807da3e7ef7ff051f38a59ae030c3c430e8d28076566b075dc75"
-    sha256 arm64_big_sur:  "0ce5a8b33a3e972a49fbc6ade300cc1e23407de0d45ea71ac01febc0be459cf5"
-    sha256 monterey:       "e377613d55ff17dbc67f3b1f51150e25f8195b557d322c142a8e3c045b410d68"
-    sha256 big_sur:        "4be373d6dbc6b1591fcd1c3ed6fb5765c4ecdfb331fca1850aab849633d0ba87"
-    sha256 catalina:       "51158c60254ac2a227f57853c873ae22a3f2a73d271a9a747cffb8a3aa323bb9"
-    sha256 x86_64_linux:   "52396c10802c7de70dc507ed3d8efb9a62e3fe67e47722729edd3c70ee8dd259"
+    sha256 arm64_ventura:  "158f7bd20fd0c0b3d1d9f5066d35ff79630c9eb1eda8f15f0f75f25019866006"
+    sha256 arm64_monterey: "6d8413442ddd3660cd572b141ad8a5c2ea9dd1119694d7f1e8b4c9fee2279d40"
+    sha256 arm64_big_sur:  "928ffd75d79ff5aff1638367919978d19b87a512dd739e848f7dcbf9a9e4015c"
+    sha256 ventura:        "99b89dfb2f7047730fe4dff6572e2fb6ceafc3f68e0c407a2a3033efbbb93c09"
+    sha256 monterey:       "440842d27ea5ae7d4b7f1c0f3af9d40226e7aab97c9d3701ea5d21f17bce55f9"
+    sha256 big_sur:        "b6d0479f32f83fd8c8ce19679dc21ac0bee7d50f673d4b9356cbc067ebd8a05f"
+    sha256 x86_64_linux:   "e03f6ce722993e8f566853bdb6442564a7357f5dfa3024367664f93accda3407"
   end
 
   depends_on "asio" => :build
@@ -42,7 +43,7 @@ class Csound < Formula
   depends_on "openjdk"
   depends_on "portaudio"
   depends_on "portmidi"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
   depends_on "stk"
 
   uses_from_macos "bison" => :build
@@ -56,7 +57,6 @@ class Csound < Formula
 
   on_linux do
     depends_on "alsa-lib"
-    depends_on "gcc"
   end
 
   conflicts_with "libextractor", because: "both install `extract` binaries"
@@ -65,8 +65,8 @@ class Csound < Formula
   fails_with gcc: "5"
 
   resource "ableton-link" do
-    url "https://github.com/Ableton/link/archive/Link-3.0.5.tar.gz"
-    sha256 "74a470c8ae8f9c325e65e981839852e821ec56b980f8b923cb77ca833c4603ed"
+    url "https://github.com/Ableton/link/archive/Link-3.0.6.tar.gz"
+    sha256 "4f4fae68bd9351cba603f07990b0d1d9cd7f986c1c78f748d97168c8ae5269b2"
   end
 
   resource "csound-plugins" do
@@ -81,8 +81,8 @@ class Csound < Formula
   end
 
   resource "getfem" do
-    url "https://download.savannah.gnu.org/releases/getfem/stable/getfem-5.4.1.tar.gz"
-    sha256 "6b58cc960634d0ecf17679ba12f8e8cfe4e36b25a5fa821925d55c42ff38a64e"
+    url "https://download.savannah.gnu.org/releases/getfem/stable/getfem-5.4.2.tar.gz"
+    sha256 "80b625d5892fe9959c3b316340f326e3ece4e98325eb0a81dd5b9ddae563b1d1"
   end
 
   def python3
@@ -146,7 +146,7 @@ class Csound < Formula
           -DBUILD_P5GLOVE_OPCODES=ON
           -DBUILD_WIIMOTE_OPCODES=ON
           -DCSOUND_FRAMEWORK=#{frameworks}/CsoundLib64.framework
-          -DCSOUND_INCLUDE_DIR=#{include}/csound
+          -DCSOUND_INCLUDE_DIR=#{frameworks}/CsoundLib64.framework/Headers
           -DPLUGIN_INSTALL_DIR=#{frameworks}/CsoundLib64.framework/Resources/Opcodes64
         ]
       else
@@ -164,7 +164,8 @@ class Csound < Formula
 
   def caveats
     caveats = <<~EOS
-      To use the Java bindings, you may need to add to #{shell_profile}:
+      To use the Java bindings, you may need to add to your shell profile
+      e.g. ~/.profile or ~/.zshrc:
         export CLASSPATH="#{opt_libexec}/csnd6.jar:."
       and link the native shared library into your Java Extensions folder:
     EOS

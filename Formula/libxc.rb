@@ -1,18 +1,18 @@
 class Libxc < Formula
   desc "Library of exchange and correlation functionals for codes"
   homepage "https://tddft.org/programs/libxc/"
-  url "https://gitlab.com/libxc/libxc/-/archive/5.2.3/libxc-5.2.3.tar.bz2"
-  sha256 "6cd45669d7f92bdcdb6879bea232dac94ad57d025cf2edfd019182ccf6494a75"
+  url "https://gitlab.com/libxc/libxc/-/archive/6.1.0/libxc-6.1.0.tar.bz2"
+  sha256 "04dcfbdb89ab0d9ae05d8534c46edf4f9ba60dd6b7633ce72f6cb3c9773bb344"
   license "MPL-2.0"
-  revision 1
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "76984fead2d7c7162093695d21d7c5b5966087b60a84e9995480851cc742d002"
-    sha256 cellar: :any,                 arm64_big_sur:  "6667ca67895897ca00340ecc4164449483f46e226affae45a70ca62f1f7d8a7c"
-    sha256 cellar: :any,                 monterey:       "baabce501ca109c134573955355b005279a151e01d3dc93ad60f0d0ac8ffe104"
-    sha256 cellar: :any,                 big_sur:        "e2a9c845aef36fe679b3694cd8aa3b446b37ceec17bfaee76d5412881e61dd39"
-    sha256 cellar: :any,                 catalina:       "d0ce63f9d4f79cd42bb34b5cf53b535d96adbf527d2865c3b8b0ad52278e3249"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e08ca5a0e6a6976022c59789c27052b16b5d44cc4eab0fe3f0fa295fcee57e20"
+    sha256 cellar: :any,                 arm64_ventura:  "0948e1952d8f9c82cb40b92e85b307abb90695ead9e1feacdd649aacd1950f2f"
+    sha256 cellar: :any,                 arm64_monterey: "197c0a86d1003f63d6ef7232686e5ef20933a21106ff579402276e517e641b54"
+    sha256 cellar: :any,                 arm64_big_sur:  "65146c97950799978716834f772b374e2b794f332b7e6f0487aefe9b29b90149"
+    sha256 cellar: :any,                 ventura:        "03d69df473f57031fb1e9c1768d72a334842c0c7b8cc1d7eedc51b46dfb66e47"
+    sha256 cellar: :any,                 monterey:       "1169534fc5a3ecdaa1b7aa6e9c54ec8a89a45df1ddab0b254104aac933ada32b"
+    sha256 cellar: :any,                 big_sur:        "dd56b362469199f447b6b2fe6dfe9caa85e1c6047bbbac30497777d7c49a94e4"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "50be3c335300036209e21277788fa9fba694265c3e66dd56f09327924f087825"
   end
 
   depends_on "autoconf" => :build
@@ -37,7 +37,7 @@ class Libxc < Formula
       {
         int major, minor, micro;
         xc_version(&major, &minor, &micro);
-        printf(\"%d.%d.%d\", major, minor, micro);
+        printf("%d.%d.%d", major, minor, micro);
       }
     EOS
     system ENV.cc, "test.c", "-L#{lib}", "-I#{include}", "-lxc", "-o", "ctest", "-lm"

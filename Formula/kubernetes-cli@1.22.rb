@@ -2,8 +2,8 @@ class KubernetesCliAT122 < Formula
   desc "Kubernetes command-line interface"
   homepage "https://kubernetes.io/"
   url "https://github.com/kubernetes/kubernetes.git",
-      tag:      "v1.22.13",
-      revision: "a43c0904d0de10f92aa3956c74489c45e6453d6e"
+      tag:      "v1.22.17",
+      revision: "a7736eaf34d823d7652415337ac0ad06db9167fc"
   license "Apache-2.0"
 
   livecheck do
@@ -12,19 +12,19 @@ class KubernetesCliAT122 < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "dbf4b795ffc28196b98d1b148ea979b8448d3b4c86c1b210ffe1767fc09ac57d"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "fb3cd294c671ac2950f77590fe7dc0d1c6d05a2d07feb5ca8ebdc967bb426d19"
-    sha256 cellar: :any_skip_relocation, monterey:       "f4cd1b20e2ce6d16cbae70fb0f3713dad1256aefbd1ca7824eb3fdfbb42cf372"
-    sha256 cellar: :any_skip_relocation, big_sur:        "383be66eef4e9b2cdac009c3001433f445ce89c56b8dcd220f1c54f9a4b4323c"
-    sha256 cellar: :any_skip_relocation, catalina:       "53ff4e79ce72314169a6dec8b521eb6cdca3631d313ab6304289b00f6ff3dd9a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b042d3fcad75ffe5736715f4a8af37de1fb08f5438847b33128a7d06a821f137"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "4888e246ca781b36e1d1c1d015272dee446dda2659c22ac14f3d4f31ce11ecee"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "b223d96b8db4ab81508a62b4f47419349bcd15c95dd7b9b3b2c4bcb1708ad908"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "a7d2e3b120e9c0eacdbae66b56938cfc2bb97832a32be381e0aad68292f9d9cc"
+    sha256 cellar: :any_skip_relocation, ventura:        "28e7487048762d2cd5c7d1089acceecc6469d34ce35141fb99434197b6f7582c"
+    sha256 cellar: :any_skip_relocation, monterey:       "9270c4e34f0a5add2a28ef857260fa8c19e8fead25af3fa42201e29ac1868c8e"
+    sha256 cellar: :any_skip_relocation, big_sur:        "b07c67f09dbc9e9b13d436c0bc398327e2b666fb6d5d8e3b4d9c2a31893861a9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5172c1c631fffc42c1c13be38f1220b935f42d385f40404d595969091140a6a0"
   end
 
   keg_only :versioned_formula
 
   # https://kubernetes.io/releases/patch-releases/#1-22
-  deprecate! date: "2022-08-28", because: :deprecated_upstream
-  # disable! date: "2022-10-28", because: :deprecated_upstream
+  disable! date: "2022-10-28", because: :deprecated_upstream
 
   depends_on "bash" => :build
   depends_on "coreutils" => :build

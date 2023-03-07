@@ -1,18 +1,19 @@
 class Nave < Formula
   desc "Virtual environments for Node.js"
   homepage "https://github.com/isaacs/nave"
-  url "https://github.com/isaacs/nave/archive/v3.3.1.tar.gz"
-  sha256 "c5789615135cf1b0b55c9e7422735bc8af4a2eee717cc09c0d520cfe88cc68a0"
+  url "https://github.com/isaacs/nave/archive/v3.5.0.tar.gz"
+  sha256 "009c96bdbbef66180796feb94b75e13a394934bc7093621851a19a1ab7d2916d"
   license "ISC"
   head "https://github.com/isaacs/nave.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "ba1b26cb794a07bace9800d71264fceb8b4b9efbddf6d9291399654d98bc88f9"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "ba1b26cb794a07bace9800d71264fceb8b4b9efbddf6d9291399654d98bc88f9"
-    sha256 cellar: :any_skip_relocation, monterey:       "1f245fcfdd7109a0939d1cb82a854407ac78bedb2bf140966b0d736c69e9a9a4"
-    sha256 cellar: :any_skip_relocation, big_sur:        "1f245fcfdd7109a0939d1cb82a854407ac78bedb2bf140966b0d736c69e9a9a4"
-    sha256 cellar: :any_skip_relocation, catalina:       "1f245fcfdd7109a0939d1cb82a854407ac78bedb2bf140966b0d736c69e9a9a4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ba1b26cb794a07bace9800d71264fceb8b4b9efbddf6d9291399654d98bc88f9"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "aac5527ec1b90826ec308809a6cd8001ad3ba56f1380d0b56b55ab448926c6e1"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "aac5527ec1b90826ec308809a6cd8001ad3ba56f1380d0b56b55ab448926c6e1"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "aac5527ec1b90826ec308809a6cd8001ad3ba56f1380d0b56b55ab448926c6e1"
+    sha256 cellar: :any_skip_relocation, ventura:        "f33d1100b6c3beb7dd5ca9ec72b2cfbe81515a3f8002a21c276a208f41236198"
+    sha256 cellar: :any_skip_relocation, monterey:       "f33d1100b6c3beb7dd5ca9ec72b2cfbe81515a3f8002a21c276a208f41236198"
+    sha256 cellar: :any_skip_relocation, big_sur:        "f33d1100b6c3beb7dd5ca9ec72b2cfbe81515a3f8002a21c276a208f41236198"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "aac5527ec1b90826ec308809a6cd8001ad3ba56f1380d0b56b55ab448926c6e1"
   end
 
   def install

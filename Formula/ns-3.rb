@@ -1,74 +1,44 @@
 class Ns3 < Formula
+  include Language::Python::Virtualenv
+
   desc "Discrete-event network simulator"
   homepage "https://www.nsnam.org/"
-  url "https://gitlab.com/nsnam/ns-3-dev/-/archive/ns-3.36.1/ns-3-dev-ns-3.36.1.tar.bz2"
-  sha256 "8826dbb35290412df9885d8a936ab0c3fe380dec4dd48c57889148c0a2c1a856"
+  url "https://gitlab.com/nsnam/ns-3-dev/-/archive/ns-3.37/ns-3-dev-ns-3.37.tar.gz"
+  sha256 "70f4dca7ff59eabedcdf97c75d1d8d593c726f0d75a6b9470f29871629a341f3"
   license "GPL-2.0-only"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "dd8388b7afa86166b4390d2765b44bc2fafdff36994692077af65f9800e47a73"
-    sha256 cellar: :any,                 arm64_big_sur:  "6d4bb953d0bdf69a52b98a5518c3e6bd838f8cc516133ae638855523548b7540"
-    sha256 cellar: :any,                 monterey:       "5fe92587f3fdbcc942bd0c771f8e2b5153afb4ed96100da86112dac6454a511c"
-    sha256 cellar: :any,                 big_sur:        "8037a6167d7b50b2e2349ce6d7fb25049aa65b36123d99128be1c2382ca3530c"
-    sha256 cellar: :any,                 catalina:       "8ebabc28901eaf3ab45ddbb20e2da25399f871edc88844125c672656af010627"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8ce00bfe0a855a282a1b8498623fca9c6bf5aca22cb755dc99c360583207b9e0"
+    sha256 cellar: :any,                 arm64_ventura:  "025372658342066002fda7183e7d70b5238b8dd951099230dddf24c0ababd95b"
+    sha256 cellar: :any,                 arm64_monterey: "bb4cdf7466478942821f1a1449ba04f2321828d30bc68d356c3791495c0d88e8"
+    sha256 cellar: :any,                 arm64_big_sur:  "1fe7dc61f8afaf84ac85159a8dd36e82cc490c7d297cdc045f544139bf32fc9d"
+    sha256 cellar: :any,                 ventura:        "370908150973ec532bbecd06e4a159287cbe36a2a766a68f3d5ee7a3c22973b8"
+    sha256 cellar: :any,                 monterey:       "f692d7bc0751d27840a3b34d061f937a9df20aa67a30021be3ca68951d93ea59"
+    sha256 cellar: :any,                 big_sur:        "9f3bc3a14ea36660ae012397901da5e4dc31da48a711c0d7e4d8dcfe9c42d2ec"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "636457c0e0458503cfd38d7ef3dac11aa7235b42729624ca7c9149be0d88da94"
   end
 
   depends_on "boost" => :build
   depends_on "cmake" => :build
-  depends_on xcode: [:build, "11"]
-
   depends_on "gsl"
   depends_on "open-mpi"
-  depends_on "python@3.10"
 
   uses_from_macos "libxml2"
   uses_from_macos "sqlite"
 
-  # Clears the Python3_LIBRARIES variable. Removing `PRIVATE ${Python3_LIBRARIES}`
-  # in ns3-module-macros is not sufficient as it doesn't apply to visualizer.so.
-  # Should be no longer needed when 3.37 rolls out.
-  on_macos do
-    patch :DATA
-  end
-
-  on_linux do
-    depends_on "gcc"
-  end
-
-  # Needs GCC 8 or above
-  fails_with gcc: "5"
-  fails_with gcc: "6"
-  fails_with gcc: "7"
-
-  resource "pybindgen" do
-    url "https://files.pythonhosted.org/packages/e0/8e/de441f26282eb869ac987c9a291af7e3773d93ffdb8e4add664b392ea439/PyBindGen-0.22.1.tar.gz"
-    sha256 "8c7f22391a49a84518f5a2ad06e3a5b1e839d10e34da7631519c8a28fcba3764"
-  end
-
   def install
-    resource("pybindgen").stage buildpath.parent/"pybindgen"
-    ENV.append "PYTHONPATH", buildpath.parent/"pybindgen"
-
     # Fix binding's rpath
     linker_flags = ["-Wl,-rpath,#{loader_path}"]
-    linker_flags << "-Wl,-undefined,dynamic_lookup" if OS.mac?
 
     system "cmake", "-S", ".", "-B", "build",
                     "-DNS3_GTK3=OFF",
-                    "-DNS3_PYTHON_BINDINGS=ON",
+                    "-DNS3_PYTHON_BINDINGS=OFF",
                     "-DNS3_MPI=ON",
                     "-DCMAKE_SHARED_LINKER_FLAGS=#{linker_flags.join(" ")}",
                     *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
 
-    # Starting 3.36, bindings are no longer installed
-    # https://gitlab.com/nsnam/ns-3-dev/-/merge_requests/1060
-    site_packages = Language::Python.site_packages("python3.10")
-    (prefix/site_packages).install (buildpath/"build/bindings/python").children
-
-    pkgshare.install "examples/tutorial/first.cc", "examples/tutorial/first.py"
+    pkgshare.install "examples/tutorial/first.cc"
   end
 
   test do
@@ -77,23 +47,5 @@ class Ns3 < Formula
            "-lns#{version}-point-to-point", "-lns#{version}-applications",
            "-std=c++17", "-o", "test"
     system "./test"
-
-    system Formula["python@3.10"].opt_bin/"python3.10", pkgshare/"first.py"
   end
 end
-
-__END__
-diff --git a/build-support/macros-and-definitions.cmake b/build-support/macros-and-definitions.cmake
-index 304ccdde7..64ae322c5 100644
---- a/build-support/macros-and-definitions.cmake
-+++ b/build-support/macros-and-definitions.cmake
-@@ -723,7 +723,8 @@ macro(process_options)
-   if(${Python3_Interpreter_FOUND})
-     if(${Python3_Development_FOUND})
-       set(Python3_FOUND TRUE)
--      if(APPLE)
-+      set(Python3_LIBRARIES "")
-+      if(FALSE)
-         # Apple is very weird and there could be a lot of conflicting python
-         # versions which can generate conflicting rpaths preventing the python
-         # bindings from working

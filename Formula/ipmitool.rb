@@ -1,59 +1,58 @@
 class Ipmitool < Formula
   desc "Utility for IPMI control with kernel driver or LAN interface"
   homepage "https://github.com/ipmitool/ipmitool"
-  url "https://downloads.sourceforge.net/project/ipmitool/ipmitool/1.8.18/ipmitool-1.8.18.tar.bz2"
-  mirror "https://deb.debian.org/debian/pool/main/i/ipmitool/ipmitool_1.8.18.orig.tar.bz2"
-  sha256 "0c1ba3b1555edefb7c32ae8cd6a3e04322056bc087918f07189eeedfc8b81e01"
+  url "https://github.com/ipmitool/ipmitool/archive/refs/tags/IPMITOOL_1_8_19.tar.gz"
+  sha256 "48b010e7bcdf93e4e4b6e43c53c7f60aa6873d574cbd45a8d86fa7aaeebaff9c"
   license "BSD-3-Clause"
-  revision 3
+  revision 1
 
   bottle do
-    sha256 cellar: :any,                 arm64_big_sur: "3223279b0188313a5d87ede24617f6bda5921acc1ce135c30c7c43823f14913f"
-    sha256 cellar: :any,                 monterey:      "498392b8b88c12f88c9e417270b7ba736619070af521750381b487b8c972d37c"
-    sha256 cellar: :any,                 big_sur:       "6dd8c02b3e556949c98d40980dd9c1b456d1fa078d9d7792f36977e7d239a4ac"
-    sha256 cellar: :any,                 catalina:      "926d5c49a0a1b9411e45c54e412403003266c27127059edb50b40e07adaf2260"
-    sha256 cellar: :any,                 mojave:        "3bf8d00d62c2e1dc781493d448062ad365ac8e7c73010ee37ba2040a48513c10"
-    sha256 cellar: :any,                 high_sierra:   "04462f0b4129d34cbf7e8e5c72591360e89dd6d6cef20008567015d57ab611c4"
-    sha256 cellar: :any,                 sierra:        "f08f0e5717ff8ccf031ca738eb4995b39db5d37b802800b6e0b6c154f6fed830"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "34d7e08574ee45e07c513a90b38c7de24636f7889e940daf8f0d87c3a9739977"
+    sha256 arm64_ventura:  "a3862eb5a4f8f401f21f61585a6a51fd5c08a6825876122179c3286b68843943"
+    sha256 arm64_monterey: "959def316be5f337341d13fd2225a7ebcafd775749d2fcde8ab23160de83e5c8"
+    sha256 arm64_big_sur:  "3e711528ae7df03c387e4a25093e202d846ec2c11ab26b85f581abf24c20b3c0"
+    sha256 ventura:        "d4b39179c103c299d23ca95a156f2ef009c37d335f9df30457a984b2579220a1"
+    sha256 monterey:       "05de9ad2b49826138bfa4c777358af766bce8d80c4aeef3c59d072d9e8240c4b"
+    sha256 big_sur:        "2e7da2c2ebe7ea60e20dd6aacfec261ac648a1eba952ea91536a0901bb4b6e05"
+    sha256 x86_64_linux:   "a0a993a436ef12c14707d60293d37233dd90e0e80909c461f262c19874951d32"
   end
 
-  depends_on "openssl@1.1"
+  depends_on "autoconf" => :build
+  depends_on "automake" => :build
+  depends_on "libtool" => :build
+  depends_on "openssl@3"
 
-  # https://sourceforge.net/p/ipmitool/bugs/433/#89ea and
-  # https://sourceforge.net/p/ipmitool/bugs/436/ (prematurely closed):
-  # Fix segfault when prompting for password
-  # Re-reported 12 July 2017 https://sourceforge.net/p/ipmitool/mailman/message/35942072/
+  on_linux do
+    depends_on "readline"
+  end
+
+  # fix enterprise-number URL due to IANA URL scheme change
+  # remove in next release
   patch do
-    url "https://gist.githubusercontent.com/adaugherity/87f1466b3c93d5aed205a636169d1c58/raw/29880afac214c1821e34479dad50dca58a0951ef/ipmitool-getpass-segfault.patch"
-    sha256 "fc1cff11aa4af974a3be191857baeaf5753d853024923b55c720eac56f424038"
+    url "https://github.com/ipmitool/ipmitool/commit/1edb0e27e44196d1ebe449aba0b9be22d376bcb6.patch?full_index=1"
+    sha256 "c7df82eeb6abf76439ca9012afdcef2e9e5ab5b44d4a80c58c7c5f2d8337bc83"
   end
 
-  # Patch for compatibility with OpenSSL 1.1.1
-  # https://reviews.freebsd.org/D17527
-  patch :p0 do
-    url "https://raw.githubusercontent.com/Homebrew/formula-patches/10f4f68f/ipmitool/openssl-1.1.diff"
-    sha256 "8ad4e19d7c39d1bf95a0219d03f4d8490727ac79cb297a36639443ef030bb76a"
+  # Patch to fix build on ARM
+  # https://github.com/ipmitool/ipmitool/issues/332
+  patch do
+    url "https://github.com/ipmitool/ipmitool/commit/a45da6b4dde21a19e85fd87abbffe31ce9a8cbe6.patch?full_index=1"
+    sha256 "98787263c33fe11141a6b576d52f73127b223394c3d2c7b1640d4adc075f14d5"
   end
 
   def install
-    # Fix ipmi_cfgp.c:33:10: fatal error: 'malloc.h' file not found
-    # Upstream issue from 8 Nov 2016 https://sourceforge.net/p/ipmitool/bugs/474/
-    inreplace "lib/ipmi_cfgp.c", "#include <malloc.h>", ""
-
-    args = %W[
-      --disable-dependency-tracking
-      --prefix=#{prefix}
-      --mandir=#{man}
-      --disable-intf-usb
-    ]
-    system "./configure", *args
-    system "make", "check"
+    system "./bootstrap"
+    system "./configure", *std_configure_args,
+                          "--mandir=#{man}",
+                          "--disable-intf-usb"
     system "make", "install"
   end
 
   test do
-    # Test version print out
-    system bin/"ipmitool", "-V"
+    assert_match version.to_s, shell_output("#{bin}/ipmitool -V")
+    if OS.mac?
+      assert_match "No hostname specified!", shell_output("#{bin}/ipmitool 2>&1", 1)
+    else # Linux
+      assert_match "Could not open device", shell_output("#{bin}/ipmitool 2>&1", 1)
+    end
   end
 end

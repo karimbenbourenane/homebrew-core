@@ -1,9 +1,10 @@
 class Vips < Formula
   desc "Image processing library"
   homepage "https://github.com/libvips/libvips"
-  url "https://github.com/libvips/libvips/releases/download/v8.13.1/vips-8.13.1.tar.gz"
-  sha256 "ad377b7e561bb2118de9a3864fcaa60c61ba7f47e849f6044d1b339906197702"
+  url "https://github.com/libvips/libvips/releases/download/v8.14.1/vips-8.14.1.tar.xz"
+  sha256 "5abde2a61f99ced7be4c32ccb13a654256eb7a0f6f0520ab61cc11412a1233fa"
   license "LGPL-2.1-or-later"
+  revision 1
 
   livecheck do
     url :stable
@@ -11,12 +12,13 @@ class Vips < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "321af8d4643cefc321ca350800d059ccd0671fcd2d5550a3d52869d5de1b5bbf"
-    sha256 arm64_big_sur:  "0bce10169f0d654aaf4a54925e20a90707280df2f0e1ffdb34cbfe53d0fb77f9"
-    sha256 monterey:       "8396cca72483ff7702006b6c38fdc0931dbedc5f7a3bd02bb396bd9571487f2f"
-    sha256 big_sur:        "75d86a0a03df9781be556632d059fb2587a001c4de7f1338bbc8971452c678a8"
-    sha256 catalina:       "9a2b7a0442105de8aa6773786c1c666abe7de3829dd94d6d70d51f386d470bef"
-    sha256 x86_64_linux:   "5b15129a3f66a817e4e7a19fe0d63d6d407f9cb8b2ebaad2c57c257b504052a8"
+    sha256 arm64_ventura:  "723f63554af72e8afe72639fd19fa0972b3045e87b76d239974457e97441236f"
+    sha256 arm64_monterey: "99316e36756f6130aeb45e8a54f876d9f58f02ce3efd82fa7bfb11b52a3c3e36"
+    sha256 arm64_big_sur:  "e8685da9f9fa3ad204e99e7c86cfcffadb270cfd0671bc3f0ff250001da06a0c"
+    sha256 ventura:        "3efbc36e88e380c09af5366a6e4dfa47460aa4a4e6cba138b8dd419f995884e5"
+    sha256 monterey:       "4aaab9204a4457ca2a4d7a9ba8be23df077c57707f91baaa325240506bad46c7"
+    sha256 big_sur:        "036232ab9c3bae1ab8d29a7a61ecf128d3221d62b19b66fd5eed0bbef403bb5f"
+    sha256 x86_64_linux:   "236dbc8946fb9088c709309c6ec382cc107dbb29c682f7ceaf5d4534ab4eb8dc"
   end
 
   depends_on "gobject-introspection" => :build
@@ -52,10 +54,6 @@ class Vips < Formula
 
   uses_from_macos "expat"
   uses_from_macos "zlib"
-
-  on_linux do
-    depends_on "gcc"
-  end
 
   fails_with gcc: "5"
 

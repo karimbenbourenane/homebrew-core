@@ -3,17 +3,18 @@ require "language/node"
 class JoplinCli < Formula
   desc "Note taking and to-do application with synchronization capabilities"
   homepage "https://joplinapp.org/"
-  url "https://registry.npmjs.org/joplin/-/joplin-2.8.1.tgz"
-  sha256 "bf5d3e2ce4a82916e984878a6a5aa80de830307643c67c9d6641f873a6903714"
+  url "https://registry.npmjs.org/joplin/-/joplin-2.10.3.tgz"
+  sha256 "5aec982e1fb0dbfb43bb783bb145a9f2694128b87bf3f328bd0c1f634edbb72d"
   license "MIT"
 
   bottle do
-    sha256                               arm64_monterey: "d075896c46572bb397fb8bb33eec5397a7bd196af8428737bef136616e42d074"
-    sha256                               arm64_big_sur:  "e8eab26199c344f6a370d1ebf68a925dbf6ad93746ee1ab8ee75b45a428c189c"
-    sha256                               monterey:       "6ae50728292a131ee4cd2679f184d5678843e09335de8c6d24bf627194dbcf21"
-    sha256                               big_sur:        "ea1da65c3f856be2849fabe36e053f15b9adb368b5b3f74779364116f7bebcae"
-    sha256                               catalina:       "ff01bf2bc679496d8de250d25eacadcf59cb315082eccfafb58335fe56230e94"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "712d7846deaf2b1b36ae5b6b6bfafa6929d89342dbb7634dc03bfe117d4ebc5e"
+    sha256                               arm64_ventura:  "de663d43417145c50a6c36a2a0b0dc3edb7c27203cafeb6bb3633d79dca4bec9"
+    sha256                               arm64_monterey: "0072f256ceb84d63dc64ba2c65622312d866b3d62c3e84dfac33149be74015b5"
+    sha256                               arm64_big_sur:  "0c7fed5aadcf9cb9f692c705bfaadc0381371d728e4dd33037dd80b3d5aba69d"
+    sha256                               ventura:        "88c3929dd70d488d9bc5f1b04a00b5b570048ffe89dbedce7af904d129e1b69a"
+    sha256                               monterey:       "e011d2ea1c3e494f71ada233e611a20290cbc389c49364166bd3700feb09be90"
+    sha256                               big_sur:        "d19763039c84722ac655c85becc6803c2f21314e51be77b357a0a17470e1e093"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5e18d19bcf807502f2e02daa15823cbf9f86cbfffea95a2783ef931de1e1dcaa"
   end
 
   depends_on "pkg-config" => :build

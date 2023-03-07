@@ -1,8 +1,8 @@
 class Fetchmail < Formula
   desc "Client for fetching mail from POP, IMAP, ETRN or ODMR-capable servers"
   homepage "https://www.fetchmail.info/"
-  url "https://downloads.sourceforge.net/project/fetchmail/branch_6.4/fetchmail-6.4.33.tar.xz"
-  sha256 "82954ebd26c77906463ce20adca45cbcf8068957441e17941bd3052a5c15432e"
+  url "https://downloads.sourceforge.net/project/fetchmail/branch_6.4/fetchmail-6.4.37.tar.xz"
+  sha256 "4a182e5d893e9abe6ac37ae71e542651fce6d606234fc735c2aaae18657e69ea"
   license all_of: [
     "LGPL-2.1-or-later",
     "ISC",
@@ -17,12 +17,13 @@ class Fetchmail < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_monterey: "b2227372f433105e774806a29fc0b08297fb68df864a1eebd9b890a9f978a685"
-    sha256 cellar: :any, arm64_big_sur:  "08c5c2242241fa8095687f922b9876cd804578abf32928bed7bfab0ed96d4dcf"
-    sha256 cellar: :any, monterey:       "b5d9c462428d6f9d8212c447f6723181c02c3b5ac982b090495d122f4d0234b6"
-    sha256 cellar: :any, big_sur:        "e0b0e0537db1e1d4e9489777551048876091d1b9cf3d695667cb2fac76ece9d3"
-    sha256 cellar: :any, catalina:       "d86c60b1dc2ad2b3e652268902c03a5f4898ca04fd22b6fbc8ccf9af490ccfc3"
-    sha256               x86_64_linux:   "e0daa49d006bf734567eeb4faedb193b5827d32e2c15840eb5a847582d7b817c"
+    sha256 cellar: :any, arm64_ventura:  "ccbfc5c57049d74a455b25e579332d416c822ced8dfe7f814c6dba0aeeb28a95"
+    sha256 cellar: :any, arm64_monterey: "cc9f08926e10e29fa015a543aff8e6f8cc26949bcb548011265d3d5c7cfb9199"
+    sha256 cellar: :any, arm64_big_sur:  "4646ca118b2cc0432b5737bc91dcac6e4583671ba54300fe44ade2c6204fc1db"
+    sha256 cellar: :any, ventura:        "e9973922c9a0633e5d4c8a45992db42886c7e9ed43c6ae45f24b7ee0ea1935f4"
+    sha256 cellar: :any, monterey:       "ac1c1e07a255b9d4446d942d142729f1e572dabdb71cb39b7b5542b4e89fbb06"
+    sha256 cellar: :any, big_sur:        "717c5476915d9ff3390ee9e05da0f3cd1bbb8d2d455ef338edacb84aeb1754d7"
+    sha256               x86_64_linux:   "26c20275fc354b2c2828ae3c4cbb616a23208b6cd06583f1d06e54410f183be7"
   end
 
   depends_on "openssl@3"

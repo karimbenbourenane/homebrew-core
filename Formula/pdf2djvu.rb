@@ -4,27 +4,26 @@ class Pdf2djvu < Formula
   url "https://github.com/jwilk/pdf2djvu/releases/download/0.9.19/pdf2djvu-0.9.19.tar.xz"
   sha256 "eb45a480131594079f7fe84df30e4a5d0686f7a8049dc7084eebe22acc37aa9a"
   license "GPL-2.0-only"
-  revision 1
+  revision 3
   head "https://github.com/jwilk/pdf2djvu.git", branch: "master"
 
   bottle do
-    sha256 arm64_monterey: "70b280582b9549d05a4dbc3500b48db63e65086ba2bdd9a580ef48b0c4da4d01"
-    sha256 arm64_big_sur:  "0db4718e92f2e30baec71ae066f73d646c1b85084b7e0c41e9b9735f6a088261"
-    sha256 monterey:       "d617ed4f9b869ee14686b27c65cd529fc222ff91bace4e25088121a7b30f6c12"
-    sha256 big_sur:        "76dcea568c1d5cd21a3fd88a0200044ba4aac6f981465dfc53601d13b56b430b"
-    sha256 catalina:       "94aa840e72765e2ba083816115237c32060ffc77cdcc79167592849de8a7318c"
-    sha256 x86_64_linux:   "8a37d7d623f4237d8152a26a8c6dddf00308d6b092929cd368be5c186b8a44a5"
+    sha256 arm64_ventura:  "1b89f7cc11c1ed0ad9893790ef19f53ac26da2d35b9cc7e65fb6aca6b08620c9"
+    sha256 arm64_monterey: "50b7761da3c04a30f23e49483d009347968aa435f689cacdb51829a978a7bb6a"
+    sha256 arm64_big_sur:  "7ab97261a347114c5682747d97619bd9bbb67a11f7f6f31183c7db874cff07e3"
+    sha256 ventura:        "2cfdba470ffefa30573ee653c830b797e32d0f885764f713b2f10062f0952275"
+    sha256 monterey:       "9cbfd8910b823ca474078f727ef20f75eed9793a7a6f1f15ee772938935795dd"
+    sha256 big_sur:        "45cf358f9a387f948a2ee380415a266db6714885dbfa5aad33438e176cb6a326"
+    sha256 x86_64_linux:   "e4b86532ab3e73076c00a603625c2ee778d06f07c012d5362982404a2fe68ea2"
   end
+
+  deprecate! date: "2023-02-04", because: :repo_archived
 
   depends_on "pkg-config" => :build
   depends_on "djvulibre"
   depends_on "exiv2"
   depends_on "gettext"
   depends_on "poppler"
-
-  on_linux do
-    depends_on "gcc"
-  end
 
   fails_with gcc: "5" # poppler compiles with GCC
 

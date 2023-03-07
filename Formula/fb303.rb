@@ -1,18 +1,21 @@
 class Fb303 < Formula
   desc "Thrift functions for querying information from a service"
   homepage "https://github.com/facebook/fb303"
-  url "https://github.com/facebook/fb303/archive/v2022.09.05.00.tar.gz"
-  sha256 "59fa35558500f7de152b8c353c1466ebe01d5b5008619c17097051b7362e3e2d"
+  # TODO: Add back to `synced_versions_formulae.json` when upstream resolves:
+  #   https://github.com/facebook/fb303/issues/34
+  url "https://github.com/facebook/fb303/archive/v2023.02.20.00.tar.gz"
+  sha256 "2e0c39a6fa1156cc8d2d79278a39e9150a7e76e045971c72086fc9c548e26c08"
   license "Apache-2.0"
   head "https://github.com/facebook/fb303.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "53a18cadd15ac6b68159d64e8652f2b8785b8dd9836247cd1c0778fcc356962a"
-    sha256 cellar: :any,                 arm64_big_sur:  "b4084df59b4689146f1a64381bfd9018540cb43e0d97493d062fa6ea4b2f5169"
-    sha256 cellar: :any,                 monterey:       "110dca2931763acc182d68666ab66b25ea51be09c1225f1bc20ab902a291a8c2"
-    sha256 cellar: :any,                 big_sur:        "b679319ae9fd07013f97d99d12100fb3ce2800561faddd29fe28382c07b28aa2"
-    sha256 cellar: :any,                 catalina:       "ee7d8a4b531996a96902de4c429e8a90a1dbddee589718c81e7f0a3b83487933"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "1a31b400fa1fc7230d5049a53c0df1e383b93e24d71e3662a37e5ed3f4123eb2"
+    sha256 cellar: :any,                 arm64_ventura:  "031a414f23c3e1f2392573730d7ea781eff54bd9c83e6370217dc21061bb10ac"
+    sha256 cellar: :any,                 arm64_monterey: "47aaa3da374538031cf324a735d22715ab7c02b055800b984f231e4f732fc382"
+    sha256 cellar: :any,                 arm64_big_sur:  "2281a40db9d47c3a4e85be982097a0a7c51172004ad831e19d3b61b29a1765aa"
+    sha256 cellar: :any,                 ventura:        "378ad8bf15deea43626ed1a97dd0404a26a006d525c25d748d35f638cec94dfe"
+    sha256 cellar: :any,                 monterey:       "f55c647972a94d90d0ed2c8e1019bbec71146ab92af9dca881ad9356acc02a37"
+    sha256 cellar: :any,                 big_sur:        "f2c160078c850255b77d0a5a44bd1c59ae465da1dfdaca881d99c167e86ef8dd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "191d184643000bca84d86d4a394f2fcff5aaa179a652b0aac8a6eaa0b2fe1f9c"
   end
 
   depends_on "cmake" => :build
@@ -24,10 +27,6 @@ class Fb303 < Formula
   depends_on "glog"
   depends_on "openssl@1.1"
   depends_on "wangle"
-
-  on_linux do
-    depends_on "gcc"
-  end
 
   fails_with gcc: "5" # C++17
 

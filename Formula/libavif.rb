@@ -1,18 +1,19 @@
 class Libavif < Formula
   desc "Library for encoding and decoding .avif files"
   homepage "https://github.com/AOMediaCodec/libavif"
-  url "https://github.com/AOMediaCodec/libavif/archive/refs/tags/v0.10.1.tar.gz"
-  sha256 "66e82854ceb84a3e542bc140a343bc90e56c68f3ecb4fff63e636c136ed9a05e"
+  url "https://github.com/AOMediaCodec/libavif/archive/refs/tags/v0.11.1.tar.gz"
+  sha256 "0eb49965562a0e5e5de58389650d434cff32af84c34185b6c9b7b2fccae06d4e"
   license "BSD-2-Clause"
-  revision 1
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "8a87d1f6d545e4f3b30ad302bc40d2b113fd0a5e7aef3b881f30ce67733af3a3"
-    sha256 cellar: :any,                 arm64_big_sur:  "028e2fedcb137f6bc66abee05d97d9d8dde3ea05ea64c5eaacf4fb39369212ea"
-    sha256 cellar: :any,                 monterey:       "e025a5a329f4cddc1f496f430b59160f50fe35a481b1926ee2b89d08960b622f"
-    sha256 cellar: :any,                 big_sur:        "468a7d894bdc34acb1f51629a3629c7ad230be2dcbc4d690f2ff1d645faea2ae"
-    sha256 cellar: :any,                 catalina:       "2a4b502605b778bc9ea1e4abc2637106a67f7ccce902334c9abf30650b28536f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b86d16243abde8499e2afd8fe06142c588dac845d8287aa96d10e8761f7b0bcb"
+    sha256 cellar: :any,                 arm64_ventura:  "9b4735a70692b1e1cb060a3239bc22b2226cb663c7321474aaaa7b237772a68c"
+    sha256 cellar: :any,                 arm64_monterey: "7894a74f1c218445038333053255a70edd4e5bbd7db601df3f9544c53c19b5e6"
+    sha256 cellar: :any,                 arm64_big_sur:  "89dae84c1c6432e7fce025d72236606fe3cad655b596a19638754e593d608092"
+    sha256 cellar: :any,                 ventura:        "920c5bcf0ebdcd67b5c8fb124b3be365d81fef5b44aaa9e82f0d487aace15a79"
+    sha256 cellar: :any,                 monterey:       "62c3120e7b162a29839b38a1eb53db3f25caa15495aee7cf5c9c54b353d9c965"
+    sha256 cellar: :any,                 big_sur:        "cd42d557da81863120e2a542200c5bebc56b0fec042758157b7c2dec6ac557c7"
+    sha256 cellar: :any,                 catalina:       "b7d1c39830e03db3700c701faad8f9df4ea9ac61f52034a49777b0fbd998474c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b519a99be7b7bf73c940eb53f1bd89cb8d06317f4888e6d71c217b03242e15a7"
   end
 
   depends_on "cmake" => :build

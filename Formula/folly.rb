@@ -1,18 +1,19 @@
 class Folly < Formula
   desc "Collection of reusable C++ library artifacts developed at Facebook"
   homepage "https://github.com/facebook/folly"
-  url "https://github.com/facebook/folly/archive/v2022.09.05.00.tar.gz"
-  sha256 "17a3804dd9aacd8a2440b3e0235cdfc2659f880c439b9a7533555d7061702f64"
+  url "https://github.com/facebook/folly/archive/v2023.03.06.00.tar.gz"
+  sha256 "04cee9d8a651a4718f359957aceb345bf546c9ac666c249d609e6611f505f78c"
   license "Apache-2.0"
   head "https://github.com/facebook/folly.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "16d8b2a23ba7877b5fbe375d40156f3ecde5c61050f7aa6bbe3c613fe69609f9"
-    sha256 cellar: :any,                 arm64_big_sur:  "8dfffcb76dbec167db3bfb0446c0b79ac0396b28023a57e7ecc610750cbb7700"
-    sha256 cellar: :any,                 monterey:       "35e5ca905eeb6c4ff3ceaeae565cd47cbeea6a89dac92233ed612ebcb67bd131"
-    sha256 cellar: :any,                 big_sur:        "31aae77d52ffb6f67f8c5cc49095a2a099eefcef902ca8568a12be1076172459"
-    sha256 cellar: :any,                 catalina:       "4e65403835b1cabcb33a0fc95ee0321b2df63c35af9d17c580a7090a66a0618f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ea60b6eccf8fac2c761bef9678c15c05ca18f26c32788e070e4564774cca9c4c"
+    sha256 cellar: :any,                 arm64_ventura:  "f45d453a4c4683844efef19ef67364aab0c3360d0cab5311d253a2d7b651c7e7"
+    sha256 cellar: :any,                 arm64_monterey: "26aa62c699de4ef50c09fb13a091853bea32d1bf028bf5050668e730b2df043b"
+    sha256 cellar: :any,                 arm64_big_sur:  "532a9ab6000029a3ecdf7112615b99cf5ea63914a4f3835504c0f34257c389e4"
+    sha256 cellar: :any,                 ventura:        "1d3173084aa8a8889b63fab8a854fe53ef11192d3a2c1acb866b5203ab26419a"
+    sha256 cellar: :any,                 monterey:       "2f9e8995057db03e173294ea927e95c4f5447ee836a0eb47c1ecd88694cb6b30"
+    sha256 cellar: :any,                 big_sur:        "6dc41a236b7c54269ebb2dfc146e69db8f72b860654fbec028070936f7528118"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5e5cc051fc2413171f6c55993c11973db9cb6f0ee07a1f6c39ef84a239afee76"
   end
 
   depends_on "cmake" => :build
@@ -31,10 +32,6 @@ class Folly < Formula
 
   on_macos do
     depends_on "llvm" if DevelopmentTools.clang_build_version <= 1100
-  end
-
-  on_linux do
-    depends_on "gcc"
   end
 
   fails_with :clang do

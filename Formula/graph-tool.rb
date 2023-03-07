@@ -3,10 +3,9 @@ class GraphTool < Formula
 
   desc "Efficient network analysis for Python 3"
   homepage "https://graph-tool.skewed.de/"
-  url "https://downloads.skewed.de/graph-tool/graph-tool-2.45.tar.bz2"
-  sha256 "f92da7accfda02b29791efe4f0b3ed93329f27232af4d3afc07c92421ec68668"
+  url "https://downloads.skewed.de/graph-tool/graph-tool-2.46.tar.bz2"
+  sha256 "305508f0c2989a150aecd5df010424979cd17e83f67852121e4ab29eb07d3275"
   license "LGPL-3.0-or-later"
-  revision 2
 
   livecheck do
     url "https://downloads.skewed.de/graph-tool/"
@@ -14,12 +13,13 @@ class GraphTool < Formula
   end
 
   bottle do
-    sha256                               arm64_monterey: "bfd35784c3e8c4915567f5ad6606e819155eb3d7fd7e1fdf5c7658ff5325de00"
-    sha256                               arm64_big_sur:  "36dd6bbcd331b5e7bb582cf77ea97ac042e0a2aede7f55fdfa3f98f99d405243"
-    sha256                               monterey:       "a02c6f456582678f5b6dd5bfc74f273a1f7d31c0d8adda6eabf2192826729da9"
-    sha256                               big_sur:        "67efce17b0b24b7d86b99d9790f16b2ddbe1dadb57636f927738103c2d97d528"
-    sha256                               catalina:       "707cd23d7855407b312eb3eb8b80fbb60a10e93983a1206db475d9b88f7c38f2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f41391aed1eff7170c45e4985f20f054726ec6629d99b693a9e95580a2b67fcd"
+    sha256                               arm64_ventura:  "3509bf499bd99492a88d5e602c01a62c507dccba4c05215b09a99a733261558b"
+    sha256                               arm64_monterey: "f6300eab60560153621653b4e6c3db1cf41ca4af8cb55f52d9959eb628d0537f"
+    sha256                               arm64_big_sur:  "98b9eef0dce551d4b17e903ef441e48e74294403d6a6475091402879b007ed44"
+    sha256                               ventura:        "58b82016944de4d294f087f4826b79a0fa38d737c463e672b380b217a9abf1e1"
+    sha256                               monterey:       "4ea17d5cd975eb0d478ca1d9b47111e7e3fa0842c9e6b968a9016d9bb9b65049"
+    sha256                               big_sur:        "df4e092e1fba2f22859843c1a629efcb054cbd3bff955e5ba94ff017cd026357"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9e99687368f25621fc0925b03d6f4a30c5823bd960018452f9c2ceba4d00d8c8"
   end
 
   depends_on "autoconf" => :build
@@ -30,64 +30,71 @@ class GraphTool < Formula
   depends_on "boost-python3"
   depends_on "cairomm@1.14"
   depends_on "cgal"
+  depends_on "fonttools"
   depends_on "google-sparsehash"
   depends_on "gtk+3"
   depends_on "librsvg"
   depends_on macos: :mojave # for C++17
   depends_on "numpy"
+  depends_on "pillow"
   depends_on "py3cairo"
   depends_on "pygobject3"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
   depends_on "scipy"
   depends_on "six"
 
   uses_from_macos "expat" => :build
 
-  on_linux do
-    depends_on "gcc"
+  # https://git.skewed.de/count0/graph-tool/-/wikis/Installation-instructions#manual-compilation
+  fails_with :gcc do
+    version "6"
+    cause "Requires C++17 compiler"
   end
 
-  fails_with gcc: "5"
+  # Resources are for Python `matplotlib` and `zstandard` packages
 
-  resource "Cycler" do
-    url "https://files.pythonhosted.org/packages/c2/4b/137dea450d6e1e3d474e1d873cd1d4f7d3beed7e0dc973b06e8e10d32488/cycler-0.10.0.tar.gz"
-    sha256 "cd7b2d1018258d7247a71425e9f26463dfb444d411c39569972f4ce586b0c9d8"
+  resource "contourpy" do
+    url "https://files.pythonhosted.org/packages/8f/4f/8a5789867f2a928fd9b32e7e8d4bc0f27a765aa7056989e7427f2c2a1966/contourpy-1.0.6.tar.gz"
+    sha256 "6e459ebb8bb5ee4c22c19cc000174f8059981971a33ce11e17dddf6aca97a142"
+  end
+
+  resource "cycler" do
+    url "https://files.pythonhosted.org/packages/34/45/a7caaacbfc2fa60bee42effc4bcc7d7c6dbe9c349500e04f65a861c15eb9/cycler-0.11.0.tar.gz"
+    sha256 "9c87405839a19696e837b3b818fed3f5f69f16f1eec1a1ad77e043dcea9c772f"
   end
 
   resource "kiwisolver" do
-    url "https://files.pythonhosted.org/packages/90/55/399ab9f2e171047d28933ae4b686d9382d17e6c09a01bead4a6f6b5038f4/kiwisolver-1.3.1.tar.gz"
-    sha256 "950a199911a8d94683a6b10321f9345d5a3a8433ec58b217ace979e18f16e248"
+    url "https://files.pythonhosted.org/packages/5f/5c/272a7dd49a1914f35cd8d6d9f386defa8b047f6fbd06badd6b77b3ba24e7/kiwisolver-1.4.4.tar.gz"
+    sha256 "d41997519fcba4a1e46eb4a2fe31bc12f0ff957b2b81bac28db24744f333e955"
   end
 
   resource "matplotlib" do
-    url "https://files.pythonhosted.org/packages/60/d3/286925802edaeb0b8834425ad97c9564ff679eb4208a184533969aa5fc29/matplotlib-3.4.2.tar.gz"
-    sha256 "d8d994cefdff9aaba45166eb3de4f5211adb4accac85cbf97137e98f26ea0219"
+    url "https://files.pythonhosted.org/packages/91/1c/a48fd779287df3425c289cc2ff728980a5b355f15f4c3c40e1822770ba44/matplotlib-3.6.2.tar.gz"
+    sha256 "b03fd10a1709d0101c054883b550f7c4c5e974f751e2680318759af005964990"
+  end
+
+  resource "packaging" do
+    url "https://files.pythonhosted.org/packages/df/9e/d1a7217f69310c1db8fdf8ab396229f55a699ce34a203691794c5d1cad0c/packaging-21.3.tar.gz"
+    sha256 "dd47c42927d89ab911e606518907cc2d3a1f38bbd026385970643f9c5b8ecfeb"
   end
 
   resource "pyparsing" do
-    url "https://files.pythonhosted.org/packages/c1/47/dfc9c342c9842bbe0036c7f763d2d6686bcf5eb1808ba3e170afdb282210/pyparsing-2.4.7.tar.gz"
-    sha256 "c203ec8783bf771a155b207279b9bccb8dea02d8f0c9e5f8ead507bc3246ecc1"
+    url "https://files.pythonhosted.org/packages/71/22/207523d16464c40a0310d2d4d8926daffa00ac1f5b1576170a32db749636/pyparsing-3.0.9.tar.gz"
+    sha256 "2b020ecf7d21b687f219b71ecad3631f644a47f01403fa1d1036b0c6416d70fb"
   end
 
   resource "python-dateutil" do
-    url "https://files.pythonhosted.org/packages/be/ed/5bbc91f03fa4c839c4c7360375da77f9659af5f7086b7a7bdda65771c8e0/python-dateutil-2.8.1.tar.gz"
-    sha256 "73ebfe9dbf22e832286dafa60473e4cd239f8592f699aa5adaf10050e6e1823c"
-  end
-
-  resource "pytz" do
-    url "https://files.pythonhosted.org/packages/b0/61/eddc6eb2c682ea6fd97a7e1018a6294be80dba08fa28e7a3570148b4612d/pytz-2021.1.tar.gz"
-    sha256 "83a4a90894bf38e243cf052c8b58f381bfe9a7a483f6a9cab140bc7f702ac4da"
+    url "https://files.pythonhosted.org/packages/4c/c4/13b4776ea2d76c115c1d1b84579f3764ee6d57204f6be27119f13a61d0a9/python-dateutil-2.8.2.tar.gz"
+    sha256 "0123cacc1627ae19ddf3c27a5de5bd67ee4586fbdd6440d9748f8abb483d3e86"
   end
 
   resource "zstandard" do
-    url "https://files.pythonhosted.org/packages/b4/79/7b192e51a2952dee3a3c9dbd9208a9838d8d497745a18a5528e2dbfb465e/zstandard-0.15.2.tar.gz"
-    sha256 "52de08355fd5cfb3ef4533891092bb96229d43c2069703d4aff04fdbedf9c92f"
+    url "https://files.pythonhosted.org/packages/9a/50/1b7f7f710c0dfc1019ec4c7295f67855722c342af82f3132664ca6dc1c07/zstandard-0.19.0.tar.gz"
+    sha256 "31d12fcd942dd8dbf52ca5f6b1bbe287f44e5d551a081a983ff3ea2082867863"
   end
 
   def python3
-    deps.map(&:to_formula)
-        .find { |f| f.name.match?(/^python@\d\.\d+$/) }
-        .opt_bin/"python3"
+    "python3.11"
   end
 
   def install
@@ -98,25 +105,24 @@ class GraphTool < Formula
     site_packages = Language::Python.site_packages(python3)
     xy = Language::Python.major_minor_version(python3)
     venv = virtualenv_create(libexec, python3)
+    venv.pip_install resources
 
-    resources.each do |r|
-      venv.pip_install_and_link r
+    %w[fonttools].each do |package_name|
+      package = Formula[package_name].opt_libexec
+      (libexec/site_packages/"homebrew-#{package_name}.pth").write package/site_packages
     end
 
-    args = [
-      "--disable-debug",
-      "--disable-dependency-tracking",
-      "--prefix=#{prefix}",
-      "PYTHON=python3",
-      "--with-python-module-path=#{prefix/site_packages}",
-      "--with-boost-python=boost_python#{xy.to_s.delete(".")}-mt",
-      "--with-boost-libdir=#{Formula["boost"].opt_lib}",
-      "--with-boost-coroutine=boost_coroutine-mt",
+    args = %W[
+      PYTHON=#{python3}
+      --with-python-module-path=#{prefix/site_packages}
+      --with-boost-python=boost_python#{xy.to_s.delete(".")}-mt
+      --with-boost-libdir=#{Formula["boost"].opt_lib}
+      --with-boost-coroutine=boost_coroutine-mt
     ]
     args << "--with-expat=#{MacOS.sdk_path}/usr" if MacOS.sdk_path_if_needed
     args << "PYTHON_LIBS=-undefined dynamic_lookup" if OS.mac?
 
-    system "./configure", *args
+    system "./configure", *std_configure_args, *args
     system "make", "install"
 
     pth_contents = "import site; site.addsitedir('#{libexec/site_packages}')\n"

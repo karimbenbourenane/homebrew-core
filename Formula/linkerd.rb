@@ -2,8 +2,8 @@ class Linkerd < Formula
   desc "Command-line utility to interact with linkerd"
   homepage "https://linkerd.io"
   url "https://github.com/linkerd/linkerd2.git",
-      tag:      "stable-2.12.0",
-      revision: "0bd3f732e68b9bc0345b801ca541fad36a8dd824"
+      tag:      "stable-2.12.4",
+      revision: "ec4bb714e9fed472a379618e1b9a01317b2425b6"
   license "Apache-2.0"
 
   livecheck do
@@ -12,12 +12,13 @@ class Linkerd < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "b8e5dfe2e143f21fc5215f2e0f13f256ac7650bf91cd93ebc50a2d4f7e3d380e"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "3559d9295ee5a3ed1511e0844cf4ab3f8083b5e3b8acb4912c3ce578404305bc"
-    sha256 cellar: :any_skip_relocation, monterey:       "10122413c6c4630f84cf2172714efc7bea20fd4e95cddab3393495a99da3e935"
-    sha256 cellar: :any_skip_relocation, big_sur:        "b565d1a74392e36bee0d87b9a3b294146ae81d24d7e3cecb7ee9f74be3a82076"
-    sha256 cellar: :any_skip_relocation, catalina:       "44bc8d80ea6026f05547cd16c695fe3febc66204eaa9821125a0bed8f6457dfa"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "01a60324e1189844470383f1ffb9417e2241696c7d52af10f6473286d04134d5"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "e6b2aad31f1471cb9542677e51218dfbd048d366c5cb0237b4a3b4081147ee64"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "4e1e383fd4aa1ea4e73ef6327d679e0609511e80b17e617f80a4717fee860f17"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "41a17b8a0c256d6a7d454016b95fd09d0896f145de583cdd776419763a4c8725"
+    sha256 cellar: :any_skip_relocation, ventura:        "49a985dce63bdc21a38d405b3bbcda5b083aa64167c7f7e1f9e607ba7cc2cdc4"
+    sha256 cellar: :any_skip_relocation, monterey:       "c6e6cc196017c1fa0037a28fb486da2a19b5499ff538d51e24c2149ba849cf2b"
+    sha256 cellar: :any_skip_relocation, big_sur:        "8914d22438db4f3a779434fcdf7864a7742a84ee9e2cc17e89f10a5946df8bf3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "67c1a0c6a3c115fa9fb4ab832e5c01a50d37156c0a5fccaa4d84cdf01f566a23"
   end
 
   depends_on "go" => :build

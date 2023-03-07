@@ -1,24 +1,27 @@
 class Sqlc < Formula
   desc "Generate type safe Go from SQL"
   homepage "https://sqlc.dev/"
-  url "https://github.com/kyleconroy/sqlc/archive/v1.15.0.tar.gz"
-  sha256 "ac616440adf59043cbb7b7871ffd6735224d517234159df4b917eee4f7b4ea71"
+  url "https://github.com/kyleconroy/sqlc/archive/v1.17.2.tar.gz"
+  sha256 "6c8e1b66d11c4aacffad8c5e9e7586df12e5b1c24f957d4c5d78c3789da5de56"
   license "MIT"
   head "https://github.com/kyleconroy/sqlc.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "c5d017c7f62c92e58b4cab7db5d38ce8ead3b596461902647833a52944080b97"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "08fddf4a13cf7b516e9b1c7c18459cc33e7f33b4080adf1b8e06ef18e5625f4d"
-    sha256 cellar: :any_skip_relocation, monterey:       "f0845fb85838e5628a50aea88767fa912f4a23cde337e113259464c839a56e2d"
-    sha256 cellar: :any_skip_relocation, big_sur:        "9aa7b0d19e1c3115d37172fda0669ab0082d40f30400e9297ad3bf12c6f0b1ea"
-    sha256 cellar: :any_skip_relocation, catalina:       "2102f08ee147f4709c0d10a232670ee59f9b84e81ed900a112b9eb7639279d1d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b2c504daa08d361427440cd2f0b1a1683ef67d20f1d63738f05915b78893c92b"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "d0b69ea618c5381f4fb070432cd6f811c35c10ccdfaf52cdb9e31bcaa8b4aec0"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "c3a9612bcf20896ec074aa7c5eeff573ee5e51ad2d37fb35a4d5403078a6c5aa"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "c3db753e1793272c04b5ef7199ea0cbdb2ec299861014f80f76243af7a76ffb9"
+    sha256 cellar: :any_skip_relocation, ventura:        "29cf3f2a38e175507f8ebd3046d8b35b0f215fef880342fefc27d8076c184cc7"
+    sha256 cellar: :any_skip_relocation, monterey:       "0403f773b16af97c39bee8e72d92d254715a386b2af5781b24fc9a062d4562b4"
+    sha256 cellar: :any_skip_relocation, big_sur:        "f659b81d1558cd5ecca81bf9a2f3f8730e2d7a4c1d6cdaec6ce836a7750f6c27"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "2073a255a0239e30b900ef06fa121fd82a6c3ff5196c9a87577356fddc6cba8a"
   end
 
   depends_on "go" => :build
 
   def install
-    system "go", "build", *std_go_args, "-ldflags", "-s -w", "./cmd/sqlc"
+    system "go", "build", *std_go_args(ldflags: "-s -w"), "./cmd/sqlc"
+
+    generate_completions_from_executable(bin/"sqlc", "completion")
   end
 
   test do

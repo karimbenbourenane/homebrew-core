@@ -4,7 +4,7 @@ class Stp < Formula
   url "https://github.com/stp/stp/archive/refs/tags/2.3.3.tar.gz"
   sha256 "ea6115c0fc11312c797a4b7c4db8734afcfce4908d078f386616189e01b4fffa"
   license "MIT"
-  revision 2
+  revision 5
   head "https://github.com/stp/stp.git", branch: "master"
 
   livecheck do
@@ -13,12 +13,13 @@ class Stp < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "9977ca306c92733f555e00073bdcba9540bc16ca8e50666cc18edd24bfaf91b9"
-    sha256 cellar: :any,                 arm64_big_sur:  "c122410909f90ffa162108e95a69e6abe7eb09ce8da980afc29ad1634cf8259d"
-    sha256 cellar: :any,                 monterey:       "50f40a71a6731f69a564d275580f56669b3b1e24dd578754a45f22b246471702"
-    sha256 cellar: :any,                 big_sur:        "8b9d797c603a6ed43db27320a55a2fa2774d580ec9673250d2167f6b3c9634c7"
-    sha256 cellar: :any,                 catalina:       "2473aedddcd7136e749d023fb018ae7e2e97760594c7db20dd0fa8ee10ff6e26"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "50ac49e6c6b56137bec4f62975fe1717f8a211949b2359d681288151aeeb3d3b"
+    sha256 cellar: :any,                 arm64_ventura:  "56b4a35b04e14bd72a3b1feed68bdf51c5685490ef217546544838a73d848e42"
+    sha256 cellar: :any,                 arm64_monterey: "1dc415463bd8ca89ef8220836f7f5884b9d13da8805acee98bda7da74e9718ad"
+    sha256 cellar: :any,                 arm64_big_sur:  "a28b087debbd62a35a1f54c59dc76b65dba5b32a919aeb5354ec9cda76f87478"
+    sha256 cellar: :any,                 ventura:        "21cfed5b9aaf58fcc7727caa8ad39d04f589149d7983591abca0cdbeb59789bd"
+    sha256 cellar: :any,                 monterey:       "4c74e59f1548eec3152763ebd7f8dc97844f4851503e1df93f7440d5f6a1e961"
+    sha256 cellar: :any,                 big_sur:        "2d022aa8899bd99248deae04511fe096bd3a4ea176d7a6772efe01d9678ec2e3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6987938313274368694342d33c5b412685a9d60e050c037f8deb577d4c6bc6b8"
   end
 
   # stp refuses to build with system bison and flex
@@ -28,17 +29,18 @@ class Stp < Formula
   depends_on "boost"
   depends_on "cryptominisat"
   depends_on "minisat"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   uses_from_macos "perl"
 
   def install
-    site_packages = prefix/Language::Python.site_packages("python3")
+    python = "python3.11"
+    site_packages = prefix/Language::Python.site_packages(python)
     site_packages.mkpath
     inreplace "lib/Util/GitSHA1.cpp.in", "@CMAKE_CXX_COMPILER@", ENV.cxx
 
     system "cmake", "-S", ".", "-B", "build",
-                    "-DPYTHON_EXECUTABLE=#{Formula["python@3.10"].opt_bin}/python3",
+                    "-DPYTHON_EXECUTABLE=#{Formula["python@3.11"].opt_bin}/#{python}",
                     "-DPYTHON_LIB_INSTALL_DIR=#{site_packages}",
                     *std_cmake_args
     system "cmake", "--build", "build"

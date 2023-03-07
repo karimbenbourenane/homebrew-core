@@ -1,10 +1,9 @@
 class GstPython < Formula
   desc "Python overrides for gobject-introspection-based pygst bindings"
   homepage "https://gstreamer.freedesktop.org/modules/gst-python.html"
-  url "https://gstreamer.freedesktop.org/src/gst-python/gst-python-1.20.3.tar.xz"
-  sha256 "db348120eae955b8cc4de3560a7ea06e36d6e1ddbaa99a7ad96b59846601cfdc"
+  url "https://gstreamer.freedesktop.org/src/gst-python/gst-python-1.22.0.tar.xz"
+  sha256 "6c63ad364ca4617eb2cbb3975ab26c66760eb3c7a6adf5be69f99c11e21ef3a5"
   license "LGPL-2.1-or-later"
-  revision 1
 
   livecheck do
     url "https://gstreamer.freedesktop.org/src/gst-python/"
@@ -12,43 +11,39 @@ class GstPython < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "c7bd54bf59d884fece2bd93a8aa87156b1711fb792769e2e824b7980fe804fbd"
-    sha256 arm64_big_sur:  "46577a49c80650c862830b1dfc739962dcf3181b03ec2af19f6e03adb3731d31"
-    sha256 monterey:       "7726dbe8e9697fc1704c7ed442fcfdcb7f5308b0b7ca573fee7d697b42978e8c"
-    sha256 big_sur:        "a12e52607ac75e19ee6712dddd5d6d27f403dd5feb4d4fa942ce432c566f2ce3"
-    sha256 catalina:       "6677dc74dee5380d456c0615390eeaefa55cdc3ec7e892c66cbb95a8c78e863c"
-    sha256 x86_64_linux:   "a3ed0216139c282fa4c8304a40c52da5e97d7a2403c9cd135fb3801d17ff82a1"
+    sha256 arm64_ventura:  "627f61e862103cfd5d37f3f8d362486c8f130681bd3803021f5ba7405eda733f"
+    sha256 arm64_monterey: "ec8f6d3ca790262c049df58b4d703e22cfd7b50fbc50290c99ef09893f30d1cf"
+    sha256 arm64_big_sur:  "f70c45aa848b1caf06d6579557e33b5b4795b0f1c7473d014fbd06d9ad5fe779"
+    sha256 ventura:        "b4ca5abcc0e8f24e1c05d7c907bdb979e3d195e0e778bd83203b84e182b5704a"
+    sha256 monterey:       "37cbf8dae7e320e4eeee532a197713cd10d1bddf29a29c2655b333534ef1b2d8"
+    sha256 big_sur:        "8f81a557d990a051ab91909ecce271a8a80de6f832ef06e3fdefb09d35195f43"
+    sha256 x86_64_linux:   "eeac212bb8c9b0b172117c32ff51362a70c280698b5f6baddebc074463425130"
   end
 
   depends_on "meson" => :build
   depends_on "ninja" => :build
   depends_on "gst-plugins-base"
   depends_on "pygobject3"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
-  # See https://gitlab.freedesktop.org/gstreamer/gst-python/-/merge_requests/41
-  patch do
-    url "https://gitlab.freedesktop.org/gstreamer/gst-python/-/commit/3e752ede7ed6261681ef3831bc3dbb594f189e76.diff"
-    sha256 "d6522bb29f1894d3d426ee6c262a18669b0759bd084a6d2a2ea1ba0612a80068"
+  # Avoid overlinking
+  patch :DATA
+
+  def python3
+    which("python3.11")
   end
 
   def install
-    python = "python3.10"
-    site_packages = prefix/Language::Python.site_packages(python)
-
-    # This shouldn't be needed, but this fails to link with libpython3.10.so.
-    # TODO: Remove this when `python@3.10` is no longer keg-only.
-    ENV.append "LDFLAGS", "-Wl,-rpath,#{Formula["python@3.10"].opt_lib}" if OS.linux?
-
+    site_packages = prefix/Language::Python.site_packages(python3)
     system "meson", "setup", "build", "-Dpygi-overrides-dir=#{site_packages}/gi/overrides",
-                                      "-Dpython=#{python}",
+                                      "-Dpython=#{python3}",
                                       *std_meson_args
     system "meson", "compile", "-C", "build", "--verbose"
     system "meson", "install", "-C", "build"
   end
 
   test do
-    system Formula["python@3.10"].opt_bin/"python3.10", "-c", <<~EOS
+    system python3, "-c", <<~EOS
       import gi
       gi.require_version('Gst', '1.0')
       from gi.repository import Gst
@@ -56,3 +51,30 @@ class GstPython < Formula
     EOS
   end
 end
+__END__
+diff --git a/gi/overrides/meson.build b/gi/overrides/meson.build
+index 5977ee3..1b399af 100644
+--- a/gi/overrides/meson.build
++++ b/gi/overrides/meson.build
+@@ -3,13 +3,20 @@ install_data(pysources,
+     install_dir: pygi_override_dir,
+     install_tag: 'python-runtime')
+ 
++# avoid overlinking
++if host_machine.system() == 'windows'
++    python_ext_dep = python_dep
++else
++    python_ext_dep = python_dep.partial_dependency(compile_args: true)
++endif
++
+ gstpython = python.extension_module('_gi_gst',
+     sources: ['gstmodule.c'],
+     install: true,
+     install_dir : pygi_override_dir,
+     install_tag: 'python-runtime',
+     include_directories : [configinc],
+-    dependencies : [gst_dep, python_dep, pygobject_dep])
++    dependencies : [gst_dep, python_ext_dep, pygobject_dep])
+ 
+ env = environment()
+ env.prepend('_GI_OVERRIDES_PATH', [

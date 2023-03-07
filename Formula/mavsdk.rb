@@ -4,8 +4,8 @@ class Mavsdk < Formula
   desc "API and library for MAVLink compatible systems written in C++17"
   homepage "https://mavsdk.mavlink.io"
   url "https://github.com/mavlink/MAVSDK.git",
-      tag:      "v1.4.4",
-      revision: "8b974d8df8fe3cec60ec14c5d9380c8984b6813e"
+      tag:      "v1.4.12",
+      revision: "7456cc7b89b406f78bbf0adc66bdcfc9192840f6"
   license "BSD-3-Clause"
   revision 1
 
@@ -15,16 +15,17 @@ class Mavsdk < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "143931f0fe09f1a01aa66ac3746e0406e0a74337898900f8dcffc8d6db23b987"
-    sha256 cellar: :any,                 arm64_big_sur:  "8097490b2a8a01c4cafd13c5b343b0915daf032e4c004f74e519f94da2e3ef1c"
-    sha256 cellar: :any,                 monterey:       "3e70dea3dd62977959c892c59918a3536e74a6e22380d3f9e2aaabff199b3264"
-    sha256 cellar: :any,                 big_sur:        "330b7571af830f525d75b7a113a50402a40bb914a0d5eb1224e1df65ad17345f"
-    sha256 cellar: :any,                 catalina:       "1c1bb11989aa12df7fda06e3ce2120c875cb116f1a3b39e8eb215ff4a0e23b91"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "4f9b6c397af30c42f8c8148d25d7f58ce9fc2219caa4f5ae67e2debc31b5d5b1"
+    sha256 cellar: :any,                 arm64_ventura:  "40405808e41f70f81bc037bbc19c9a741626ad137b6cba4a15bf47bb5fc6f925"
+    sha256 cellar: :any,                 arm64_monterey: "8bf4c1c1143ea19466c30af74c405ea804d9a152c018c0a1f1e2670e9f2c829e"
+    sha256 cellar: :any,                 arm64_big_sur:  "02e4d1b7e117781012d51701b728004140ff66d829144c07c615124a8d4afe90"
+    sha256 cellar: :any,                 ventura:        "07581c7788d4d660e20d4af8af77b450d358c544d070a4167850e20bddc6e944"
+    sha256 cellar: :any,                 monterey:       "9b6f196908b0eb6871ecd227aaf4a9a37e7a14bdb77586eb25195fc2442d2913"
+    sha256 cellar: :any,                 big_sur:        "f535b375a7b74ac0ed7ebae35aaa19b59178975f18bfa290bd747ca5e45211ba"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "62dec9bfff9bb00965975420e5329ea33ec8abf77c61b1e07837962653cbe9a6"
   end
 
   depends_on "cmake" => :build
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => :build
   depends_on "six" => :build
   depends_on "abseil"
   depends_on "c-ares"
@@ -40,10 +41,6 @@ class Mavsdk < Formula
 
   on_macos do
     depends_on "llvm" if DevelopmentTools.clang_build_version <= 1100
-  end
-
-  on_linux do
-    depends_on "gcc"
   end
 
   fails_with :clang do
@@ -82,7 +79,7 @@ class Mavsdk < Formula
 
     # Install protoc-gen-mavsdk deps
     venv_dir = buildpath/"bootstrap"
-    venv = virtualenv_create(venv_dir, "python3")
+    venv = virtualenv_create(venv_dir, "python3.11")
     venv.pip_install resources
 
     # Install protoc-gen-mavsdk

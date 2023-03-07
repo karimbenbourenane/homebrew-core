@@ -1,8 +1,8 @@
 class Ki18n < Formula
   desc "KDE Gettext-based UI text internationalization"
   homepage "https://api.kde.org/frameworks/ki18n/html/index.html"
-  url "https://download.kde.org/stable/frameworks/5.97/ki18n-5.97.0.tar.xz"
-  sha256 "032f6d6f78c815ab2630a559ebf4c4a3737147fb35f327d213a171acf6f81e1e"
+  url "https://download.kde.org/stable/frameworks/5.103/ki18n-5.103.0.tar.xz"
+  sha256 "38ea91627f427d9ab74ebaa278163a5a94af2eaba5ac9e3d16a472d9457840e6"
   license all_of: [
     "BSD-3-Clause",
     "LGPL-2.0-or-later",
@@ -18,26 +18,23 @@ class Ki18n < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "1cef7532c44a52def14589d19fdc7edec0b3700179ade84ea24299fd42fd53d7"
-    sha256 arm64_big_sur:  "e48220c3ed0bfe8c737b95fc7cf0418041a466f8cfbbe8076b806ee66d9d8aad"
-    sha256 monterey:       "e733d4a805a4c2980d0597495b157df8cef9c0679a2b2b85e5784336b83116bc"
-    sha256 big_sur:        "ee13b2fefaeba31b523413d5d986681af8e2c30553954ffc6e6c9992c3dcad3a"
-    sha256 catalina:       "1270874360d3f52e7b5bf6eca851624891d42c25b67093cbe9c2647ac839bd99"
-    sha256 x86_64_linux:   "5d36e4647eb3c66660c1704e81d4bbb10d7b557d3f910a6a21adcbe87dea7242"
+    sha256 cellar: :any,                 arm64_ventura:  "369fb06504604e1ea2c058a7989a2716b04e51807f5ebf195cdfc58499612c16"
+    sha256 cellar: :any,                 arm64_monterey: "603c8ceb1f11d90610a8fdae4ff8f57720895cb216482eb80d663d26a3794157"
+    sha256 cellar: :any,                 arm64_big_sur:  "42c9ad24f18f326cc88bcd8d5a895754a2e30fe00d235b7e94662332debc2245"
+    sha256 cellar: :any,                 ventura:        "50a37aaa66ec1c2e10eee527e6c8e0874524757dbd17e165ee87f106964a8417"
+    sha256 cellar: :any,                 monterey:       "fb45e3d7fc04e99cabfcf4ada3191408ebcbd3cc0de8c89c04914e716b83ed4e"
+    sha256 cellar: :any,                 big_sur:        "bdfe3937f8d8f27a88abc103a371d1d50cac7a7abaddd2fea4411bfe81eec32e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a821816353597785461f72360e674d37735f09170a51fc8fdd6bdf6f4cdc902b"
   end
 
   depends_on "cmake" => [:build, :test]
   depends_on "doxygen" => :build
   depends_on "extra-cmake-modules" => [:build, :test]
   depends_on "graphviz" => :build
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => :build
   depends_on "gettext"
   depends_on "iso-codes"
   depends_on "qt@5"
-
-  on_linux do
-    depends_on "gcc"
-  end
 
   fails_with gcc: "5"
 

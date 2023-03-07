@@ -1,10 +1,9 @@
 class OpenMpi < Formula
   desc "High performance message passing library"
   homepage "https://www.open-mpi.org/"
-  url "https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.4.tar.bz2"
-  sha256 "92912e175fd1234368c8730c03f4996fe5942e7479bb1d10059405e7f2b3930d"
+  url "https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.5.tar.bz2"
+  sha256 "a640986bc257389dd379886fdae6264c8cfa56bc98b71ce3ae3dfbd8ce61dbe3"
   license "BSD-3-Clause"
-  revision 1
 
   livecheck do
     url :homepage
@@ -12,13 +11,13 @@ class OpenMpi < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 arm64_monterey: "a2d31ec8594e73c2c4a1bba865d8e81c610b0ff01f039f96efefe0317535d339"
-    sha256 arm64_big_sur:  "7ff7d8a4ea8395d2601bf72ad17ea422fa326325c38a47dd572add58ca36cbf8"
-    sha256 monterey:       "0af78dd3d07df75329c6ba30a9fccf16d6cf7e4a9eb5d8f2af3b892496df47d2"
-    sha256 big_sur:        "e6c45885f7dbbe4a8e112c493293976d7dc67739dd6c5fa7511413fc1210ac23"
-    sha256 catalina:       "ca1c09fd3cf0b9fee16b1d31759e1c0a3ad9b964b4165354f22c51606059306a"
-    sha256 x86_64_linux:   "6858cb1171181e721a6b8f2d9fb9d43eaae2c8fef7ebc5b6076f133484332485"
+    sha256 arm64_ventura:  "89a564cff8b043b4fe5e3d34c2f096ea6bc89cf72e4165fa1b551d29d5a55b88"
+    sha256 arm64_monterey: "c5b0561326489ee9e8ba2d6a6281fde4db0355847fd2f940f2163b89e001081b"
+    sha256 arm64_big_sur:  "7e246c8147f40a8455fa8cc4b54832f79acd2661173199a4c1e8407ff9d2176d"
+    sha256 ventura:        "c96d7b4d63ad9355fbc53f649382b98049bee122b73abf0917cdda475c5dae0f"
+    sha256 monterey:       "596abf565b48277a76d71cac98bd9419ea8cefc8135ca22c188f43f2cc0de4eb"
+    sha256 big_sur:        "88ca0ebd264ece1fc595c3842226f675ce5a93d4e208c1b2fc5ab4bb79757e17"
+    sha256 x86_64_linux:   "5ade70516d7f3b71c9917a0ef8749ede07a50a4b88b388f25954857c650f843a"
   end
 
   head do
@@ -44,12 +43,14 @@ class OpenMpi < Formula
       oshmem/tools/oshmem_info/param.c
     ]
 
-    inreplace inreplace_files, "OMPI_CXX_ABSOLUTE", "\"#{ENV.cxx}\""
+    cxx = OS.linux? ? "g++" : ENV.cxx
+    inreplace inreplace_files, "OMPI_CXX_ABSOLUTE", "\"#{cxx}\""
 
     inreplace_files << "orte/tools/orte-info/param.c" unless build.head?
     inreplace_files << "opal/mca/pmix/pmix3x/pmix/src/tools/pmix_info/support.c" unless build.head?
 
-    inreplace inreplace_files, /(OPAL|PMIX)_CC_ABSOLUTE/, "\"#{ENV.cc}\""
+    cc = OS.linux? ? "gcc" : ENV.cc
+    inreplace inreplace_files, /(OPAL|PMIX)_CC_ABSOLUTE/, "\"#{cc}\""
 
     ENV.cxx11
     ENV.runtime_cpu_detection

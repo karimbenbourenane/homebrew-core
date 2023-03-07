@@ -12,23 +12,20 @@ class Exa < Formula
   end
 
   bottle do
-    rebuild 2
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "0d39fb8905caae1b7b0f998960b7ed2fed3f758499acdab52b7a68acb6ed06f4"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "d60f5270bfc6f8fcf6729d86bcf994e5cdf582761711c67170dd990c4951e728"
-    sha256 cellar: :any_skip_relocation, monterey:       "3fe9b4a21d636e1282df9f2d9d29ac785af5ecd10bf3a2a584eebb57976b8311"
-    sha256 cellar: :any_skip_relocation, big_sur:        "bd1eb7bc9000217571a70b5c745befe6e471cca27374b0035557fe6afe3e73dd"
-    sha256 cellar: :any_skip_relocation, catalina:       "5400719f606f276a1e421685881919adbda04028cead1b8c64b1b342c201fb9a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c7f44f39c1beea749b9dd4373954a080381c0f0f01d8e987e8f21ac87e269155"
+    rebuild 5
+    sha256 cellar: :any,                 arm64_ventura:  "a3896eda34a5096be5642986d3de7c87eab719af5f6d3ad54ee216744a1462c2"
+    sha256 cellar: :any,                 arm64_monterey: "1b10765192e4f4940862feab95cf7f7491f50fca87771550f4a0796ca0b7563f"
+    sha256 cellar: :any,                 arm64_big_sur:  "29f335cc2130b0c5ee93236f9a3e805dc8af4fb9414a3e4b73d38e1c528399ad"
+    sha256 cellar: :any,                 ventura:        "4cc39e72c301eef716e0ab8e2f05f91fa3e1cbf3545b8002f9602ceb2c3c3c82"
+    sha256 cellar: :any,                 monterey:       "48e94b7764256f3e9e309dfd1a08c4dbaa2af3e2623fcfdb7c5ea9558fde6e5c"
+    sha256 cellar: :any,                 big_sur:        "3668c3a6a375d1ef1d340abbb77488ea6c60a166ea692da3eda5eb04cfbdbef2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "17a48a5beedeb00f98311e75e25cc3cd7043b1f9ef28ceccc5285bb4848eec34"
   end
 
   depends_on "pandoc" => :build
+  depends_on "pkg-config" => :build
   depends_on "rust" => :build
-
-  uses_from_macos "zlib"
-
-  on_linux do
-    depends_on "libgit2"
-  end
+  depends_on "libgit2"
 
   def install
     system "cargo", "install", *std_cargo_args
@@ -57,5 +54,13 @@ class Exa < Formula
   test do
     (testpath/"test.txt").write("")
     assert_match "test.txt", shell_output("#{bin}/exa")
+
+    linkage_with_libgit2 = (bin/"exa").dynamically_linked_libraries.any? do |dll|
+      next false unless dll.start_with?(HOMEBREW_PREFIX.to_s)
+
+      File.realpath(dll) == (Formula["libgit2"].opt_lib/shared_library("libgit2")).realpath.to_s
+    end
+
+    assert linkage_with_libgit2, "No linkage with libgit2! Cargo is likely using a vendored version."
   end
 end

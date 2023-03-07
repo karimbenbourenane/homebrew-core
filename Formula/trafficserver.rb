@@ -1,18 +1,19 @@
 class Trafficserver < Formula
   desc "HTTP/1.1 compliant caching proxy server"
   homepage "https://trafficserver.apache.org/"
-  url "https://downloads.apache.org/trafficserver/trafficserver-9.1.3.tar.bz2"
-  mirror "https://archive.apache.org/dist/trafficserver/trafficserver-9.1.3.tar.bz2"
-  sha256 "c8bf77b034b0da6c38d3ec9f3ca85ef1038aa046170e839308b0a59709d9afb6"
+  url "https://downloads.apache.org/trafficserver/trafficserver-9.2.0.tar.bz2"
+  mirror "https://archive.apache.org/dist/trafficserver/trafficserver-9.2.0.tar.bz2"
+  sha256 "45cc8198e2b0a12fad41d1cdc7e59675a64e1a38c6845923924de7bcfb5f74e4"
   license "Apache-2.0"
 
   bottle do
-    sha256 arm64_monterey: "ef9e8dbeb1d0a7641e07d22bea716e70f7c1b6e405acc68a521422b7f52e9a91"
-    sha256 arm64_big_sur:  "3ec4d70534efa2685f0af42c5d1cf3d976e0e5e11e750c20ac8debd64ba3b69a"
-    sha256 monterey:       "970141715408a567173a2363e40fe16d15d8343cbd05281ad46e9415e0e1d73c"
-    sha256 big_sur:        "c1d6b953daa4fe80b578dad4b29652ecedf76ee9d0cf666a65545662ad9bc79e"
-    sha256 catalina:       "9e180b50a512165d3ca4492bf07ec1f46ba2cc1789225dab686231b8bc48f043"
-    sha256 x86_64_linux:   "83cad1def656b877a48b269690c575dd3a0c8f7faacbca9bb87f3d7a80732d39"
+    sha256 arm64_ventura:  "618c899fe9753c75ba338a0ac3ac39b58367eb78ae83c916ac585dffe76944cb"
+    sha256 arm64_monterey: "87288afff7329c6630a092d0e5322367cf3f5cc53e4e4fd17ed440f3ab4ce97a"
+    sha256 arm64_big_sur:  "0af95c168e7d5af31d8179f690863d408139c2f0fb983322137d069e35bdacf8"
+    sha256 ventura:        "21b8b4aa2f4c96f76e38853c4afde0f3aa294791d6eb17da9c0bb22c1edb840e"
+    sha256 monterey:       "898575eb75584f9c884c7580bc00344bf7a49ddb295cdc98e72761c117d6de38"
+    sha256 big_sur:        "f8d42c92a06c7b472c10f34a047dc417079539d9cf6c1581cf4ae0f4919222af"
+    sha256 x86_64_linux:   "eb16bfdc1c6ec0ff60d434aa86ab639ac02e40110c3fe35dfa8751d46d990974"
   end
 
   head do
@@ -26,7 +27,7 @@ class Trafficserver < Formula
   depends_on "pkg-config" => :build
   depends_on "hwloc"
   depends_on macos: :mojave # `error: call to unavailable member function 'value': introduced in macOS 10.14`
-  depends_on "openssl@1.1"
+  depends_on "openssl@3"
   depends_on "pcre"
   depends_on "yaml-cpp"
 
@@ -36,10 +37,6 @@ class Trafficserver < Formula
     depends_on "autoconf" => :build
     depends_on "automake" => :build
     depends_on "libtool"  => :build
-  end
-
-  on_linux do
-    depends_on "gcc"
   end
 
   fails_with gcc: "5" # needs C++17
@@ -59,7 +56,7 @@ class Trafficserver < Formula
       --mandir=#{man}
       --localstatedir=#{var}
       --sysconfdir=#{pkgetc}
-      --with-openssl=#{Formula["openssl@1.1"].opt_prefix}
+      --with-openssl=#{Formula["openssl@3"].opt_prefix}
       --with-yaml-cpp=#{Formula["yaml-cpp"].opt_prefix}
       --with-group=admin
       --disable-tests

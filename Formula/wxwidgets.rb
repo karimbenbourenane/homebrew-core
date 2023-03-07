@@ -1,10 +1,9 @@
 class Wxwidgets < Formula
   desc "Cross-platform C++ GUI toolkit"
   homepage "https://www.wxwidgets.org"
-  url "https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.0/wxWidgets-3.2.0.tar.bz2"
-  sha256 "356e9b55f1ae3d58ae1fed61478e9b754d46b820913e3bfbc971c50377c1903a"
-  license "wxWindows"
-  revision 1
+  url "https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.2.1/wxWidgets-3.2.2.1.tar.bz2"
+  sha256 "dffcb6be71296fff4b7f8840eb1b510178f57aa2eb236b20da41182009242c02"
+  license "LGPL-2.0-or-later" => { with: "WxWindows-exception-3.1" }
   head "https://github.com/wxWidgets/wxWidgets.git", branch: "master"
 
   livecheck do
@@ -13,26 +12,35 @@ class Wxwidgets < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "f82e5102e00d063b2147b4fd19671dc54933038cd0f6036eeeaad462856a00da"
-    sha256 cellar: :any,                 arm64_big_sur:  "d22754feb51491069e60d590292fa4e52663030c950ef930eb179706bedec72d"
-    sha256 cellar: :any,                 monterey:       "378d100c3066938cfd47f2b33508dc72061b57aba8bebcdff2e2c1884b72ba6d"
-    sha256 cellar: :any,                 big_sur:        "54f03e7ef16ced680b6e8eeccc5fd077669af9ab8d1e020c165274f036bc94cb"
-    sha256 cellar: :any,                 catalina:       "8fa5b3a5b42f734c036d2b5d6750513a9ad71a9b2dc6729fe39a1e14140b9688"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "17ed6f286f589cfdba01bb3e39296b4c7a51197834cd3307399e98555292f6f8"
+    sha256 cellar: :any,                 arm64_ventura:  "57f4e7e5c477ceedcfc61e2c0cc1e9fb43dcbc5460e178651ea72fa082743cca"
+    sha256 cellar: :any,                 arm64_monterey: "eabe4d3be0802595b3690ea0a7e0ba928cd05323563fdc4c2c8eca0cc617fd5f"
+    sha256 cellar: :any,                 arm64_big_sur:  "4440d70361440822a00750c2363c2d6eef2412863d8308c9571fe2352143799c"
+    sha256 cellar: :any,                 ventura:        "5a7051517de061440de513389d20bc7e7a8cc1601571f836c553a1ba19c97702"
+    sha256 cellar: :any,                 monterey:       "5f3399ebf5080fd205c39fe7da594f216175ab451fea181e59d5bd7d7e94295d"
+    sha256 cellar: :any,                 big_sur:        "ed575bbb6e1cd8545facc7b14c83ca6d7b1c1ef64e2fdc93b7700217e6565612"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "4e144d7720804e4c5873ca76be1b7e70c571a3b9d927f0913c29599070a27dad"
   end
 
+  depends_on "pkg-config" => :build
   depends_on "jpeg-turbo"
   depends_on "libpng"
   depends_on "libtiff"
+  depends_on "pcre2"
+
+  uses_from_macos "expat"
+  uses_from_macos "zlib"
 
   on_linux do
-    depends_on "pkg-config" => :build
     depends_on "gtk+3"
     depends_on "libsm"
     depends_on "mesa-glu"
   end
 
   def install
+    # Remove all bundled libraries excluding `nanosvg` which isn't available as formula
+    %w[catch pcre].each { |l| (buildpath/"3rdparty"/l).rmtree }
+    %w[expat jpeg png tiff zlib].each { |l| (buildpath/"src"/l).rmtree }
+
     args = [
       "--prefix=#{prefix}",
       "--enable-clipboard",
@@ -51,6 +59,8 @@ class Wxwidgets < Formula
       "--with-libtiff",
       "--with-opengl",
       "--with-zlib",
+      "--disable-dependency-tracking",
+      "--disable-tests",
       "--disable-precomp-headers",
       # This is the default option, but be explicit
       "--disable-monolithic",

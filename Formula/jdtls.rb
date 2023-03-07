@@ -3,9 +3,9 @@ class Jdtls < Formula
 
   desc "Java language specific implementation of the Language Server Protocol"
   homepage "https://github.com/eclipse/eclipse.jdt.ls"
-  url "https://download.eclipse.org/jdtls/milestones/1.15.0/jdt-language-server-1.15.0-202208311644.tar.gz"
-  version "1.15.0"
-  sha256 "34368a50a1b2e9c8baf4e302fe21e5b99963a935157713d3c21002ceb13c3fd8"
+  url "https://download.eclipse.org/jdtls/milestones/1.20.0/jdt-language-server-1.20.0-202302201605.tar.gz"
+  version "1.20.0"
+  sha256 "e62ccd18f6778d7b4910f588173af066c362f1eb318783d49fbc485a9e135765"
   license "EPL-2.0"
   version_scheme 1
 
@@ -15,17 +15,16 @@ class Jdtls < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "283d50b7c93ba460b349bbeeb8e63e00872bec7c374917d417f420e48732f322"
+    sha256 cellar: :any_skip_relocation, all: "0b2b66babcf27d90e61d5444e87e039c4c018abf29eeeb9b3a965fff6679f384"
   end
 
   depends_on "openjdk"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   def install
     libexec.install %w[bin config_mac config_linux features plugins]
     rewrite_shebang detected_python_shebang, libexec/"bin/jdtls"
-    (bin/"jdtls").write_env_script libexec/"bin/jdtls",
-      Language::Java.overridable_java_home_env
+    (bin/"jdtls").write_env_script libexec/"bin/jdtls", Language::Java.overridable_java_home_env
   end
 
   test do

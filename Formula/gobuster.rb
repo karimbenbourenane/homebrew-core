@@ -1,28 +1,26 @@
 class Gobuster < Formula
   desc "Directory/file & DNS busting tool written in Go"
   homepage "https://github.com/OJ/gobuster"
-  url "https://github.com/OJ/gobuster.git",
-      tag:      "v3.1.0",
-      revision: "f5051ed456dc158649bb8bf407889ab0978bf1ba"
+  url "https://github.com/OJ/gobuster/archive/refs/tags/v3.5.0.tar.gz"
+  sha256 "95637b503aa6e96bad2e864e39b51d8f616dff87e54932e0d1af6af514c46e21"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "44353288958adfaede89054b42dbac2f20f4cf1968d2c1b7101d3ab140d4eef8"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "e6e7f65fbed3896cb3b63eefddd16de3b621a8d72b205d24b8f7abd21379f87e"
-    sha256 cellar: :any_skip_relocation, monterey:       "ecbea96dbc4a7889cb9c2cd295d84858b5f332b7d44c12f482450e6e1e10266f"
-    sha256 cellar: :any_skip_relocation, big_sur:        "8342b115722243f5c108de8ecdb5aefd20ae5deb884e48732c80595c24897f0d"
-    sha256 cellar: :any_skip_relocation, catalina:       "f8f36299b36b59006637dcc7d062614eb209ba82a31f5a67fce789c4d6ef9562"
-    sha256 cellar: :any_skip_relocation, mojave:         "16912d38db06501d02cdab6066d1da01129779d958ce142c40018cce30328fc4"
-    sha256 cellar: :any_skip_relocation, high_sierra:    "341ce02f5e99ba1bf9cee8d6cbdd150a6e36d8b0fd811ded7a2da8933d877f9a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "493ef7685bc5627b6b382479f3645eda52a36010581e3c9400145775d7da0ca2"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "39f5143ba65fd0a08bfaa94f8510649bc5443434d9584a6d46f363388318110d"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "37542e80bb5de721368142b0b5acd7ff367864726d2da2829ff296f819f3f46e"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "5e098f079d2035fe8f9b400df45149bfced96ef47d52adca31ff84273bb381ab"
+    sha256 cellar: :any_skip_relocation, ventura:        "fb3407f0bdea0660470c86173c617c45b1e1ee75a767f0c0d6faef4e3232faff"
+    sha256 cellar: :any_skip_relocation, monterey:       "c473363b8bd234b17b3f2514758bdae6731d12c2660d6a5d5be60357d7538dd5"
+    sha256 cellar: :any_skip_relocation, big_sur:        "23c617ae4a4c6a5034d84d12d79a9babb3fdfc79ac61427f5a7b5dd7351be4f9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a335f588aad5a03686f3b1621b01e0b69695315b16f0d9480bd1e1937c388967"
   end
 
-  # Bump to 1.18 on the next release.
-  depends_on "go@1.17" => :build
+  depends_on "go" => :build
 
   def install
-    system "go", "build", "-ldflags", "-s -w", "-trimpath", "-o", bin/"gobuster"
-    prefix.install_metafiles
+    system "go", "build", *std_go_args(ldflags: "-s -w")
+
+    generate_completions_from_executable(bin/"gobuster", "completion")
   end
 
   test do
@@ -36,5 +34,7 @@ class Gobuster < Formula
 
     output = shell_output("#{bin}/gobuster dir -u https://buffered.io -w words.txt 2>&1")
     assert_match "Finished", output
+
+    assert_match version.major_minor.to_s, shell_output(bin/"gobuster version")
   end
 end

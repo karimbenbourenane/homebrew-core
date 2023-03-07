@@ -1,106 +1,126 @@
 class Ghc < Formula
   desc "Glorious Glasgow Haskell Compilation System"
   homepage "https://haskell.org/ghc/"
-  url "https://downloads.haskell.org/~ghc/8.10.7/ghc-8.10.7-src.tar.xz"
-  sha256 "e3eef6229ce9908dfe1ea41436befb0455fefb1932559e860ad4c606b0d03c9d"
-  # We bundle a static GMP so GHC inherits GMP's license
+  # We build bundled copies of libffi and GMP so GHC inherits the licenses
   license all_of: [
     "BSD-3-Clause",
-    any_of: ["LGPL-3.0-or-later", "GPL-2.0-or-later"],
+    "MIT", # libffi
+    any_of: ["LGPL-3.0-or-later", "GPL-2.0-or-later"], # GMP
   ]
-  revision 1
+  head "https://gitlab.haskell.org/ghc/ghc.git", branch: "master"
+
+  stable do
+    url "https://downloads.haskell.org/~ghc/9.4.4/ghc-9.4.4-src.tar.xz"
+    sha256 "e8cef25a6ded1531cda7a90488d0cfb6d780657d16636daa59430be030cd67e2"
+
+    # Fix build with sphinx-doc 6+. Remove patch when available in release.
+    patch do
+      url "https://gitlab.haskell.org/ghc/ghc/-/commit/00dc51060881df81258ba3b3bdf447294618a4de.diff"
+      sha256 "354baeb8727fbbfb6da2e88f9748acaab23bcccb5806f8f59787997753231dbb"
+    end
+  end
 
   livecheck do
     url "https://www.haskell.org/ghc/download.html"
-    regex(/href=.*?download[._-]ghc[._-][^"' >]+?\.html[^>]*?>\s*?v?(8(?:\.\d+)+)\s*?</i)
+    regex(/href=.*?download[._-]ghc[._-][^"' >]+?\.html[^>]*?>\s*?v?(\d+(?:\.\d+)+)\s*?</i)
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "41e846a0479f930390ae2c65cf7ae0f3ea3755ff26df56822fb999722fb4932e"
-    sha256 cellar: :any,                 arm64_big_sur:  "7ddd8e8dabdb5654f167aa079ef9a1290e20aa151ce3580eed24042d95d47b57"
-    sha256                               monterey:       "c50034c3553a0f6099e2dfc3c7c33ca148256fedc8bc9be492cc942284bb473e"
-    sha256                               big_sur:        "68f447996de80ef0aa655b9b0f5cc048503a09366b17edf77b101f9c1a38fe0b"
-    sha256                               catalina:       "14f6f4c4faa2ef0e4de7b225346c3b084de3356f069ac77eed05768046c70e28"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "bea0a8011b453e37e99855a6640642303d60c6611db366cb5f2d02a7546da19b"
+    sha256 cellar: :any,                 arm64_ventura:  "f136deaa7967fd86ecece56020453a1f30d73b8a6898d0c007270c041c0b3239"
+    sha256 cellar: :any,                 arm64_monterey: "c12624f0a4ee82cab1cdc390e516cdcbe9402307001b3830335389897689bd6b"
+    sha256 cellar: :any,                 arm64_big_sur:  "f8f5b51f2e1504a5f18f37e762fec8f30f3bfb992422403eeb930f1302bae300"
+    sha256 cellar: :any,                 ventura:        "10822b64bd093c1a19c1813cd2065aa11843f03976be92d42ca57d5f70f0d293"
+    sha256 cellar: :any,                 monterey:       "8d438fe6888ca4a95e7ab2689a0549abd0815c781a37bba2f116431364296985"
+    sha256 cellar: :any,                 big_sur:        "4fcdfd3cb167d33c688326a1daf7343a9a9e013b7c9a6562914f8e9694981ff9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8bbdf64a0bcef088b7e9a89d4ff43213de8e4faf746cce595c262b3e11c63153"
   end
 
-  depends_on "python@3.9" => :build
+  depends_on "autoconf" => :build
+  depends_on "automake" => :build
+  depends_on "python@3.11" => :build
   depends_on "sphinx-doc" => :build
+  depends_on macos: :catalina
 
   uses_from_macos "m4" => :build
   uses_from_macos "ncurses"
+
+  # Build uses sed -r option, which is not available in Catalina shipped sed.
+  on_catalina do
+    depends_on "gnu-sed" => :build
+  end
 
   on_linux do
     depends_on "gmp" => :build
   end
 
-  # GHC 8.10.7 user manual recommend use LLVM 9 through 12
-  # https://downloads.haskell.org/~ghc/8.10.7/docs/html/users_guide/8.10.7-notes.html
+  # GHC 9.4.4 user manual recommend use LLVM 9 through 13
+  # https://downloads.haskell.org/~ghc/9.4.4/docs/users_guide/9.4.4-notes.html
   # and we met some unknown issue w/ LLVM 13 before https://gitlab.haskell.org/ghc/ghc/-/issues/20559
   # so conservatively use LLVM 12 here
   on_arm do
     depends_on "llvm@12"
   end
 
-  resource "gmp" do
-    on_macos do
-      url "https://ftp.gnu.org/gnu/gmp/gmp-6.2.1.tar.xz"
-      mirror "https://gmplib.org/download/gmp/gmp-6.2.1.tar.xz"
-      mirror "https://ftpmirror.gnu.org/gmp/gmp-6.2.1.tar.xz"
-      sha256 "fd4829912cddd12f84181c3451cc752be224643e87fac497b69edddadc49b4f2"
-    end
-  end
-
-  # https://www.haskell.org/ghc/download_ghc_8_10_7.html#macosx_x86_64
-  # "This is a distribution for Mac OS X, 10.7 or later."
   # A binary of ghc is needed to bootstrap ghc
   resource "binary" do
     on_macos do
-      on_intel do
-        url "https://downloads.haskell.org/~ghc/8.10.7/ghc-8.10.7-x86_64-apple-darwin.tar.xz"
-        sha256 "287db0f9c338c9f53123bfa8731b0996803ee50f6ee847fe388092e5e5132047"
-      end
       on_arm do
-        url "https://downloads.haskell.org/ghc/8.10.7/ghc-8.10.7-aarch64-apple-darwin.tar.xz"
-        sha256 "dc469fc3c35fd2a33a5a575ffce87f13de7b98c2d349a41002e200a56d9bba1c"
+        url "https://downloads.haskell.org/~ghc/9.2.5/ghc-9.2.5-aarch64-apple-darwin.tar.xz"
+        sha256 "b060ad093e0d86573e01b3d1fd622d4892f8d8925cbb7d75a67a01d2a4f27f18"
+      end
+      on_intel do
+        url "https://downloads.haskell.org/~ghc/9.2.5/ghc-9.2.5-x86_64-apple-darwin.tar.xz"
+        sha256 "6c46f5003f29d09802d572a7c5fabf6c1f91714a474967a5415b15df77fdcd90"
       end
     end
-
     on_linux do
-      url "https://downloads.haskell.org/~ghc/8.10.7/ghc-8.10.7-x86_64-deb9-linux.tar.xz"
-      sha256 "ced9870ea351af64fb48274b81a664cdb6a9266775f1598a79cbb6fdd5770a23"
+      on_arm do
+        url "https://downloads.haskell.org/~ghc/9.2.5/ghc-9.2.5-aarch64-deb10-linux.tar.xz"
+        sha256 "29c0735ada90cdbf7e4a227dee08f18d74e33ec05d7c681e4ef95b8aa13104b3"
+      end
+      on_intel do
+        url "https://downloads.haskell.org/~ghc/9.2.5/ghc-9.2.5-x86_64-ubuntu20.04-linux.tar.xz"
+        sha256 "be1ca5b2864880d7c3623c51f2c2ca773e380624929bf0be8cfadbdb7f4b7154"
+      end
+    end
+  end
+
+  resource "cabal-install" do
+    on_macos do
+      on_arm do
+        url "https://downloads.haskell.org/~cabal/cabal-install-3.8.1.0/cabal-install-3.8.1.0-aarch64-darwin.tar.xz"
+        sha256 "f75b129c19cf3aa88cf9885cbf5da6d16f9972c7f770c528ca765b9f0563ada3"
+      end
+      on_intel do
+        url "https://downloads.haskell.org/~cabal/cabal-install-3.8.1.0/cabal-install-3.8.1.0-x86_64-darwin.tar.xz"
+        sha256 "f5ff69127b0e596b0d7895a2b0b383543aa92ae46d9b1b28f2868d2a97ed0de9"
+      end
+    end
+    on_linux do
+      on_arm do
+        url "https://downloads.haskell.org/~cabal/cabal-install-3.8.1.0/cabal-install-3.8.1.0-aarch64-linux-deb10.tar.xz"
+        sha256 "c7fa9029f2f829432dd9dcf764e58605fbb7431db79234feb3e46684a9b37214"
+      end
+      on_intel do
+        url "https://downloads.haskell.org/~cabal/cabal-install-3.8.1.0/cabal-install-3.8.1.0-x86_64-linux-deb10.tar.xz"
+        sha256 "c71a1a46fd42d235bb86be968660815c24950e5da2d1ff4640da025ab520424b"
+      end
     end
   end
 
   def install
     ENV["CC"] = ENV.cc
     ENV["LD"] = "ld"
-    ENV["PYTHON"] = Formula["python@3.9"].opt_bin/"python3"
+    ENV["PYTHON"] = which("python3.11")
+    # Work around `ENV["CC"]` no longer being used unless set to absolute path.
+    # Caused by https://gitlab.haskell.org/ghc/ghc/-/commit/6be2c5a7e9187fc14d51e1ec32ca235143bb0d8b
+    # Issue ref: https://gitlab.haskell.org/ghc/ghc/-/issues/22175
+    # TODO: remove once upstream issue is fixed
+    ENV["ac_cv_path_CC"] = ENV.cc
 
-    args = %w[--enable-numa=no]
-    if OS.mac?
-      # Build a static gmp rather than in-tree gmp, otherwise all ghc-compiled
-      # executables link to Homebrew's GMP.
-      gmp = libexec/"integer-gmp"
-
-      # GMP *does not* use PIC by default without shared libs so --with-pic
-      # is mandatory or else you'll get "illegal text relocs" errors.
-      resource("gmp").stage do
-        cpu = Hardware::CPU.arm? ? "aarch64" : Hardware.oldest_cpu
-        system "./configure", "--prefix=#{gmp}", "--with-pic", "--disable-shared",
-                              "--build=#{cpu}-apple-darwin#{OS.kernel_version.major}"
-        system "make"
-        system "make", "install"
-      end
-
-      args = ["--with-gmp-includes=#{gmp}/include",
-              "--with-gmp-libraries=#{gmp}/lib"]
-    end
-
+    binary = buildpath/"binary"
     resource("binary").stage do
-      binary = buildpath/"binary"
-
-      binary_args = args
+      binary_args = []
       if OS.linux?
         binary_args << "--with-gmp-includes=#{Formula["gmp"].opt_include}"
         binary_args << "--with-gmp-libraries=#{Formula["gmp"].opt_lib}"
@@ -110,16 +130,41 @@ class Ghc < Formula
       ENV.deparallelize { system "make", "install" }
 
       ENV.prepend_path "PATH", binary/"bin"
+      # Build uses sed -r option, which is not available in Catalina shipped sed.
+      ENV.prepend_path "PATH", Formula["gnu-sed"].libexec/"gnubin" if MacOS.version == :catalina
     end
 
-    args << "--with-intree-gmp" if OS.linux?
+    resource("cabal-install").stage { (binary/"bin").install "cabal" }
+    system "cabal", "v2-update"
+    if build.head?
+      cabal_args = std_cabal_v2_args.reject { |s| s["installdir"] }
+      system "cabal", "v2-install", "alex", "happy", *cabal_args, "--installdir=#{binary}/bin"
+      system "./boot"
+    end
 
-    system "./configure", "--prefix=#{prefix}", *args
-    system "make"
+    system "./configure", "--prefix=#{prefix}", "--disable-numa", "--with-intree-gmp"
+    hadrian_args = %W[
+      -j#{ENV.make_jobs}
+      --prefix=#{prefix}
+      --flavour=release
+      --docs=no-sphinx-pdfs
+    ]
+    # Work around linkage error due to RPATH in ghc-iserv-dyn-ghc
+    # Issue ref: https://gitlab.haskell.org/ghc/ghc/-/issues/22557
+    unless build.head?
+      os = OS.mac? ? "osx" : OS.kernel_name.downcase
+      cpu = Hardware::CPU.arm? ? "aarch64" : Hardware::CPU.arch.to_s
+      extra_rpath = rpath(source: lib/"ghc-#{version}/bin",
+                          target: lib/"ghc-#{version}/lib/#{cpu}-#{os}-ghc-#{version}")
+      hadrian_args << "*.iserv.ghc.link.opts += -optl-Wl,-rpath,#{extra_rpath}"
+    end
+    # Let hadrian handle its own parallelization
+    ENV.deparallelize { system "hadrian/build", "install", *hadrian_args }
 
-    ENV.deparallelize { system "make", "install" }
-    Dir.glob(lib/"*/package.conf.d/package.cache") { |f| rm f }
-    Dir.glob(lib/"*/package.conf.d/package.cache.lock") { |f| rm f }
+    bash_completion.install "utils/completion/ghc.bash" => "ghc"
+    ghc_libdir = build.head? ? lib.glob("ghc-*").first : lib/"ghc-#{version}"
+    (ghc_libdir/"lib/package.conf.d/package.cache").unlink
+    (ghc_libdir/"lib/package.conf.d/package.cache.lock").unlink
 
     bin.env_script_all_files libexec, PATH: "${PATH}:#{Formula["llvm@12"].opt_bin}" if Hardware::CPU.arm?
   end

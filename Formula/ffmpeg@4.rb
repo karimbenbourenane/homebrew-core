@@ -1,8 +1,8 @@
 class FfmpegAT4 < Formula
   desc "Play, record, convert, and stream audio and video"
   homepage "https://ffmpeg.org/"
-  url "https://ffmpeg.org/releases/ffmpeg-4.4.2.tar.xz"
-  sha256 "af419a7f88adbc56c758ab19b4c708afbcae15ef09606b82b855291f6a6faa93"
+  url "https://ffmpeg.org/releases/ffmpeg-4.4.3.tar.xz"
+  sha256 "6c5b6c195e61534766a0b5fe16acc919170c883362612816d0a1c7f4f947006e"
   # None of these parts are used by default, you have to explicitly pass `--enable-gpl`
   # to configure to activate them. In this case, FFmpeg's license changes to GPL v2+.
   license "GPL-2.0-or-later"
@@ -14,12 +14,13 @@ class FfmpegAT4 < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "45fe3d6bcbed4a82661897100313edef0985cbbfd31c8a26e3d0e8d0cff4ae80"
-    sha256 arm64_big_sur:  "6be8e7871edbbdc8ac4ed06c30aaf0b2ce885a06d228f25b212e8133ae251034"
-    sha256 monterey:       "97d4a31d4b3273635c38fd06d3dcf6476564517c8b8d25e172d97823ceb08cea"
-    sha256 big_sur:        "48bd7a081bda5fa6fa355611e3a2ca7e1b58c34296df821fcaad79bd2068ecf4"
-    sha256 catalina:       "1249b1db3fd4bb13354a11db67c3546f81ef74eafc0b13b671be3828a51ff903"
-    sha256 x86_64_linux:   "d7a6a6e7ed2ce7ad954f05ecd16324c79ffa6cdb7d8a1699c3b8afa6837b675f"
+    sha256 arm64_ventura:  "53297e8ebd077cf9eb6224b93cdb1836347dfbb66dd2187d5e0cdbbfeb568243"
+    sha256 arm64_monterey: "7f0b4a0c6537397e569e0390732bfbd24ca1a637d1855551adde59b1d19527bd"
+    sha256 arm64_big_sur:  "a38843a817a5bfe47e190c2fd33042ccbdc7dc1dd20a556d0083989a64866961"
+    sha256 ventura:        "2d89cc26552994c4d2a4a174c2ee485528b2ebd95b51be01eb9f8dd65759c16e"
+    sha256 monterey:       "0098ccd1059da96d8bdae9e35f397441c40b3547bdf2b4e3366e35e54f0fb879"
+    sha256 big_sur:        "e2d875d51bbceace5509ff7b8f7604cb62fd138f786c3063b83847fe890c011c"
+    sha256 x86_64_linux:   "c278fda4b430045427610196755d533c9ea285c5df5b1ef9ce65b36a4b32c547"
   end
 
   keg_only :versioned_formula
@@ -66,7 +67,6 @@ class FfmpegAT4 < Formula
 
   on_linux do
     depends_on "alsa-lib"
-    depends_on "gcc" # because rubberband is compiled with gcc
     depends_on "libxv"
   end
 

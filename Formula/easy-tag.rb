@@ -4,21 +4,23 @@ class EasyTag < Formula
   url "https://download.gnome.org/sources/easytag/2.4/easytag-2.4.3.tar.xz"
   sha256 "fc51ee92a705e3c5979dff1655f7496effb68b98f1ada0547e8cbbc033b67dd5"
   license "GPL-2.0-or-later"
-  revision 7
+  revision 8
 
   bottle do
-    sha256 arm64_monterey: "0e334fc2c5c63aa37ca2a591a7fd8766971c5968182bf9a54f65341ca68aa26e"
-    sha256 arm64_big_sur:  "19c855890bd69d2f3b43474643f0549471fddb21a7bd9028f7a3c79eb1b3babc"
-    sha256 monterey:       "bdfb1e89623fd2c2768838c25e1dbee94df3dfddee44ac909981016fbdaa511a"
-    sha256 big_sur:        "90aaef272ceccc7649f07c4f28f035bf244c46b2d2759fb1f20b4461dc1ddaf5"
-    sha256 catalina:       "e54ae5171bfd60214766706fc9442d3824c6ce0b29e989060496341bf5844295"
-    sha256 x86_64_linux:   "2138a2a771d53f468b4aca39464f049106901b0645532a8b1b63ad2da33c98f6"
+    rebuild 1
+    sha256 arm64_ventura:  "2842fbc4cf1533ae7f7734797839ef1658526719b4050a4293f9cbe57af6b88d"
+    sha256 arm64_monterey: "62610eeb362c3239309e9559cf01632f86c4c3b55b119aec1c4b8f79fbd5ce9d"
+    sha256 arm64_big_sur:  "b9e4f4fb767f1bcacaa1fa4f527814681d92ce47d7d091f22e3bb506f7e4c3f7"
+    sha256 ventura:        "d79741edf9f1f7351596ee388e1fc4b80f0e817f66b1f63303ae7c33e99dfbb6"
+    sha256 monterey:       "e07457b1fe81c61d43908dae2964dba03e56631e4788f1546c194079c7be2ddb"
+    sha256 big_sur:        "51c76274e95501746d8f92476e2d9d9fe4163b00f2750ba9e703e8b4e8c0f670"
+    sha256 x86_64_linux:   "2990dcdd7b0c5eb9c23aa7bb3af2720d8ead25ef00ae9d2f6edf5004d32526e1"
   end
 
   depends_on "intltool" => :build
   depends_on "itstool" => :build
   depends_on "pkg-config" => :build
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => :build
   depends_on "adwaita-icon-theme"
   depends_on "flac"
   depends_on "gtk+3"

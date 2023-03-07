@@ -4,25 +4,27 @@ class Field3d < Formula
   url "https://github.com/imageworks/Field3D/archive/v1.7.3.tar.gz"
   sha256 "b6168bc27abe0f5e9b8d01af7794b3268ae301ac72b753712df93125d51a0fd4"
   license "BSD-3-Clause"
-  revision 7
+  revision 9
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "b39c3161c958937e66aa74d0ef7780a4e2df3d279fd834cddc011c930bbc401c"
-    sha256 cellar: :any,                 arm64_big_sur:  "8be626af06a5963eefff00b617d732055ecc5c981aa9da4b3646f70874f92047"
-    sha256 cellar: :any,                 monterey:       "08450558bd22e30ea9fbc0987f97d7cb08996c768df4da2f1622d369100cdc13"
-    sha256 cellar: :any,                 big_sur:        "6e05fd88a91b386fdacaae1b18d2438ab3be3cbef44c0b98f83d09d9dfb5dc1d"
-    sha256 cellar: :any,                 catalina:       "90a03036d21be5f0546ae00ecc8327e44704093aebe27d5055e9007a7a9bf0f2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ce229d05e72f9d75644f1a8afdf402ab38e902b6695df6eb95f7d74c136bcb38"
+    sha256 cellar: :any,                 arm64_ventura:  "01f10aea2d4feb02cf770ef2beb67d2603d43df433d5e5b922045e9e2f92af38"
+    sha256 cellar: :any,                 arm64_monterey: "2f8a59f6d8f8eec9b1dd0946876bb4304c0acf2d6f0a59316badd554bcf22f5c"
+    sha256 cellar: :any,                 arm64_big_sur:  "e61de0782adecfc668e47fbec1158573dc0143b6a65f11dc837aa413902e5fd6"
+    sha256 cellar: :any,                 ventura:        "58eb110354954de1ba4b9f1c81114cf128e5d3e1609b681964d5765364098483"
+    sha256 cellar: :any,                 monterey:       "ec3eec933c2123f29d3aca93b5cf70cdd26187cb811f817d1ac2846a9fb6bfca"
+    sha256 cellar: :any,                 big_sur:        "2fa65c2a7f992a9d979ff347dcce2c3d4f7a2061eb4820fa3961ad363d99e515"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c6b7c036967955a85f3b22c2f924c85b36688f1b4c1e608df07393095c86bedf"
   end
+
+  # Depends on deprecated `ilmbase` and upstream has been discussing
+  # archiving repo in https://groups.google.com/g/field3d-dev/c/nBrVsNQ9SHo
+  # Last release on 2020-03-11
+  deprecate! date: "2023-02-03", because: :unmaintained
 
   depends_on "cmake" => :build
   depends_on "boost"
   depends_on "hdf5"
   depends_on "ilmbase"
-
-  on_linux do
-    depends_on "gcc"
-  end
 
   fails_with gcc: "5"
 
@@ -39,13 +41,14 @@ class Field3d < Formula
   end
 
   test do
-    system ENV.cxx, "-std=c++11", "-I#{include}", "-L#{lib}", "-lField3D",
+    system ENV.cxx, "-std=c++11", "-I#{include}",
+           pkgshare/"sample_code/create_and_write/main.cpp",
+           "-L#{lib}", "-lField3D",
            "-I#{Formula["boost"].opt_include}",
            "-L#{Formula["boost"].opt_lib}", "-lboost_system",
            "-I#{Formula["hdf5"].opt_include}",
            "-L#{Formula["hdf5"].opt_lib}", "-lhdf5",
            "-I#{Formula["ilmbase"].opt_include}",
-           pkgshare/"sample_code/create_and_write/main.cpp",
            "-o", "test"
     system "./test"
   end

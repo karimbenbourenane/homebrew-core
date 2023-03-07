@@ -9,21 +9,23 @@ class Flintrock < Formula
   revision 5
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "97474adf966430d69e41aac39085d9ecb297eff62166bb68d116b2a2e5aa05be"
-    sha256 cellar: :any,                 arm64_big_sur:  "c93826add42fdde156e464f3ef6c140822652ff9232f8a4b772b19207017d4bd"
-    sha256 cellar: :any,                 monterey:       "9e0c68b26fbd4834d48128a22e9c824060bf21148bd054b537d0fb0f14413e3e"
-    sha256 cellar: :any,                 big_sur:        "0632a0702b01870280f317e81df200622420be87428a53858cf4096a3bc7fdcd"
-    sha256 cellar: :any,                 catalina:       "41fe119e906f7f0e8d1bf4f887403199c498d8dda312fc38403fb7412dce9a0f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9e021def7be48971bf180cbf6c07b6ca13b174482adf5c6edbffdbd9a267dd0d"
+    rebuild 3
+    sha256 cellar: :any,                 arm64_ventura:  "af7b03cf4466a5dc871c9cdfcb5b4742695043aa830dfc7f723e7404adff26b7"
+    sha256 cellar: :any,                 arm64_monterey: "c1d8922635deb4237cfed541614f3d3dfb1ed249882f7f02cef3a316f75f5733"
+    sha256 cellar: :any,                 arm64_big_sur:  "1277c8fca9d74dffc5efafd87ee9f80edf51215b55d001c623bd8218454db3c9"
+    sha256 cellar: :any,                 ventura:        "3f50f2f7974ae7e265acf01d995fae388a899d77749ab4abac9dd3f90ab3cbfb"
+    sha256 cellar: :any,                 monterey:       "a04996f9fd2d1fb31895a88243c0a7a3a7719c5e343518c2fde9fd12c8c990de"
+    sha256 cellar: :any,                 big_sur:        "36ba8bafc43846970c4fa7149ede83f30dd31a2f0b6dee9758cd23b79e095e83"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d612d02cba4d04b5d128e9e72a7a07ec100f1dc47299e32aa55dd576a2c34d9d"
   end
 
   depends_on "rust" => :build
-  depends_on "python@3.10"
+  depends_on "python@3.11"
   depends_on "six"
 
   resource "bcrypt" do
-    url "https://files.pythonhosted.org/packages/e8/36/edc85ab295ceff724506252b774155eff8a238f13730c8b13badd33ef866/bcrypt-3.2.2.tar.gz"
-    sha256 "433c410c2177057705da2a9f2cd01dd157493b2a7ac14c8593a16b3dab6b6bfb"
+    url "https://files.pythonhosted.org/packages/8c/ae/3af7d006aacf513975fd1948a6b4d6f8b4a307f8a244e1a3d3774b297aad/bcrypt-4.0.1.tar.gz"
+    sha256 "27d375903ac8261cfe4047f6709d16f7d18d39b1ec92aaf72af989552a650ebd"
   end
 
   resource "boto3" do
@@ -37,8 +39,8 @@ class Flintrock < Formula
   end
 
   resource "cffi" do
-    url "https://files.pythonhosted.org/packages/00/9e/92de7e1217ccc3d5f352ba21e52398372525765b2e0c4530e6eb2ba9282a/cffi-1.15.0.tar.gz"
-    sha256 "920f0d66a896c2d99f0adbb391f990a84091179542c205fa53ce5787aff87954"
+    url "https://files.pythonhosted.org/packages/2b/a8/050ab4f0c3d4c1b8aaa805f70e26e84d0e27004907c5b8ecc1d31815f92a/cffi-1.15.1.tar.gz"
+    sha256 "d400bfb9a37b1351253cb402671cea7e89bdecc294e8016a707f6d1d8ac934f9"
   end
 
   resource "click" do
@@ -47,8 +49,8 @@ class Flintrock < Formula
   end
 
   resource "cryptography" do
-    url "https://files.pythonhosted.org/packages/51/05/bb2b681f6a77276fc423d04187c39dafdb65b799c8d87b62ca82659f9ead/cryptography-37.0.2.tar.gz"
-    sha256 "f224ad253cc9cea7568f49077007d2263efa57396a2f2f78114066fd54b5c68e"
+    url "https://files.pythonhosted.org/packages/6a/f5/a729774d087e50fffd1438b3877a91e9281294f985bda0fd15bf99016c78/cryptography-39.0.1.tar.gz"
+    sha256 "d1f6198ee6d9148405e49887803907fe8962a23e6c6f83ea7d98f1c0de375695"
   end
 
   resource "jmespath" do
@@ -87,8 +89,8 @@ class Flintrock < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/1b/a5/4eab74853625505725cefdf168f48661b2cd04e7843ab836f3f63abf81da/urllib3-1.26.9.tar.gz"
-    sha256 "aabaf16477806a5e1dd19aa41f8c2b7950dd3c746362d7e3223dbe6de6ac448e"
+    url "https://files.pythonhosted.org/packages/c5/52/fe421fb7364aa738b3506a2d99e4f3a56e079c0a798e9f4fa5e14c60922f/urllib3-1.26.14.tar.gz"
+    sha256 "076907bf8fd355cde77728471316625a4d2f7e713c125f51953bb5b3eecf4f72"
   end
 
   def install

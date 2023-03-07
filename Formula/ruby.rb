@@ -1,10 +1,20 @@
 class Ruby < Formula
   desc "Powerful, clean, object-oriented scripting language"
   homepage "https://www.ruby-lang.org/"
-  url "https://cache.ruby-lang.org/pub/ruby/3.1/ruby-3.1.2.tar.gz"
-  sha256 "61843112389f02b735428b53bb64cf988ad9fb81858b8248e22e57336f24a83e"
   license "Ruby"
-  revision 1
+
+  stable do
+    url "https://cache.ruby-lang.org/pub/ruby/3.2/ruby-3.2.1.tar.gz"
+    sha256 "13d67901660ee3217dbd9dd56059346bd4212ce64a69c306ef52df64935f8dbd"
+
+    # Should be updated only when Ruby is updated (if an update is available).
+    # The exception is Rubygem security fixes, which mandate updating this
+    # formula & the versioned equivalents and bumping the revisions.
+    resource "rubygems" do
+      url "https://rubygems.org/rubygems/rubygems-3.4.6.tgz"
+      sha256 "6a53bdd53495e80cda63a1f393c45bea0d66b3ecf11c34d88fabdacd0704412f"
+    end
+  end
 
   livecheck do
     url "https://www.ruby-lang.org/en/downloads/"
@@ -12,37 +22,36 @@ class Ruby < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "31217c5ddf91622cb444b41e3fa27e91e09606a45732b84e8f680b4020c2fe6e"
-    sha256 arm64_big_sur:  "1bf22db112a85a2c3d39d8f36c2794a1023a072eb6743bd72cc7db5edc5cc46e"
-    sha256 monterey:       "519a9dca4f576cb54858ca6b8371891d4bbfa7268e3baf2839996eac0a253b10"
-    sha256 big_sur:        "49cbb1dddd7c8c7449b7df170c7ee704d36ae4aafdf985eb12d8eccaf91bea76"
-    sha256 catalina:       "e0ab84261c665f24bcd88a8ff6b9cecd7fedb92636da43518d128f4f048a7627"
-    sha256 x86_64_linux:   "4382b9a0940dbfbf8e3b8b63b1e2602e1fa0cabdd6acc7be83ef66077c7d6adc"
+    sha256 arm64_ventura:  "847ffd1c19baa2529b3caa244a86811298697a56da93dd955fe5c28d0f288497"
+    sha256 arm64_monterey: "c9ff8aa4730964478c58972c2237f5ff8dc8d04d93af1104ee320b6bd75de317"
+    sha256 arm64_big_sur:  "134bee6f2ef2301b46cc42ec07d5af577bf1d22f3590be5480f22f4c78a5e742"
+    sha256 ventura:        "067df852d76aec266a429828840242efded9d5345f27abef8b56e0b12efeeba7"
+    sha256 monterey:       "52b35ac566918d22a102f4b37417e534ca23653b050d1264f2b63c90f9e78617"
+    sha256 big_sur:        "7f8fbebe38b5f1e9c8940bc2607a2a71fe04069bb37b36c950e608f44d8c01ba"
+    sha256 x86_64_linux:   "6ef0ae1a01d1949b831c5f52d46a4f45898a6337011a33dbfacca47d1b0c58be"
   end
 
   head do
-    url "https://github.com/ruby/ruby.git", branch: "trunk"
+    url "https://github.com/ruby/ruby.git", branch: "master"
     depends_on "autoconf" => :build
+    depends_on "bison" => :build
+    depends_on "rust" => :build
   end
 
   keg_only :provided_by_macos
 
+  depends_on "autoconf" => :build
+  depends_on "bison" => :build
   depends_on "pkg-config" => :build
+  depends_on "rust" => :build
   depends_on "libyaml"
   depends_on "openssl@1.1"
   depends_on "readline"
 
+  uses_from_macos "gperf"
   uses_from_macos "libffi"
   uses_from_macos "libxcrypt"
   uses_from_macos "zlib"
-
-  # Should be updated only when Ruby is updated (if an update is available).
-  # The exception is Rubygem security fixes, which mandate updating this
-  # formula & the versioned equivalents and bumping the revisions.
-  resource "rubygems" do
-    url "https://rubygems.org/rubygems/rubygems-3.3.11.tgz"
-    sha256 "64184aec5bf3d4314eca3b8bae2085c5ddec50564b822340035187431dc1c074"
-  end
 
   def api_version
     Utils.safe_popen_read("#{bin}/ruby", "-e", "print Gem.ruby_api_version")
@@ -98,6 +107,8 @@ class Ruby < Formula
 
     # A newer version of ruby-mode.el is shipped with Emacs
     elisp.install Dir["misc/*.el"].reject { |f| f == "misc/ruby-mode.el" }
+
+    return if build.head? # Use bundled RubyGems for --HEAD (will be newer)
 
     # This is easier than trying to keep both current & versioned Ruby
     # formulae repeatedly updated with Rubygem patches.
@@ -242,10 +253,10 @@ class Ruby < Formula
 
     (testpath/"Gemfile").write <<~EOS
       source 'https://rubygems.org'
-      gem 'gemoji'
+      gem 'github-markup'
     EOS
     system bin/"bundle", "exec", "ls" # https://github.com/Homebrew/homebrew-core/issues/53247
     system bin/"bundle", "install", "--binstubs=#{testpath}/bin"
-    assert_predicate testpath/"bin/gemoji", :exist?, "gemoji is not installed in #{testpath}/bin"
+    assert_predicate testpath/"bin/github-markup", :exist?, "github-markup is not installed in #{testpath}/bin"
   end
 end

@@ -3,45 +3,46 @@ class Trzsz < Formula
 
   desc "Simple file transfer tools, similar to lrzsz (rz/sz), and compatible with tmux"
   homepage "https://trzsz.github.io"
-  url "https://files.pythonhosted.org/packages/1a/73/dfeb828f96ce7a395fe38ce72f29b0e7fe3c43348f946ca7d3806a79e1a0/trzsz-1.1.0.tar.gz"
-  sha256 "4e0d1b8afb8912d351e0de997f8f1e557298b547a6daac03c6a60282962ada72"
+  url "https://files.pythonhosted.org/packages/60/fb/fcaeef46e58afa2cf2fef5ce1ad9f4e083feb157b4e12b3687114d2a5ed7/trzsz-1.1.1.tar.gz"
+  sha256 "f113783ca8533252813d355e9a200e78762cafd4197a841f6b5289112ebf5805"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "5a33d8e1027e2dcc3b66748bcccd26fafbbd76164bbb0e6fdf5e039b5b253054"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "3a7255468430adc1e9cdbd52692dcb932d56dea831cffc32f7e3201bb8a73560"
-    sha256 cellar: :any_skip_relocation, monterey:       "ad3127d4f5594fcc8d9fe674802415908051747281d953499ba70f49a5e7ec69"
-    sha256 cellar: :any_skip_relocation, big_sur:        "d74a257f520b8303bfd38cceb311c329d644bd9c2e2b9989b32fdc02727bf6ba"
-    sha256 cellar: :any_skip_relocation, catalina:       "0429ec0db1f6a8fb61f84005c3750d2f5745576fcec3c6ff9525667888bec8a7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "476a4150a84b1a7190bb283e13a9b12274dbd8c616327d452ce17364a03c544a"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "92e240ab29a8a38045df7f11c24781dfc001c566d7131d34165ca33d977e7b6c"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "6f4883613c85069602bafbf57782788962c0c5b025543fafd7fbd5ca5da7c3b4"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "b299420f609d20762fa4f06366a9fe2c30ff96dbfcbb607a4091bafeb0563f54"
+    sha256 cellar: :any_skip_relocation, ventura:        "6c1bfaed118bc729b5328dffc5bb6e087a166f7d3016439ea967952a82ff5954"
+    sha256 cellar: :any_skip_relocation, monterey:       "5d4a12f30d95e5931ef0520e2fce7097dadddfd0df0998d874d597124c4bd9f9"
+    sha256 cellar: :any_skip_relocation, big_sur:        "6ea70e3217f93d8783c33c1b70a43d82aedd703eb9fb6848cce44b40a8841733"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a2290accbb6527d9e3c1c4603be61f58053cf36cb5bc53e9d5d8c28e421ff102"
   end
 
   depends_on "protobuf"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   resource "iterm2" do
-    url "https://files.pythonhosted.org/packages/37/a9/0f01cd95cd099a04b221a817f3b01d17034a1de6d4c3319f66ef09822b08/iterm2-2.5.tar.gz"
-    sha256 "4e0f8a463fd4d6be1282fdd12df0e17e876782ae96a45b8afd508ffd22f58555"
+    url "https://files.pythonhosted.org/packages/4f/eb/47bb125fd3b32969f3bc8e0b8997bbe308484ac4d04331ae1e6199ae2c0f/iterm2-2.7.tar.gz"
+    sha256 "f6f0bec46c32cecaf7be7fd82296ec4697d4bf2101f0c4aab24cc123991fa230"
   end
 
   resource "trzsz-iterm2" do
-    url "https://files.pythonhosted.org/packages/9a/26/6f8505a1908efde7b771ba365beaf7c627fcb96e27691d380d9dc0272b72/trzsz-iterm2-1.1.0.tar.gz"
-    sha256 "89f37b641528893ce529adf02e754f6d083379d4c9016590669f329b754f0966"
+    url "https://files.pythonhosted.org/packages/77/5f/6b9f043c19458246886810a6af4d1f977328b2d158fa1e3825666c298498/trzsz-iterm2-1.1.1.tar.gz"
+    sha256 "6bbcc011ed1936ee1ed01b33ac8f290ed90fdff2d9e0e8a6070cd61fc8e2b9bd"
   end
 
   resource "trzsz-libs" do
-    url "https://files.pythonhosted.org/packages/3f/75/c52618d862018af7ca1923be2b63d2cf7845f69da38970088fd64bb071e5/trzsz-libs-1.1.0.tar.gz"
-    sha256 "f116a18d6429be74ff6a321e9a6b0b59afecc5d62bf27c9f17bd63a39b31633c"
+    url "https://files.pythonhosted.org/packages/01/4b/9f4ca38ba1cef8a4d44ac7115cea8eaf1e47dc88ddb10a72646682b8cc09/trzsz-libs-1.1.1.tar.gz"
+    sha256 "8536733f42eb30bdede15ff49995d241447c8f64cda85d3a1a382b9267b79113"
   end
 
   resource "trzsz-svr" do
-    url "https://files.pythonhosted.org/packages/eb/82/39f3144bd3584f7ecc5f23fa5f929d5cba8135ec690bfcbceae02490448f/trzsz-svr-1.1.0.tar.gz"
-    sha256 "057ba12437f72e92b95087d6699ba9849d6f1a41286d9e9c7539a603d22a22fc"
+    url "https://files.pythonhosted.org/packages/bb/60/48cf879ebdc262769ccfd50c7954a533628c83faeae095be7dcc20f18769/trzsz-svr-1.1.1.tar.gz"
+    sha256 "e02e8240b0b9de7c8c72557597954158a5591660a291b6f70a0f54e1dedcd273"
   end
 
   resource "websockets" do
-    url "https://files.pythonhosted.org/packages/f8/a3/622d9acbfb9a71144b5d7609906bc648c62e3ca5fdbb1c8cca222949d82c/websockets-10.3.tar.gz"
-    sha256 "fc06cc8073c8e87072138ba1e431300e2d408f054b27047d047b549455066ff4"
+    url "https://files.pythonhosted.org/packages/85/dc/549a807a53c13fd4a8dac286f117a7a71260defea9ec0c05d6027f2ae273/websockets-10.4.tar.gz"
+    sha256 "eef610b23933c54d5d921c92578ae5f89813438fded840c2e9809d378dc765d3"
   end
 
   def install

@@ -2,8 +2,8 @@ class K3d < Formula
   desc "Little helper to run CNCF's k3s in Docker"
   homepage "https://k3d.io"
   url "https://github.com/k3d-io/k3d.git",
-    tag:      "v5.4.6",
-    revision: "f6838597ddf1cab5bcdb391f883748c6e4d69b48"
+    tag:      "v5.4.8",
+    revision: "5e5f56f7ec8f9be76bf301809f361ce6672d589d"
   license "MIT"
 
   livecheck do
@@ -12,12 +12,13 @@ class K3d < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "588d17cc7f9f064c55a39971ef17d19718bd7b0f96271a119e277372277c3175"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "43ba3973c5ef2b3f7263a21593ad118676c0191b87bb4cda263567f8f44dab68"
-    sha256 cellar: :any_skip_relocation, monterey:       "61056bb1b12548a2eebe84a69d25c2daee8b264af7c62f192903b320d27f7f00"
-    sha256 cellar: :any_skip_relocation, big_sur:        "d52673edb9907ae737223b24e59d6285d28658b13f0f8fbb4c3bbb3162344709"
-    sha256 cellar: :any_skip_relocation, catalina:       "83e7f2aaaf59b6454099d73ae4229bf04dfd7871e056e2956ecedafae9669395"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d42eda8fc36ae8871f9cffffd09bca6a9357ee12f3dc42224c24a03fd7fd15d2"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "e95e4b3e4d4538f1383804a14195c3a7d3fdbd1a52b34675d01e04c1e3371960"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "e95e4b3e4d4538f1383804a14195c3a7d3fdbd1a52b34675d01e04c1e3371960"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "e95e4b3e4d4538f1383804a14195c3a7d3fdbd1a52b34675d01e04c1e3371960"
+    sha256 cellar: :any_skip_relocation, ventura:        "fb6fb66c7c943e125a6570c6ae3547edd9304acb7f6b2bc74f0d381fdf3e2d0f"
+    sha256 cellar: :any_skip_relocation, monterey:       "fb6fb66c7c943e125a6570c6ae3547edd9304acb7f6b2bc74f0d381fdf3e2d0f"
+    sha256 cellar: :any_skip_relocation, big_sur:        "fb6fb66c7c943e125a6570c6ae3547edd9304acb7f6b2bc74f0d381fdf3e2d0f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "326b06b516deed6aba37bf717f0686ca6d6aeb93f368062b4b498d2e89855c0f"
   end
 
   depends_on "go" => :build

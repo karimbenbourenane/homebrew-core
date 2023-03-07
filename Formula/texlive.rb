@@ -8,7 +8,7 @@ class Texlive < Formula
   mirror "https://ftp.tu-chemnitz.de/pub/tug/historic/systems/texlive/2022/texlive-20220321-source.tar.xz"
   sha256 "5ffa3485e51eb2c4490496450fc69b9d7bd7cb9e53357d92db4bcd4fd6179b56"
   license :public_domain
-  revision 3
+  revision 4
   head "https://github.com/TeX-Live/texlive-source.git", branch: "trunk"
 
   livecheck do
@@ -34,14 +34,16 @@ class Texlive < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "9e1973b006f811bf58c056aa17e83854abd7ebb9fa0d5ce736e8c5aa74c99001"
-    sha256 arm64_big_sur:  "f23102d50870e9aa8c9ecfca831cb635f8a27e239606265909848a60f3f0293e"
-    sha256 monterey:       "c3fb7c5fef5f6cc0674a8fe3c10514c2bf26ea305919e73f8e4665c7ec6ccbfc"
-    sha256 big_sur:        "3b5e0fec9c2b5c2372de119b184f635b532d2bb5d95474ab4459acc2076ba6fe"
-    sha256 catalina:       "0d9f247cbb404360d234079370de6bf0978e45492930d17c4c0d1f5ad96ba73a"
-    sha256 x86_64_linux:   "7f8fc254c991b0fff4b4c9fed973d5d086d0bb37ec824f68dd5d707f7881b644"
+    sha256 arm64_ventura:  "dbbefb35066d5b3f3ff05b0dfaf6f8f693e6b5c0b9ee3cac1faad142f9dc15f1"
+    sha256 arm64_monterey: "d1d7174ad04b40bd8af96cccdd05a7ec2a0968b098d4c2b1fc4075ce4aba6c5c"
+    sha256 arm64_big_sur:  "1072e81065a9939ec8083e2f4bd867cac27eab3616ccdd1cd854c57e22d6db07"
+    sha256 ventura:        "6e3c96256e0a3cf02a853fae9f37b449ef0d1684c6a68df90aa26699a81509ea"
+    sha256 monterey:       "b3a94d0983d4228f376b9422965d1194997ce3e46aff4f03d7c24b28c905185f"
+    sha256 big_sur:        "0b724744053580e9e443558589489f7aca8dec7246a831170d09345ad4a35a7b"
+    sha256 x86_64_linux:   "ecc061a0f1fd4e947df3dd141473d28f2413a1e0e4d21a4b430b1fa5de7442b0"
   end
 
+  depends_on "pkg-config" => :build
   depends_on "cairo"
   depends_on "clisp"
   depends_on "fontconfig"
@@ -62,7 +64,8 @@ class Texlive < Formula
   depends_on "pixman"
   depends_on "potrace"
   depends_on "pstoedit"
-  depends_on "python@3.10"
+  depends_on "pygments"
+  depends_on "python@3.11"
 
   uses_from_macos "icu4c"
   uses_from_macos "ncurses"
@@ -71,8 +74,6 @@ class Texlive < Formula
   uses_from_macos "zlib"
 
   on_linux do
-    depends_on "pkg-config" => :build
-    depends_on "gcc"
     depends_on "libice"
     depends_on "libnsl"
     depends_on "libsm"
@@ -106,11 +107,6 @@ class Texlive < Formula
     url "https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2022/texlive-20220321-texmf.tar.xz"
     mirror "https://ftp.tu-chemnitz.de/pub/tug/historic/systems/texlive/2022/texlive-20220321-texmf.tar.xz"
     sha256 "372b2b07b1f7d1dd12766cfc7f6656e22c34a5a20d03c1fe80510129361a3f16"
-  end
-
-  resource "Pygments" do
-    url "https://files.pythonhosted.org/packages/e0/ef/5905cd3642f2337d44143529c941cc3a02e5af16f0f65f81cbef7af452bb/Pygments-2.13.0.tar.gz"
-    sha256 "56a8508ae95f98e2b9bdf93a6be5ae3f7d8af858b43e02c5a2ff083726be40c1"
   end
 
   resource "Module::Build" do
@@ -339,20 +335,17 @@ class Texlive < Formula
   end
 
   def install
-    python3 = "python3.10"
+    python3 = "python3.11"
     # Install Perl resources
     ENV.prepend_create_path "PERL5LIB", libexec/"lib/perl5"
     ENV["PERL_MM_USE_DEFAULT"] = "1"
     ENV["OPENSSL_PREFIX"] = Formula["openssl@1.1"].opt_prefix
 
     tex_resources = %w[texlive-extra install-tl texlive-texmf]
-    python_resources = %w[Pygments]
 
     resources.each do |r|
       r.stage do
         next if tex_resources.include? r.name
-
-        next if python_resources.include? r.name
 
         if File.exist? "Makefile.PL"
           system "perl", "Makefile.PL", "INSTALL_BASE=#{libexec}",
@@ -366,10 +359,6 @@ class Texlive < Formula
         end
       end
     end
-
-    # Install Python resources
-    venv = virtualenv_create(libexec, python3)
-    venv.pip_install resource("Pygments")
 
     # Install TeXLive resources
     resource("texlive-extra").stage do

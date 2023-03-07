@@ -1,18 +1,19 @@
 class Gum < Formula
   desc "Tool for glamorous shell scripts"
   homepage "https://github.com/charmbracelet/gum"
-  url "https://github.com/charmbracelet/gum/archive/v0.6.0.tar.gz"
-  sha256 "53bc02a5aac5659e5c89d9b469dc181b7379e51defb123d1dfe05753fe05184e"
+  url "https://github.com/charmbracelet/gum/archive/v0.9.0.tar.gz"
+  sha256 "27dab5c8ca25e09794d54d7610064bea37a4e0c471d4e0a8a6835727a27a9a0f"
   license "MIT"
   head "https://github.com/charmbracelet/gum.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "f4eda2fb0d97ea65e379c57b07883aa2bf92eb1d65015c358b0ee3ddda9fab3f"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "76b21e0177cf615d007f4da4c9a26b0e5201aaf0fcd6b148b7accc9630e6882a"
-    sha256 cellar: :any_skip_relocation, monterey:       "471654df2292c3e2212c5342c790df6686cc45a9691cc54bfd6dcc1495e14411"
-    sha256 cellar: :any_skip_relocation, big_sur:        "2842da41b1e91947b2cacd9a459c368fe340100824351d754c08716707575577"
-    sha256 cellar: :any_skip_relocation, catalina:       "2165dde2605eeb88230a26bc04bcdf3fa822dcb86670400419037a8f8768b178"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "28736b820e8bc27ee9babf56841fe211387223a30db2dd4a7bc19b9627192b64"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "dd772298955d7d90bad4bbfecbb77c2c5c95e58ff36c25f87f40435d259f5d2d"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "44729bc895716cfd473f137572f3c1d710e2a0066f2891ccd9919c9b30c6af86"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "d407a429562e44a542aa015e92cec1ea729f94b230794962acf1c0f425e29003"
+    sha256 cellar: :any_skip_relocation, ventura:        "20d286a734e0fa4078334e69e28e660ee7d16ae2c6e8aa1005e2e49b28452864"
+    sha256 cellar: :any_skip_relocation, monterey:       "8ae16d197dedfe61b2e976c3837e5f48c2761118aef2191fc22723341cc0bae0"
+    sha256 cellar: :any_skip_relocation, big_sur:        "102911871d328ccba13cc140b1b7489cf0fb50698f3da7606462640728beff18"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5bee76272497a0828f8f1911e208e5c3af75d9365091e14bfa1624c872420d75"
   end
 
   depends_on "go" => :build

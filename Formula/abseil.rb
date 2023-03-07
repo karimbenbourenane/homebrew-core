@@ -1,37 +1,40 @@
 class Abseil < Formula
   desc "C++ Common Libraries"
   homepage "https://abseil.io"
-  url "https://github.com/abseil/abseil-cpp/archive/refs/tags/20220623.1.tar.gz"
-  sha256 "91ac87d30cc6d79f9ab974c51874a704de9c2647c40f6932597329a282217ba8"
+  url "https://github.com/abseil/abseil-cpp/archive/refs/tags/20230125.1.tar.gz"
+  sha256 "81311c17599b3712069ded20cca09a62ab0bf2a89dfa16993786c8782b7ed145"
   license "Apache-2.0"
   head "https://github.com/abseil/abseil-cpp.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "d27a0ad54eb544a7f5a272cc1d3d50e6290660480a574b424c98db481107b620"
-    sha256 cellar: :any,                 arm64_big_sur:  "641db05b2d660720d1b97d1ea9b93849fdf65941483871525707fb64c890bbfe"
-    sha256 cellar: :any,                 monterey:       "cbbdfaa39842b6b483ce62c35e4315cdd0c2b9918ae92cf1fd46c02bcf1e4c34"
-    sha256 cellar: :any,                 big_sur:        "e5b7f75a35bcbe0fa096396bd8d6c34a1b66564002dee8c599b6ac8559f73b29"
-    sha256 cellar: :any,                 catalina:       "5fba2bd66821b5033f901918a15947fe28e1b4950a6742184e60d01cd45158dc"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "60f232cba63cc45c520f74a64d50371d124862569a5718077da85b4385928e86"
+    sha256 cellar: :any,                 arm64_ventura:  "fa0b75319f9699720edd3f7ab18ab3106dfd28f82739e22c0f0d9e25faaeb32d"
+    sha256 cellar: :any,                 arm64_monterey: "e5bb53ed283a441548331d3de02d0258359a4b89fe36b8aa945923307fd53f1b"
+    sha256 cellar: :any,                 arm64_big_sur:  "abf21c9625cbd42535ed005de64be2c2d6ac534e0de7c7f7d4c5bcdde1625b02"
+    sha256 cellar: :any,                 ventura:        "306df33feb8d35d0ac341db33c4c9ac36ca8886de300cf3e34551140d5fede5b"
+    sha256 cellar: :any,                 monterey:       "b368a41757d986a2ed34f55ac80555445a7c0d35b5f55ba26ec8cfb242eeb20f"
+    sha256 cellar: :any,                 big_sur:        "6a80a4248e7e9c0491c1d06d0e2ff1b6224f9dabbe6f1c31e2f3bbbc215b9ee0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "722649548a9d355499bc452c95bdfa71809b1f84df048776537dde787e771709"
   end
 
   depends_on "cmake" => :build
 
-  on_linux do
-    depends_on "gcc"
-  end
-
   fails_with gcc: "5" # C++17
 
   def install
-    mkdir "build" do
-      system "cmake", "..",
-                      *std_cmake_args,
-                      "-DCMAKE_INSTALL_RPATH=#{rpath}",
-                      "-DCMAKE_CXX_STANDARD=17",
-                      "-DBUILD_SHARED_LIBS=ON"
-      system "make"
-      system "make", "install"
+    system "cmake", "-S", ".", "-B", "build",
+                    "-DCMAKE_INSTALL_RPATH=#{rpath}",
+                    "-DCMAKE_CXX_STANDARD=17",
+                    "-DBUILD_SHARED_LIBS=ON",
+                    "-DABSL_PROPAGATE_CXX_STD=ON",
+                    *std_cmake_args
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
+
+    # Remove bad flags in .pc files.
+    # https://github.com/abseil/abseil-cpp/issues/1408
+    if OS.mac?
+      inreplace lib.glob("pkgconfig/absl_random_internal_randen_hwaes{,_impl}.pc"),
+                "-Xarch_x86_64 -Xarch_x86_64 -Xarch_arm64 ", ""
     end
   end
 

@@ -2,17 +2,19 @@ class Raylib < Formula
   desc "Simple and easy-to-use library to learn videogames programming"
   homepage "https://www.raylib.com/"
   url "https://github.com/raysan5/raylib/archive/4.2.0.tar.gz"
-  sha256 "5fd2e7d825f345924800c38291f44423bcbcc036bd72fa2e3abedfc54e5b68b5"
+  sha256 "676217604a5830cb4aa31e0ede0e4233c942e2fc5c206691bded58ebcd82a590"
   license "Zlib"
   head "https://github.com/raysan5/raylib.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "69e93e7dc849db008bca6c8c0a0cf107ecd890cd0f4a00b96ea28023a58d4e26"
-    sha256 cellar: :any,                 arm64_big_sur:  "d7293b2408c9a266e0500d1f278a066ed40461d43e1b89517d04da5e96b67402"
-    sha256 cellar: :any,                 monterey:       "bb1e50ec7d16791024f9597bb9c8ecdf7fec7efa1fe68dca386a9436754d4054"
-    sha256 cellar: :any,                 big_sur:        "998493ec15c8aae5e4dd9566f51acd14839732b06f516f2b4f8eec2bd5a12448"
-    sha256 cellar: :any,                 catalina:       "5a8f902f781f5a9b0b6650aab32257a1ddb682f200b00bfb6bb7c1cad6382b5c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f8f53583e14f95f4ddc15583aed1dcf69a7d49c803567974e9041a32aee4e126"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_ventura:  "ec67c3221fb300294d3c643e6b034713b95e63771279aa6e380b7e1c8e717614"
+    sha256 cellar: :any,                 arm64_monterey: "01236d25f3d11ed06e4f3879475af7a682c4607447e90741a889a91663d43852"
+    sha256 cellar: :any,                 arm64_big_sur:  "57b7d7a99f53062c93a8c4bbb8dfd4e0616b99cf2568c881b407b9a225026ceb"
+    sha256 cellar: :any,                 ventura:        "d5831b9563d8472813c775c76ef9ee4ff4d8f25dc0ef5060f2846b9fee0ddfeb"
+    sha256 cellar: :any,                 monterey:       "b006fe2ac760039dbeaff35b6b4ca3efd0400c1bc96721b1f6a20f7bb47a7d13"
+    sha256 cellar: :any,                 big_sur:        "4ae7529ca36e3472288580111ad74e8f8ef25dd261c12da9deabf096cf5b363a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "00df3ed5cda42486632e8016d127862f00e69685c5944401cce87d3cc523584e"
   end
 
   depends_on "cmake" => :build
@@ -28,20 +30,22 @@ class Raylib < Formula
   end
 
   def install
-    system "cmake", ".", "-DBUILD_SHARED_LIBS=ON",
-                         "-DMACOS_FATLIB=OFF",
-                         "-DBUILD_EXAMPLES=OFF",
-                         "-DBUILD_GAMES=OFF",
-                         *std_cmake_args
-    system "make", "install"
-    system "make", "clean"
-    system "cmake", ".", "-DBUILD_SHARED_LIBS=OFF",
-                         "-DMACOS_FATLIB=OFF",
-                         "-DBUILD_EXAMPLES=OFF",
-                         "-DBUILD_GAMES=OFF",
-                         *std_cmake_args
-    system "make"
-    lib.install "raylib/libraylib.a"
+    system "cmake", "-S", ".", "-B", "build",
+                               "-DBUILD_SHARED_LIBS=ON",
+                               "-DMACOS_FATLIB=OFF",
+                               "-DBUILD_EXAMPLES=OFF",
+                               "-DBUILD_GAMES=OFF",
+                               *std_cmake_args
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
+    system "cmake", "-S", ".", "-B", "build-static",
+                               "-DBUILD_SHARED_LIBS=OFF",
+                               "-DMACOS_FATLIB=OFF",
+                               "-DBUILD_EXAMPLES=OFF",
+                               "-DBUILD_GAMES=OFF",
+                               *std_cmake_args
+    system "cmake", "--build", "build-static"
+    lib.install "build-static/raylib/libraylib.a"
   end
 
   test do

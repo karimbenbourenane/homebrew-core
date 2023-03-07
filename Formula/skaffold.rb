@@ -2,43 +2,27 @@ class Skaffold < Formula
   desc "Easy and Repeatable Kubernetes Development"
   homepage "https://skaffold.dev/"
   url "https://github.com/GoogleContainerTools/skaffold.git",
-      tag:      "v1.39.2",
-      revision: "7ed1d722b53b55ac1c909f00d00a05b47d0964dd"
+      tag:      "v2.2.0",
+      revision: "bfc52e41ca7fbeac8a9f1da681118d14e197d6d4"
   license "Apache-2.0"
   head "https://github.com/GoogleContainerTools/skaffold.git", branch: "main"
 
-  # The `strategy` code below can be removed if/when this software exceeds
-  # version 2.2.3. Until then, it's used to omit an older tag that would always
-  # be treated as newest.
-  livecheck do
-    url :stable
-    regex(/^v?(\d+(?:\.\d+)+)$/i)
-    strategy :git do |tags, regex|
-      malformed_tags = ["v2.2.3"].freeze
-      tags.map do |tag|
-        next if malformed_tags.include?(tag)
-
-        tag[regex, 1]
-      end
-    end
-  end
-
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "55cab393bdfcf94fea81f0a50cb274990dacf1992acec72a3f1777767dd37256"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "ae52545e4ffe685e2f211aaebc8b34dd0095f99badfe0408b777da1604cc3eda"
-    sha256 cellar: :any_skip_relocation, monterey:       "f8c2c7f28fca29be8e196ca3c4117b7dd7720e08202960d4dd0afac8bcc4b32c"
-    sha256 cellar: :any_skip_relocation, big_sur:        "4825f834520493e21c0535506deb0b4ec4f654c9d15ff83df36ca2f4f930751d"
-    sha256 cellar: :any_skip_relocation, catalina:       "b81e665432dceef8d85096619b234d7ba138ff1f6c71ec412c18ef58d0b38931"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "80f8da7c4b41fb874ee715402d8e30fbe390f916b55aa73526f8d6cc386be743"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "f1bf7e896f6d190d78207e5abbe21af8d9d255f91a26cef5266e60d75ea8594d"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "4b93f6a7d7f2fea74c667068233a4079677252e515840c033b7ee153ba58a091"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "08e37b243af68873b6d88e3a16a42587c87916629367d52ca983fd9e757938f7"
+    sha256 cellar: :any_skip_relocation, ventura:        "107927c6420b13d11e405ea8c4a055c59068853684086659fae49bd4cb8e0060"
+    sha256 cellar: :any_skip_relocation, monterey:       "2cb25dc8ff89be1f843928c44d70ae935ad75299e18e75ce7d60335907eadeb3"
+    sha256 cellar: :any_skip_relocation, big_sur:        "2cb3f764ae2acdaf732ab830ac6352aea358e6843fadefb3266bdf965399e7da"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "4f18d851751c27b4c9c75f693e92b639b0c0a441e21c647222bea7555ff38c77"
   end
 
-  # Bump to 1.18 on the next release, if possible.
-  depends_on "go@1.17" => :build
+  depends_on "go" => :build
 
   def install
     system "make"
     bin.install "out/skaffold"
-    generate_completions_from_executable(bin/"skaffold", "completion", shells: [:bash, :zsh])
+    generate_completions_from_executable(bin/"skaffold", "completion")
   end
 
   test do

@@ -4,15 +4,16 @@ class Mapcrafter < Formula
   url "https://github.com/mapcrafter/mapcrafter/archive/v.2.4.tar.gz"
   sha256 "f3b698d34c02c2da0c4d2b7f4e251bcba058d0d1e4479c0418eeba264d1c8dae"
   license "GPL-3.0"
-  revision 5
+  revision 7
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "787a4156146e10c6a47853010fe3a6209ee29edd99288739053959e3fe942bfc"
-    sha256 cellar: :any,                 arm64_big_sur:  "c16d450b6f17c7940672a2a029f30db1436703783643d5086767eac97185d711"
-    sha256 cellar: :any,                 monterey:       "4f10840bc41b9609ae938b2c17a19f11dbdf2905c8e96aad173a2f66dae1c9c9"
-    sha256 cellar: :any,                 big_sur:        "27d406bba19b092d6713d17b5d11583c6022c672fda0f4231cb3be73ef8ccb1a"
-    sha256 cellar: :any,                 catalina:       "3126138292de05f6fe29ca6f951696efafb01e44ad7ace316a1e9df6db5cdbab"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "182394f0857e830efd8705bfbdd52bb5afd9a86ca1f33fc98d8ed6b5710b394f"
+    sha256 cellar: :any,                 arm64_ventura:  "09a0ca21ab205a905c30443647581723126b109a30f98d945006aab5d9bfe4e6"
+    sha256 cellar: :any,                 arm64_monterey: "dd3b387299e1d45005f90a4455a8f3f4498554b1fc0b24523f83ee652f42934b"
+    sha256 cellar: :any,                 arm64_big_sur:  "ffc7f348ec306fff455b9b64e160758f787795120efc863dc1e60744cd5ca444"
+    sha256 cellar: :any,                 ventura:        "4e534e2b7cbe4565a37d45075b79f31f2505f88f00271d667d278dcfcb07c139"
+    sha256 cellar: :any,                 monterey:       "2b099964a12b9d44b6ce7f6f09a227213f4308b4bf0751b1bd21e177f48fb190"
+    sha256 cellar: :any,                 big_sur:        "12e1d407b240c0aac77be423235a6636ffc3ecc2b15d07f568286f0d534c7b05"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "af8d1f5d66243ddbd1dd66fa3c2867ac516b387e8e7a931f4134d4fa01ee809f"
   end
 
   depends_on "cmake" => :build

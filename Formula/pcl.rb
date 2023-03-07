@@ -1,19 +1,20 @@
 class Pcl < Formula
   desc "Library for 2D/3D image and point cloud processing"
   homepage "https://pointclouds.org/"
-  url "https://github.com/PointCloudLibrary/pcl/archive/pcl-1.12.1.tar.gz"
-  sha256 "dc0ac26f094eafa7b26c3653838494cc0a012bd1bdc1f1b0dc79b16c2de0125a"
+  url "https://github.com/PointCloudLibrary/pcl/archive/pcl-1.13.0.tar.gz"
+  sha256 "b6f6769b84d3d8313e48278388b923e32cf519e6a27a4876c2170d587b33721d"
   license "BSD-3-Clause"
-  revision 3
+  revision 2
   head "https://github.com/PointCloudLibrary/pcl.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "8cc4232822ff0809a1c28c77b86be152cdf641153c7aabf9493517a5f96bb000"
-    sha256 cellar: :any,                 arm64_big_sur:  "6cb3f4914ed6a1f658545c94d2517fc29b24c13aaedf0ea8284659819e7fd61a"
-    sha256 cellar: :any,                 monterey:       "2dd1ee60e206db46ca8ceca41c59649c53824ec63835b540e9549af0e645c898"
-    sha256 cellar: :any,                 big_sur:        "41a3aa58ef57a64194edfa85da969b86e75157ae8c6bf7d77f6214b84d85b1ca"
-    sha256 cellar: :any,                 catalina:       "e2a1320bb8e99bce217145914f482eb686db68d53bd7b9dbb6c90580d4e00d8a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "856249a7b7637982e482a6502b47e59b36eb7c2d9ecac8afa403ca8e5e8c40e9"
+    sha256 cellar: :any,                 arm64_ventura:  "a6f1cf06d839ebf014c2595423e76b11df7b5432cad49d56ecfe352a5d27db9d"
+    sha256 cellar: :any,                 arm64_monterey: "04a04a07f89b13e0a7ed50dd17b163ecffee6c3ecd487753acd5396f43bf2acb"
+    sha256 cellar: :any,                 arm64_big_sur:  "8dc05550e4b08debdbf1ad135013e7cb860abd43f32bd4262e5ecc5fe65f8cea"
+    sha256 cellar: :any,                 ventura:        "1896b72ac0e30f8418d61e4c9f4c858ed1040fff4cb9f481d129ebf9df3d35ab"
+    sha256 cellar: :any,                 monterey:       "91493152414e609f705f1d1c98329c57a069e7856bb425ab7620a36291ef6129"
+    sha256 cellar: :any,                 big_sur:        "88b4a5e40bcaab179befab7781794bad2248e1b7ab7d35a4e4241e459493dcb6"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "1f8846c606117b712f2878f16d5f171f673b3746cd9984db2c1a4be65294262c"
   end
 
   depends_on "cmake" => [:build, :test]
@@ -31,17 +32,6 @@ class Pcl < Formula
 
   on_macos do
     depends_on "libomp"
-  end
-
-  on_linux do
-    depends_on "gcc"
-  end
-
-  fails_with gcc: "5" # qt@5 is built with GCC
-
-  patch do
-    url "https://github.com/PointCloudLibrary/pcl/commit/e964409b4accfd9070093dbc3c9cf5fb216cd877.patch?full_index=1"
-    sha256 "78c77388e6c82105d028d5e42662a37c497c35982622a6f8bc875b1c411ab375"
   end
 
   def install
@@ -68,6 +58,9 @@ class Pcl < Formula
     else
       "-DBUILD_apps_modeler:BOOL=OFF"
     end
+
+    # The AppleClang versions shipped on current MacOS versions do not support the -march=native flag on arm
+    args << "-DPCL_ENABLE_MARCHNATIVE:BOOL=OFF" if build.bottle?
 
     mkdir "build" do
       system "cmake", "..", *args
@@ -121,8 +114,9 @@ class Pcl < Formula
       # revision without bumping this formula's revision as well
       ENV.prepend_path "PKG_CONFIG_PATH", Formula["eigen"].opt_share/"pkgconfig"
       ENV.delete "CPATH" # `error: no member named 'signbit' in the global namespace`
-      system "cmake", "..", "-DQt5_DIR=#{Formula["qt@5"].opt_lib}/cmake/Qt5",
-                            *std_cmake_args
+      args = std_cmake_args + ["-DQt5_DIR=#{Formula["qt@5"].opt_lib}/cmake/Qt5"]
+      args << "-DCMAKE_BUILD_RPATH=#{lib}" if OS.linux?
+      system "cmake", "..", *args
       system "make"
       system "./pcd_write"
       assert_predicate (testpath/"build/test_pcd.pcd"), :exist?

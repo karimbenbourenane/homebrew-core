@@ -2,8 +2,8 @@ class Ipfs < Formula
   desc "Peer-to-peer hypermedia protocol"
   homepage "https://ipfs.tech/"
   url "https://github.com/ipfs/kubo.git",
-      tag:      "v0.15.0",
-      revision: "3ae52a41e39ec95aacc48d67b2882c9baeabc2ff"
+      tag:      "v0.18.1",
+      revision: "675f8bddc18baf473f728af5ea8701cb79f97854"
   license all_of: [
     "MIT",
     any_of: ["MIT", "Apache-2.0"],
@@ -16,17 +16,20 @@ class Ipfs < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "20bbc3537dbcf1b967adc0c21ac7c2a29016c3fb1220e895f7ec580967f41224"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "49e28f7381907b6f081a72b923a317770b0e33d5fe9e1015f18576fc57fa4cb4"
-    sha256 cellar: :any_skip_relocation, monterey:       "7cbac2ff6ca2cf1917d2b647a917601945ff4a7cd50960c28f76b5ff04a35479"
-    sha256 cellar: :any_skip_relocation, big_sur:        "6e20af6ce911d73fc5e5304b20fe44d784f473ad3109211eab7dd229a37048de"
-    sha256 cellar: :any_skip_relocation, catalina:       "18fbf0dcf3a44e0e70c822bb4df944a0496905e81546b630a8944f593f9a4399"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9a79c98ad0011a0c05176ded94c8c63568947f53bd09ab0117b3518479990a8c"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "fcbad31c879fdec667936a4554dcca91c691d66e44b9661f357a0809a00e6398"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "928391df10977e6fc904376b75a9af4eab747ee8bbd9a88fe3a0a018ae399df0"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "e90e63800fee90e649eaabcb0c303629af268d466106323feed7eaf85ebf2703"
+    sha256 cellar: :any_skip_relocation, ventura:        "aa4c5193277f7c900d647020acc15a18f9329330369cf8171867581708755f4d"
+    sha256 cellar: :any_skip_relocation, monterey:       "b164663b8126c003b6e77a1cd981996067e0af3cc0bf6a96ed6a69650144b80a"
+    sha256 cellar: :any_skip_relocation, big_sur:        "1a45563a05f0ec8250036e80069be098afd65f0cc4eacaa2c016150456ce127c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "2a595cddf7450bf86035d486f7221f52a60c0698143238f3388fca5fa3b5ca17"
   end
 
-  # Required lucas-clemente/quic-go >= 0.28
-  # Try to switch to the latest go on the next release
-  depends_on "go@1.18" => :build
+  # Support for go 1.20 is merged upstream but not yet landed in a tag:
+  # https://github.com/ipfs/kubo/pull/9647
+  # Remove on next release.
+  depends_on "go@1.19" => :build
 
   def install
     system "make", "build"

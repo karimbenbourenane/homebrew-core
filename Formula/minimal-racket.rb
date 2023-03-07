@@ -1,8 +1,8 @@
 class MinimalRacket < Formula
   desc "Modern programming language in the Lisp/Scheme family"
   homepage "https://racket-lang.org/"
-  url "https://mirror.racket-lang.org/installers/8.6/racket-minimal-8.6-src.tgz"
-  sha256 "01d509d5ffd82920ff4bb41de84c07ecc6af9122953716ad43d84aa7b3939f48"
+  url "https://mirror.racket-lang.org/installers/8.8/racket-minimal-8.8-src.tgz"
+  sha256 "29a613d4fcc7b4661e8f70991277a7b06885691f7ee3ced7b9e8997f77be8505"
   license any_of: ["MIT", "Apache-2.0"]
 
   # File links on the download page are created using JavaScript, so we parse
@@ -15,13 +15,13 @@ class MinimalRacket < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 arm64_monterey: "0b5e925451860875bcee3426d933853df22667891deab5f58af81db44c7ec64b"
-    sha256 arm64_big_sur:  "f32e1a4c7a2df5d93e160fd500df5bd9408ae3a0878469827544bb8575967127"
-    sha256 monterey:       "382691a83867d3a375900057862963904dab092dbb5923a1dbfc2b0397c4d182"
-    sha256 big_sur:        "6a6567b68a2213255d55fa9658823d2f7bea83bf9638d854ce3e87c12685fd49"
-    sha256 catalina:       "34ac8c5df8fc1ca3ae360cb63230cbe662437ebbff43724988967876e7bc894f"
-    sha256 x86_64_linux:   "5ceb281664ea1a00c477a6476757e7963e5b13db482dd57789dc474ad3ac375e"
+    sha256 arm64_ventura:  "30ce6959accb919a85e4e881458d6db1a0da67d308a1dc69b0093902b43766dc"
+    sha256 arm64_monterey: "dba9022820868279f0f49ed4a11fa02ecdce06ebf0900108b9398e0f369576a5"
+    sha256 arm64_big_sur:  "eff78efe27b08ab24720602206fd1f3925402b4062b3bcb15ed2852a797c126c"
+    sha256 ventura:        "6d338ac2d5336ff4c6a29c0f1a828e532dd74c91fc86e8c6a09a7173335e788d"
+    sha256 monterey:       "072dff6dfd2cad4b2f091b0cefaa2297c01a5db16e5dcabcbc3f4091bd81c201"
+    sha256 big_sur:        "8423ea925387892ac90f36fb8b4bf227d430bbd06b937cc6ee04e42958929366"
+    sha256 x86_64_linux:   "195e27929cee36dfc13d42758a1e775dfc00fd5c0f2110c1665dda88ec1f0496"
   end
 
   depends_on "openssl@1.1"

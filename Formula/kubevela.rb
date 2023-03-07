@@ -2,18 +2,19 @@ class Kubevela < Formula
   desc "Application Platform based on Kubernetes and Open Application Model"
   homepage "https://kubevela.io"
   url "https://github.com/kubevela/kubevela.git",
-      tag:      "v1.5.4",
-      revision: "17872f97050bb0d039b6f7f0f7245fe7f714fe9f"
+      tag:      "v1.7.5",
+      revision: "1c2df10299dfa015f34011317fa2b4a109988407"
   license "Apache-2.0"
   head "https://github.com/kubevela/kubevela.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "d6e7210ea14bc159bf21a5e154f6cb7489a94fc70cfe4b79e543d113cd7fdc98"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "d6e7210ea14bc159bf21a5e154f6cb7489a94fc70cfe4b79e543d113cd7fdc98"
-    sha256 cellar: :any_skip_relocation, monterey:       "233b0d89e3508b8e35087fab11f0e825f7b0e29eb0b5b6965acf3ad0bf2fc084"
-    sha256 cellar: :any_skip_relocation, big_sur:        "233b0d89e3508b8e35087fab11f0e825f7b0e29eb0b5b6965acf3ad0bf2fc084"
-    sha256 cellar: :any_skip_relocation, catalina:       "233b0d89e3508b8e35087fab11f0e825f7b0e29eb0b5b6965acf3ad0bf2fc084"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "0e79e8d39e0bf6f068cebae26eebab2e48359ac8d8c88e27a04edd617fef20e9"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "4c1de11ffbfe0b6e1131951da1a8c901fd83facc01b43eab845be8b790fc9ff1"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "4c1de11ffbfe0b6e1131951da1a8c901fd83facc01b43eab845be8b790fc9ff1"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "4c1de11ffbfe0b6e1131951da1a8c901fd83facc01b43eab845be8b790fc9ff1"
+    sha256 cellar: :any_skip_relocation, ventura:        "912cd4a760f2d39acb1cfe3b5020f484d71bc8be43fe63b144c80b0a3e1ed1b9"
+    sha256 cellar: :any_skip_relocation, monterey:       "912cd4a760f2d39acb1cfe3b5020f484d71bc8be43fe63b144c80b0a3e1ed1b9"
+    sha256 cellar: :any_skip_relocation, big_sur:        "912cd4a760f2d39acb1cfe3b5020f484d71bc8be43fe63b144c80b0a3e1ed1b9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "df1520589512e56646c2b9aedad8e654231b48277e741682657b9409640be296"
   end
 
   depends_on "go" => :build
@@ -27,6 +28,8 @@ class Kubevela < Formula
     ]
 
     system "go", "build", *std_go_args(output: bin/"vela", ldflags: ldflags), "./references/cmd/cli"
+
+    generate_completions_from_executable(bin/"vela", "completion", shells: [:bash, :zsh], base_name: "vela")
   end
 
   test do

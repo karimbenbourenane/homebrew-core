@@ -1,8 +1,8 @@
 class GnupgAT22 < Formula
   desc "GNU Pretty Good Privacy (PGP) package"
   homepage "https://gnupg.org/"
-  url "https://gnupg.org/ftp/gcrypt/gnupg/gnupg-2.2.39.tar.bz2"
-  sha256 "ab74db6685f026d7c0a10b527ecddecd608606a1691d15fda5d0a7f7d27e4c2f"
+  url "https://gnupg.org/ftp/gcrypt/gnupg/gnupg-2.2.41.tar.bz2"
+  sha256 "13f3291007a5e8546fcb7bc0c6610ce44aaa9b3995059d4f8145ba09fd5be3e1"
   license "GPL-3.0-or-later"
 
   livecheck do
@@ -11,12 +11,13 @@ class GnupgAT22 < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "509c767f63efee9557d507b4651155cc87daae47a8fdc58df2030cac6c8a7fec"
-    sha256 arm64_big_sur:  "fdcdd0dfbb313846d86c0ff0c1062f5568663efc7d7ea3f41661e8a996862503"
-    sha256 monterey:       "14699c2d17414dfe1a74e54466aabdacf770c24f47f32953586be223b0fe3ca4"
-    sha256 big_sur:        "39e27c52176d3e971dbd627464dbd354dfe83726e9c35dbdbc807dd2da8f9e8e"
-    sha256 catalina:       "e906301a6d3a7b12e2462710e243ed2f4da67f80495962825c488ecbf2ea6e5b"
-    sha256 x86_64_linux:   "861e9de9f4c52fb0cf499e5028f2880fda6f087d54f3e41714ca88d631758aef"
+    sha256 arm64_ventura:  "5789285b2a977cf20b61a346fcf44f5260a20af5432d0cc62732a89609e3c828"
+    sha256 arm64_monterey: "e21c9ae6576afb03b728ed48a4a5a2458bf23cff71944d5f93939d02cca148ee"
+    sha256 arm64_big_sur:  "8fd172c5b153ea13239e921c186329218be6d4506ff4e91167753c756dc1d92c"
+    sha256 ventura:        "35a9d856bd6a1abe7585291295883d3f68d54076af55e881fc0356bcdbd84f88"
+    sha256 monterey:       "1ded70c04491779a692124ff3530e75bff9ed48a0d1d5d4448a03ac59424b3bb"
+    sha256 big_sur:        "00c4f5f0629f45826b4c1c163596c32f13e726c24c85149eb34267901ca0ad10"
+    sha256 x86_64_linux:   "e407d01641735fdeeb789ca26ee6dc4d8dfd445202c9612316981d5209314901"
   end
 
   keg_only :versioned_formula
@@ -31,6 +32,7 @@ class GnupgAT22 < Formula
   depends_on "libusb"
   depends_on "npth"
   depends_on "pinentry"
+  depends_on "readline" # Possible opportunistic linkage. TODO: Check if this can be removed.
 
   uses_from_macos "sqlite" => :build
 

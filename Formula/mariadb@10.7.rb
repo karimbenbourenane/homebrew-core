@@ -1,40 +1,31 @@
 class MariadbAT107 < Formula
   desc "Drop-in replacement for MySQL"
   homepage "https://mariadb.org/"
-  url "https://downloads.mariadb.com/MariaDB/mariadb-10.7.4/source/mariadb-10.7.4.tar.gz"
-  sha256 "73dd9c9d325520f20ca5e0ef16f94b7be1146bed7e4a78e735c20daebf3a4173"
+  url "https://downloads.mariadb.com/MariaDB/mariadb-10.7.8/source/mariadb-10.7.8.tar.gz"
+  sha256 "f8c69d9080d85eafb3e3a84837bfa566a7f5527a8af6f9a081429d4de0de4778"
   license "GPL-2.0-only"
 
-  # This uses a placeholder regex to satisfy the `PageMatch` strategy
-  # requirement. In the future, this will be updated to use a `Json` strategy
-  # and we can remove the unused regex at that time.
+  # https://mariadb.com/kb/en/mariadb-10-7-8-release-notes/#notable-items
   livecheck do
-    url "https://downloads.mariadb.org/rest-api/mariadb/all-releases/?olderReleases=false"
-    regex(/unused/i)
-    strategy :page_match do |page|
-      json = JSON.parse(page)
-      json["releases"]&.map do |release|
-        next unless release["release_number"]&.start_with?(version.major_minor)
-        next unless release["status"]&.include?("stable")
-
-        release["release_number"]
-      end
-    end
+    skip "10.7.8 is the final release of MariaDB 10.7"
   end
 
   bottle do
-    sha256 arm64_monterey: "0fff3ecc5b2b819c8e764cb787b5819c47954646b2ec84d25100f3c5dcac84ff"
-    sha256 arm64_big_sur:  "a66f1694566871298c59854a9fd8426a08928ab0a49f3d000fed4b78440ba9ea"
-    sha256 monterey:       "01f2c4a8c440c11decd30f39b8ed8fa20c72b88aace7d5550a534802c1a146a7"
-    sha256 big_sur:        "e58a1cd5cdf49507f5d2ba279ca2e5e307ff1281da33cdcb89ed98acf64a309b"
-    sha256 catalina:       "7ef190ad6414c4e7397c7930f010ef18852b9a0215f3f6c232d6d7d6ba80f139"
-    sha256 x86_64_linux:   "08ab120aa7c45cae0c860f69d3b3d47db6dff1085187b19fed76dad705ca18a4"
+    sha256 arm64_ventura:  "8f0a0e4d4638e3cd70b84e61349b1602d81826e5a57ae6d8143727302a9531af"
+    sha256 arm64_monterey: "89fc9092f426431a756b9e7922a856611d32c287cb0c8d6ca9eb09255a933486"
+    sha256 arm64_big_sur:  "60dd2de709df30222cc8b1d9ebdfee1d8e14c8f1eeb7184f3306ccfaf1cacc04"
+    sha256 ventura:        "ae41f693e1fade9f269cb241bc4ba565454514f62d4fa37397e249b41a09fdb9"
+    sha256 monterey:       "a74860e584fbcfd2ff0ddbf53bfb84f2eee35c1b77ffb81b1d4a28b1cd0943f1"
+    sha256 big_sur:        "a4aacf02a33ca4fc6c74b9a60dd36a200b14410293241d0278c6177461fe37bd"
+    sha256 x86_64_linux:   "c8f87ce51571b084849bfc5ab32600e5beda52552bcdf4edd65cf607fe81cfb3"
   end
 
   keg_only :versioned_formula
 
   # See: https://mariadb.com/kb/en/changes-improvements-in-mariadb-107/
-  disable! date: "2023-02-01", because: :unsupported
+  # and https://mariadb.org/about/#maintenance-policy
+  # End-of-life on 2023-02-09. Disable date set to 3 months after.
+  disable! date: "2023-05-09", because: :unsupported
 
   depends_on "bison" => :build
   depends_on "cmake" => :build
@@ -48,7 +39,6 @@ class MariadbAT107 < Formula
   uses_from_macos "zlib"
 
   on_linux do
-    depends_on "gcc"
     depends_on "linux-pam"
     depends_on "readline" # uses libedit on macOS
   end

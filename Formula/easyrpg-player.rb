@@ -4,19 +4,20 @@ class EasyrpgPlayer < Formula
   url "https://easyrpg.org/downloads/player/0.7.0/easyrpg-player-0.7.0.tar.xz"
   sha256 "12149f89cc84f3a7f1b412023296cf42041f314d73f683bc6775e7274a1c9fbc"
   license "GPL-3.0-or-later"
-  revision 3
+  revision 4
 
   livecheck do
     url "https://github.com/EasyRPG/Player.git"
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "71895da3ee0ae93fff96e9dba48afa5609c4b2d2b42102a862da4673605e366c"
-    sha256 cellar: :any,                 arm64_big_sur:  "7fd2cb62de865ab95efc459f40961ac22226f1734ba59f1b9b0317bbd38be072"
-    sha256 cellar: :any,                 monterey:       "7d663c0d68fbaca66bfdaa49f8d20c96ad28806193e0c76c0a28225b6999212a"
-    sha256 cellar: :any,                 big_sur:        "8b3ce92dc8aa8cccbbfdc395c523d2e9309a64d0073fe7c12488d3abc9f7e308"
-    sha256 cellar: :any,                 catalina:       "a0ab488ffe50144343477885b1b76d0a17976c410087600848e664b46cd9458c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ac4dcac0b158f6af96b65178da115aaa8dbed80b0912d47039eb89e5d1daf7e8"
+    sha256 cellar: :any,                 arm64_ventura:  "0e8898fbb79b434b75345933dc4e5caac15a8756b500304a6c3eafbe70092bd4"
+    sha256 cellar: :any,                 arm64_monterey: "a346d38b8f2323390d1fecc9c37c47298bd9052afc0cd076189f84826ef8e715"
+    sha256 cellar: :any,                 arm64_big_sur:  "898f87d069f28bfab7f0db4a49755d533419408075baab30274617887b4d6fb3"
+    sha256 cellar: :any,                 ventura:        "a27ba0a849fef39fef553ad595217fffb452a9ad42e52757fd1df0704d41834c"
+    sha256 cellar: :any,                 monterey:       "dc89596e72cd7a078db044f33d27d0810b43a3dbedf6936323fbf76a2320d0c0"
+    sha256 cellar: :any,                 big_sur:        "88d830b70f1ce15d7732c1032cd1707297b86978f508344225c86c5e736be51f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7629047f8f56d4c4b846c2aa8c4115366be5946063b247486248f1bdbbced968"
   end
 
   depends_on "cmake" => :build
@@ -37,7 +38,6 @@ class EasyrpgPlayer < Formula
   on_linux do
     depends_on "pkg-config" => :build
     depends_on "alsa-lib"
-    depends_on "gcc"
   end
 
   fails_with gcc: "5"

@@ -2,8 +2,8 @@ class ArchiSteamFarm < Formula
   desc "Application for idling Steam cards from multiple accounts simultaneously"
   homepage "https://github.com/JustArchiNET/ArchiSteamFarm"
   url "https://github.com/JustArchiNET/ArchiSteamFarm.git",
-      tag:      "5.3.0.3",
-      revision: "1e03077dc73605450ae5f52abf57ca0c7d0604c6"
+      tag:      "5.4.3.2",
+      revision: "10007e0752b60474ac71017e36677d2f5e998914"
   license "Apache-2.0"
   head "https://github.com/JustArchiNET/ArchiSteamFarm.git", branch: "main"
 
@@ -13,12 +13,13 @@ class ArchiSteamFarm < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "327993e7afc86ce64a792abec480382bd093c829ce100d930f814ee53a3eebdc"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "9f722041477efd5a6a1b72f194c204a2def82c8d321c10483deec93b964c1732"
-    sha256 cellar: :any_skip_relocation, monterey:       "3a04a935a20276fadbee76c96ec0295634ddb09a30ae5f5a55eba74d41a25d01"
-    sha256 cellar: :any_skip_relocation, big_sur:        "1eaa72d7ef0b81cb8991249d9ae2fd0bc95e6fee71052e66878661926019778f"
-    sha256 cellar: :any_skip_relocation, catalina:       "ecd9a3c99de7f291ceb28b768ab66ad2a8416038cb8441a16867757a837110e4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fc12df6e306adaf19ce1370f32e4ccf57142c5d993ca6963b219e6441b3cf89d"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "208281b71c8bed1a02ee22e211ae26864fbb67325977c3787d8441b5669955fb"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "2c83bb0a10d5f2dd5961a80ebad8bbf7a0fd6f0ae24e3932d683e0bd72ebb4e8"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "505368b47f9d693f78ba1dbd272b65b5dfca31903f642464520dc8401550476c"
+    sha256 cellar: :any_skip_relocation, ventura:        "8f6045e3ec66b7246f44f35d6c368f47a40545541caf0104272e7d58e892b620"
+    sha256 cellar: :any_skip_relocation, monterey:       "b4a88fc3195f8cb5ea17983e0f9a64066d5de8711e725d070df7cf3089e42b0c"
+    sha256 cellar: :any_skip_relocation, big_sur:        "e7181c0e91495af2f69e2101c63535c8421be3067fbef24668235a3382cf0cde"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "2a150fda1df849a7ce3d785248a5156fe43ffd9836be21e3f709aee55445f9e6"
   end
 
   depends_on "dotnet"
@@ -41,7 +42,7 @@ class ArchiSteamFarm < Formula
 
   def caveats
     <<~EOS
-      Config: #{etc}/asf/
+      ASF config files should be placed under #{etc}/asf/.
     EOS
   end
 

@@ -1,8 +1,8 @@
 class Stunnel < Formula
   desc "SSL tunneling program"
   homepage "https://www.stunnel.org/"
-  url "https://www.stunnel.org/downloads/stunnel-5.64.tar.gz"
-  sha256 "eebe53ed116ba43b2e786762b0c2b91511e7b74857ad4765824e7199e6faf883"
+  url "https://www.stunnel.org/downloads/stunnel-5.69.tar.gz"
+  sha256 "1ff7d9f30884c75b98c8a0a4e1534fa79adcada2322635e6787337b4e38fdb81"
   license "GPL-2.0-or-later"
 
   livecheck do
@@ -11,12 +11,13 @@ class Stunnel < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "661fb14a483558d6572ed459c085fb3456d60dc58dcced2caf2bf082ba074ba9"
-    sha256 cellar: :any,                 arm64_big_sur:  "324a76ed9a0567ccb8b5553be53d8273e24767a5258a5769b4d4ba59bc19a9ca"
-    sha256 cellar: :any,                 monterey:       "30b9d6e8dafd81b4cb5da4978f9abfb309f682884596a85e84c75ce1f248649a"
-    sha256 cellar: :any,                 big_sur:        "ea4d844c27669ad32c6166dc1b7f073be0e67aa9dbb832bacbc6a29a48ffec17"
-    sha256 cellar: :any,                 catalina:       "2d287f3838ee54b9296feb29aa4d79f5091bad04ebc079e1af5bb0ef94226783"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "4189f6dfab60662d3a9747cc1323f34242fcff1f938f0c7ca50fb2eaf3597f0b"
+    sha256 cellar: :any,                 arm64_ventura:  "4d3d865982840b1662a3058e106fbce761241a8ec4aa8998d71c8e007653028a"
+    sha256 cellar: :any,                 arm64_monterey: "2d4b8d9eaae526b0386afd3b6679d02eb2b23579c78b84dd9055a826cd9d77b8"
+    sha256 cellar: :any,                 arm64_big_sur:  "ff2b75c783a359a8a12347de55979f45e650c1cb0b58267c39b22bcffbf2d6d3"
+    sha256 cellar: :any,                 ventura:        "ad0e4c4b1cccfb33b03d704f4a71e8b0d61c09f89fccffd6b8421fca341ceb6a"
+    sha256 cellar: :any,                 monterey:       "9e3cfb283e6a94b9a935f8cdf2e4408a6c04ed945d0c3d48fea01dc6d0654dc3"
+    sha256 cellar: :any,                 big_sur:        "cd7b4eb6c115a163ef8df9f93bde1ea800c2488a1c9c29a6da73df30fd5af3b6"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ea23482d88b174665da5b10b7b470a20a6b39163c6a1eb7414ed08645c4ba2c1"
   end
 
   depends_on "openssl@3"

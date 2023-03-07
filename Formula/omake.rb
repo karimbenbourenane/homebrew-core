@@ -1,8 +1,8 @@
 class Omake < Formula
   desc "Build system designed for scalability, portability, and concision"
   homepage "http://projects.camlcity.org/projects/omake.html"
-  url "https://github.com/ocaml-omake/omake/archive/omake-0.10.3.tar.gz"
-  sha256 "5f42aabdb4088b5c4e86c7a08e235dc7d537fd6b3064852154303bb92f5df70e"
+  url "https://github.com/ocaml-omake/omake/archive/omake-0.10.6.tar.gz"
+  sha256 "f84f4cbb18a075782a7432bbf9abd5ef177eb0603fc1c69afffce8c2c25e30ee"
   license "GPL-2.0-only"
   head "https://github.com/ocaml-omake/omake.git", branch: "master"
 
@@ -12,14 +12,13 @@ class Omake < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "725e9f575aa66632678bf58a4a358d1b7bd30a2cb2024be2f37a49cfed2a0adb"
-    sha256 arm64_big_sur:  "3083df4b79088af402da7dbc31f1ff7368c656029bc328bb984a0ad3e86d317b"
-    sha256 monterey:       "33fc23f440db2f5f7950bb818aff16d46dbe46993faded5130c8e411b6e79c6f"
-    sha256 big_sur:        "983b6e4988b2bb1c5200e413c7a6152b196df9610c41c4768addca6a0355e1f5"
-    sha256 catalina:       "21933568db9ed765a0bf8c1f04b9f38e5923b6a320372a570499b221fb2afe6d"
-    sha256 mojave:         "f54a0498316969552424a646ef36b15c567162e689e04203c95a5f8a4536c589"
-    sha256 high_sierra:    "587b563698dc29ea2c662ffa58458f45e212f131e3687a37d26d8f379f089588"
-    sha256 x86_64_linux:   "8fe2949b2aa964a4310791453c27f1d05f8f693750ba0c9b8fad4b0d79580182"
+    sha256 arm64_ventura:  "94c636910242c5431bf03e0cd3d5c8f2972a48ad821ba36443ce603c44c84f70"
+    sha256 arm64_monterey: "40ad54dcd5bef35cfb5ab3e7cb7b5f81e03c1b313b1f7c74e715b6ea6c6353f7"
+    sha256 arm64_big_sur:  "a980b712dacb260d0ec4b2121545cdec4a1534ca95976e10b6edfb6eb2137569"
+    sha256 ventura:        "3794f8d448da10ad33558e4a7390f8e657a4de09a84db6933387f1f59da0603c"
+    sha256 monterey:       "f41e4e4311dd134634010373863ef6ab0830c0c4bbb210590c8e2975b10fe35d"
+    sha256 big_sur:        "8dd4cb8d9e79996dc69c9205dfddba7e7e530971f197c2f40d306818afb6a97e"
+    sha256 x86_64_linux:   "5d2038dba034f18eae8f32a98f526ef30b45ceae8ca6bd103b3e083267ab2695"
   end
 
   depends_on "ocaml" => [:build, :test]
@@ -30,7 +29,10 @@ class Omake < Formula
 
   def install
     system "./configure", "-prefix", prefix
+    system "make"
     system "make", "install"
+
+    share.install prefix/"man"
   end
 
   test do

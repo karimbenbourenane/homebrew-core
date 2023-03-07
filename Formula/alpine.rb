@@ -14,15 +14,18 @@ class Alpine < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "973af919206221f5c35872b2860d14c826e7a33a05e3bff7eb3f6b1e40a6bdc5"
-    sha256 arm64_big_sur:  "927accb3ab4fdd2e3c595ea4753ca772d8d4e4b3c2efcc8ff6fa6647f540dae6"
-    sha256 monterey:       "6255e89a49b454f34cb476d5db4f3a136725b99ca3ef92292127de694f663f02"
-    sha256 big_sur:        "13456cf7fadc33e4f3a29f8c8eb056aa158bb3abcccbea6c763df47353200853"
-    sha256 catalina:       "05adde35293ccc5096010e925746dd15f4536d5789ceca210d5ebf7324571aeb"
-    sha256 x86_64_linux:   "24dfabc14a011679dc6c181bb5579bc27f3b8bc134ab412b6bdfa4306d10a8fd"
+    rebuild 2
+    sha256 arm64_ventura:  "9b7a5da6cd88ce590ec0c1c2ef8dc45da8a4fa45d108eb976157ddd505cf2b2a"
+    sha256 arm64_monterey: "b1c884c5cc1d84813284e85e74ae3c78db147b46da0d0b8d18ade4ff2ee550ac"
+    sha256 arm64_big_sur:  "ba5962d03c0733fff29eb92d1c759867185d38de7ba342561ccbd20da5ce050d"
+    sha256 ventura:        "7b8f62b0200eb3ed18c3f79ecf7201f8409916f505fe738068307b6dbeb754ca"
+    sha256 monterey:       "5f289262fe8971acbe473b036316f73d7a17c8f9bbbcb7a966c2a2d5e7c06ee6"
+    sha256 big_sur:        "8a5830644c5e7738ba52ad6687eebf493020c8e6d14a4d247b3372138cac37a3"
+    sha256 catalina:       "0a9ccb4fa8aac9476933d439ee57c30c234a20c0b189cdab09dfceba2e19b00d"
+    sha256 x86_64_linux:   "3a326ae9048a1ea6fe4403478254a7bb403c1a565486b96d7224138f1b2e3072"
   end
 
-  depends_on "openssl@1.1"
+  depends_on "openssl@3"
 
   uses_from_macos "ncurses"
   uses_from_macos "openldap"
@@ -30,6 +33,8 @@ class Alpine < Formula
   on_linux do
     depends_on "linux-pam"
   end
+
+  conflicts_with "macpine", because: "both install `alpine` binaries"
 
   # patch for macOS obtained from developer; see git commit
   # https://repo.or.cz/alpine.git/commitdiff/701aebc00aff0585ce6c96653714e4ba94834c9c
@@ -40,8 +45,8 @@ class Alpine < Formula
 
     args = %W[
       --disable-debug
-      --with-ssl-dir=#{Formula["openssl@1.1"].opt_prefix}
-      --with-ssl-certs-dir=#{etc}/openssl@1.1
+      --with-ssl-dir=#{Formula["openssl@3"].opt_prefix}
+      --with-ssl-certs-dir=#{etc}/openssl@3
       --prefix=#{prefix}
       --with-bundled-tools
     ]

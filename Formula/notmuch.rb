@@ -6,7 +6,7 @@ class Notmuch < Formula
   url "https://notmuchmail.org/releases/notmuch-0.37.tar.xz"
   sha256 "0e766df28b78bf4eb8235626ab1f52f04f1e366649325a8ce8d3c908602786f6"
   license "GPL-3.0-or-later"
-  revision 1
+  revision 2
   head "https://git.notmuchmail.org/git/notmuch", using: :git, branch: "master"
 
   livecheck do
@@ -15,12 +15,14 @@ class Notmuch < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "046ffb5869a9eda612272afeb41b0dd22da13cf7cce94e4e3fa8e711c7df157b"
-    sha256 cellar: :any,                 arm64_big_sur:  "6fb3ab2c851007505e2f36ee5d10347d910d14509a7c5fcca999d4476488e362"
-    sha256 cellar: :any,                 monterey:       "94edbd6c448b901be5248c4479c359eb2e98c6cd352e169a0c3b261c3085f292"
-    sha256 cellar: :any,                 big_sur:        "c21015a05fc6e19faf1b62fa0d7a0709310020d7e1577f5238ed24ab8550524d"
-    sha256 cellar: :any,                 catalina:       "cc418cca02772fe5dd12b03fccfdeda0e0469057bee105aeb92643523f3a7108"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9166a3ea5cefff981cc8c8c1630724c7982f9b3bb399a9a2177906bd251df2b7"
+    sha256 cellar: :any,                 arm64_ventura:  "ed024d3539758c36f8cb6a97774ecaa52ef04d631f9af13eda3746060923d220"
+    sha256 cellar: :any,                 arm64_monterey: "8df2e487a5c64d1eebdf18ba66171c9f3037550b2dcbb049bf62eb6f0a41cc7b"
+    sha256 cellar: :any,                 arm64_big_sur:  "dea84eba81f2265c25fd9e4186fbd24175d0c00125ff0e4c5a783d0c627be3bd"
+    sha256 cellar: :any,                 ventura:        "fef920bcbd5fe54a3211110c18287b9622a328cdc2ede30a9307656620ccb1d0"
+    sha256 cellar: :any,                 monterey:       "4815aac84a42dc1b40dcd7fced6295e764e77d57f1b270d87466a6addae1a6cb"
+    sha256 cellar: :any,                 big_sur:        "7b26d6498972ee90cfebeda76047001fe8194f5f44bf8fe6425059723f17706d"
+    sha256 cellar: :any,                 catalina:       "c5b74dd48985c55a7bb92b9b3eb1140ffc10b053a50ba7205da6be4913fd65cf"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "4f87c70a3e47b6422b5dc2abf802ace4115e9a52eeb20926d3017c3513bb1767"
   end
 
   depends_on "doxygen" => :build
@@ -30,7 +32,7 @@ class Notmuch < Formula
   depends_on "sphinx-doc" => :build
   depends_on "glib"
   depends_on "gmime"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
   depends_on "talloc"
   depends_on "xapian"
 
@@ -46,9 +48,13 @@ class Notmuch < Formula
     sha256 "e644fdec12f7872f86c58ff790da456218b10f863970249516d60a5eaca77206"
   end
 
+  def python3
+    "python3.11"
+  end
+
   def install
     ENV.cxx11 if OS.linux?
-    site_packages = Language::Python.site_packages("python3")
+    site_packages = Language::Python.site_packages(python3)
     with_env(PYTHONPATH: Formula["sphinx-doc"].opt_libexec/site_packages) do
       system "./configure", "--prefix=#{prefix}",
                             "--mandir=#{man}",
@@ -68,10 +74,10 @@ class Notmuch < Formula
     (prefix/"vim").install "vim/syntax"
 
     cd "bindings/python" do
-      system "python3", *Language::Python.setup_install_args(prefix)
+      system python3, *Language::Python.setup_install_args(prefix, python3)
     end
 
-    venv = virtualenv_create(libexec, "python3")
+    venv = virtualenv_create(libexec, python3)
     venv.pip_install resources
     venv.pip_install buildpath/"bindings/python-cffi"
 
@@ -94,7 +100,7 @@ class Notmuch < Formula
     <<~EOS
       The python CFFI bindings (notmuch2) are not linked into shared site-packages.
       To use them, you may need to update your PYTHONPATH to include the directory
-      #{opt_libexec/Language::Python.site_packages(Formula["python@3.10"].opt_bin/"python3")}
+      #{opt_libexec/Language::Python.site_packages(python3)}
     EOS
   end
 
@@ -106,10 +112,9 @@ class Notmuch < Formula
     (testpath/"Mail").mkpath
     assert_match "0 total", shell_output("#{bin}/notmuch new")
 
-    python = Formula["python@3.10"].opt_bin/"python3"
-    system python, "-c", "import notmuch"
-    with_env(PYTHONPATH: libexec/Language::Python.site_packages(python)) do
-      system python, "-c", "import notmuch2"
+    system python3, "-c", "import notmuch"
+    with_env(PYTHONPATH: libexec/Language::Python.site_packages(python3)) do
+      system python3, "-c", "import notmuch2"
     end
   end
 end

@@ -1,17 +1,18 @@
 class SofiaSip < Formula
   desc "SIP User-Agent library"
   homepage "https://sofia-sip.sourceforge.io/"
-  url "https://github.com/freeswitch/sofia-sip/archive/v1.13.8.tar.gz"
-  sha256 "792b99eb35e50d7abeb42e91a5dceaf28afc5be1a85ffb01995855792a747fec"
+  url "https://github.com/freeswitch/sofia-sip/archive/v1.13.14.tar.gz"
+  sha256 "a517e31c6a406af3d7ec8cb0154e46ad12fbcb54dadfc3deada5d97bdbd9cc5a"
   license "LGPL-2.1-or-later"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "4a9236cfca7bdf5f2b0150c43b6880bb3228aeb74e78f4ca5d90b23e7629345e"
-    sha256 cellar: :any,                 arm64_big_sur:  "ce246432a246e2d745544771006439d443b639b5a40c7e155c13d8e4b6d1175b"
-    sha256 cellar: :any,                 monterey:       "4634460ca33e34cca0c8261a164f1b17d9585ab4824836f78518dc52d945e543"
-    sha256 cellar: :any,                 big_sur:        "34823f7ddba4cabc4ecfbd38441f2a0efec3f99dcfc05203f15b2c69d3ac8ab8"
-    sha256 cellar: :any,                 catalina:       "6c76cd5a4ddbcf0f886a511baa0dfd351a25f1f49ec38ea5bf73f29d7874a78a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "1508be4f8955a341f1e100e657a260ae2e291325a36e1fe71d42664a095cb112"
+    sha256 cellar: :any,                 arm64_ventura:  "bfb64a936a3aeaa45e62ebbec38ef5c80367a90b35c132937cfffe7915e88634"
+    sha256 cellar: :any,                 arm64_monterey: "a813e90a4350f194fadb9b391166fc4f228365164aeb023f82e49351b2af8db7"
+    sha256 cellar: :any,                 arm64_big_sur:  "d1e1035d5208ec5ed8524fc0fa833f24d5779ded1ad8bf460c98e189d3293e76"
+    sha256 cellar: :any,                 ventura:        "e3eba59e3f47f5a1eec8fc2742b2ce283a2342c931dd2021cf72371a026c4a0c"
+    sha256 cellar: :any,                 monterey:       "65c5af6c9db07ea047a68655649384cecf400e312048738364698d3b94a46102"
+    sha256 cellar: :any,                 big_sur:        "394da7b648bd351e1e6c88d222f44b9912268a0fe20dbfaf277b486bf058b51d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "0b2b254d850f0c82836fff43ab69e8dd01dc3306753e200b9d08faec38f65532"
   end
 
   depends_on "autoconf" => :build

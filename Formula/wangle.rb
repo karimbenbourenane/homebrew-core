@@ -1,18 +1,19 @@
 class Wangle < Formula
   desc "Modular, composable client/server abstractions framework"
   homepage "https://github.com/facebook/wangle"
-  url "https://github.com/facebook/wangle/releases/download/v2022.09.05.00/wangle-v2022.09.05.00.tar.gz"
-  sha256 "f5e69512ecfd80f73f5329cecd89219ea7ddb19c13926050d0ec9f71dd384f3a"
+  url "https://github.com/facebook/wangle/releases/download/v2023.03.06.00/wangle-v2023.03.06.00.tar.gz"
+  sha256 "037db6cdcbdd1c5ba1613f7ee27e04a61dcce1b19163b64d0150fc5232761c58"
   license "Apache-2.0"
   head "https://github.com/facebook/wangle.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "1b0258fd8fa28923f9d53bda0a7a8f59e75501d05c09969670d10cab6847ca0a"
-    sha256 cellar: :any,                 arm64_big_sur:  "ea951a63c2eba1be6e229b4105c76af0322280f12c167c3a877c86d0f7da47fc"
-    sha256 cellar: :any,                 monterey:       "6fe93848963f7294a0147a7a446123f631590b55cc9caaa58fb392d6b310bfcb"
-    sha256 cellar: :any,                 big_sur:        "f902f2c37540e3ab3b51ead90cec6e6d218c73c3dc165d9bb0d092378448557a"
-    sha256 cellar: :any,                 catalina:       "c3777827a5e47fcc2fa52f48568c78111dfa2e3dc9652e30f58ce154f25b3b5f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fe6c3f2e95b1a55986b38b027f7f3475812c7b3cdc3a684f65c43a58fd7427aa"
+    sha256 cellar: :any,                 arm64_ventura:  "ee72f85fbdc8cb61a7c5748f4f9d0cc4965027df914990ce2eb06a84e649054d"
+    sha256 cellar: :any,                 arm64_monterey: "fa806ad2350c87f11b379ee24bcd01388a4d53f810af54fef433b120f9d7bd1b"
+    sha256 cellar: :any,                 arm64_big_sur:  "954b2e0fa4355d759e46dd77765b521e6e965d225ab210d7b7d4de934e54c4d1"
+    sha256 cellar: :any,                 ventura:        "da8298e56ca0f7422a8e0d5799bcecf900cbc3a3ff5207013d272fddddc58908"
+    sha256 cellar: :any,                 monterey:       "8326fd33f70050d2db4f36a3aba7ada6a8e1b417ceb7c9d0e7a07ba061126922"
+    sha256 cellar: :any,                 big_sur:        "c1d52425a6c9e3bb20a98c3dd4849d580254d90cd7eee7f9ba70d2c06afdd428"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fe64e54be968ae07e81bbd396ced2d7591f17752910c2c06e69569274a0562a5"
   end
 
   depends_on "cmake" => :build
@@ -32,10 +33,6 @@ class Wangle < Formula
 
   uses_from_macos "bzip2"
   uses_from_macos "zlib"
-
-  on_linux do
-    depends_on "gcc"
-  end
 
   fails_with gcc: "5"
 

@@ -2,7 +2,7 @@ class Sysdig < Formula
   desc "System-level exploration and troubleshooting tool"
   homepage "https://sysdig.com/"
   license "Apache-2.0"
-  revision 4
+  revision 9
 
   stable do
     url "https://github.com/draios/sysdig/archive/0.29.3.tar.gz"
@@ -22,12 +22,12 @@ class Sysdig < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "d23b9a35120a40444e93c64d98f708362cf02f68d915218533849012d2633197"
-    sha256 arm64_big_sur:  "4d49cc9e1910227710b298d0f28cb907e3cb71f606818c06c31125cc293b8c37"
-    sha256 monterey:       "bd8c3741c23dd9bdef1fa13d0fa299b4368b5072f3c58956e09c549d5a5ff676"
-    sha256 big_sur:        "1306aa6f105ff51b13305c1084a807894d103b0ad3f7a71621780b87124f0621"
-    sha256 catalina:       "78f6f81a3fb4d61fb2ca2d41ec1c5b10284c9edc77b0e49fc1eb088b3b5d8a83"
-    sha256 x86_64_linux:   "e41e14f0ac825d44419b2af77d183230af82feb377df1dd2d0bc45d8a873b9d7"
+    sha256 arm64_ventura:  "25d9766a9870e4d5696f2ed126c4d1fbecd2761446a8f3fe5c4c08586ad19a0f"
+    sha256 arm64_monterey: "e5e391dc281e5e0e25956eb063882383268bd17aad46adf4b52c2fed01cdad9a"
+    sha256 arm64_big_sur:  "47a7283c72b2986715910f9fc97831a4f3a76502c66efda9b8ffeff407a3a262"
+    sha256 ventura:        "f0eec8a21aac55fe9a9bcc420a66dbe605a16393fb28e023343d5e0268271260"
+    sha256 monterey:       "012c921f362759cd62668245a5a7626ff2402b980da1c628e2811e0c0128f8fb"
+    sha256 big_sur:        "3ea079c0f1aa61de2372e5788bffcf150fda93fad184b8852695f2a414cc17f5"
   end
 
   head do
@@ -42,7 +42,7 @@ class Sysdig < Formula
   depends_on "nlohmann-json" => :build
   depends_on "c-ares"
   depends_on "jsoncpp"
-  depends_on "luajit-openresty"
+  depends_on "luajit"
   depends_on "openssl@1.1"
   depends_on "tbb"
   depends_on "yaml-cpp"
@@ -54,7 +54,6 @@ class Sysdig < Formula
   on_linux do
     depends_on "libb64" => :build
     depends_on "elfutils"
-    depends_on "gcc"
     depends_on "grpc"
     depends_on "jq"
     depends_on "protobuf"
@@ -83,13 +82,15 @@ class Sysdig < Formula
               "set(CMAKE_EXE_LINKER_FLAGS \"-pagezero_size 10000 -image_base 100000000\")",
               ""
 
-    args = std_cmake_args + %W[
+    # Keep C++ standard in sync with `abseil.rb`.
+    args = %W[
       -DSYSDIG_VERSION=#{version}
       -DUSE_BUNDLED_DEPS=OFF
       -DCREATE_TEST_TARGETS=OFF
       -DBUILD_LIBSCAP_EXAMPLES=OFF
       -DDIR_ETC=#{etc}
       -DFALCOSECURITY_LIBS_SOURCE_DIR=#{buildpath}/falcosecurity-libs
+      -DCMAKE_CXX_STANDARD=17
     ]
 
     # `USE_BUNDLED_*=OFF` flags are implied by `USE_BUNDLED_DEPS=OFF`, but let's be explicit.
@@ -99,7 +100,7 @@ class Sysdig < Formula
 
     args << "-DBUILD_DRIVER=OFF" if OS.linux?
 
-    system "cmake", "-S", ".", "-B", "build", *args
+    system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
 

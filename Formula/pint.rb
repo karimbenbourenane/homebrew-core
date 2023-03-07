@@ -1,17 +1,18 @@
 class Pint < Formula
   desc "Prometheus rule linter/validator"
   homepage "https://cloudflare.github.io/pint/"
-  url "https://github.com/cloudflare/pint/archive/refs/tags/v0.29.3.tar.gz"
-  sha256 "927bc1a356178581ef1abad696430e1ee8801f7ce31e82f6da873c91b8467360"
+  url "https://github.com/cloudflare/pint/archive/refs/tags/v0.41.1.tar.gz"
+  sha256 "806afda04c150a4c43dc1c56c0ce364c7cd87e95858f2c6878ce556a2697cd82"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "eb08baed0ecdb74201f05e0a54fda7e5699340ad42e64932739a6a301cc98cf9"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "c8d1c2bdfe5c6ec07e1c27fe1b97fca1ccbfd8de4168638105ece784e96098ec"
-    sha256 cellar: :any_skip_relocation, monterey:       "b0bb44771b4a43168eb1e64f10af532f9884ae40d70099252bd0b06de3b3be5d"
-    sha256 cellar: :any_skip_relocation, big_sur:        "081710f361b03c6dd1a0a6ac92b64298da52371553198f5d831bbdcb43fdaab4"
-    sha256 cellar: :any_skip_relocation, catalina:       "bb0c65b05063fd2d66f3637f2624978d32b4352a0aaf73dd698c9fe0b797775e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "84a72b9412835d6d1bc54fe76e461cdf9b755b4cb4035a3200516fff9d1e2283"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "dd5ad6b54d3a2c66daa6a2a7f1537e9ec2f4bf462a9f03d8340cb9e02f0a1fc9"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "e2a58da6442c03bf0b10909dc05387de1913b284f36f730dac1c28784a5d1d54"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "a33211ee0f51d8b12fd5f0932191eaf15c0941c50eaa0fbce6403a9415155f02"
+    sha256 cellar: :any_skip_relocation, ventura:        "05134214be06da1e64d42267259718c0e4b34f46056b7299f37df2fc1277cbbe"
+    sha256 cellar: :any_skip_relocation, monterey:       "189b15a2acc74723b70e3b920e9e46fa125a2f59fd1de1b9e0ee9e836ecc7b9f"
+    sha256 cellar: :any_skip_relocation, big_sur:        "5767c2a601b155edc857733bcaeb2f77b41e9004f18d1ca5c96b29fca0cc86ae"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "933d4a7ea652f7ac04972ed1b355ddaabd1267b76269d543fd51309de13f9066"
   end
 
   depends_on "go" => :build

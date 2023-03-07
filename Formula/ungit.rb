@@ -3,17 +3,18 @@ require "language/node"
 class Ungit < Formula
   desc "Easiest way to use Git. On any platform. Anywhere"
   homepage "https://github.com/FredrikNoren/ungit"
-  url "https://registry.npmjs.org/ungit/-/ungit-1.5.21.tgz"
-  sha256 "db8a15b1d914277ac45e908dbb74a1950dee3c5da1ac9b04d397dc34b57edf7d"
+  url "https://registry.npmjs.org/ungit/-/ungit-1.5.23.tgz"
+  sha256 "d868b06d0a160773799577d09bad528cf011c74f18d521356a332208c99aa991"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "7fbd45d11df1c57d30d8d5e7a18e08711b429fe7f96237822b6c97282ee3dfd7"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "7fbd45d11df1c57d30d8d5e7a18e08711b429fe7f96237822b6c97282ee3dfd7"
-    sha256 cellar: :any_skip_relocation, monterey:       "b30195eb0fe0cab7e8e4bb1dcfe53c484647f2eebce8f49385a4e46523b4b4ef"
-    sha256 cellar: :any_skip_relocation, big_sur:        "b30195eb0fe0cab7e8e4bb1dcfe53c484647f2eebce8f49385a4e46523b4b4ef"
-    sha256 cellar: :any_skip_relocation, catalina:       "b30195eb0fe0cab7e8e4bb1dcfe53c484647f2eebce8f49385a4e46523b4b4ef"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7fbd45d11df1c57d30d8d5e7a18e08711b429fe7f96237822b6c97282ee3dfd7"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "10a662739162e9eccd5e41fbacc6a7ed21b0e6f31ad7908b33608b98dd0036f3"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "10a662739162e9eccd5e41fbacc6a7ed21b0e6f31ad7908b33608b98dd0036f3"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "10a662739162e9eccd5e41fbacc6a7ed21b0e6f31ad7908b33608b98dd0036f3"
+    sha256 cellar: :any_skip_relocation, ventura:        "5f1cc918a458c3c25635be952c1cec2ba185ceca6715504eac7f25465101b535"
+    sha256 cellar: :any_skip_relocation, monterey:       "5f1cc918a458c3c25635be952c1cec2ba185ceca6715504eac7f25465101b535"
+    sha256 cellar: :any_skip_relocation, big_sur:        "5f1cc918a458c3c25635be952c1cec2ba185ceca6715504eac7f25465101b535"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "10a662739162e9eccd5e41fbacc6a7ed21b0e6f31ad7908b33608b98dd0036f3"
   end
 
   depends_on "node"

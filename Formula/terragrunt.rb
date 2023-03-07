@@ -1,21 +1,21 @@
 class Terragrunt < Formula
   desc "Thin wrapper for Terraform e.g. for locking state"
   homepage "https://terragrunt.gruntwork.io/"
-  url "https://github.com/gruntwork-io/terragrunt/archive/v0.38.9.tar.gz"
-  sha256 "5f3952de7474dc0d14d620e0f61b51c98070b7053e7b015bbf9f981ed7990fa7"
+  url "https://github.com/gruntwork-io/terragrunt/archive/v0.44.4.tar.gz"
+  sha256 "dd6d81ad8251e4beb63e791507afe4f332e6a4e5e6729ce0910be7105b3e2022"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "5d115422d80238a408450bb079bc97237d1ef94ae10970aec81cac839027cf5a"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "596ed38eb25a4bc13ccee267df2d07e02d10f84ae84eb5e10c540fdcfe211883"
-    sha256 cellar: :any_skip_relocation, monterey:       "4221c8a8900f53fcafc88d82d9c121364e441d42dc2aaf4c35e095aa8568d52c"
-    sha256 cellar: :any_skip_relocation, big_sur:        "b5fbc5d76bec06db3103f1ed37ca57b71f208d817b68709aa97c8bbaa5bd7fce"
-    sha256 cellar: :any_skip_relocation, catalina:       "961198cee9c3ddcb3f395ee53864fd7c7a9f71fb0aa44b26c5009f2fed23e992"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6f3747f106d12d6d46237a24ed360b4389e64d47680a36ba7c32a36f96182b0f"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "d92a1fe6197fa84419060292b46cfae216c9165b9fdc1f49b28479cc70f4fe43"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "d92a1fe6197fa84419060292b46cfae216c9165b9fdc1f49b28479cc70f4fe43"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "d92a1fe6197fa84419060292b46cfae216c9165b9fdc1f49b28479cc70f4fe43"
+    sha256 cellar: :any_skip_relocation, ventura:        "a1bc84ffe02fa7699457d247ded3830fdc76d060227b5a657dcc034cc236b600"
+    sha256 cellar: :any_skip_relocation, monterey:       "a1bc84ffe02fa7699457d247ded3830fdc76d060227b5a657dcc034cc236b600"
+    sha256 cellar: :any_skip_relocation, big_sur:        "a1bc84ffe02fa7699457d247ded3830fdc76d060227b5a657dcc034cc236b600"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ac5be9e2e32123845277043dca229ead1aad0c22b0c559d0390d8a34fa8e34af"
   end
 
   depends_on "go" => :build
-  depends_on "terraform"
 
   conflicts_with "tgenv", because: "tgenv symlinks terragrunt binaries"
 

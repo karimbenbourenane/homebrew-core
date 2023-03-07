@@ -1,17 +1,18 @@
 class Lmod < Formula
   desc "Lua-based environment modules system to modify PATH variable"
   homepage "https://lmod.readthedocs.io"
-  url "https://github.com/TACC/Lmod/archive/8.7.12.tar.gz"
-  sha256 "da32359e49f702dfb1df200fa91f384660d07d6d883b79010b2cd7fb03f22c73"
+  url "https://github.com/TACC/Lmod/archive/8.7.19.tar.gz"
+  sha256 "1d706ef7f50378dd869ece2081a6b116ae59ede82f6cd7ca2771c6a33e3ddcf8"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "669ad193564cc084077c3d73762bf0c1d1ede6ef4053263bdbd2bf07b3d1b13a"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "ff7d21560b2238aa6317ddabc4b15c65b58e1c5415d9381d1ed82db0b918715d"
-    sha256 cellar: :any_skip_relocation, monterey:       "9cc12a3db8b5341941d01aa13cde9f5c40488d9aec5cb355fe6917d3483ebeec"
-    sha256 cellar: :any_skip_relocation, big_sur:        "1bb0024d5d5a5aaf602ca77e9cdb208012e42ddedf5d1ac5723fc021b1adedd5"
-    sha256 cellar: :any_skip_relocation, catalina:       "1ad68181b72fa2290354a849045132a6b856a5e06edb9e9c1a800b64e4d67504"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "097b1fd4219109498c859bb2c39a458fc4a83ce99571f47dba6a2c7794784661"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "83f10926dfd4462068ed15aa0ac8e2dd7177df2ba8e61ac2cdcb51fba207dd59"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "feb221e05f092f479a7a52405d9dd7885290e6b2959f0b96b48add94e6787583"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "25e3ffcb3b8ef175e8a57cc09dcea09b0f70f1504f5be78a6b8d01fdd7b9bf24"
+    sha256 cellar: :any_skip_relocation, ventura:        "6043d0a5eefa97d164f2e0ee9fd11efc03b91fea193be2fbda8d662927fa13bf"
+    sha256 cellar: :any_skip_relocation, monterey:       "213c4443af4f69829e5b0e0a24d1f7eb8faadae527f64ed9a13ca591aaf0a82d"
+    sha256 cellar: :any_skip_relocation, big_sur:        "a6d625e6f7f219b43740cc1b37a2bfda56ac15a0931c2b7a364cf0e2a9fb7111"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "06b338a6421b0b63ded903f8617fba26587a46aa07c1d8568450d33228bf2ce8"
   end
 
   depends_on "luarocks" => :build

@@ -2,18 +2,19 @@ class Vcluster < Formula
   desc "Creates fully functional virtual k8s cluster inside host k8s cluster's namespace"
   homepage "https://www.vcluster.com"
   url "https://github.com/loft-sh/vcluster.git",
-      tag:      "v0.11.2",
-      revision: "5ad633df5a2f8841d2a935d7a6be4d7daf68a653"
+      tag:      "v0.14.1",
+      revision: "3475fbf2a52ede5a374d4d157b6f084ad4b69292"
   license "Apache-2.0"
   head "https://github.com/loft-sh/vcluster.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "03fec4fe31101046f722609eaa18b8cb56c52ff0dc30c5bb53d9ea305dbe586d"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "eaafb6de49a4c966f96d710202a66f0bc63aaeabae31354f67d5f5d7ef3ca54c"
-    sha256                               monterey:       "9edea9d99795dab63afe90c181b2f6d16b4bd1ed4611a97b9f2425ff1f2d0bd5"
-    sha256                               big_sur:        "63e20c3f184ae9eeb2d3696c337cce0b09ab8046e3a791ab05e496b45d186bf3"
-    sha256                               catalina:       "e117c7ae15a9590b8893aaa928bee6e2efe90f305e778f5f9c7e82db6a53892c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ede12f1c9298a4831ec0ad567f27d711b09577beba4abc0ce5c918a29b3ef9a8"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "d29d7d9e4c08a1bad8798024622021780b349d9ea1aa262bbf954514648b9965"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "886005a25d4431b62d8c034c2cf1c09dfbbc3221519d0cfdc6a872a50e732607"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "5739523d010e438f0bbbbcf36815ce6b05402d6a0d01a063b7e67274faf27686"
+    sha256 cellar: :any_skip_relocation, ventura:        "788bdfc585b311abac50d4eb976d0c8d1418cac593a3350164f34d4036c6bbc4"
+    sha256 cellar: :any_skip_relocation, monterey:       "eeca428507915c1c819a5a9e4a023db0c31c424c16496becd3c6b9190aa88dcb"
+    sha256 cellar: :any_skip_relocation, big_sur:        "d40dfb294595968d2e172c5041d0bf2c56de6c9035a26f900f9a319a08150720"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6d3525bde7ecbb184ce37b9c947e1621e30a98689d7f2a3cd7791167e53c8ba3"
   end
 
   depends_on "go" => :build
@@ -27,8 +28,9 @@ class Vcluster < Formula
       -X main.buildDate=#{time.iso8601}
       -X main.version=#{version}
     ]
+    system "go", "generate", "./..."
     system "go", "build", "-mod", "vendor", *std_go_args(ldflags: ldflags), "./cmd/vclusterctl/main.go"
-    generate_completions_from_executable(bin/"vcluster", "completion", shells: [:zsh, :bash])
+    generate_completions_from_executable(bin/"vcluster", "completion")
   end
 
   test do

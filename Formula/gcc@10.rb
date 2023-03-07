@@ -12,17 +12,17 @@ class GccAT10 < Formula
   end
 
   bottle do
-    sha256                               monterey:     "734de3e434643524e973bc752c45de86d2de98b39c709e3a8735b875b5db08f2"
-    sha256                               big_sur:      "5cae922429ade324a434b01882825092166fe56b5f74597c0d8f0d3376f19b9a"
-    sha256                               catalina:     "baf8f3867cf211c64c6d747dca662323301824955b6aa4d0b201fc90b329217b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "bf5eb012ec771025b9512fd551984635e4a6b956849d6b9a3f5744e51ae603a0"
+    rebuild 1
+    sha256                               ventura:      "41fdc0ba7755243c1c489d265907b57f927c0f27d1a8708539f8d1fbf98b26ce"
+    sha256                               monterey:     "506382e56e8ba8adf3edf00b519d07e0b953985ba25e7974a5a7ccc6cb08c10a"
+    sha256                               big_sur:      "275d560e460a9045dbc19551eeef72b707eb02244f61a91cb4a53aa40e799a15"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "b828f739ed72d459927d3c0c6397faaa74d5bbe6c2c28acee4e7d1f9f1af60aa"
   end
 
   # The bottles are built on systems with the CLT installed, and do not work
   # out of the box on Xcode-only systems due to an incorrect sysroot.
   pour_bottle? only_if: :clt_installed
 
-  depends_on arch: :x86_64
   depends_on "gmp"
   depends_on "isl"
   depends_on "libmpc"
@@ -30,12 +30,23 @@ class GccAT10 < Formula
 
   uses_from_macos "zlib"
 
+  on_macos do
+    depends_on arch: :x86_64
+  end
+
   on_linux do
     depends_on "binutils"
   end
 
   # GCC bootstraps itself, so it is OK to have an incompatible C++ stdlib
   cxxstdlib_check :skip
+
+  # Fix for build against macOS 13 SDK
+  # https://github.com/iains/gcc-10-branch/issues/8
+  patch do
+    url "https://raw.githubusercontent.com/Homebrew/formula-patches/d52cefd45a18ea9df3e3cd8cac5dcf6755f94edd/gcc/gcc-10.3-ventura.diff"
+    sha256 "26f45ae2ad69d9ba16f3ac2e9384a5a2e56f2a18722c91759f871d53fba43cce"
+  end
 
   def version_suffix
     version.major.to_s
@@ -95,7 +106,11 @@ class GccAT10 < Formula
 
       # Change the default directory name for 64-bit libraries to `lib`
       # https://www.linuxfromscratch.org/lfs/view/development/chapter06/gcc-pass2.html
-      inreplace "gcc/config/i386/t-linux64", "m64=../lib64", "m64="
+      if Hardware::CPU.arm?
+        inreplace "gcc/config/aarch64/t-aarch64-linux", "lp64=../lib64", "lp64="
+      else
+        inreplace "gcc/config/i386/t-linux64", "m64=../lib64", "m64="
+      end
     end
 
     mkdir "build" do
@@ -184,7 +199,7 @@ class GccAT10 < Formula
       #   * `-idirafter <dir>` instructs gcc to search system header
       #     files after gcc internal header files.
       # For libraries:
-      #   * `-nostdlib -L#{libgcc}` instructs gcc to use brewed glibc
+      #   * `-nostdlib -L#{libgcc} -L#{glibc.opt_lib}` instructs gcc to use brewed glibc
       #     if applied.
       #   * `-L#{libdir}` instructs gcc to find the corresponding gcc
       #     libraries. It is essential if there are multiple brewed gcc
@@ -198,7 +213,7 @@ class GccAT10 < Formula
         + -isysroot #{HOMEBREW_PREFIX}/nonexistent #{system_header_dirs.map { |p| "-idirafter #{p}" }.join(" ")}
 
         *link_libgcc:
-        #{glibc_installed ? "-nostdlib -L#{libgcc}" : "+"} -L#{libdir} -L#{HOMEBREW_PREFIX}/lib
+        #{glibc_installed ? "-nostdlib -L#{libgcc} -L#{glibc.opt_lib}" : "+"} -L#{libdir} -L#{HOMEBREW_PREFIX}/lib
 
         *link:
         + --dynamic-linker #{HOMEBREW_PREFIX}/lib/ld.so -rpath #{libdir} -rpath #{HOMEBREW_PREFIX}/lib

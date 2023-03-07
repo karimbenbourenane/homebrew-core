@@ -1,23 +1,25 @@
 class Seqkit < Formula
   desc "Cross-platform and ultrafast toolkit for FASTA/Q file manipulation in Golang"
   homepage "https://bioinf.shenwei.me/seqkit"
-  url "https://github.com/shenwei356/seqkit/archive/v2.3.0.tar.gz"
-  sha256 "2691a2cdd83d51a447016f35206f7e47e429bbbf6b10b35c13cbdf993769578c"
+  url "https://github.com/shenwei356/seqkit/archive/v2.3.1.tar.gz"
+  sha256 "814930772645a1c5f491a0a0f0498d967b6caa512f137e10bc0a1925f28f863b"
   license "MIT"
   head "https://github.com/shenwei356/seqkit.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "f57cbd62bbef0a0192b22fe821388169e4d66ab926a586241e2f3cb8913e117d"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "0d8852c1400079f7869a90e65a96afd846658febb841392174400a3761f9c6d7"
-    sha256 cellar: :any_skip_relocation, monterey:       "f448b6b365d9819acc7f90d8c5e5ae3663279d03669600a6dec1203820746d4e"
-    sha256 cellar: :any_skip_relocation, big_sur:        "55611359dea6f44503232815fcad360246610c038e255f7b6113030173db9067"
-    sha256 cellar: :any_skip_relocation, catalina:       "a0117784a961caeb392ad6ea3b3cbeca41f8b358f499e250f3ef35c3bc0bc494"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5913e6bf676b8c66bfc148eccb37cc227c07c6b7b6b592f5171826bbfb5b2cfb"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "4bbe61982f11a4b274a948a110b0fc410d3014e652cb0bfd636f20297a93d21d"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "11969f64223bc8a71d041bf2934644d53df932a1d7e30dc86f4f93a5b6eb3eda"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "c95f03f99dd50792c7df76870c808d973549c642451d8ffa53af667e1c13b481"
+    sha256 cellar: :any_skip_relocation, ventura:        "b7260beec91491ca592c13f65cbef48e380d705aa649c27b9e9b5eaa8d38bc68"
+    sha256 cellar: :any_skip_relocation, monterey:       "98a8f262be6da9b75e696a8eb078f3980765dd290692cc97f43ea55e5511a630"
+    sha256 cellar: :any_skip_relocation, big_sur:        "c6ecdb987395a135f714456e2ada365f83ae10c33a976da97f261289a2fa6c8f"
+    sha256 cellar: :any_skip_relocation, catalina:       "4a37dab9864f1329fc6a00acd714ca75ce3fecc2d83132cf22b4434bd0dcf827"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d90f15ba8fc7602ddf3b9498a3ddad7dd00b2f828730613a2bff6088cf57d9e2"
   end
 
   depends_on "go" => :build
 
-  resource "testdata" do
+  resource "homebrew-testdata" do
     url "https://raw.githubusercontent.com/shenwei356/seqkit/e37d70a7e0ca0e53d6dbd576bd70decac32aba64/tests/seqs4amplicon.fa"
     sha256 "b0f09da63e3c677cc698d5cdff60e2d246368263c22385937169a9a4c321178a"
   end
@@ -27,7 +29,7 @@ class Seqkit < Formula
   end
 
   test do
-    resource("testdata").stage do
+    resource("homebrew-testdata").stage do
       assert_equal ">seq1\nCCCACTGAAA",
       shell_output("#{bin}/seqkit amplicon --quiet -F CCC -R TTT seqs4amplicon.fa").strip
     end

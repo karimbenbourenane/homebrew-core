@@ -1,23 +1,26 @@
 class Ghorg < Formula
   desc "Quickly clone an entire org's or user's repositories into one directory"
   homepage "https://github.com/gabrie30/ghorg"
-  url "https://github.com/gabrie30/ghorg/archive/refs/tags/v1.8.7.tar.gz"
-  sha256 "0a4c7f8051d8351508510148e01c965a10490d97362b9c14407d0d19d7fd7778"
+  url "https://github.com/gabrie30/ghorg/archive/refs/tags/v1.9.3.tar.gz"
+  sha256 "7a648398c0193bda39388c536f205d713f7d713b62e5aec3aa435bcfd5a5fe12"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "0c02619092bfdc6fdd64a9f7593cd5f654d51b632d265133ab4f54165b89248a"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "3e481e33fa2cfc5023545babecbd35044fa1cb82f5d0966034848fc98029747b"
-    sha256 cellar: :any_skip_relocation, monterey:       "a1250ebd3d16be9928eb51480de8729a3855ac985312066113a85f1e74b57006"
-    sha256 cellar: :any_skip_relocation, big_sur:        "d29fab7ecc4a1c870c5a2cbdffe31d909a2a93fe0fddb2b42e6ada1549026143"
-    sha256 cellar: :any_skip_relocation, catalina:       "f262b941ce2df0faa9920b1679284b0749aa72ccde94e8107c3bbc82d6d326cb"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8fb69d590574dda2d0f88365918143cfb825d88f73aab1c9b34d5338ae2a3b86"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "969ac411325fbe7c745e92830dde8798a629717d73e866cf55e4803bd16547df"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "ea8cab4ab82afa9a48752c67e1334484268fa82f6c6efc1171b34db20b64d2d6"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "fcfdb7d96c9dad158b530374c8b023b4e7e6bf44ec41016fa354881b631f02ec"
+    sha256 cellar: :any_skip_relocation, ventura:        "df89f2e8eab56c7fe85227f8c04e9e7de88ba2e3e6af480f93ec67f1bc03c464"
+    sha256 cellar: :any_skip_relocation, monterey:       "81658502763f88dffcac378a318fbed565b71dcc9e3845d4d952852555eeda76"
+    sha256 cellar: :any_skip_relocation, big_sur:        "ce4750c13d4c4fd71b37eec3025da73f85b255e85366a7fb2da27c3a4b9b2ef9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fef67608848e8d9494160327a7746ddc3858c48253a08005327b388e0238596e"
   end
 
   depends_on "go" => :build
 
   def install
     system "go", "build", *std_go_args(ldflags: "-s -w")
+
+    generate_completions_from_executable(bin/"ghorg", "completion")
   end
 
   test do

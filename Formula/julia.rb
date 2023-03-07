@@ -1,31 +1,28 @@
 class Julia < Formula
   desc "Fast, Dynamic Programming Language"
   homepage "https://julialang.org/"
+  # Use the `-full` tarball to avoid having to download during the build.
+  #
+  # TODO: Use system `suite-sparse` when `julia` supports v7.
+  # Issue ref: https://github.com/JuliaLang/julia/issues/47884
+  url "https://github.com/JuliaLang/julia/releases/download/v1.8.5/julia-1.8.5-full.tar.gz"
+  sha256 "35554080a4b4d3ce52ef220254306bd42ac0d88eff9eb85592a57d0663db5df2"
   license all_of: ["MIT", "BSD-3-Clause", "Apache-2.0", "BSL-1.0"]
   head "https://github.com/JuliaLang/julia.git", branch: "master"
 
-  stable do
-    # Use the `-full` tarball to avoid having to download during the build.
-    url "https://github.com/JuliaLang/julia/releases/download/v1.8.0/julia-1.8.0-full.tar.gz"
-    sha256 "fe278b2e8d59bb60abfd64cfad4074e23ee0353c26615423d70a5085de4124e1"
-
-    # Fix compatibility with LibGit2 1.4.0+
-    patch do
-      url "https://raw.githubusercontent.com/archlinux/svntogit-community/cd813138d8a6fd496d0972a033d55028613be06d/trunk/julia-libgit-1.4.patch"
-      sha256 "cfe498a090d0026b92f9db4ed65ac3818c2efa5ec83bcefed728d27abff73081"
-    end
-  end
-
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "cf13fbd2b78a4ee0826788432ecb8018c22c31863355a3cec834b7a3030961a5"
-    sha256 cellar: :any,                 arm64_big_sur:  "51ff3aa7f88335c2a33d28e4bb8ac6b4460a6aea31dda5f0f4606a3814ef9cc0"
-    sha256 cellar: :any,                 monterey:       "ba5d07d81db47f45cf7e7ece28e5dff57c984fb4afff1adc454c2dff8f113975"
-    sha256 cellar: :any,                 big_sur:        "4535bf04d0a801126e7e662efd0aceab67568c1e98a32b9847aa8fdae2a540d9"
-    sha256 cellar: :any,                 catalina:       "89022df59545d014861454c41b7fefe38f519ed7eb4fb71bb7f4103a70858a14"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "4abfbcb44e5177226506e25e8e5120e74698c7fc52b81110587163468890022e"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_ventura:  "c1037240e426c9fc671d5789cac61d0b3d549c1030575531f1521ddb1c86874f"
+    sha256 cellar: :any,                 arm64_monterey: "0167c6cf98e943213b5e0008f606b451a2af33d7e096225734c7511d06031420"
+    sha256 cellar: :any,                 arm64_big_sur:  "7917478a969d2c77943e06b838870598667c9ffba66d1e0ab7a8cf10a6779d8e"
+    sha256 cellar: :any,                 ventura:        "9df6a752cddfcf40c2557142dda80affe16a65cba15ae38804e7db56b72e5117"
+    sha256 cellar: :any,                 monterey:       "838b1e930dd3c706a09760e15c16297522744ea6c34858dcfdbc4eb7ce404f67"
+    sha256 cellar: :any,                 big_sur:        "04d835e6a1f86cbdeed2008abbee5f67875d2d4530f38dec8c7ea32ad298200b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f654ce16ae86789190edc823dcaeadffd175311897e58dc55ae14135a61c09a7"
   end
 
   depends_on "cmake" => :build # Needed to build LLVM
+  depends_on "suite-sparse" => :test # Check bundled copy is used
   depends_on "ca-certificates"
   depends_on "curl"
   depends_on "gcc" # for gfortran
@@ -39,7 +36,6 @@ class Julia < Formula
   depends_on "openlibm"
   depends_on "p7zip"
   depends_on "pcre2"
-  depends_on "suite-sparse"
   depends_on "utf8proc"
 
   uses_from_macos "perl" => :build
@@ -55,10 +51,17 @@ class Julia < Formula
   fails_with gcc: "5"
 
   # Link against libgcc_s.1.1.dylib, not libgcc_s.1.dylib
-  # https://github.com/JuliaLang/julia/pull/46240
+  # https://github.com/JuliaLang/julia/issues/48056
   patch do
-    url "https://raw.githubusercontent.com/Homebrew/formula-patches/dd7279eea22d92688d2a821c245d92c4f8406fcf/julia/libgcc_s.diff"
-    sha256 "f12c11db53390145b4a9b1ea3b412019eee89c0d197eef6c78b0565bf7fd7aaf"
+    url "https://raw.githubusercontent.com/Homebrew/formula-patches/202ccbabd44bd5ab02fbdee2f51f87bb88d74417/julia/libgcc_s-1.8.5.diff"
+    sha256 "1eea77d8024ad8bc9c733a0e0770661bc08228d335b20c4696350ed5dfdab29a"
+  end
+
+  # Fix Linux build, listdc++ issue. Remove in next version.
+  # https://github.com/JuliaLang/julia/issues/47987
+  patch do
+    url "https://github.com/JuliaLang/julia/commit/0b211609.patch?full_index=1"
+    sha256 "f8b802ef2004320dd8039b3c4896e99f5460c9bcada29bc699eaca7f843f2737"
   end
 
   def install
@@ -76,7 +79,7 @@ class Julia < Formula
       USE_SYSTEM_LAPACK=1
       USE_SYSTEM_GMP=1
       USE_SYSTEM_MPFR=1
-      USE_SYSTEM_LIBSUITESPARSE=1
+      USE_SYSTEM_LIBSUITESPARSE=0
       USE_SYSTEM_UTF8PROC=1
       USE_SYSTEM_MBEDTLS=1
       USE_SYSTEM_LIBSSH2=1
@@ -109,34 +112,21 @@ class Julia < Formula
     args << "JULIA_CPU_TARGET=#{cpu_targets.join(";")}" if build.stable?
     args << "TAGGED_RELEASE_BANNER=Built by #{tap.user} (v#{pkg_version})"
 
-    # Prepare directories we install things into for the build
-    (buildpath/"usr/lib").mkpath
-    (buildpath/"usr/lib/julia").mkpath
-    (buildpath/"usr/share/julia").mkpath
-
+    ENV.append "LDFLAGS", "-Wl,-rpath,#{lib}/julia"
     # Help Julia find keg-only dependencies
     deps.map(&:to_formula).select(&:keg_only?).map(&:opt_lib).each do |libdir|
       ENV.append "LDFLAGS", "-Wl,-rpath,#{libdir}"
-
-      next unless OS.linux?
-
-      libdir.glob(shared_library("*")) do |so|
-        cp so, buildpath/"usr/lib"
-        cp so, buildpath/"usr/lib/julia"
-        chmod "u+w", [buildpath/"usr/lib"/so.basename, buildpath/"usr/lib/julia"/so.basename]
-      end
     end
 
     gcc = Formula["gcc"]
-    gcclibdir = gcc.opt_lib/"gcc"/gcc.any_installed_version.major
+    gcclibdir = gcc.opt_lib/"gcc/current"
     if OS.mac?
       ENV.append "LDFLAGS", "-Wl,-rpath,#{gcclibdir}"
       # List these two last, since we want keg-only libraries to be found first
       ENV.append "LDFLAGS", "-Wl,-rpath,#{HOMEBREW_PREFIX}/lib"
-      ENV.append "LDFLAGS", "-Wl,-rpath,/usr/lib"
+      ENV.append "LDFLAGS", "-Wl,-rpath,/usr/lib" # Needed to find macOS zlib.
     else
       ENV.append "LDFLAGS", "-Wl,-rpath,#{lib}"
-      ENV.append "LDFLAGS", "-Wl,-rpath,#{lib}/julia"
     end
 
     # Remove library versions from MbedTLS_jll, nghttp2_jll and others
@@ -149,7 +139,7 @@ class Julia < Formula
     end
 
     # Make Julia use a CA cert from `ca-certificates`
-    cp Formula["ca-certificates"].pkgetc/"cert.pem", buildpath/"usr/share/julia"
+    (buildpath/"usr/share/julia").install_symlink Formula["ca-certificates"].pkgetc/"cert.pem"
 
     system "make", *args, "install"
 
@@ -215,11 +205,7 @@ class Julia < Formula
                         .map(&:basename)
                         .map(&:to_s)
                         .reject do |name|
-                          next true if name.start_with? "sys"
-                          next true if name.start_with? "libjulia-internal"
-                          next true if name.start_with? "libccalltest"
-
-                          false
+                          name.start_with?("sys", "libjulia-internal", "libccalltest")
                         end
 
     (testpath/"library_test.jl").write <<~EOS

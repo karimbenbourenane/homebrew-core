@@ -1,17 +1,18 @@
 class JavaServiceWrapper < Formula
   desc "Simplify the deployment, launch and monitoring of Java applications"
   homepage "https://wrapper.tanukisoftware.com/"
-  url "https://downloads.sourceforge.net/project/wrapper/wrapper_src/Wrapper_3.5.50_20220513/wrapper_3.5.50_src.tar.gz"
-  sha256 "570e7fc0dd18af7f5b6b1e176af84ce6efac0a0100ed00ab842d95dc1c41ed5a"
+  url "https://downloads.sourceforge.net/project/wrapper/wrapper_src/Wrapper_3.5.52_20230307/wrapper_3.5.52_src.tar.gz"
+  sha256 "8b69e5e5ec24391071ebc93603f99f1c37f0eca5bcfee03d0d9acd230e8aaac5"
   license "GPL-2.0-only"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "2447aa9f2e257c6b7fa7cf17f4df29f908695d9e2275585f6a36257560837f9f"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "101668fcd3b114ec988b6ec87119b9b9f38b6c144d2eae0add593c1afdad051d"
-    sha256 cellar: :any_skip_relocation, monterey:       "ddc698eb778851d6c5c14383e90e34be5018121f5473cfe3834a41aa6b67b515"
-    sha256 cellar: :any_skip_relocation, big_sur:        "763a03cbdef1dff1f0a31cc5257bda16e4264629df14f46612bcc6f8fbd87308"
-    sha256 cellar: :any_skip_relocation, catalina:       "60129bcf63eb406d6b94f7ddce99c376d02525ab531c10b6bf87bcdc9678b4b7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5ee285ca317b6f149ff42c8c85943911477fa8e9a00fa47f283f8ff5fb0832e4"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "7afc3050718d9c2826d7085cc8555df0a7d9e310dd827bfaf8f870f10033c8a0"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "2219b472b7b4fd67e7cb7083245b96f5772fe17e81266ff30d57956e267f86e4"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "0be1155f459adf66ca9c0c8e4fdc20f63fedfd083e10ac8abacd9ebb3ecaadb3"
+    sha256 cellar: :any_skip_relocation, ventura:        "ddf46c6defb6371cd3308dac66c1bca037b505edbd0ef1a1b0d071955cd30e42"
+    sha256 cellar: :any_skip_relocation, monterey:       "65d6e4110c5e34d3d00a03e72579b64ad26e418477b5683e88b7f2e2d7811552"
+    sha256 cellar: :any_skip_relocation, big_sur:        "3612e7eea8c6e62317962965e62e168a50489698bdc0d67026051b33ddcc2745"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "781b137b40dd264fbac45f3c08744e165eac1bf8729b6279f43b6af6f86d8458"
   end
 
   depends_on "ant" => :build

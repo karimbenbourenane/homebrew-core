@@ -1,20 +1,21 @@
 class Mmseqs2 < Formula
   desc "Software suite for very fast sequence search and clustering"
   homepage "https://mmseqs.com/"
-  url "https://github.com/soedinglab/MMseqs2/archive/13-45111.tar.gz"
-  version "13-45111"
-  sha256 "6444bb682ebf5ced54b2eda7a301fa3e933c2a28b7661f96ef5bdab1d53695a2"
+  url "https://github.com/soedinglab/MMseqs2/archive/14-7e284.tar.gz"
+  version "14-7e284"
+  sha256 "a15fd59b121073fdcc8b259fc703e5ce4c671d2c56eb5c027749f4bd4c28dfe1"
   license "GPL-3.0-or-later"
   head "https://github.com/soedinglab/MMseqs2.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "4cc52d9e04445aad8bb4ff8ad6e5ee2555b5d507143bbb88d20f920fb40240f9"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "510d513310f2372e90eb1cd63a3e03e8f86e92d286fc9bc28e11c64c6e953ebb"
-    sha256 cellar: :any_skip_relocation, monterey:       "ac8946e457d058c5ee45f2663b0671e16ea000f51465e963291114af9e0637e0"
-    sha256 cellar: :any_skip_relocation, big_sur:        "9c77c3321deb69aa84df7326821c803ecd377dc3f91931c26ca030832c25ee80"
-    sha256 cellar: :any_skip_relocation, catalina:       "f52feb3e6c03379981c6d7af2f2a3d404b0f0eb20ef2de490c1e8d67bd03ef54"
-    sha256 cellar: :any_skip_relocation, mojave:         "72a26a3d303d4150154c8200893ae6f4554b5eb1fe93a24d86c3b88d90aa1a3a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c007b75f505bb8b2672da63d4c2d373f1e6162e924172ac52e2f57290548a572"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "67ab6bae6d53d0ae65dd6a49f0d5dbe57eacf817ce7c0d684b8b54b845d1af61"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "17c64802df51661ae64fab38d1ef34d6fd5764b22fb0b9d741c5e67f713593f2"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "efe40f0e8d4ffa862f09aec630203447d41f4d3a568e8639a7b9443367f7f2c1"
+    sha256 cellar: :any_skip_relocation, ventura:        "bfd8aa126d8adce2baa635fd49378f41f7016aef8a1d5f4039b5c8487ea330eb"
+    sha256 cellar: :any_skip_relocation, monterey:       "a204fe616c7f2daa544a27354cc2fdfa3d887a6fa7e5b46dd3b6082881bc0d41"
+    sha256 cellar: :any_skip_relocation, big_sur:        "89e1fcf1aad609ac81b1c6a739ae2f27eb507c374409a26f9a5b3ead1a4036a3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5915a38fefb90dd7ed9922354b9842a27c843536e318067937112b2f34959b29"
   end
 
   depends_on "cmake" => [:build, :test]
@@ -33,7 +34,7 @@ class Mmseqs2 < Formula
 
   resource "documentation" do
     url "https://github.com/soedinglab/MMseqs2.wiki.git",
-        revision: "790eb1b49f460d6054d5b8a6a643b8543f166388"
+        revision: "4cd4a50c83d72dc60d75dc79afe1b9b67b5e775d"
   end
 
   resource "testdata" do
@@ -52,9 +53,9 @@ class Mmseqs2 < Formula
 
     if OS.mac?
       libomp = Formula["libomp"]
-      args << "-DOpenMP_C_FLAGS=-Xpreprocessor\ -fopenmp\ -I#{libomp.opt_include}"
+      args << "-DOpenMP_C_FLAGS=-Xpreprocessor -fopenmp -I#{libomp.opt_include}"
       args << "-DOpenMP_C_LIB_NAMES=omp"
-      args << "-DOpenMP_CXX_FLAGS=-Xpreprocessor\ -fopenmp\ -I#{libomp.opt_include}"
+      args << "-DOpenMP_CXX_FLAGS=-Xpreprocessor -fopenmp -I#{libomp.opt_include}"
       args << "-DOpenMP_CXX_LIB_NAMES=omp"
       args << "-DOpenMP_omp_LIBRARY=#{libomp.opt_lib}/libomp.a"
     end
@@ -68,7 +69,9 @@ class Mmseqs2 < Formula
   end
 
   def caveats
-    "MMseqs2 requires at least SSE4.1 CPU instruction support." if !Hardware::CPU.sse4? && !Hardware::CPU.arm?
+    on_intel do
+      "MMseqs2 requires at least SSE4.1 CPU instruction support." unless Hardware::CPU.sse4?
+    end
   end
 
   test do

@@ -1,6 +1,8 @@
 class Lilypond < Formula
-  desc "Music engraving program"
+  desc "Music engraving system"
   homepage "https://lilypond.org"
+  url "https://lilypond.org/download/sources/v2.24/lilypond-2.24.1.tar.gz"
+  sha256 "d5c59087564a5cd6f08a52ba80e7d6509b91c585e44385dcc0fa39265d181509"
   license all_of: [
     "GPL-3.0-or-later",
     "GPL-3.0-only",
@@ -8,20 +10,9 @@ class Lilypond < Formula
     "GFDL-1.3-no-invariants-or-later",
     :public_domain,
     "MIT",
+    "AGPL-3.0-only",
+    "LPPL-1.3c",
   ]
-  revision 1
-
-  stable do
-    url "https://lilypond.org/download/sources/v2.22/lilypond-2.22.2.tar.gz"
-    sha256 "dde90854fa7de1012f4e1304a68617aea9ab322932ec0ce76984f60d26aa23be"
-
-    # Shows LilyPond's Guile version (Homebrew uses v2, other builds use v1).
-    # See https://gitlab.com/lilypond/lilypond/-/merge_requests/950
-    patch do
-      url "https://gitlab.com/lilypond/lilypond/-/commit/a6742d0aadb6ad4999dddd3b07862fe720fe4dbf.diff"
-      sha256 "2a3066c8ef90d5e92b1238ffb273a19920632b7855229810d472e2199035024a"
-    end
-  end
 
   livecheck do
     url "https://lilypond.org/source.html"
@@ -29,17 +20,17 @@ class Lilypond < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "42d9e24c8ff290b790e9fc1bd498de92714dea3974522fb80e9a1f5873651116"
-    sha256 arm64_big_sur:  "a3e8921348a09a2c6effd6b9e36397c834d564371cfa5fdbe65733c2975a6673"
-    sha256 monterey:       "21e65b1b54833b521171096e141af20fa1b2eb3e335a91283ef94a1d7e47854d"
-    sha256 big_sur:        "f903f32936b52a9650a84451801a5f1dab1a13266e9bb11409654fd1fa65e406"
-    sha256 catalina:       "b364827c6ff8e36c08ce2be6bc1b98e1f36b2ecce915e27a73f326332785c2ff"
-    sha256 x86_64_linux:   "03dc525eddfe9e67d9818e2d68543aff8770d13bc0e8ae0dfcd54c6f8905401c"
+    sha256 arm64_ventura:  "c45e113cf07c6e3f5cdf643afef23374d3a0ecd3899eea218ada9643b01d6d66"
+    sha256 arm64_monterey: "f8c7fa7a880578518afc49fa973c3c9fc3e7121777cc876034ebd27a34bdf4c4"
+    sha256 arm64_big_sur:  "c2bc546882c16a954bc3e09534d73ba2aa72eefa1d727fb6b5e7317d456f1259"
+    sha256 ventura:        "eb3a0f38944e7148d50db0ef6f304d1e486b796d11de913215e07ef9217f74c4"
+    sha256 monterey:       "96950e483a62532a6f8245b9b2ed6e11ec0c3ceae8e3895f478af3e26034f845"
+    sha256 big_sur:        "747b81fb47da9b632cc89036f5c8cb97b320244b819f8f89e50eb13a37c81e47"
+    sha256 x86_64_linux:   "4795737ac58934f65fc775dc2d6ad5de4e895649a5be6e6656663811f7d28746"
   end
 
   head do
-    url "https://git.savannah.gnu.org/git/lilypond.git", branch: "master"
-    mirror "https://github.com/lilypond/lilypond.git"
+    url "https://gitlab.com/lilypond/lilypond.git", branch: "master"
 
     depends_on "autoconf" => :build
   end
@@ -54,38 +45,69 @@ class Lilypond < Formula
   depends_on "fontconfig"
   depends_on "freetype"
   depends_on "ghostscript"
-  depends_on "guile@2"
+  depends_on "guile"
   depends_on "pango"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   uses_from_macos "flex" => :build
   uses_from_macos "perl" => :build
 
+  resource "font-urw-base35" do
+    url "https://github.com/ArtifexSoftware/urw-base35-fonts/archive/refs/tags/20200910.tar.gz"
+    sha256 "e0d9b7f11885fdfdc4987f06b2aa0565ad2a4af52b22e5ebf79e1a98abd0ae2f"
+  end
+
   def install
     system "./autogen.sh", "--noconfigure" if build.head?
 
-    texgyre_dir = "#{Formula["texlive"].opt_share}/texmf-dist/fonts/opentype/public/tex-gyre"
-    system "./configure", "--prefix=#{prefix}",
-                          "--datadir=#{share}",
-                          "--with-texgyre-dir=#{texgyre_dir}",
-                          "--disable-documentation"
+    system "./configure", "--datadir=#{share}",
+                          "--disable-documentation",
+                          "--with-flexlexer-dir=#{Formula["flex"].include}",
+                          "GUILE_FLAVOR=guile-3.0",
+                          *std_configure_args
 
-    ENV.prepend_path "LTDL_LIBRARY_PATH", Formula["guile@2"].opt_lib
     system "make"
     system "make", "install"
 
+    system "make", "bytecode"
+    system "make", "install-bytecode"
+
     elisp.install share.glob("emacs/site-lisp/*.el")
 
-    libexec.install bin/"lilypond"
+    fonts = pkgshare/version/"fonts/otf"
 
-    (bin/"lilypond").write_env_script libexec/"lilypond",
-      GUILE_WARN_DEPRECATED: "no",
-      LTDL_LIBRARY_PATH:     "#{Formula["guile@2"].opt_lib}:$LTDL_LIBRARY_PATH"
+    resource("font-urw-base35").stage do
+      ["C059", "NimbusMonoPS", "NimbusSans"].each do |name|
+        Dir["fonts/#{name}-*.otf"].each do |font|
+          fonts.install font
+        end
+      end
+    end
+
+    ["cursor", "heros", "schola"].each do |name|
+      cp Dir[Formula["texlive"].share/"texmf-dist/fonts/opentype/public/tex-gyre/texgyre#{name}-*.otf"], fonts
+    end
   end
 
   test do
     (testpath/"test.ly").write "\\relative { c' d e f g a b c }"
     system bin/"lilypond", "--loglevel=ERROR", "test.ly"
     assert_predicate testpath/"test.pdf", :exist?
+
+    output = shell_output("#{bin}/lilypond --define-default=show-available-fonts 2>&1")
+    output = output.encode("UTF-8", invalid: :replace, replace: "")
+    fonts = {
+      "C059"            => ["Roman", "Bold", "Italic", "Bold Italic"],
+      "Nimbus Mono PS"  => ["Regular", "Bold", "Italic", "Bold Italic"],
+      "Nimbus Sans"     => ["Regular", "Bold", "Italic", "Bold Italic"],
+      "TeX Gyre Cursor" => ["Regular", "Bold", "Italic", "Bold Italic"],
+      "TeX Gyre Heros"  => ["Regular", "Bold", "Italic", "Bold Italic"],
+      "TeX Gyre Schola" => ["Regular", "Bold", "Italic", "Bold Italic"],
+    }
+    fonts.each do |family, styles|
+      styles.each do |style|
+        assert_match(/^\s*#{family}:style=#{style}$/, output)
+      end
+    end
   end
 end

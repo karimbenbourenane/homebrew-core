@@ -1,8 +1,8 @@
 class Xmrig < Formula
   desc "Monero (XMR) CPU miner"
   homepage "https://github.com/xmrig/xmrig"
-  url "https://github.com/xmrig/xmrig/archive/v6.18.0.tar.gz"
-  sha256 "4531a31c0c095fcae18fdef0157f1e2a6694408abbcff6789c8f3cd6ab2c3ca0"
+  url "https://github.com/xmrig/xmrig/archive/v6.19.0.tar.gz"
+  sha256 "772f947058e5b89ca9bf34128487def47796870b547439a9b0524ddd1899420c"
   license "GPL-3.0-or-later"
   head "https://github.com/xmrig/xmrig.git", branch: "dev"
 
@@ -12,12 +12,13 @@ class Xmrig < Formula
   end
 
   bottle do
-    sha256                               arm64_monterey: "1da1fc4a51baca0ef97dde96ce4574a743892f7abb001ee9a8009783aa0b8a2e"
-    sha256                               arm64_big_sur:  "5d21b0a51189c496add0957d7ff2029995c20f6b3ac9199d0ecb35e1177e76c3"
-    sha256                               monterey:       "4c2d83937291e552c369743ee8d2cebaa5834756de152e87022d8247431ac01e"
-    sha256                               big_sur:        "1756da83146306c303350f6d6764ded50a3c0eca947dca5dce35ec83de791920"
-    sha256                               catalina:       "e39c4c45bcdfd052399d7449e2fa38187bcb51a69eff0ea34ed44c07bdbac1a2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "70d997270b0fa25a71f43f7e278f063c7e95a6cd35751d9f46f0dc4de6342e93"
+    sha256                               arm64_ventura:  "d6cec80eb30c7a7ff4f99978423bcb7d03eb26c55d66e2ce012dc90c051324de"
+    sha256                               arm64_monterey: "a8b9c6d7c268f933d72968c2cee3137059540ce01be053dd312c344c9cd4f717"
+    sha256                               arm64_big_sur:  "1356c2658808854823655eb92519a81d23596c42941bc8823ee7150bc85b8112"
+    sha256                               ventura:        "6623a97cbd00eb0534dac7c9123ea6c2c23edd0095aabfb8ed8543afe8ef446f"
+    sha256                               monterey:       "79832403da7a03ecdfbd1d25319cfd872dca6dac2a887001edf728eb83098876"
+    sha256                               big_sur:        "19481861a3288ba44192afa33f9937badfb348a4c6c2544c263645186ad482d2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "556978b294fe2ca556d8319fab08371b515d51504abcd92c24acdfab4f751324"
   end
 
   depends_on "cmake" => :build
@@ -57,12 +58,13 @@ class Xmrig < Formula
         # GNU/Linux raises EIO when read is done on closed pty
       end
     end
+
     assert_match(/POOL #1\s+#{Regexp.escape(test_server)} algo auto/, output)
-    pattern = "#{test_server} DNS error: \"unknown node or service\""
+
     if OS.mac?
-      assert_match pattern, output
+      assert_match "#{test_server} DNS error: \"unknown node or service\"", output
     else
-      assert_match Regexp.union(pattern, "#{test_server} connect error: \"connection refused\""), output
+      assert_match "#{test_server} 127.0.0.1 connect error: \"connection refused\"", output
     end
   end
 end

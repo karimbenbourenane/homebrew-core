@@ -3,8 +3,8 @@ class NanopbGenerator < Formula
 
   desc "C library for encoding and decoding Protocol Buffer messages"
   homepage "https://jpa.kapsi.fi/nanopb/docs/index.html"
-  url "https://jpa.kapsi.fi/nanopb/download/nanopb-0.4.6.tar.gz"
-  sha256 "e379d9babd86b9cfd8f8900fd0da8705cbd9bea4491178fb2b8be5e217bf02ab"
+  url "https://jpa.kapsi.fi/nanopb/download/nanopb-0.4.7.tar.gz"
+  sha256 "87055a0d9a99a95429a95497e566e59d8d16103cfd90b7b6e8ee364b6559666a"
   license "Zlib"
 
   livecheck do
@@ -13,11 +13,11 @@ class NanopbGenerator < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "07bb3eaaff21602786aba8175fa1b4e76ef6c736114f53eee63045affc5535bc"
+    sha256 cellar: :any_skip_relocation, all: "8fa99a6f2d8fbb4fc69952cc533309c554578f983f5413d882bd86d9ddef37b7"
   end
 
   depends_on "protobuf"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   conflicts_with "mesos",
     because: "they depend on an incompatible version of protobuf"
@@ -28,6 +28,7 @@ class NanopbGenerator < Formula
       rewrite_shebang detected_python_shebang, "nanopb_generator.py"
       libexec.install "nanopb_generator.py", "protoc-gen-nanopb", "proto"
       bin.install_symlink libexec/"protoc-gen-nanopb", libexec/"nanopb_generator.py"
+      rewrite_shebang detected_python_shebang, libexec/"protoc-gen-nanopb"
     end
   end
 

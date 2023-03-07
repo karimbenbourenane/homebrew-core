@@ -3,17 +3,18 @@ require "language/node"
 class Httpyac < Formula
   desc "Quickly and easily send REST, SOAP, GraphQL and gRPC requests"
   homepage "https://httpyac.github.io/"
-  url "https://registry.npmjs.org/httpyac/-/httpyac-5.6.5.tgz"
-  sha256 "4a1d09726470493ff38a8dd692fde8c2c040dd6efd3cea1c08cdaf029230a0c1"
+  url "https://registry.npmjs.org/httpyac/-/httpyac-6.2.0.tgz"
+  sha256 "524f72279edd8fdbdfc37c425f9f094ef15fade057797b8bd51d147252436c66"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "fd7d077d82a3753cd37740715674551eca2a9a1172247da928528ef5ed3c0727"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "fd7d077d82a3753cd37740715674551eca2a9a1172247da928528ef5ed3c0727"
-    sha256 cellar: :any_skip_relocation, monterey:       "113bf27a5cca6efbb57f7c2c50ab6ffb73e72e3e79246f8b52ac58522207c7b8"
-    sha256 cellar: :any_skip_relocation, big_sur:        "113bf27a5cca6efbb57f7c2c50ab6ffb73e72e3e79246f8b52ac58522207c7b8"
-    sha256 cellar: :any_skip_relocation, catalina:       "113bf27a5cca6efbb57f7c2c50ab6ffb73e72e3e79246f8b52ac58522207c7b8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9801f18f996cdbde43be903c57741252740949b427cebbf46af837c4e91cd837"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "356f11df5652d77d3752a944f9cbc08447d54abd2c359b00235e825b6aea7711"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "356f11df5652d77d3752a944f9cbc08447d54abd2c359b00235e825b6aea7711"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "356f11df5652d77d3752a944f9cbc08447d54abd2c359b00235e825b6aea7711"
+    sha256 cellar: :any_skip_relocation, ventura:        "8b29aee34cf6dc0a98f7ab582c9d8abe5becd5f4c129304c4e0f2b70abf800af"
+    sha256 cellar: :any_skip_relocation, monterey:       "8b29aee34cf6dc0a98f7ab582c9d8abe5becd5f4c129304c4e0f2b70abf800af"
+    sha256 cellar: :any_skip_relocation, big_sur:        "8b29aee34cf6dc0a98f7ab582c9d8abe5becd5f4c129304c4e0f2b70abf800af"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "0fb10b59bc543a309bde12dd824b121ff41f62a1581909aece14d50a5ac15453"
   end
 
   depends_on "node"
@@ -45,16 +46,26 @@ class Httpyac < Formula
       Content-Type: text/html
       Authorization: Bearer token
 
-      # @keepStreaming
-      MQTT tcp://broker.hivemq.com
-      Topic: testtopic/1
-      Topic: testtopic/2
+      POST https://countries.trevorblades.com/graphql
+      Content-Type: application/json
+
+      query Continents($code: String!) {
+          continents(filter: {code: {eq: $code}}) {
+            code
+            name
+          }
+      }
+
+      {
+          "code": "EU"
+      }
     EOS
 
     output = shell_output("#{bin}/httpyac send test_cases --all")
     # for httpbin call
     assert_match "HTTP/1.1 200  - OK", output
-    # for mqtt calls
+    # for graphql call
+    assert_match "\"name\": \"Europe\"", output
     assert_match "2 requests processed (2 succeeded, 0 failed)", output
 
     assert_match version.to_s, shell_output("#{bin}/httpyac --version")

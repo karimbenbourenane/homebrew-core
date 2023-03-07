@@ -1,10 +1,9 @@
 class Rdkit < Formula
   desc "Open-source chemoinformatics library"
   homepage "https://rdkit.org/"
-  url "https://github.com/rdkit/rdkit/archive/Release_2022_03_5.tar.gz"
-  sha256 "38e6fb9f063b6132310f17e654f2c4350876f9164b0a17b49fe3df7d0555a744"
+  url "https://github.com/rdkit/rdkit/archive/Release_2022_09_5.tar.gz"
+  sha256 "2efe7ce3b527df529ed3e355e2aaaf14623e51876be460fa4ad2b7f7ad54c9b1"
   license "BSD-3-Clause"
-  revision 2
   head "https://github.com/rdkit/rdkit.git", branch: "master"
 
   livecheck do
@@ -16,12 +15,13 @@ class Rdkit < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "78475e78e4bf5bcbe98afe7dea77f0b93a44de5d1bdeeec028c08e3d7d302b72"
-    sha256 cellar: :any,                 arm64_big_sur:  "540f8d9291e17cd4c44b4d56bbac714e525812ac03dfd9cbbf01d73928a71088"
-    sha256 cellar: :any,                 monterey:       "1034abba3684d3b859717449e23e2bad586a7e9d076432d38f39cda3bba7bc09"
-    sha256 cellar: :any,                 big_sur:        "2f807f48039e21653b76a6b1374684ea30d1cf7df5fbb6d0f00eeaf18c4c3794"
-    sha256 cellar: :any,                 catalina:       "15d1d7ee27e43e5a24118bf8de8e67c217d708e00fceecb727198cb851b62877"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "4285f2fdbb4613eba4dc8ea89887c5e25ead13fad79cf9e77242be8381db0f75"
+    sha256 cellar: :any,                 arm64_ventura:  "f750836a68116ff4659653197c08f8ce6835e58150c8b1a8edf113ff4b0d0df6"
+    sha256 cellar: :any,                 arm64_monterey: "900a39ace739f2d1b73554fba90d778e08488ea6eeec9d6ceccdcafba660a08e"
+    sha256 cellar: :any,                 arm64_big_sur:  "8a7ec32c15f2e1cb6e5bfb69234e3c296042e60a2765184b56e9e028e6f6227f"
+    sha256 cellar: :any,                 ventura:        "9b9fccc44b80b88718522172dc13c32df925fdf3736eacd2f13cdd0ecd288e1a"
+    sha256 cellar: :any,                 monterey:       "70db267fe12bb0823ef14635d8547b056f94a1a75cf97ae5fff0df40377c2a9d"
+    sha256 cellar: :any,                 big_sur:        "48a73b6097eb21261daee03cca7c7918bfd798a8b6d857465c633bcdb375d55d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "bd845d7e7e2a794fa45ed306175f72f18ab92ba1de8d52836b34e5fe31f058b1"
   end
 
   depends_on "cmake" => :build
@@ -33,11 +33,16 @@ class Rdkit < Formula
   depends_on "numpy"
   depends_on "postgresql@14"
   depends_on "py3cairo"
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   def python
     deps.map(&:to_formula)
         .find { |f| f.name.match?(/^python@\d\.\d+$/) }
+  end
+
+  # Get Python location
+  def python_executable
+    python.opt_libexec/"bin/python"
   end
 
   def postgresql
@@ -50,8 +55,6 @@ class Rdkit < Formula
     ENV.append "CFLAGS", "-Wno-parentheses -Wno-logical-op-parentheses -Wno-format"
     ENV.append "CXXFLAGS", "-Wno-parentheses -Wno-logical-op-parentheses -Wno-format"
 
-    # Get Python location
-    python_executable = python.opt_bin/"python3"
     py3ver = Language::Python.major_minor_version python_executable
     py3prefix = if OS.mac?
       python.opt_frameworks/"Python.framework/Versions"/py3ver
@@ -106,10 +109,10 @@ class Rdkit < Formula
   end
 
   test do
-    system python.opt_bin/"python3", "-c", "import rdkit"
+    system python_executable, "-c", "import rdkit"
     (testpath/"test.py").write <<~EOS
       from rdkit import Chem ; print(Chem.MolToSmiles(Chem.MolFromSmiles('C1=CC=CN=C1')))
     EOS
-    assert_match "c1ccncc1", shell_output("#{python.opt_bin}/python3 test.py 2>&1")
+    assert_match "c1ccncc1", shell_output("#{python_executable} test.py 2>&1")
   end
 end

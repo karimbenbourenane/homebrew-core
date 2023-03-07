@@ -1,17 +1,18 @@
 class Evernote2md < Formula
   desc "Convert Evernote .enex file to Markdown"
   homepage "https://github.com/wormi4ok/evernote2md"
-  url "https://github.com/wormi4ok/evernote2md/archive/v0.18.0.tar.gz"
-  sha256 "504643760dae72c6cb92d2d47c57bcd5abd9c387cb6a8905bd37d0701a667337"
+  url "https://github.com/wormi4ok/evernote2md/archive/v0.18.2.tar.gz"
+  sha256 "e8efb9d4e8a8e420afd26a764b3b0b01c2154d5802ad891f366551e404e44e30"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "11d45306252f1dd5bbd7ded3115ccfdba6740cb67fdad70bd5bbcbd83cdceef1"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "1557c34b5e7cca74b6dd60bf27658a93b87b38f4bad245686239fc82eac582bf"
-    sha256 cellar: :any_skip_relocation, monterey:       "a45395b345cc446d72afc9fa47fca285e2807cc8465cf5b85bf5631ed0fc6825"
-    sha256 cellar: :any_skip_relocation, big_sur:        "43005070722194a3f73833d5b2e53a371ce58ebcf0b70e5641929604df30e695"
-    sha256 cellar: :any_skip_relocation, catalina:       "73976d8face6a9cdebc8796b70370fa79eb464d77bf16dab3c2c03f81e309c7c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "bb9a0064b54faba9d18b94bdb751e04ddbef1808d0f66e205aa12ae506a288e7"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "cbb1507b87408ae78e94266166810e70517aa194884b6b4f82910d19b0bc0c0e"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "cbb1507b87408ae78e94266166810e70517aa194884b6b4f82910d19b0bc0c0e"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "cbb1507b87408ae78e94266166810e70517aa194884b6b4f82910d19b0bc0c0e"
+    sha256 cellar: :any_skip_relocation, ventura:        "0bab4010e74f30701d3ddd09adedddae03f288f7ff6446b64c4ff569330f8abf"
+    sha256 cellar: :any_skip_relocation, monterey:       "0bab4010e74f30701d3ddd09adedddae03f288f7ff6446b64c4ff569330f8abf"
+    sha256 cellar: :any_skip_relocation, big_sur:        "0bab4010e74f30701d3ddd09adedddae03f288f7ff6446b64c4ff569330f8abf"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b736f3707aafc42111701178ae6c8f1f061a8a3981e98f3fd4c77aa3bd4abf12"
   end
 
   depends_on "go" => :build

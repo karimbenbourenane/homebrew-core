@@ -1,18 +1,19 @@
 class Xmake < Formula
   desc "Cross-platform build utility based on Lua"
   homepage "https://xmake.io/"
-  url "https://github.com/xmake-io/xmake/releases/download/v2.7.1/xmake-v2.7.1.tar.gz"
-  sha256 "e44085090641547d8814afcc345d641d8ce1e38b6e05fee7375fc88150c0803d"
+  url "https://github.com/xmake-io/xmake/releases/download/v2.7.7/xmake-v2.7.7.tar.gz"
+  sha256 "aa05875921896ba4a07ac10a876979326367370631599919537fb2f8ff096750"
   license "Apache-2.0"
   head "https://github.com/xmake-io/xmake.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "2d91a81c577ff9ba5eb2a1f93687dd47bc8113e5f9d018ce315b9790ebec6937"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "c55fcf18231d0b1b9ceab04489d923c6c4d24cdf9bc96157caa595c924307663"
-    sha256 cellar: :any_skip_relocation, monterey:       "f8d6a0fad40948223c7a10beb5e22ca487816bcc4788a967634e389b0f714a23"
-    sha256 cellar: :any_skip_relocation, big_sur:        "1b69d673af8513c2fa37bacba80ced9aacc902f5db29a34acf4d512caa87bb8c"
-    sha256 cellar: :any_skip_relocation, catalina:       "ad39be1a85c1c85dc7d6faca48ed7a064d63245c14bcf3440a15e6c5ebe64348"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b4b6afb39301d5be70dcc7cc94d2c7a0d12df991d3839130bd2bc80e7952a8a0"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "6f6e043545b1139b92e822c461c3ed9711bdec3e00371fdd7e6944936e659f88"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "4b4a084dfa37d6cc2c5c61a9b00e6bac41adfc4d8491a01f6ce393830f08de1a"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "4a1cdd678a8e80f89c4136875289c22be582fc24a0aeef198ff18245320ea5d1"
+    sha256 cellar: :any_skip_relocation, ventura:        "01014f446bb29957997effd9b22161195e9d8aa5e60ea9fc0695600d6533c975"
+    sha256 cellar: :any_skip_relocation, monterey:       "a3d9445d1c8bf1257c39a1d3d69a066ce8c6d23aca364f8c72145df036d602ae"
+    sha256 cellar: :any_skip_relocation, big_sur:        "af9f347abd4f5657dd4d85738985bb94ea028811bef8894c62c2f9f43bc5fba6"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "1e8aa1a524da6d94bafd387c68922ef9b5b7b621a282f757a55005cbf1c33c18"
   end
 
   on_linux do
@@ -22,8 +23,9 @@ class Xmake < Formula
   def install
     ENV["XMAKE_ROOT"] = "y" if OS.linux? && ENV["HOMEBREW_GITHUB_ACTIONS"]
 
+    system "./configure"
     system "make"
-    system "make", "install", "prefix=#{prefix}"
+    system "make", "install", "PREFIX=#{prefix}"
   end
 
   test do

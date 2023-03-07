@@ -1,31 +1,34 @@
 class Noti < Formula
   desc "Trigger notifications when a process completes"
   homepage "https://github.com/variadico/noti"
-  url "https://github.com/variadico/noti/archive/3.5.0.tar.gz"
-  sha256 "04183106921e3a6aa7c107c6dff6fa13273436e8a26d139e49f34c5d1eea348c"
+  url "https://github.com/variadico/noti/archive/3.7.0.tar.gz"
+  sha256 "f970a4dd242e6b58edf51320aa237bb20d689bbc8fd0f7d0db5aa1980a2dc269"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "947f45e4f2792140748229ed6ab17f3f2497b0668c643ffd11cf1d76bac4ee89"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "a4eb0ad59a65cb3c8c870aef3b96754c2ec1b3e62ca79d30bad2abdf746ce9e3"
-    sha256 cellar: :any_skip_relocation, monterey:       "36bf279d975a61d82a48e4618c0c925c283f3bdd383e9bf95b443349ae43acbb"
-    sha256 cellar: :any_skip_relocation, big_sur:        "c62799cbbb117b38b1aa7115d9ca4e823caf6eba30bc509638445d82ea7aaa99"
-    sha256 cellar: :any_skip_relocation, catalina:       "fd5b46d0b59943d06196923e4ba4f5628816d3c051d3b982939e3e64d2397fdf"
-    sha256 cellar: :any_skip_relocation, mojave:         "83a2ca79439aaaa5872597f0d937facea22e69eba196eade49a20099c5b6b120"
-    sha256 cellar: :any_skip_relocation, high_sierra:    "f622905f1a8f1ce308b629de6521c17be579de1019a3727ec568a359f852d135"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8b5e7f6ed05b1d96d96059281319cbb3fd5cfb95b7b81c58aa7cfc115698cffb"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "fc237b7b1e28e0974312a7b154dd06b8bc5cdde57f7dd197e008b7e1450d9ffd"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "e93a4812623537c4f636b81238d48049c2aa74920c4b34945d317b0001714e11"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "00bbb0435c2d8478f994220e4b209561428a535bb36b9b298f169e51f8abfe9f"
+    sha256 cellar: :any_skip_relocation, ventura:        "d0a210912a499f329ee9709b5544147df22ccb09544c323f1ecdde4dcbbfe956"
+    sha256 cellar: :any_skip_relocation, monterey:       "468ea5232ab7fb8acd9818fe0c285a38f2b16eb23bb66b1d57dedc5c572f443a"
+    sha256 cellar: :any_skip_relocation, big_sur:        "32a52ff508147b1ff62967f173391b14c7f865dc1a56163b243e71c3d38f2bdf"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "01035f395f9d150621351e73a6f87091dd10d2af579ffc1c1b636990f6d937e8"
   end
 
-  # Bump to 1.18 on the next release, if possible.
-  depends_on "go@1.17" => :build
+  depends_on "go" => :build
 
   def install
-    system "go", "build", "-mod=vendor", "-o", "#{bin}/noti", "cmd/noti/main.go"
-    man1.install "docs/man/noti.1"
-    man5.install "docs/man/noti.yaml.5"
+    ldflags = %W[
+      -s -w
+      -X github.com/variadico/noti/internal/command.Version=#{version}
+    ]
+    system "go", "build", *std_go_args(ldflags: ldflags), "cmd/noti/main.go"
+    man1.install "docs/man/dist/noti.1"
+    man5.install "docs/man/dist/noti.yaml.5"
   end
 
   test do
-    system "#{bin}/noti", "-t", "Noti", "-m", "'Noti recipe installation test has finished.'"
+    assert_match "noti version #{version}", shell_output("#{bin}/noti --version").chomp
+    system bin/"noti", "-t", "Noti", "-m", "'Noti recipe installation test has finished.'"
   end
 end

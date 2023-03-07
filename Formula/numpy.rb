@@ -1,24 +1,25 @@
 class Numpy < Formula
   desc "Package for scientific computing with Python"
   homepage "https://www.numpy.org/"
-  url "https://files.pythonhosted.org/packages/f4/66/17b8e95770478436bf968353c89683ce6f9e14d92e0d4fb3111c09ba18d2/numpy-1.23.2.tar.gz"
-  sha256 "b78d00e48261fbbd04aa0d7427cf78d18401ee0abd89c7559bbf422e5b1c7d01"
+  url "https://files.pythonhosted.org/packages/e4/a9/6704bb5e1d1d778d3a6ee1278a8d8134f0db160e09d52863a24edb58eab5/numpy-1.24.2.tar.gz"
+  sha256 "003a9f530e880cb2cd177cba1af7220b9aa42def9c4afc2a2fc3ee6be7eb2b22"
   license "BSD-3-Clause"
   head "https://github.com/numpy/numpy.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any, arm64_monterey: "b284ff6aa538939f427dc6a50c70d8c454e85ba3fe9889f1a4acafd53cf23c71"
-    sha256 cellar: :any, arm64_big_sur:  "f66822d74874b3614ea0ba65861a7f75edc1e22468c89440aeef0644319f1dac"
-    sha256 cellar: :any, monterey:       "8015542dac17e451d03eb099a7ff619495cb401114f27a8a0a617cf01dc0306f"
-    sha256 cellar: :any, big_sur:        "b502b26f761b905efd9b2eaa385dcdbe43f1756a92935fb7b9146cb61bf61e5c"
-    sha256 cellar: :any, catalina:       "97f68914c19ea4027394df979520ddc82c191079ee45d3760b98f18f035ec961"
-    sha256               x86_64_linux:   "b8e2df7a9019f0c286c373a805f7e6e4111d6576637a6100d2a9eb8e6a6f46b3"
+    sha256 cellar: :any,                 arm64_ventura:  "885f55ca8b1a88627292e16656ba6396d587830f3919ce9d7f66969ba34c294c"
+    sha256 cellar: :any,                 arm64_monterey: "0a96f47ed28398f80358edc4738833fd7710d2aa19b9902d31e368f8a87dcd07"
+    sha256 cellar: :any,                 arm64_big_sur:  "92bc7c4390bf719678c935ca2fbfac0294a51bddfa49850f8aa751fe21515f8c"
+    sha256 cellar: :any,                 ventura:        "686a94aeb73f80d8fc4c4d61b8f25e22880217ff64b29904583e41046b3e51c9"
+    sha256 cellar: :any,                 monterey:       "a014fbb0dd176d9f2798e8c82458086049511150c6e7c86b58a88236f56b4425"
+    sha256 cellar: :any,                 big_sur:        "cd9640c3aa8ff5f93d7cf7ee56b85efc8e46d9585094dbec8100143b79fde0cd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "0a6218d38684599df183c3915cd4435c231764c0d0d80895a8c6c80401ee17f8"
   end
 
   depends_on "gcc" => :build # for gfortran
   depends_on "libcython" => :build
   depends_on "python@3.10" => [:build, :test]
-  depends_on "python@3.9" => [:build, :test]
+  depends_on "python@3.11" => [:build, :test]
   depends_on "openblas"
 
   fails_with gcc: "5"

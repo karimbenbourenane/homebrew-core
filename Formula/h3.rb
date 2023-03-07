@@ -1,17 +1,18 @@
 class H3 < Formula
   desc "Hexagonal hierarchical geospatial indexing system"
   homepage "https://uber.github.io/h3/"
-  url "https://github.com/uber/h3/archive/v4.0.0.tar.gz"
-  sha256 "218ce453cf7548a843fc23271dc48523cd6a601b6d26d9dd8d23a35b6128793b"
+  url "https://github.com/uber/h3/archive/v4.1.0.tar.gz"
+  sha256 "ec99f1f5974846bde64f4513cf8d2ea1b8d172d2218ab41803bf6a63532272bc"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "5ccfa8701b32825395c48a357bd2e70a36667f2b4baa98764f76843315a23273"
-    sha256 cellar: :any,                 arm64_big_sur:  "5caef45b04bc8bc3213e0188a81d162c6169683823f04203adc9242ed773d0dd"
-    sha256 cellar: :any,                 monterey:       "f131ea0412bcaa6686152d9497ed329ffa5418f6130aa5239a49e8d2ff5e82c4"
-    sha256 cellar: :any,                 big_sur:        "ccb72ef40580a82c89b254dab5d0f1ea08a256dfdd6af1b3fc8cfb940643ca00"
-    sha256 cellar: :any,                 catalina:       "46948db333917ed24a8c558f48477cbfecabbe5dfcb058745008404a22571aa2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "cfc07c7796ea3ee96808a8cfdd3001e1b46a25a2cc913991faaca41baed2c702"
+    sha256 cellar: :any,                 arm64_ventura:  "44686e792f5b905666c5200c15e31ac3023e1148b474443c0f202322620d600c"
+    sha256 cellar: :any,                 arm64_monterey: "bf4c9ea8b3140be46dedb8aa9b91cde186835ba1cc53c720e129bb36b58bfbc8"
+    sha256 cellar: :any,                 arm64_big_sur:  "d3afae09e49800840dbeb968fa454c82753f8cb9d9234ac2a2887e7ff210f172"
+    sha256 cellar: :any,                 ventura:        "519d67be32f5f41440a487eb85a0dc3055e9a4983fb6bb39a10aaeb388f543e3"
+    sha256 cellar: :any,                 monterey:       "6de52d5a62572d73f9e2f7fa062971c4bfb52da64265063a2528a146f0c0ecff"
+    sha256 cellar: :any,                 big_sur:        "c6119a992a3e994b8b3dcb1d8cdd9a783bb000f93c9ad60ed3d24f60db1bc0ce"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ea347ced55cef67aa8d834815798f19b7f64db12f7a76cd2f992c8047437161f"
   end
 
   depends_on "cmake" => :build

@@ -1,33 +1,30 @@
 class Quazip < Formula
   desc "C++ wrapper over Gilles Vollant's ZIP/UNZIP package"
   homepage "https://github.com/stachenov/quazip/"
-  url "https://github.com/stachenov/quazip/archive/v1.3.tar.gz"
-  sha256 "c1239559cd6860cab80a0fd81f4204e606f9324f702dab6166b0960676ee1754"
+  url "https://github.com/stachenov/quazip/archive/v1.4.tar.gz"
+  sha256 "79633fd3a18e2d11a7d5c40c4c79c1786ba0c74b59ad752e8429746fe1781dd6"
   license "LGPL-2.1-only"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "1a90afdde6493e15734bea6d7a28ae564587f34aeb92869a64e144caa6fe9ee8"
-    sha256 cellar: :any,                 arm64_big_sur:  "2f880c097eca45aada016573e392d2f7138813b4583dce0cf7d78a64a5e57709"
-    sha256 cellar: :any,                 monterey:       "d5d59babd543adc6c638229cd727bad679543a1aac2e944c72f7c8c3a3093b6e"
-    sha256 cellar: :any,                 big_sur:        "d3c54b37b3a5666873ef96f5e58fbdddd221c096cdb502b98938a94af43b9627"
-    sha256 cellar: :any,                 catalina:       "803e17b2e45326eb8a4e534f20fddfa138fe0d3f570798ce48a8135af9604ef1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b4d08d29dabd478538204972235ecbc739f1a3bf84ee9878c6ec67a2f93b465b"
+    sha256 cellar: :any,                 arm64_ventura:  "29ad7c05c766208ae51d0c220e83a98313ebd55e804cac3a627e9097591bbbb6"
+    sha256 cellar: :any,                 arm64_monterey: "86c13aac1ac1d25a71d4a293c1b5c4cc683cc900c12d3a0bb40f64f5e5867a5f"
+    sha256 cellar: :any,                 arm64_big_sur:  "247b7788823f0b63f6e07644478a39c44d282fd7ec1d87302549c1905bef8898"
+    sha256 cellar: :any,                 ventura:        "787aa2aad4f009e230c77c92d73c40851f82bd8711e02da3f490426adea5c5d2"
+    sha256 cellar: :any,                 monterey:       "1ba3e44696f2612a297050db3502f0087cc41eedb4e07be65ee13af72e182a16"
+    sha256 cellar: :any,                 big_sur:        "dbc4fd05eb139a16baa6d0a1c8f3dba25d63f6272b0c2cc0e4d3b5f363911eea"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b0523a1e075f87a641161a89a6b936e975923fc2e29afa9b61e40562be74f639"
   end
 
   depends_on "cmake" => :build
   depends_on xcode: :build
   depends_on "qt"
 
-  on_linux do
-    depends_on "gcc"
-  end
-
   fails_with gcc: "5" # C++17
 
   def install
-    system "cmake", ".", "-DCMAKE_PREFIX_PATH=#{Formula["qt"].opt_lib}", *std_cmake_args
-    system "make"
-    system "make", "install"
+    system "cmake", "-S", ".", "-B", "build", "-DCMAKE_PREFIX_PATH=#{Formula["qt"].opt_lib}", *std_cmake_args
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
 
     cd include do
       include.install_symlink "QuaZip-Qt#{Formula["qt"].version.major}-#{version}/quazip" => "quazip"
@@ -37,14 +34,15 @@ class Quazip < Formula
   test do
     ENV.delete "CPATH"
     (testpath/"test.pro").write <<~EOS
-      TEMPLATE     = app
-      CONFIG      += console
-      CONFIG      -= app_bundle
-      TARGET       = test
-      SOURCES     += test.cpp
-      INCLUDEPATH += #{include}
-      LIBPATH     += #{lib}
-      LIBS        += -lquazip#{version.major}-qt#{Formula["qt"].version.major}
+      TEMPLATE        = app
+      CONFIG         += console
+      CONFIG         -= app_bundle
+      TARGET          = test
+      SOURCES        += test.cpp
+      INCLUDEPATH    += #{include}
+      LIBPATH        += #{lib}
+      LIBS           += -lquazip#{version.major}-qt#{Formula["qt"].version.major}
+      QMAKE_RPATHDIR += #{lib}
     EOS
 
     (testpath/"test.cpp").write <<~EOS
@@ -55,7 +53,7 @@ class Quazip < Formula
       }
     EOS
 
-    system "#{Formula["qt"].bin}/qmake", "test.pro"
+    system Formula["qt"].bin/"qmake", "test.pro"
     system "make"
     assert_predicate testpath/"test", :exist?, "test output file does not exist!"
     system "./test"

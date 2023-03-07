@@ -4,15 +4,16 @@ class C10t < Formula
   url "https://github.com/udoprog/c10t/archive/1.7.tar.gz"
   sha256 "0e5779d517105bfdd14944c849a395e1a8670bedba5bdab281a0165c3eb077dc"
   license "BSD-3-Clause"
-  revision 2
+  revision 4
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "5bcb225283ff1ef1517416ea63fd4531991694f295145be2c370d1d54d9b84da"
-    sha256 cellar: :any,                 arm64_big_sur:  "38cf0106eca82d542b1e3af46093b7ae8794e255352f40ce2bc380ff525088d7"
-    sha256 cellar: :any,                 monterey:       "cefe5abaf716636386a488aa4567bed7de4e83427f3e3cc65dc180a933245f7e"
-    sha256 cellar: :any,                 big_sur:        "f6549cf911df71c42423a42b0ea9ca7aaeabd45607c71b46cfa45f558041af6f"
-    sha256 cellar: :any,                 catalina:       "bb70f4cc507e90b5f72a44c0d0fa1a4beb500a44fd25b16681633e6521735871"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fbec62e6c3534ee4fd7cdb676589ca41788015dad4facbf966d5a62c637c1548"
+    sha256 cellar: :any,                 arm64_ventura:  "87bfb448e0461b3f6854ca2d35216fcc949cd652935bf4f9ebdf60ea717a3351"
+    sha256 cellar: :any,                 arm64_monterey: "235dd40d5d9aa664635c59efe22d054bdf6cc687a1e4a1e0ca43254b2325288b"
+    sha256 cellar: :any,                 arm64_big_sur:  "9461253ad226e1b367b25a36f311dc2d05e0d3df58920723b98007c8f0b4debd"
+    sha256 cellar: :any,                 ventura:        "2dea1e71d21eb4dbd242bfe9f210702c42345b1ee2e27818731827d5ee136136"
+    sha256 cellar: :any,                 monterey:       "1b4a0b97ff0ba51123c5f5c31d5105e7d3965a57e056e35ce17dd6330eb19360"
+    sha256 cellar: :any,                 big_sur:        "9f4137cb46c4712d4fa2f9f4af3d640e0469fe12bb24aa402cdec42ea328ad91"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "109fe3090ead8cd3194473afa380872eae1f88e72304741d8b1c3340251fe044"
   end
 
   depends_on "cmake" => :build
@@ -41,6 +42,7 @@ class C10t < Formula
   end
 
   def install
+    ENV.cxx11
     inreplace "test/CMakeLists.txt", "boost_unit_test_framework", "boost_unit_test_framework-mt"
     args = std_cmake_args
     unless OS.mac?

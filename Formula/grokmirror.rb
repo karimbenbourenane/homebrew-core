@@ -10,40 +10,41 @@ class Grokmirror < Formula
   head "https://github.com/mricon/grokmirror.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "06b15553ec31d5e3a41c51fa728d7eb6b40c2882c21180ea5cdcefaddf2d42d4"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "06b15553ec31d5e3a41c51fa728d7eb6b40c2882c21180ea5cdcefaddf2d42d4"
-    sha256 cellar: :any_skip_relocation, monterey:       "b9c6c6fd6aca9319bbe706881667e1294af1b53573ef3e10e20ab7578498462e"
-    sha256 cellar: :any_skip_relocation, big_sur:        "b9c6c6fd6aca9319bbe706881667e1294af1b53573ef3e10e20ab7578498462e"
-    sha256 cellar: :any_skip_relocation, catalina:       "b9c6c6fd6aca9319bbe706881667e1294af1b53573ef3e10e20ab7578498462e"
-    sha256 cellar: :any_skip_relocation, mojave:         "b9c6c6fd6aca9319bbe706881667e1294af1b53573ef3e10e20ab7578498462e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "3a9f85ea67686b0e0b307a727aa964f9ebf62eca5d5fa9cdddbd8232fd7c2861"
+    rebuild 2
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "575557ee7b1dfb91f4b6d9c894f92d18fa2f3599a51eeffd9252d9a47ee30831"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "79e18c3586aebe8298b911feb87d772bd08c16b16e92e663289861f18cddd504"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "3319592a5961b5c9e5bc8c4f6661887145fba61fb214d67911fce4e15ba6e964"
+    sha256 cellar: :any_skip_relocation, ventura:        "55ae3b899fb78983834cc8ba37cdda057b0d5dbc791788d6d821152b1dd6a0e2"
+    sha256 cellar: :any_skip_relocation, monterey:       "6fece291fbd9033dea1ee7187fc3e145ffab41767c7b0b7b11413644a88d1c4b"
+    sha256 cellar: :any_skip_relocation, big_sur:        "9e362090e2a147800d1882bdca7d7eea47e4bf5773c1f1244b406865ca4437e4"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "4dde4654426c623f3164b7d2d734fafbd5b70a2ca4735596d856ed133725f9b9"
   end
 
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   resource "certifi" do
-    url "https://files.pythonhosted.org/packages/6d/78/f8db8d57f520a54f0b8a438319c342c61c22759d8f9a1cd2e2180b5e5ea9/certifi-2021.5.30.tar.gz"
-    sha256 "2bbf76fd432960138b3ef6dda3dde0544f27cbf8546c458e60baf371917ba9ee"
+    url "https://files.pythonhosted.org/packages/37/f7/2b1b0ec44fdc30a3d31dfebe52226be9ddc40cd6c0f34ffc8923ba423b69/certifi-2022.12.7.tar.gz"
+    sha256 "35824b4c3a97115964b408844d64aa14db1cc518f6562e8d7261699d1350a9e3"
   end
 
   resource "charset-normalizer" do
-    url "https://files.pythonhosted.org/packages/e7/4e/2af0238001648ded297fb54ceb425ca26faa15b341b4fac5371d3938666e/charset-normalizer-2.0.4.tar.gz"
-    sha256 "f23667ebe1084be45f6ae0538e4a5a865206544097e4e8bbcacf42cd02a348f3"
+    url "https://files.pythonhosted.org/packages/96/d7/1675d9089a1f4677df5eb29c3f8b064aa1e70c1251a0a8a127803158942d/charset-normalizer-3.0.1.tar.gz"
+    sha256 "ebea339af930f8ca5d7a699b921106c6e29c617fe9606fa7baa043c1cdae326f"
   end
 
   resource "idna" do
-    url "https://files.pythonhosted.org/packages/cb/38/4c4d00ddfa48abe616d7e572e02a04273603db446975ab46bbcd36552005/idna-3.2.tar.gz"
-    sha256 "467fbad99067910785144ce333826c71fb0e63a425657295239737f7ecd125f3"
+    url "https://files.pythonhosted.org/packages/8b/e1/43beb3d38dba6cb420cefa297822eac205a277ab43e5ba5d5c46faf96438/idna-3.4.tar.gz"
+    sha256 "814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4"
   end
 
   resource "requests" do
-    url "https://files.pythonhosted.org/packages/e7/01/3569e0b535fb2e4a6c384bdbed00c55b9d78b5084e0fb7f4d0bf523d7670/requests-2.26.0.tar.gz"
-    sha256 "b8aa58f8cf793ffd8782d3d8cb19e66ef36f7aba4353eec859e74678b01b07a7"
+    url "https://files.pythonhosted.org/packages/9d/ee/391076f5937f0a8cdf5e53b701ffc91753e87b07d66bae4a09aa671897bf/requests-2.28.2.tar.gz"
+    sha256 "98b1b2782e3c6c4904938b84c0eb932721069dfdb9134313beff7c83c2df24bf"
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/4f/5a/597ef5911cb8919efe4d86206aa8b2658616d676a7088f0825ca08bd7cb8/urllib3-1.26.6.tar.gz"
-    sha256 "f57b4c16c62fa2760b7e3d97c35b255512fb6b59a259730f36ba32ce9f8e342f"
+    url "https://files.pythonhosted.org/packages/c5/52/fe421fb7364aa738b3506a2d99e4f3a56e079c0a798e9f4fa5e14c60922f/urllib3-1.26.14.tar.gz"
+    sha256 "076907bf8fd355cde77728471316625a4d2f7e713c125f51953bb5b3eecf4f72"
   end
 
   def install

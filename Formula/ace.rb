@@ -1,8 +1,8 @@
 class Ace < Formula
   desc "ADAPTIVE Communication Environment: OO network programming in C++"
   homepage "https://www.dre.vanderbilt.edu/~schmidt/ACE.html"
-  url "https://github.com/DOCGroup/ACE_TAO/releases/download/ACE%2BTAO-7_0_8/ACE+TAO-7.0.8.tar.bz2"
-  sha256 "a050ffef2b2780f8e4fbc7250c20460b48bec3ea80064575d554cc36eb666cf4"
+  url "https://github.com/DOCGroup/ACE_TAO/releases/download/ACE%2BTAO-7_1_0/ACE+TAO-7.1.0.tar.bz2"
+  sha256 "90d642b7a67445da89cb73d2c091b169b373c63d2db78cf498d930864b382d43"
   license "DOC"
 
   livecheck do
@@ -14,12 +14,13 @@ class Ace < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "1d7cdca57f5f17952a4fec4c8256bd12c3253334f8f33ff0e44085e822c37ba3"
-    sha256 cellar: :any,                 arm64_big_sur:  "80bf0478c8a50658d45af23dfc60407435386952670cd1d0fd4dc7db44a2f390"
-    sha256 cellar: :any,                 monterey:       "91e1921808d72dd92c2105909a32ec012777a3b4cc01c50e422169a4c2965e3e"
-    sha256 cellar: :any,                 big_sur:        "59e10285e1f0cea510ce248000dcc1dce05d6962778f549f74efcdaa6550024a"
-    sha256 cellar: :any,                 catalina:       "075c33922ec132c7cd0941e80f7e593a4fb48b3b9e163745fdba7734e0d88e29"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fec7514588fe20d0c3150f9b935ce84925be69cd7de9e21857e658d862df0026"
+    sha256 cellar: :any,                 arm64_ventura:  "a44e54f72c986ac00a0d69f0c29d4210c15a8e388633f048572a61a72e8f08ec"
+    sha256 cellar: :any,                 arm64_monterey: "70de46a1f01f56b30aeb025c6e614ffcc5b57fc1b8ab75ec9977ba6ccdd949bb"
+    sha256 cellar: :any,                 arm64_big_sur:  "74c0543862954a143e3c416b3882212b6236bc4f57d16083921926410923ee35"
+    sha256 cellar: :any,                 ventura:        "194c265bb2c944f55f6d2b25b7b3a027ab77c8991d3466f274af458db1f11d57"
+    sha256 cellar: :any,                 monterey:       "2d5398e1c4eb90a7bb2c23803f3e45d91f13ec9378550660da9ce3500f17c1a3"
+    sha256 cellar: :any,                 big_sur:        "3a81bf75bfec8c9f4f0d867e6eb94b50bbbff0a8b2ee4ce26e5824f11ec37cad"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b2c94b653f0d51707ea554fd420d64fc12455bf8142d19aaedf41ccfb2f1a422"
   end
 
   def install
@@ -27,8 +28,6 @@ class Ace < Formula
     ln_sf "config-#{os}.h", "ace/config.h"
     ln_sf "platform_#{os}.GNU", "include/makeinclude/platform_macros.GNU"
 
-    # Set up the environment the way ACE expects during build.
-    ENV.cxx11
     ENV["ACE_ROOT"] = buildpath
     ENV["DYLD_LIBRARY_PATH"] = "#{buildpath}/lib"
 

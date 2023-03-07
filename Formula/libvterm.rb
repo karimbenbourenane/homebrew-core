@@ -1,8 +1,8 @@
 class Libvterm < Formula
   desc "C99 library which implements a VT220 or xterm terminal emulator"
   homepage "http://www.leonerd.org.uk/code/libvterm/"
-  url "http://www.leonerd.org.uk/code/libvterm/libvterm-0.2.tar.gz"
-  sha256 "4c5150655438cfb8c57e7bd133041140857eb04defd0e544521c0e469258e105"
+  url "http://www.leonerd.org.uk/code/libvterm/libvterm-0.3.1.tar.gz"
+  sha256 "25a8ad9c15485368dfd0a8a9dca1aec8fea5c27da3fa74ec518d5d3787f0c397"
   license "MIT"
   version_scheme 1
 
@@ -12,12 +12,13 @@ class Libvterm < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "5cd306979b892e89d43e58c6259c9631101d7dc685addc6fe306d42e5a746ac4"
-    sha256 cellar: :any,                 arm64_big_sur:  "45364ba93182739f8d2b5fd17c98f23ea04c5f3d2bea8bfbc4505e3d7fe8405c"
-    sha256 cellar: :any,                 monterey:       "5eaf3c64effc28db52d1da5e9d974646e8fd57926a96435cb75200591c321a97"
-    sha256 cellar: :any,                 big_sur:        "feca616448c260cf992bc1a58eb537028d08cf0af008003b09c1602f81eabe75"
-    sha256 cellar: :any,                 catalina:       "397b586af09ebea105af914adeb0ca6f943ca2b3f1948555e3336b21c6e39833"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "eaa7a320354097e4ca5c0c3f6ef1310d62cdce4d941e3b0a1ffae19eec262758"
+    sha256 cellar: :any,                 arm64_ventura:  "8223c9b38657d9029e9ca4fbed618de2819a26d2c55662a2ac249ddb2e19ee20"
+    sha256 cellar: :any,                 arm64_monterey: "fb4d33a68c1d2f74bf3a365b999d00699cb458470ef14473f681c28db5d862ae"
+    sha256 cellar: :any,                 arm64_big_sur:  "93895eb12f869135a997949df26a6dac909061a16b5161236acc79c2a8c48de8"
+    sha256 cellar: :any,                 ventura:        "047bb97a27597a58514e7cdf012064d13cf42676e1546fbe78020064ba2f88dc"
+    sha256 cellar: :any,                 monterey:       "e5cb1676eea4d4a2e6aaa76d39edec5387245342811861531e747697f264aa94"
+    sha256 cellar: :any,                 big_sur:        "52d39b4b5dbe5c70ff96f44ec9772b89a2218a5cc53e942ade2bf0922942d9d6"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "910c60368d29ac5b99138523a0e4a03ab4c64abbe1089333ded4b481c024a1d2"
   end
 
   depends_on "libtool" => :build

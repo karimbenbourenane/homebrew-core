@@ -5,6 +5,7 @@ class OathToolkit < Formula
   mirror "https://fossies.org/linux/privat/oath-toolkit-2.6.6.tar.gz"
   sha256 "fd68b315c71ba1db47bcc6e67f598568db4131afc33abd23ed682170e3cb946c"
   license all_of: ["GPL-3.0-or-later", "LGPL-2.1-or-later"]
+  revision 1
 
   livecheck do
     url "https://download.savannah.gnu.org/releases/oath-toolkit/"
@@ -12,13 +13,13 @@ class OathToolkit < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_monterey: "d12d5f53c630491e0db01dd5955e9dd23baeae9080df3f24eb726ccf359aaa97"
-    sha256               arm64_big_sur:  "3e54014feda461a1aa6f68f71570c8be14076aac4a6823345b76b10feba0cf94"
-    sha256               monterey:       "a3b5fca2b9fbe382935b54efa49d56f07bb1f637cc1c17d90418a33ce265e92b"
-    sha256               big_sur:        "ed6ceb54edc0b0bea449a75c756b604c6204f6fd80c9e280ce57b1e3d7140ac7"
-    sha256               catalina:       "04c85d25d9c1e8cac2164a4b538344f95181346fd3170e65e43173aca6770b6d"
-    sha256               mojave:         "136fc9c533486f31645fdd6594d96fc8f17487439248b78a8c42a868ce7aaacb"
-    sha256               x86_64_linux:   "3ea5398bb38297c062a54cce0ee803487211cf9f16c7697981d67a3edebd94e6"
+    sha256 cellar: :any, arm64_ventura:  "d56bf5ebe830d184b5ead115d5cd6cbd99e841ecc22bdaa1eb95acc7c1205dd7"
+    sha256 cellar: :any, arm64_monterey: "e625bb0ce23aa527527c3edde57e7ac2c3636818058d78df3d6d6365ce5d54ed"
+    sha256               arm64_big_sur:  "717b1353b92a3014f89cd9d70d1fde81ea8d72105bc2f7664e2991873b7f995f"
+    sha256               ventura:        "7a9b25b290e753ce832993af349c3b9a6082b54ca622e5bf3762f7f917830b3d"
+    sha256               monterey:       "1e835161792bb992feba1db5e19c662de011357c85cd1d1beb29c7fd60994e41"
+    sha256 cellar: :any, big_sur:        "ed8dd264bf39ffdeff84b2ed366bb3bebcd3578081b9f5d78a9f2b05160078aa"
+    sha256               x86_64_linux:   "b571a3591c7215d239a068af0b284211a7222b96af08bd73736c6c8dd08c6547"
   end
 
   depends_on "pkg-config" => :build

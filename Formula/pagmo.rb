@@ -1,18 +1,18 @@
 class Pagmo < Formula
   desc "Scientific library for massively parallel optimization"
   homepage "https://esa.github.io/pagmo2/"
-  url "https://github.com/esa/pagmo2/archive/v2.18.0.tar.gz"
-  sha256 "5ad40bf3aa91857a808d6b632d9e1020341a33f1a4115d7a2b78b78fd063ae31"
+  url "https://github.com/esa/pagmo2/archive/v2.19.0.tar.gz"
+  sha256 "701ada528de7d454201e92a5d88903dd1c22ea64f43861d9694195ddfef82a70"
   license any_of: ["LGPL-3.0-or-later", "GPL-3.0-or-later"]
-  revision 1
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "9fdeb12b0f2606287dd1e2032da47a63c84702b3b983ea502fa258ef8ccd2c46"
-    sha256 cellar: :any,                 arm64_big_sur:  "c47c61282421e3ca6dcc9b0c3506860d79283a3612eb2307f52292c48e423986"
-    sha256 cellar: :any,                 monterey:       "76a1ef6baf81a36641d9ded41378f20f4a528f378e289d9d4c03396143fd49bc"
-    sha256 cellar: :any,                 big_sur:        "3c13ea41cb30df2fdb763fce03b402ee38c0a44a48eb41374dda972ca19786f0"
-    sha256 cellar: :any,                 catalina:       "5ec05fbd452a6bd80feaab0e4030ad8e2ff5d29e5e895779171118ea7bada8ed"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "167678b868dc7796bbe34aa805d657b2012bcf6c413594e1dbff9e190dbe57fb"
+    sha256 cellar: :any,                 arm64_ventura:  "310df884da16bdb83fc9d1d890f4badfeafbfcc5d26e3182b516b8816ddb50f7"
+    sha256 cellar: :any,                 arm64_monterey: "765c33daf58fb08fcb240bd60c3bd6c72d7a16ce83da175c9693f766107e5592"
+    sha256 cellar: :any,                 arm64_big_sur:  "6298767893209c1e81b3c6ded53f84581c30a1b288b5c9d2ca27d1cd3a97c9d5"
+    sha256 cellar: :any,                 ventura:        "dd5652d55e5c58c22e93fbf8b895b6cb8563c109f1a0f58c9293a97e899bfc9d"
+    sha256 cellar: :any,                 monterey:       "eab152f7b7620d1afb8db53642f7da540a656cd13e742a241ca658c9928deecd"
+    sha256 cellar: :any,                 big_sur:        "afe5a7c7f449f3bcbae91a9d23d9548828ea3ebaaf992c4a6e9152283c58406e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a4b1be604b7367a9719ce437d12f6bd72f8c821bdb5e639ed6f7cc921d4bb7fe"
   end
 
   depends_on "cmake" => :build
@@ -20,10 +20,6 @@ class Pagmo < Formula
   depends_on "eigen"
   depends_on "nlopt"
   depends_on "tbb"
-
-  on_linux do
-    depends_on "gcc"
-  end
 
   fails_with gcc: "5"
 

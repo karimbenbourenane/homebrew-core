@@ -1,24 +1,25 @@
 class Wireshark < Formula
   desc "Graphical network analyzer and capture tool"
   homepage "https://www.wireshark.org"
-  url "https://www.wireshark.org/download/src/all-versions/wireshark-3.6.7.tar.xz"
-  mirror "https://1.eu.dl.wireshark.org/src/all-versions/wireshark-3.6.7.tar.xz"
-  sha256 "cce10a35caa2f79b73d3e6e4dc5388dd47d216114a550fdeb06ae78da0edb7c5"
+  url "https://www.wireshark.org/download/src/all-versions/wireshark-4.0.4.tar.xz"
+  mirror "https://1.eu.dl.wireshark.org/src/all-versions/wireshark-4.0.4.tar.xz"
+  sha256 "a4a09f6564f00639036ffe5064ac4dc2176adfa3e484c539c9c73f835436e74b"
   license "GPL-2.0-or-later"
   head "https://gitlab.com/wireshark/wireshark.git", branch: "master"
 
   livecheck do
     url "https://www.wireshark.org/download.html"
-    regex(/Stable Release \((\d+(?:\.\d+)*)/i)
+    regex(/href=.*?wireshark[._-]v?(\d+(?:\.\d+)+)\.t/i)
   end
 
   bottle do
-    sha256 arm64_monterey: "2af55f85377ba3bf6e10dc4173cc8c55785c4f2c37c65430606692a9add0d4a6"
-    sha256 arm64_big_sur:  "4eb76a02dbd3b155b205a8f8e16409fa83d0bb606d08d2914c81cfb769125c44"
-    sha256 monterey:       "ced94ed71232b873f0807d994184b09764f2e51e147ffb62f4240ab128f0c3fb"
-    sha256 big_sur:        "8718d561354155c1d49bf9c601fbb6788c461bb1fc933305e87e05d9ff2379b7"
-    sha256 catalina:       "812521a69760692ec3142f959f8f275d8a0fc34132b8305ea30a859505e05c17"
-    sha256 x86_64_linux:   "3bfef710231b69378c6b9f6f64e41a051a6b250560286b90c0eac53768dfe892"
+    sha256 arm64_ventura:  "40ff9c2bf1f2e88ce4e08c2f4ec1e4402eeee3ecc3a605cd03ab8cd58c35d42b"
+    sha256 arm64_monterey: "529c4be5b86deb78b886d450b1d4374a011e925bf82fd9933243c4cf9e38f20b"
+    sha256 arm64_big_sur:  "db35a1acfc71d429db258e1108b6a42b2a265fa3486f090becab608d01d62607"
+    sha256 ventura:        "bdf6ee39d2607dbb4d64d9a1c4e4e3665640d8a2e68356cc0f005d15ea76c73a"
+    sha256 monterey:       "00f8fcbcd0d77094a022115052a075afe6329fd0c352e61dd965b0779456ae0c"
+    sha256 big_sur:        "1909bb2787d8fffdb0140c0c72baf61beb464c28f39aa1bb13b96f9e54eddf9d"
+    sha256 x86_64_linux:   "8b831cb4b63c8b5176d62f96ae424fcb58408b657b02ffd36547fa4330bd7bee"
   end
 
   depends_on "cmake" => :build
@@ -35,9 +36,11 @@ class Wireshark < Formula
   uses_from_macos "bison" => :build
   uses_from_macos "flex" => :build
   uses_from_macos "python" => :build
+  uses_from_macos "libpcap"
+  uses_from_macos "libxml2"
 
   def install
-    args = std_cmake_args + %W[
+    args = %W[
       -DENABLE_CARES=ON
       -DENABLE_GNUTLS=ON
       -DENABLE_MAXMINDDB=ON
@@ -60,8 +63,9 @@ class Wireshark < Formula
       -DCMAKE_INSTALL_NAME_DIR:STRING=#{lib}
     ]
 
-    system "cmake", *args, "."
-    system "make", "install"
+    system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
 
     # Install headers
     (include/"wireshark").install Dir["*.h"]

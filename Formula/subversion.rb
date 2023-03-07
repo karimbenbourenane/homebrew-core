@@ -2,6 +2,7 @@ class Subversion < Formula
   desc "Version control system designed to be a better CVS"
   homepage "https://subversion.apache.org/"
   license "Apache-2.0"
+  revision 1
 
   stable do
     url "https://www.apache.org/dyn/closer.lua?path=subversion/subversion-1.14.2.tar.bz2"
@@ -16,12 +17,14 @@ class Subversion < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "cc7272eb04cb9564921a7479ad81ba0f6af0ac5f27aff9c78666471c999a25a5"
-    sha256 arm64_big_sur:  "6420f6a0aaf382043a6f82510a48c98a8255e36e95960c3212594a288ed04b78"
-    sha256 monterey:       "8e32c2e3a9c0a87a109f78987d1271f0b477a261ec1eadebdb906690f948b8ee"
-    sha256 big_sur:        "c9eead079b25c32aae6dc376ca1e28313f6ff17cfb8cb625c4f018716f24118f"
-    sha256 catalina:       "519405e1ed9e5c0f7b6c962188223b3c2609f6cfd6b47e56b59d46aabd9779a7"
-    sha256 x86_64_linux:   "9c1001ca80d3443d9556f7db973ff2079acd6b8d5b66a865d26d0b868e6610e4"
+    rebuild 2
+    sha256 arm64_ventura:  "2a9a5e70f1fbaa17eeef6bb50376371c3a851b7a9a4b4603221c1fd14c54fc7f"
+    sha256 arm64_monterey: "da10671ff8bd10ab4032572c40963d60ddaa57feae1b6f09df6d9626bfd8496d"
+    sha256 arm64_big_sur:  "8944bdee4668b9750e8a1aa250eab73033ecbd1870d12e492637de25dd6251cc"
+    sha256 ventura:        "de4cc446ee4d782f3a1c44e078fd8644bbe321e6cbf275b7db78eed22a122448"
+    sha256 monterey:       "a29ab2cecb13316b6dc44e3ce0f9f3dc9bcc9484abaca2aac2984d1d89e2fc17"
+    sha256 big_sur:        "d24d68286d208a2294bf6e4e722aae60bed9574d827ca25354b12dccd8ef8ed7"
+    sha256 x86_64_linux:   "f3b735902067cdd7733ceac8310689236b4fe403205787bcbbc9ee7bced85968"
   end
 
   head do
@@ -33,7 +36,7 @@ class Subversion < Formula
   end
 
   depends_on "pkg-config" => :build
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => [:build, :test]
   depends_on "scons" => :build # For Serf
   depends_on "swig" => :build
   depends_on "apr"
@@ -54,14 +57,12 @@ class Subversion < Formula
   uses_from_macos "zlib"
 
   on_macos do
-    depends_on "openjdk" => :build unless MacOS.version.outdated_release?
     # Prevent "-arch ppc" from being pulled in from Perl's $Config{ccflags}
     patch :DATA
   end
 
   on_linux do
     depends_on "libtool" => :build
-    depends_on "openjdk" => :build
   end
 
   resource "py3c" do
@@ -75,6 +76,10 @@ class Subversion < Formula
     sha256 "549c2d21c577a8a9c0450facb5cca809f26591f048e466552240947bdf7a87cc"
   end
 
+  def python3
+    "python3.11"
+  end
+
   def install
     py3c_prefix = buildpath/"py3c"
     serf_prefix = libexec/"serf"
@@ -83,8 +88,8 @@ class Subversion < Formula
     resource("serf").stage do
       if OS.linux?
         inreplace "SConstruct" do |s|
-          s.gsub! "env.Append(LIBPATH=['$OPENSSL\/lib'])",
-          "\\1\nenv.Append(CPPPATH=['$ZLIB\/include'])\nenv.Append(LIBPATH=['$ZLIB/lib'])"
+          s.gsub! "env.Append(LIBPATH=['$OPENSSL/lib'])",
+          "\\1\nenv.Append(CPPPATH=['$ZLIB/include'])\nenv.Append(LIBPATH=['$ZLIB/lib'])"
         end
       end
 
@@ -118,8 +123,9 @@ class Subversion < Formula
 
       args << "ZLIB=#{Formula["zlib"].opt_prefix}" if OS.linux?
 
-      system "scons", *args
-      system "scons", "install"
+      scons = Formula["scons"].opt_bin/"scons"
+      system scons, *args
+      system scons, "install"
     end
 
     # Use existing system zlib and sqlite
@@ -142,7 +148,6 @@ class Subversion < Formula
       ENV.append "LDFLAGS", "-Wl,-rpath=#{serf_prefix}/lib"
     end
 
-    openjdk = deps.map(&:to_formula).find { |f| f.name.match? "^openjdk" }
     perl = DevelopmentTools.locate("perl")
     ruby = DevelopmentTools.locate("ruby")
 
@@ -166,13 +171,9 @@ class Subversion < Formula
       --without-gpg-agent
       --without-jikes
       PERL=#{perl}
-      PYTHON=#{Formula["python@3.10"].opt_bin}/python3
+      PYTHON=#{which(python3)}
       RUBY=#{ruby}
     ]
-    if openjdk
-      args.unshift "--with-jdk=#{Formula["openjdk"].opt_prefix}",
-                   "--enable-javahl"
-    end
 
     # preserve compatibility with macOS 12.0–12.2
     args.unshift "--enable-sqlite-compatibility-version=3.36.0" if MacOS.version == :monterey
@@ -193,15 +194,7 @@ class Subversion < Formula
 
     system "make", "swig-py"
     system "make", "install-swig-py"
-    (lib/"python3.10/site-packages").install_symlink Dir["#{lib}/svn-python/*"]
-
-    # Java and Perl support don't build correctly in parallel:
-    # https://github.com/Homebrew/homebrew/issues/20415
-    if openjdk
-      ENV.deparallelize
-      system "make", "javahl"
-      system "make", "install-javahl"
-    end
+    (prefix/Language::Python.site_packages(python3)).install_symlink Dir["#{lib}/svn-python/*"]
 
     perl_archlib = Utils.safe_popen_read(perl.to_s, "-MConfig", "-e", "print $Config{archlib}")
     perl_core = Pathname.new(perl_archlib)/"CORE"
@@ -223,8 +216,12 @@ class Subversion < Formula
           "-DPERL_DARWIN -fno-strict-aliasing -I#{HOMEBREW_PREFIX}/include -I#{perl_core}"
       end
     end
-    system "make", "swig-pl"
-    system "make", "install-swig-pl"
+    system "make", "swig-pl-lib"
+    system "make", "install-swig-pl-lib"
+    cd "subversion/bindings/swig/perl/native" do
+      system perl, "Makefile.PL", "PREFIX=#{prefix}", "INSTALLSITEMAN3DIR=#{man3}"
+      system "make", "install"
+    end
 
     # This is only created when building against system Perl, but it isn't
     # purged by Homebrew's post-install cleaner because that doesn't check
@@ -240,10 +237,6 @@ class Subversion < Formula
 
       The perl bindings are located in various subdirectories of:
         #{opt_lib}/perl5
-
-      You may need to link the Java bindings into the Java Extensions folder:
-        sudo mkdir -p /Library/Java/Extensions
-        sudo ln -s #{HOMEBREW_PREFIX}/lib/libsvnjavahl-1.dylib /Library/Java/Extensions/libsvnjavahl-1.dylib
     EOS
   end
 
@@ -263,6 +256,8 @@ class Subversion < Formula
     perl_version = Utils.safe_popen_read(perl.to_s, "--version")[/v(\d+\.\d+(?:\.\d+)?)/, 1]
     ENV["PERL5LIB"] = "#{lib}/perl5/site_perl/#{perl_version}/#{platform}"
     system perl, "-e", "use SVN::Client; new SVN::Client()"
+
+    system python3, "-c", "import svn.client, svn.repos"
   end
 end
 

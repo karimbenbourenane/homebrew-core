@@ -1,8 +1,8 @@
 class Rubberband < Formula
   desc "Audio time stretcher tool and library"
   homepage "https://breakfastquay.com/rubberband/"
-  url "https://breakfastquay.com/files/releases/rubberband-3.0.0.tar.bz2"
-  sha256 "df6530b403c8300a23973df22f36f3c263f010d53792063e411f633cebb9ed85"
+  url "https://breakfastquay.com/files/releases/rubberband-3.1.2.tar.bz2"
+  sha256 "dda7e257b14c59a1f59c5ccc4d6f19412039f77834275955aa0ff511779b98d2"
   license "GPL-2.0-or-later"
   head "https://hg.sr.ht/~breakfastquay/rubberband", using: :hg
 
@@ -12,12 +12,13 @@ class Rubberband < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_monterey: "5e69d82b8ac49175b0d5f7ce7cd144cf5ad0a1a53256ec3d320a88e049f519d4"
-    sha256 cellar: :any, arm64_big_sur:  "fe47590afe376f2f7e1b24a239a5e4947534d8425e97c42a3a34b30d343f3d02"
-    sha256 cellar: :any, monterey:       "ff93a71a132ce14e836d9f3d80d430ef41c39470da40d4088d3d8d3e58cf827f"
-    sha256 cellar: :any, big_sur:        "b02d05078216b43fe33e2b1354fd8a67fa5c3330f893480ccb3bc2b6bb9880f2"
-    sha256 cellar: :any, catalina:       "b73a156422b447a2c5a9426abbc70e58e97b0bb644080849e796d8ddbbbab630"
-    sha256               x86_64_linux:   "2edf30d682c1aeebe61f194a30e8d06203baa8bf88a05a83a5465e4fa30496d3"
+    sha256 cellar: :any, arm64_ventura:  "22172e690033abb29e48a440db401433c110ae09f4b0632f28c4397a839b5089"
+    sha256 cellar: :any, arm64_monterey: "fe6363f0a2cc447e10c819e1c7bac33ccbb5d5bfb0a239eb8573e4d55ba28b3f"
+    sha256 cellar: :any, arm64_big_sur:  "640bc828d90f53d0a369a4018fb85e613f2af25da4e38a63713db78682967c1a"
+    sha256 cellar: :any, ventura:        "97aa5feed6c72107a20bb7cd76ff58e8f04b19247121bdd504cdbf2be3304029"
+    sha256 cellar: :any, monterey:       "4ae7e36ab409a31df353cabb0f517161a4455740b94233bed5aaeeea51a8485d"
+    sha256 cellar: :any, big_sur:        "36da34e200b63614206089168a021a93499377360b13ed6ab663b86a594b70c3"
+    sha256               x86_64_linux:   "2f8993fef124b04bd00f9bdc6ab5be15a3956f7f00e7c690e3201d1879f4d5fa"
   end
 
   depends_on "meson" => :build
@@ -28,7 +29,6 @@ class Rubberband < Formula
 
   on_linux do
     depends_on "fftw"
-    depends_on "gcc"
     depends_on "ladspa-sdk"
     depends_on "vamp-plugin-sdk"
   end

@@ -1,18 +1,19 @@
 class Xh < Formula
   desc "Friendly and fast tool for sending HTTP requests"
   homepage "https://github.com/ducaale/xh"
-  url "https://github.com/ducaale/xh/archive/refs/tags/v0.16.1.tar.gz"
-  sha256 "c1fd4f33be96ba1c19580fc66dd9d059a716f00f532a516e159ce9342e50cd43"
+  url "https://github.com/ducaale/xh/archive/refs/tags/v0.18.0.tar.gz"
+  sha256 "ed16781248d60a1f86d8da206440e9c761520bcd00917213dc6eb68fe357999e"
   license "MIT"
   head "https://github.com/ducaale/xh.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "6883bfed4baeff32fda41fd65598d5743f755c74c3e78d61fc94d795c457ab81"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "51caf49e26e66f098d27f0ffcb8f5655c4fa6f8805732388b8ddad6b627b77ff"
-    sha256 cellar: :any_skip_relocation, monterey:       "9e38e2511c4666cd05e9af6827b94767131374126a0ed28a1b37df0aee9c5efe"
-    sha256 cellar: :any_skip_relocation, big_sur:        "7fcd794e148d73e7b14b9f3261c5fba5b490233f261b1a10d9a4762dfed36e6e"
-    sha256 cellar: :any_skip_relocation, catalina:       "b70120b70cd998361f1e6da4d5ca7c2f92d2359e56155fba179dd4277a0aa0c1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "39e0780ad19d1e316a81bc2df1bc1577c7ed918ef5ba59cdfff0a621b2fa9fa0"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "d61598252fc5fbb54df6eafebff6ca858d460357a45f6d1f6f6bae0551c11630"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "4be4b4127f5e092eb010635197b27e9a7578447f2f4cbca3a27262b5207fc059"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "d761e673f263c3faecd46adced465de42066d766625e7f75d401189f9a17fba6"
+    sha256 cellar: :any_skip_relocation, ventura:        "1f40065f6ff5b6df2c9738588f260ff1f831d772537102380b1963b71f5d66e5"
+    sha256 cellar: :any_skip_relocation, monterey:       "2637f17856ec93fea48593d9b3b10edf5958c02bc4a52b0e25f443fe672e3c03"
+    sha256 cellar: :any_skip_relocation, big_sur:        "bf162b38e669261cc35ad5f160f8053b66d74f4ce92ff5c550d5b40aa2dd26e7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ed590304329cbd86904ff0ced04a11d7116e81287cebf975ea4b483dedc42b3b"
   end
 
   depends_on "rust" => :build

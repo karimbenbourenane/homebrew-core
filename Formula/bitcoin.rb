@@ -1,10 +1,9 @@
 class Bitcoin < Formula
   desc "Decentralized, peer to peer payment network"
   homepage "https://bitcoincore.org/"
-  url "https://bitcoincore.org/bin/bitcoin-core-23.0/bitcoin-23.0.tar.gz"
-  sha256 "26748bf49d6d6b4014d0fedccac46bf2bcca42e9d34b3acfd9e3467c415acc05"
+  url "https://bitcoincore.org/bin/bitcoin-core-24.0.1/bitcoin-24.0.1.tar.gz"
+  sha256 "12d4ad6dfab4767d460d73307e56d13c72997e114fad4f274650f95560f5f2ff"
   license "MIT"
-  revision 4
   head "https://github.com/bitcoin/bitcoin.git", branch: "master"
 
   livecheck do
@@ -13,12 +12,13 @@ class Bitcoin < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "f6cf894a92fc754ea145beba3676d918518dcabe3e94ba152731d7e17aba75bd"
-    sha256 cellar: :any,                 arm64_big_sur:  "ac400352429a055e239c4277361599517c8d48a5d7aa62d93f85548191bcd4c5"
-    sha256 cellar: :any,                 monterey:       "7ba835979b1e23942a1064217d986f114cd2befaa1f0a9cc40dab4023110559a"
-    sha256 cellar: :any,                 big_sur:        "250aaa6c856cf4adb29597bee8bff6a03157f837a9f8ffce7868aaca6c7c47dd"
-    sha256 cellar: :any,                 catalina:       "5d15d68d17ef1567afd59f09004ab87ecf433b3534b5811f0aec7b34c49e6e5b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "bb0cb3880b0ef7c530dc248cc7757d4618f7ef1e710b67f7afc81c761456ae29"
+    sha256 cellar: :any,                 arm64_ventura:  "45d947210f6f1bb4bbe1836ce6a3852218dc909925c12ee593f8aadf84d8c93a"
+    sha256 cellar: :any,                 arm64_monterey: "d07972bb774322c1d88fa4f834dfbfc36f9cf9494dd849f8fb94286f7d650c25"
+    sha256 cellar: :any,                 arm64_big_sur:  "07f9831b1766e2fddcfd6286b0e8e4c164e286e2241cbc2670f702227cc5a97a"
+    sha256 cellar: :any,                 ventura:        "ebd2453adcf200b10c5574216d76b17dd0f59951720a57622c615898fe9807a9"
+    sha256 cellar: :any,                 monterey:       "959d5f095bfd82de01bf34aa183a6be900f4659743d1ac50b44f100bf8ecc328"
+    sha256 cellar: :any,                 big_sur:        "be3ace44a1b4bcf4e8cb11c34e455afaa030570d4af409d7fb697021710fb7ed"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5eac48a633510ed9382e8cf0f5a184e142c057a31ff913f96b32c98d07716960"
   end
 
   depends_on "autoconf" => :build
@@ -39,10 +39,12 @@ class Bitcoin < Formula
 
   on_linux do
     depends_on "util-linux" => :build # for `hexdump`
-    depends_on "gcc"
   end
 
-  fails_with gcc: "5"
+  fails_with :gcc do
+    version "7" # fails with GCC 7.x and earlier
+    cause "Requires std::filesystem support"
+  end
 
   def install
     system "./autogen.sh"

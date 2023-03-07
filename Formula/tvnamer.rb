@@ -10,34 +10,36 @@ class Tvnamer < Formula
   head "https://github.com/dbr/tvnamer.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "b810144406407dbf0144f108e6d7d97c5f516a6a70b2416fb44863bdc5e2a6fe"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "90a9fbd9cbed86327be513280ac0a3a257612678706eb6c06b4d87afeac0f27d"
-    sha256 cellar: :any_skip_relocation, monterey:       "9714bf10493610885adfabdfd81e149b0e746a7dde0f829217bc01a383158bf5"
-    sha256 cellar: :any_skip_relocation, big_sur:        "ce42fa5966eccaec699c950624d78ca9ea761420ab87506e7b3868b70f153cb2"
-    sha256 cellar: :any_skip_relocation, catalina:       "92115fc76ed4c93dbb15d311ac5bd98a530d9e104487a7aa1641f199a125b54e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f245ac1d125a2acb208dcf8dcc322a1d000c2fa518629945f5f275a55a74d4bb"
+    rebuild 2
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "33eb178a5c3033f0ed5d29725531949439a09ef5cd65690dc0c2d90623c610c9"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "14e517b01bad38fa7059bf514d0c37dbcc4160735c3e5952e7dc1ce7186ee0ad"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "51d4b3b8a5d40f4269e0785f7f2e766d003e02923c564704b540142350457941"
+    sha256 cellar: :any_skip_relocation, ventura:        "06eb0bc11e8e1ac519257ee07516122cfc0fab4ac338a78eae102bc53eac590f"
+    sha256 cellar: :any_skip_relocation, monterey:       "e0bd8bab2ba136c7dbc5b9aca813b24fd4b11290a64f2d54b1c3d01a51a43cdf"
+    sha256 cellar: :any_skip_relocation, big_sur:        "9ab06f2fc93b7f57e74faa91f3c48ec16455b912d1a19e0a8c4dc5f5d7c6e201"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5e4957eac10b6909126be373f2dc4d63208e31a1d2addd457388158c538817be"
   end
 
-  depends_on "python@3.10"
+  depends_on "python@3.11"
 
   resource "certifi" do
-    url "https://files.pythonhosted.org/packages/6c/ae/d26450834f0acc9e3d1f74508da6df1551ceab6c2ce0766a593362d6d57f/certifi-2021.10.8.tar.gz"
-    sha256 "78884e7c1d4b00ce3cea67b44566851c4343c120abd683433ce934a68ea58872"
+    url "https://files.pythonhosted.org/packages/37/f7/2b1b0ec44fdc30a3d31dfebe52226be9ddc40cd6c0f34ffc8923ba423b69/certifi-2022.12.7.tar.gz"
+    sha256 "35824b4c3a97115964b408844d64aa14db1cc518f6562e8d7261699d1350a9e3"
   end
 
   resource "charset-normalizer" do
-    url "https://files.pythonhosted.org/packages/56/31/7bcaf657fafb3c6db8c787a865434290b726653c912085fbd371e9b92e1c/charset-normalizer-2.0.12.tar.gz"
-    sha256 "2857e29ff0d34db842cd7ca3230549d1a697f96ee6d3fb071cfa6c7393832597"
+    url "https://files.pythonhosted.org/packages/96/d7/1675d9089a1f4677df5eb29c3f8b064aa1e70c1251a0a8a127803158942d/charset-normalizer-3.0.1.tar.gz"
+    sha256 "ebea339af930f8ca5d7a699b921106c6e29c617fe9606fa7baa043c1cdae326f"
   end
 
   resource "idna" do
-    url "https://files.pythonhosted.org/packages/62/08/e3fc7c8161090f742f504f40b1bccbfc544d4a4e09eb774bf40aafce5436/idna-3.3.tar.gz"
-    sha256 "9d643ff0a55b762d5cdb124b8eaa99c66322e2157b69160bc32796e824360e6d"
+    url "https://files.pythonhosted.org/packages/8b/e1/43beb3d38dba6cb420cefa297822eac205a277ab43e5ba5d5c46faf96438/idna-3.4.tar.gz"
+    sha256 "814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4"
   end
 
   resource "requests" do
-    url "https://files.pythonhosted.org/packages/60/f3/26ff3767f099b73e0efa138a9998da67890793bfa475d8278f84a30fec77/requests-2.27.1.tar.gz"
-    sha256 "68d7c56fd5a8999887728ef304a6d12edc7be74f1cfa47714fc8b414525c9a61"
+    url "https://files.pythonhosted.org/packages/9d/ee/391076f5937f0a8cdf5e53b701ffc91753e87b07d66bae4a09aa671897bf/requests-2.28.2.tar.gz"
+    sha256 "98b1b2782e3c6c4904938b84c0eb932721069dfdb9134313beff7c83c2df24bf"
   end
 
   resource "requests-cache" do
@@ -51,8 +53,8 @@ class Tvnamer < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/1b/a5/4eab74853625505725cefdf168f48661b2cd04e7843ab836f3f63abf81da/urllib3-1.26.9.tar.gz"
-    sha256 "aabaf16477806a5e1dd19aa41f8c2b7950dd3c746362d7e3223dbe6de6ac448e"
+    url "https://files.pythonhosted.org/packages/c5/52/fe421fb7364aa738b3506a2d99e4f3a56e079c0a798e9f4fa5e14c60922f/urllib3-1.26.14.tar.gz"
+    sha256 "076907bf8fd355cde77728471316625a4d2f7e713c125f51953bb5b3eecf4f72"
   end
 
   def install

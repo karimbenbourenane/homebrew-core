@@ -1,23 +1,23 @@
 class GitTrim < Formula
   desc "Trim your git remote tracking branches that are merged or gone"
   homepage "https://github.com/foriequal0/git-trim"
-  url "https://github.com/foriequal0/git-trim/archive/v0.4.2.tar.gz"
-  sha256 "0f728c7f49cc8ffb0c485547a114c94bdebd7eead9466b1b43f486ef583a3d73"
+  url "https://github.com/foriequal0/git-trim.git",
+      tag:      "v0.4.4",
+      revision: "1f39d85ddb242e9933fba9faaecd6f423f2b6a5b"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "3cd1f15388555fd2bb5f4fd580f315e1bada283d4f4ce6aa2411bbfbd7c3b079"
-    sha256 cellar: :any,                 arm64_big_sur:  "0fbf3f4908554abfcda3a7b49c8f49bc878152dcbaad4d4fa8c19cce9f6b2f6a"
-    sha256 cellar: :any,                 monterey:       "145445f0a7f6267c1490fa94bec8dcf71abc693759bfd129059528e9347a0a12"
-    sha256 cellar: :any,                 big_sur:        "5c52fe8dd74e83a4a7048ae8a4f42661c2738718ea40ebede07ecf83771ba5ff"
-    sha256 cellar: :any,                 catalina:       "387724382d30ce0ac900da57f737d0f3ba91a57e29242e8b790f4ade97bf7179"
-    sha256 cellar: :any,                 mojave:         "090af1343e6b5938c97127d0c7a63fe49804269c0dc0c98c19ed160798b34bec"
-    sha256 cellar: :any,                 high_sierra:    "23beea483f50121bdf7b545e0345ec5d192ee362fcf3402f999905c3ebcd8188"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ab1874dc73e61a21044a336683b346b1bb5f30ae2c3c795608e0926a7902747b"
+    sha256 cellar: :any,                 arm64_ventura:  "3f230f99015946e53ff857649b92fc82ebdc01d53aabb1698379a6428056a304"
+    sha256 cellar: :any,                 arm64_monterey: "a39f49254342159071cbb88d3f3b8e97f189f5333502d185be152c73fe9c5770"
+    sha256 cellar: :any,                 arm64_big_sur:  "0f3c73e37431403348e7ac496b3b39671366a576d61e75315d0e2f6667000404"
+    sha256 cellar: :any,                 ventura:        "69a202e87bbe253c69c6cdcf65faf14e9523a8419c65ddd74eacc209dd432a94"
+    sha256 cellar: :any,                 monterey:       "164e873f61a2afa6c661821d77480ecf94d7c3e4d77da26335925af31628722b"
+    sha256 cellar: :any,                 big_sur:        "0e8c7d52f14301a786bfe5cce167310955f11da5cce33c780f6dee5da1299c13"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "4663a90075b39aa34a60e0b5c097bb69b1820b9a72b1d47c54562fa9e08288de"
   end
 
   depends_on "rust" => :build
-  depends_on "openssl@1.1"
+  depends_on "openssl@3"
 
   uses_from_macos "zlib"
 

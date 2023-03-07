@@ -2,29 +2,27 @@ class Duckdb < Formula
   desc "Embeddable SQL OLAP Database Management System"
   homepage "https://www.duckdb.org"
   url "https://github.com/duckdb/duckdb.git",
-      tag:      "v0.5.0",
-      revision: "109f932c41fba9d61189e01ab0e5496cb9749506"
+      tag:      "v0.7.1",
+      revision: "b00b93f0b14bfff869e1facfd86a6b556a6f1c6e"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "b01deabb88723b83840595f54bfbe796cdbe8d5ddf8d9bda3e13f82ab09e650b"
-    sha256 cellar: :any,                 arm64_big_sur:  "7336c5aceb390577a68431be1176ed6fc2d8383b40e4808521fcf4f04a2cb47b"
-    sha256 cellar: :any,                 monterey:       "79545701dc3647210045c427fa4487df8bb6882db4ebebc5602c291c95b13350"
-    sha256 cellar: :any,                 big_sur:        "82bc5e789590e0c75bf3191388a09eaa61b1a801da5d11c218fb4606888dc68d"
-    sha256 cellar: :any,                 catalina:       "63d281acc5b8f30921831d0ed4ad9001ee4764ed81f5927a377f551fabdc8be4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8543f2e7009379a935fcc42b32508f92514746ae948a33db12fc0665e2736f04"
+    sha256 cellar: :any,                 arm64_ventura:  "4c9561b82d613ed2eb59716d5f99ad7a7a24011eedb2c21234d1f47985376cb7"
+    sha256 cellar: :any,                 arm64_monterey: "38edf75cac22b89858013b3735c6d84b0e185e58d168e18a35d4b9b2eb076b72"
+    sha256 cellar: :any,                 arm64_big_sur:  "599848c4bdae7f847bb6e383ff7f9dc558893789540babae0d76927b391403ae"
+    sha256 cellar: :any,                 ventura:        "bbf0b3048b3cea604ca700876c4d77431debaaf3c2ef3b417737a88b374a26bc"
+    sha256 cellar: :any,                 monterey:       "ff875bdebba7d54eb0a5935f70c8813d816980f364f47b3e073d8544bbcaebc2"
+    sha256 cellar: :any,                 big_sur:        "fc6c046a7ac940a57e540314c4ffc0baa2075694e2cd948afc9833956f287745"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "91001b67511feeda3325d193dee4c5947e9096e22a7c649faa6779d0225c2e08"
   end
 
   depends_on "cmake" => :build
-  depends_on "python@3.10" => :build
 
   def install
-    ENV.deparallelize if OS.linux? # amalgamation builds take GBs of RAM
-    mkdir "build/amalgamation"
-    system Formula["python@3.10"].opt_bin/"python3", "scripts/amalgamation.py", "--extended"
-    system Formula["python@3.10"].opt_bin/"python3", "scripts/parquet_amalgamation.py"
-    cd "src/amalgamation" do
-      system "cmake", "../..", *std_cmake_args
+    mkdir "build"
+    cd "build" do
+      system "cmake", "..", *std_cmake_args, "-DBUILD_ICU_EXTENSION=1", "-DBUILD_JSON_EXTENSION=1",
+             "-DBUILD_PARQUET_EXTENSION=1"
       system "make"
       system "make", "install"
       bin.install "duckdb"
@@ -45,8 +43,9 @@ class Duckdb < Formula
     expected_output = <<~EOS
       ┌─────────────┐
       │ avg("temp") │
+      │   double    │
       ├─────────────┤
-      │ 45.0        │
+      │        45.0 │
       └─────────────┘
     EOS
 

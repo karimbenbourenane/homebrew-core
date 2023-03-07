@@ -3,27 +3,26 @@ class Khard < Formula
 
   desc "Console carddav client"
   homepage "https://github.com/scheibler/khard/"
-  url "https://files.pythonhosted.org/packages/a3/4e/e9cbcb281d371c355f251e5d9ca58b7e0d02dffd2bf4938888068fbc2def/khard-0.17.0.tar.gz"
-  sha256 "164e1aee9264735ec0473a74a38842e6272bbb814d949a66084c6a373bd95618"
+  url "https://files.pythonhosted.org/packages/fd/d6/3172fc469cc09decfb502e5428f6a44b0fec48952ae5afe4d657d9e74ea0/khard-0.18.0.tar.gz"
+  sha256 "fe88d4b47fdd948610ac573c01fa13d1b7996265cbc44391085761af9a030615"
   license "GPL-3.0"
-  revision 2
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "fe134a1ea2ef4d9a16d959cc5c7fde80fb4a9c8b94c501bf44fbe907fe0721dc"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "3fc28b1402c727ebec6e711fb708e60e323fe2b5c626123dea2bf4182fba2098"
-    sha256 cellar: :any_skip_relocation, monterey:       "b9bc8806c6ce7690ca5ea73636d8768218de08f492590071fa8f56bda47d72fa"
-    sha256 cellar: :any_skip_relocation, big_sur:        "cbbe9d10dec73dfa9c431267ebac08bad479efbbf1b9df9a2e7b1265a7a0b3f8"
-    sha256 cellar: :any_skip_relocation, catalina:       "82627b07e76133d8cd6b96411fdbcc9d3be3e13554d81798a6054d9bc8d4161c"
-    sha256 cellar: :any_skip_relocation, mojave:         "64336ee4c660ff81770d274d905f236bd32b1dc9a01d9d1bc8ceffcdc3edff6e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "23a3b6a9293dde85e044263c8c948d11df80a08d2afc7e88937bdc9762684c25"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "cd1e2cf55cf4db6d949fb5d323ae5f012879b708509e42ca653063219646b457"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "74d3bb85f5dffdd698f66e289163ec068a4dd20f40063bee9430cee827283d44"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "3b17fcb88bffbe52279883633a3ade7c39eb89b82495f6f8013f795d0f22c8c1"
+    sha256 cellar: :any_skip_relocation, ventura:        "e0a97ec63cdef5c1e383053591966a0ca5872b9b96f0a733431611567551c475"
+    sha256 cellar: :any_skip_relocation, monterey:       "1966589c1fbf696ab701e65f171ec517601a3de20f05d01a0f484767b2603ed1"
+    sha256 cellar: :any_skip_relocation, big_sur:        "80506ea07260b9e958ad9e41b752308ba6b1b963585aa30a7919f94e412e0042"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9ecdd8b889de9800958f6b364b1399bd2bbe22e5dd64380dede70bc012172a2d"
   end
 
-  depends_on "python@3.10"
+  depends_on "python@3.11"
   depends_on "six"
 
   resource "atomicwrites" do
-    url "https://files.pythonhosted.org/packages/55/8d/74a75635f2c3c914ab5b3850112fd4b0c8039975ecb320e4449aa363ba54/atomicwrites-1.4.0.tar.gz"
-    sha256 "ae70396ad1a434f9c7046fd2dd196fc04b12f9e91ffb859164193be8b6168a7a"
+    url "https://files.pythonhosted.org/packages/87/c6/53da25344e3e3a9c01095a89f16dbcda021c609ddb42dd6d7c0528236fb2/atomicwrites-1.4.1.tar.gz"
+    sha256 "81b2c9071a49367a7f770170e5eec8cb66567cfbbc8c73d20ce5ca4a8d71cf11"
   end
 
   resource "configobj" do
@@ -37,18 +36,13 @@ class Khard < Formula
   end
 
   resource "ruamel.yaml" do
-    url "https://files.pythonhosted.org/packages/71/81/f597606e81f53eb69330e3f8287e9b5a3f7ed0481824036d550da705cd82/ruamel.yaml-0.17.16.tar.gz"
-    sha256 "1a771fc92d3823682b7f0893ad56cb5a5c87c48e62b5399d6f42c8759a583b33"
-  end
-
-  resource "ruamel.yaml.clib" do
-    url "https://files.pythonhosted.org/packages/8b/25/08e5ad2431a028d0723ca5540b3af6a32f58f25e83c6dda4d0fcef7288a3/ruamel.yaml.clib-0.2.6.tar.gz"
-    sha256 "4ff604ce439abb20794f05613c374759ce10e3595d1867764dd1ae675b85acbd"
+    url "https://files.pythonhosted.org/packages/46/a9/6ed24832095b692a8cecc323230ce2ec3480015fbfa4b79941bd41b23a3c/ruamel.yaml-0.17.21.tar.gz"
+    sha256 "8b7ce697a2f212752a35c1ac414471dc16c424c9573be4926b56ff3f5d23b7af"
   end
 
   resource "Unidecode" do
-    url "https://files.pythonhosted.org/packages/41/a6/93288318cfae2fa0ca978dfe6bb94b22b7e9a9e98b6149a4af00b1e76ee8/Unidecode-1.3.2.tar.gz"
-    sha256 "669898c1528912bcf07f9819dc60df18d057f7528271e31f8ec28cc88ef27504"
+    url "https://files.pythonhosted.org/packages/0b/25/37c77fc07821cd06592df3f18281f5e716bc891abd6822ddb9ff941f821e/Unidecode-1.3.6.tar.gz"
+    sha256 "fed09cf0be8cf415b391642c2a5addfc72194407caee4f98719e40ec2a72b830"
   end
 
   resource "vobject" do

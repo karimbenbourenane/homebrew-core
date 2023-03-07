@@ -3,20 +3,21 @@
 class QtAT5 < Formula
   desc "Cross-platform application and UI framework"
   homepage "https://www.qt.io/"
-  url "https://download.qt.io/official_releases/qt/5.15/5.15.5/single/qt-everywhere-opensource-src-5.15.5.tar.xz"
-  mirror "https://mirrors.dotsrc.org/qtproject/archive/qt/5.15/5.15.5/single/qt-everywhere-opensource-src-5.15.5.tar.xz"
-  mirror "https://mirrors.ocf.berkeley.edu/qt/archive/qt/5.15/5.15.5/single/qt-everywhere-opensource-src-5.15.5.tar.xz"
-  sha256 "5a97827bdf9fd515f43bc7651defaf64fecb7a55e051c79b8f80510d0e990f06"
+  url "https://download.qt.io/official_releases/qt/5.15/5.15.8/single/qt-everywhere-opensource-src-5.15.8.tar.xz"
+  mirror "https://mirrors.dotsrc.org/qtproject/archive/qt/5.15/5.15.8/single/qt-everywhere-opensource-src-5.15.8.tar.xz"
+  mirror "https://mirrors.ocf.berkeley.edu/qt/archive/qt/5.15/5.15.8/single/qt-everywhere-opensource-src-5.15.8.tar.xz"
+  sha256 "776a9302c336671f9406a53bd30b8e36f825742b2ec44a57c08217bff0fa86b9"
   license all_of: ["GFDL-1.3-only", "GPL-2.0-only", "GPL-3.0-only", "LGPL-2.1-only", "LGPL-3.0-only"]
   revision 2
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "886dd5ce9d42b493243dd6acfb19e1df02db721b71a7f763cd6a38e280de13c3"
-    sha256 cellar: :any,                 arm64_big_sur:  "d850b52300c76f43a020e8a8f40f738abda4b7a49c8aa127fd1995ff6d21dae3"
-    sha256 cellar: :any,                 monterey:       "e3d3ea19bd773803ad001f01d28f9e7591eab22f13a2219e58d75bf0c9b580c2"
-    sha256 cellar: :any,                 big_sur:        "b3da3a73a96ad85fb78cc1e7b848ce58e6756be7f2c449b8671146a976f53699"
-    sha256 cellar: :any,                 catalina:       "f5544342b62de9c137383ec54cdb3311fbd3240d9f60c352a55fe42e53408c74"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "72def3e805136f7892ab754cf7d9d5894b52a263d040a978788644d29adc3e4d"
+    sha256 cellar: :any,                 arm64_ventura:  "80db845716cee249eb424670056138785c2ce8815f16a805520d2cce5dd7e6b4"
+    sha256 cellar: :any,                 arm64_monterey: "a979309fc71095a2e2064abb9fb97f92643a480a117e7a0860cbbdda8600f38e"
+    sha256 cellar: :any,                 arm64_big_sur:  "7842784e8190399194cac5b386a7e1a6266f5940f9ada7c6f16f20a4e755951d"
+    sha256 cellar: :any,                 ventura:        "25a85217b26196f477a11c677b4645e73d6a683190a793ebc1d0f20e1d6ba122"
+    sha256 cellar: :any,                 monterey:       "5ca03960f30417b2f64c9016a8a53d61a053d2ea419532ee32802ed77609f842"
+    sha256 cellar: :any,                 big_sur:        "48d913b8d27bf076e2dd85b441147e7205f85b182b7c7b56a104dd2075553374"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "311137d3eb328362cd12c33d361b32e922d53b3388cda0356463a9ea548e6d64"
   end
 
   keg_only :versioned_formula
@@ -44,7 +45,6 @@ class QtAT5 < Formula
     depends_on "alsa-lib"
     depends_on "at-spi2-core"
     depends_on "fontconfig"
-    depends_on "gcc"
     depends_on "harfbuzz"
     depends_on "icu4c"
     depends_on "libdrm"
@@ -80,8 +80,8 @@ class QtAT5 < Formula
 
   resource "qtwebengine" do
     url "https://code.qt.io/qt/qtwebengine.git",
-        tag:      "v5.15.10-lts",
-        revision: "c7e716ef1ffd63a8ab1f4dbf879230849eb3b505"
+        tag:      "v5.15.11-lts",
+        revision: "3d23b379a7c0a87922f9f5d9600fde8c4e58f1fd"
 
     # Add Python 3 support to qt-webengine-chromium.
     # Submitted upstream here: https://codereview.qt-project.org/c/qt/qtwebengine-chromium/+/416534
@@ -105,6 +105,13 @@ class QtAT5 < Formula
       sha256 "cf9be3ffcc3b3cd9450b1ff13535ff7d76284f73173412d097a6ab487463a379"
       directory "src/3rdparty"
     end
+
+    # Fix build for Xcode 14
+    patch do
+      url "https://raw.githubusercontent.com/Homebrew/formula-patches/405b6b7ca7b95860ee70368076382b171a1c66f4/qt5/qt5-webengine-xcode14.diff"
+      sha256 "142c4fb11dca6c0bbc86ca8f74410447c23be1b1d314758515bfda20afa6f612"
+      directory "src/3rdparty"
+    end
   end
 
   # Update catapult to a revision that supports Python 3.
@@ -113,33 +120,18 @@ class QtAT5 < Formula
     revision: "5eedfe23148a234211ba477f76fc2ea2e8529189"
   end
 
-  # Backport of https://code.qt.io/cgit/qt/qtbase.git/commit/src/plugins/platforms/cocoa?id=dece6f5840463ae2ddf927d65eb1b3680e34a547
-  # to fix the build with Xcode 13.
-  # The original commit is for Qt 6 and cannot be applied cleanly to Qt 5.
-  patch :DATA
-
   # Fix build for GCC 11
   patch do
-    url "https://invent.kde.org/qt/qt/qtbase/commit/ccc0f5cd016eb17e4ff0db03ffed76ad32c8894d.patch"
-    sha256 "ad97b5dbb13875f95a6d9ffc1ecf89956f8249771a4e485bd5ddcbe0c8ba54e8"
+    url "https://invent.kde.org/qt/qt/qtbase/commit/ee7aed5e1020fa88f86777701948c8a236db4fc5.patch"
+    sha256 "ed082ed3cac51158ede4a0f4236eedf99c0981b3451c69f34e116fa8487fa333"
     directory "qtbase"
   end
 
-  # Fix build for GCC 11
+  # https://download.qt.io/official_releases/qt/5.15/CVE-2022-25255-qprocess5-15.diff
   patch do
-    url "https://invent.kde.org/qt/qt/qtdeclarative/commit/8da88589929a1d82103c8bbfa80210f3c1af3714.patch"
-    sha256 "9faedb41c80f23d4776f0be64f796415abd00ef722a318b3f7c1311a8f82e66d"
-    directory "qtdeclarative"
-  end
-
-  # Patch for qmake on ARM
-  # https://codereview.qt-project.org/c/qt/qtbase/+/327649
-  patch do
-    on_arm do
-      url "https://raw.githubusercontent.com/Homebrew/formula-patches/9dc732/qt/qt-split-arch.patch"
-      sha256 "36915fde68093af9a147d76f88a4e205b789eec38c0c6f422c21ae1e576d45c0"
-      directory "qtbase"
-    end
+    url "https://invent.kde.org/qt/qt/qtbase/commit/12df089a0095645daae4f932c495258751d881fc.patch"
+    sha256 "43ba11c26de2fa57bf541be02d3078bde4e8fecabda97e28e35e1f9252c4264b"
+    directory "qtbase"
   end
 
   def install
@@ -198,10 +190,6 @@ class QtAT5 < Formula
         -webengine-pulseaudio
         -webengine-webp
       ]
-
-      # Change default mkspec for qmake on Linux to use brewed GCC
-      inreplace "qtbase/mkspecs/common/g++-base.conf", "$${CROSS_COMPILE}gcc", ENV.cc
-      inreplace "qtbase/mkspecs/common/g++-base.conf", "$${CROSS_COMPILE}g++", ENV.cxx
 
       # Homebrew-specific workaround to ignore spurious linker warnings on Linux.
       inreplace "qtwebengine/src/3rdparty/chromium/build/config/compiler/BUILD.gn",
@@ -282,14 +270,3 @@ class QtAT5 < Formula
     system "./hello"
   end
 end
-
-__END__
---- a/qtbase/src/plugins/platforms/cocoa/qiosurfacegraphicsbuffer.h
-+++ b/qtbase/src/plugins/platforms/cocoa/qiosurfacegraphicsbuffer.h
-@@ -43,4 +43,6 @@
- #include <qpa/qplatformgraphicsbuffer.h>
- #include <private/qcore_mac_p.h>
-+ 
-+#include <CoreGraphics/CGColorSpace.h>
-
- QT_BEGIN_NAMESPACE

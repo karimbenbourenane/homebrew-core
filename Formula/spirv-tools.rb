@@ -1,38 +1,41 @@
 class SpirvTools < Formula
   desc "API and commands for processing SPIR-V modules"
   homepage "https://github.com/KhronosGroup/SPIRV-Tools"
-  url "https://github.com/KhronosGroup/SPIRV-Tools/archive/v2022.3.tar.gz"
-  sha256 "df6dc5ed5351f99aaaa6acc78111342d3400b27b99f18148d3be408570144a70"
+  url "https://github.com/KhronosGroup/SPIRV-Tools/archive/v2023.1.tar.gz"
+  sha256 "f3d8245aeb89f098c01dddaa566f9c0f2aab4a3d62a9020afaeb676b5e7e64d4"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "3676eb82afbaed373d6890f396c776894e203462236e54dc78c875752d49c1cd"
-    sha256 cellar: :any,                 arm64_big_sur:  "bff478f3a0a4568b59a334ffa58ca36bf28fd2c231d7c45da751748dd959ba6a"
-    sha256 cellar: :any,                 monterey:       "fdd9b70b3a5bb37bcf950d92fdf935858fbe28fddcfdeb26d6cffd6fa20ac384"
-    sha256 cellar: :any,                 big_sur:        "2fd8180138dd9ce986b05a3c99949a1f93e74401c77861108164e0cc858d29c6"
-    sha256 cellar: :any,                 catalina:       "cf5831027fb19732eb90e87581569d21bcf60041abfa0e275aac18f19d9b0cc3"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a23cff43a7e33773b6eb205fe5be7a9b28c24863186f148633c5d42ffd4386c5"
+    sha256 cellar: :any,                 arm64_ventura:  "916d8dad376b992a828381434fa0ddd15b3a9ffc400faad24ee94c39d120f5f6"
+    sha256 cellar: :any,                 arm64_monterey: "1a0442fe06ce023a264efa6130737aaeb8c85f7494ffb075e0f2ad0eb2d658d2"
+    sha256 cellar: :any,                 arm64_big_sur:  "f2615f4bdc222feba22ede47a25e982dbf67772563d04ed35a9e04a147a749cf"
+    sha256 cellar: :any,                 ventura:        "aee6553cf98dccdca9e6a44c429fe898fe75439210c8a246e482bd2a582aae44"
+    sha256 cellar: :any,                 monterey:       "7ec4ade9e0d39b04c0bfa3603aa711aee8d3b29efbcd3b4e8d87b09eeb676085"
+    sha256 cellar: :any,                 big_sur:        "e1ca07f84e15f2064973039018353e9ebd7b3bfd14b97bec653a47173a80e463"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d241e865c471ada045b338a345d4a62bebed2e9b263859d5cf4a03de3a5bf7ae"
   end
 
   depends_on "cmake" => :build
-  depends_on "python@3.10" => :build
+  depends_on "python@3.11" => :build
+
+  conflicts_with "shaderc", because: "both install `spirv-*` binaries"
 
   resource "re2" do
     # revision number could be found in ./DEPS
     url "https://github.com/google/re2.git",
-        revision: "5723bb8950318135ed9cf4fc76bed988a087f536"
+        revision: "954656f47fe8fb505d4818da1e128417a79ea500"
   end
 
   resource "effcee" do
     # revision number could be found in ./DEPS
     url "https://github.com/google/effcee.git",
-        revision: "ddf5e2bb92957dc8a12c5392f8495333d6844133"
+        revision: "c7b4db79f340f7a9981e8a484f6d5785e24242d1"
   end
 
   resource "spirv-headers" do
     # revision number could be found in ./DEPS
     url "https://github.com/KhronosGroup/SPIRV-Headers.git",
-        revision: "b2a156e1c0434bc8c99aaebba1c7be98be7ac580"
+        revision: "d13b52222c39a7e9a401b44646f0ca3a640fbd47"
   end
 
   def install
@@ -42,6 +45,7 @@ class SpirvTools < Formula
 
     mkdir "build" do
       system "cmake", "..", *std_cmake_args,
+                            "-DCMAKE_INSTALL_RPATH=#{rpath}",
                             "-DBUILD_SHARED_LIBS=ON",
                             "-DSPIRV_SKIP_TESTS=ON",
                             "-DSPIRV_TOOLS_BUILD_STATIC=OFF"

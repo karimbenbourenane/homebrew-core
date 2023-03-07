@@ -1,17 +1,18 @@
 class GpgTui < Formula
   desc "Manage your GnuPG keys with ease! 🔐"
   homepage "https://github.com/orhun/gpg-tui"
-  url "https://github.com/orhun/gpg-tui/archive/v0.9.1.tar.gz"
-  sha256 "876d9dd34e575c230fc63558e5974830b71a4c092a885526dfdbc19aba31c610"
+  url "https://github.com/orhun/gpg-tui/archive/v0.9.4.tar.gz"
+  sha256 "37645b53a5969fe976ca2520ed81f54d88d65411c561389f7f9e773eb5247fd9"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "ef7e0576b4914ac1512731c22387a9b7b4aea3320d55f697bbda1245ea4448e7"
-    sha256 cellar: :any,                 arm64_big_sur:  "b0c6f1cfb61dd6be121d5f2653b517bb5c2f0ecceaa3d111f4cba2a243d9a8fc"
-    sha256 cellar: :any,                 monterey:       "b257a8c7f576d59f4a1d18b353b940f146b16683b30ae7d35644f94d0449e6b7"
-    sha256 cellar: :any,                 big_sur:        "41d5a21cb96a55b92528d6999d4a7c52a5a055e0982fcd61e1929b972f3939eb"
-    sha256 cellar: :any,                 catalina:       "70be11f66733d29e745854a0d7b174b9ede6f728a3145c690e18cf3666857409"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c79970c8a9798c1a69d6f44b46f56ffef2420ad1b54686af9fd9cdd111adb4a9"
+    sha256 cellar: :any,                 arm64_ventura:  "e4969367e72f48de7f25bd381f888919e37fe8c553d14b9440a6ab2b104f2167"
+    sha256 cellar: :any,                 arm64_monterey: "337cef81506411638c8c107ba3886b1e06e37c690d05d6e303c9036a243c22a7"
+    sha256 cellar: :any,                 arm64_big_sur:  "2c30fd4b4933fd4dc62f2fb926ef967284fc9352db7411c80dfd00dcd7a16ea9"
+    sha256 cellar: :any,                 ventura:        "9a2f494cc64d0eacf9e0236bd73adc272bd73a1bac5da5dbf7be2912821fe64e"
+    sha256 cellar: :any,                 monterey:       "10ac3f7d21f15b4f01c38d6b8ecb5acad14d9090a1ad8d78c0e9a0315e5d7802"
+    sha256 cellar: :any,                 big_sur:        "2337c41c8af7f7163b16a2108847fa7a7c0cbecd526064459446cb1d8c1f1b99"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c6350e86b35b0890aade6d50b5cebb727457922b88748b06c7dfacf758213132"
   end
 
   depends_on "rust" => :build

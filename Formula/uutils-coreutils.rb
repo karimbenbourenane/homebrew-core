@@ -1,27 +1,31 @@
 class UutilsCoreutils < Formula
   desc "Cross-platform Rust rewrite of the GNU coreutils"
   homepage "https://github.com/uutils/coreutils"
-  url "https://github.com/uutils/coreutils/archive/0.0.15.tar.gz"
-  sha256 "67abc3ed547537afdbe95aaa7cabf551afebfeee5f015874013fa5d7403ec3e4"
+  url "https://github.com/uutils/coreutils/archive/0.0.17.tar.gz"
+  sha256 "a133449db283c145483e7945c925104007294d600b75991c5dad2cc91dc11d2e"
   license "MIT"
   head "https://github.com/uutils/coreutils.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "44babb77ea6296065a7bf5171074beea9a79ed9a2a775c89af9eb45ca1e4643b"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "ce3fc84595a5340150970c18189fd7b21e86f48f23542abcf30e5d0e39b7e8e8"
-    sha256 cellar: :any_skip_relocation, monterey:       "30727d1ae8136e0185dda1bae30544f0cfdd0298bd5856461aa47f07a652d48d"
-    sha256 cellar: :any_skip_relocation, big_sur:        "e94b25d4fd556e42049946a2160d4a1f9ea90e7b163784b0cabb199ddc9a9f22"
-    sha256 cellar: :any_skip_relocation, catalina:       "1e5c73a5c33153270c4238f30ab97b28f07b9c1babe76019e85c5f2d1a8dc323"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c5a566f060dbeba0e4f67fd8f68a46bdfe320c691d1fba8d340b611f838d216e"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "2564c384fc6f14705bb7fee5945456a367f1d57c8c9bcdf389dd6a6568d56b9e"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "655ef4922e443b52ec8f6736ca33d083e71a8d74230817e2fd900a3002a09002"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "c838e956287ce194ea90ab583ad523061eb4ae7844dc17b71c57df746b69fcdf"
+    sha256 cellar: :any_skip_relocation, ventura:        "ab18409fbea0b22b8538a60596dbf6bd5290fd7c1099f4aa5f86b6dc1ec169c6"
+    sha256 cellar: :any_skip_relocation, monterey:       "1da67fbe06daa0c1346ee089d2eedb533033753a757afa5dd0c3d554baa81f7c"
+    sha256 cellar: :any_skip_relocation, big_sur:        "4da380a5b907247066d2d2283eefe0753831e2394f65f7b2d1bfde35a7f5fccc"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f66439946cfaf19010f6aecfbf98dea36639d4377ff012191456b9afd2aa14f1"
   end
 
   depends_on "make" => :build
   depends_on "rust" => :build
   depends_on "sphinx-doc" => :build
 
-  conflicts_with "coreutils", because: "uutils-coreutils and coreutils install the same binaries"
-  conflicts_with "aardvark_shell_utils", because: "both install `realpath` binaries"
-  conflicts_with "truncate", because: "both install `truncate` binaries"
+  on_macos do
+    conflicts_with "coreutils", because: "uutils-coreutils and coreutils install the same binaries"
+    conflicts_with "aardvark_shell_utils", because: "both install `realpath` binaries"
+    conflicts_with "truncate", because: "both install `truncate` binaries"
+  end
 
   def install
     man1.mkpath
@@ -46,18 +50,27 @@ class UutilsCoreutils < Formula
     libexec.install_symlink "uuman" => "man"
 
     # Symlink non-conflicting binaries
-    %w[
-      base32 dircolors factor hashsum hostid nproc numfmt pinky ptx realpath
-      shred shuf stdbuf tac timeout truncate
-    ].each do |cmd|
+    no_conflict = if OS.mac?
+      %w[
+        base32 dircolors factor hashsum hostid nproc numfmt pinky ptx realpath
+        shred shuf stdbuf tac timeout truncate
+      ]
+    else
+      %w[hashsum]
+    end
+    no_conflict.each do |cmd|
       bin.install_symlink "u#{cmd}" => cmd
       man1.install_symlink "u#{cmd}.1.gz" => "#{cmd}.1.gz"
     end
   end
 
   def caveats
+    provided_by = "coreutils"
+    on_macos do
+      provided_by = "macOS"
+    end
     <<~EOS
-      Commands also provided by macOS have been installed with the prefix "u".
+      Commands also provided by #{provided_by} have been installed with the prefix "u".
       If you need to use these commands with their normal names, you
       can add a "uubin" directory to your PATH from your bashrc like:
         PATH="#{opt_libexec}/uubin:$PATH"
