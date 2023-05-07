@@ -1,19 +1,18 @@
 class Ibazel < Formula
   desc "Tools for building Bazel targets when source files change"
   homepage "https://github.com/bazelbuild/bazel-watcher"
-  url "https://github.com/bazelbuild/bazel-watcher/archive/refs/tags/v0.21.4.tar.gz"
-  sha256 "57e87637f86f7260c8619525c470e2379b6e7cf7a51bfa1b2342b1f29d306777"
+  url "https://github.com/bazelbuild/bazel-watcher/archive/refs/tags/v0.23.1.tar.gz"
+  sha256 "b0ea333083bab36703670a11688833493ce4b42beb3590398bd6973c0d7cbd86"
   license "Apache-2.0"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "70fb9e15f1baea5e6a24915c6ea10b087420022aaffa66bd1f81cff129af03d6"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "b3226ebae016c1c9583980b8101077ff55e3ed171b1e763e699fea31e41b929a"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "424434a824b0748325601863238d18e925e22da91f7a26a7cc5ed6193b10a10a"
-    sha256 cellar: :any_skip_relocation, ventura:        "b61e899cea4841514b85b42dac082ed5f1f8ac3d8ae49d00b9234dc1bface4e4"
-    sha256 cellar: :any_skip_relocation, monterey:       "b61e899cea4841514b85b42dac082ed5f1f8ac3d8ae49d00b9234dc1bface4e4"
-    sha256 cellar: :any_skip_relocation, big_sur:        "49233ff62932a2dfe41ded272391e63a190ae801b857f583388f66d642e05fa5"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "94a4c042fce4afc577475ad5a9492ab4e0551b1c22be275c4aaffefe766e58ee"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "1dae3ba02b9728271f950c9ad2649263972ef73d17598168afef4ccdfa1d0044"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "1a0b6be1029e9553d345c58f7e06ed770a2bd209304ea8b2dedd0ceaf98b213e"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "5d0705d4358c659102a4d720517914ab358cd9c05eb53e5ee59515497d2429ee"
+    sha256 cellar: :any_skip_relocation, ventura:        "097f5aab0cf3ffb1d6b9ebb3c4ac551e7f744a33608105e7640b9e22cb91d1d5"
+    sha256 cellar: :any_skip_relocation, monterey:       "6d1ca535a5ed46f555b088448f31f11234dd58c72d8b0fbac65db8bb283a42f8"
+    sha256 cellar: :any_skip_relocation, big_sur:        "6fa3ff697ebb258dc1d32995487f56670481b46bd5e03b2687925f00ca103421"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a846a4e8b59adbfe971975156107c362f67eea31ec0c9ffeaf388064ab492efc"
   end
 
   depends_on "go" => [:build, :test]
@@ -90,4 +89,4 @@ index 8a30e8f..09b254e 100644
 +++ b/.bazelversion
 @@ -1 +1 @@
 -5.4.0
-+6.0.0
++6.1.1

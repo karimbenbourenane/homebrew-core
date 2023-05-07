@@ -1,19 +1,19 @@
 class Jackett < Formula
   desc "API Support for your favorite torrent trackers"
   homepage "https://github.com/Jackett/Jackett"
-  url "https://github.com/Jackett/Jackett/archive/refs/tags/v0.20.3486.tar.gz"
-  sha256 "c02db37fe353c279facd0d5877e84f5dd6a516271de631a5f51fe719b85e72c4"
+  url "https://github.com/Jackett/Jackett/archive/refs/tags/v0.20.4101.tar.gz"
+  sha256 "c71532972565fc2f529c3151afb63e1fd6162baa578e23d68d4d760b27a62f16"
   license "GPL-2.0-only"
   head "https://github.com/Jackett/Jackett.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "59cb992a2c266d5b51e0d149ec596be6a980c70329bb2250bd92a6fe431390cb"
-    sha256 cellar: :any,                 arm64_monterey: "196660965c83722b92b4dfa9612c380f0f65077c077d3e730883f0c686df9aae"
-    sha256 cellar: :any,                 arm64_big_sur:  "c3bc7823715f4cba6b845c184d6694ef7b05e85358bdad28ccdf867cfa028718"
-    sha256 cellar: :any,                 ventura:        "0723a3127b8189a76dd10142087035f7b97ce233af6066389fff9671e92fc5a7"
-    sha256 cellar: :any,                 monterey:       "cc0b18140f2c12af666936db6fc15c94aa86028322145d8c3c0e147a13fa2f85"
-    sha256 cellar: :any,                 big_sur:        "8b0f7cb04e778b13a5e78ee62b17c10f2dda04385e06992eab86feaeb850b587"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "bfccca3fb528d7cbc7de463bbe11e321e97ca33e54a7daa2657a961fb5062a97"
+    sha256 cellar: :any,                 arm64_ventura:  "6b0725485a69fa707cc5fb2c402aef8aecdc5ab11d855640af8ecd1f0563ac64"
+    sha256 cellar: :any,                 arm64_monterey: "c7639ada18dc3f9ca60d722457e3fdcea50ded26fc36994bd24bf9cf40cacaa7"
+    sha256 cellar: :any,                 arm64_big_sur:  "4c14c3a715347e7400d2eb01a5dc231ce4dcc5793219b56a08e0081e57764065"
+    sha256 cellar: :any,                 ventura:        "19e7c9b3a14c2d2fee2643da6e4a2ee597d219cfd880613f332f78220adc2353"
+    sha256 cellar: :any,                 monterey:       "bc4d90c95c2b0bbd71f680316c5ce1a57aea9f99d4abce8710c3dccdfa5a440c"
+    sha256 cellar: :any,                 big_sur:        "6dffe6ab119f344333f27da9cc7bff4178570b58bb86cc66014b8ba5aecc397f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c0cc5b59c3e053143c59bd0cd5705126ea4e0d0dbaae133d3cd912aa843c9b1e"
   end
 
   depends_on "dotnet@6"
@@ -48,7 +48,7 @@ class Jackett < Formula
   service do
     run opt_bin/"jackett"
     keep_alive true
-    working_dir libexec
+    working_dir opt_libexec
     log_path var/"log/jackett.log"
     error_log_path var/"log/jackett.log"
   end

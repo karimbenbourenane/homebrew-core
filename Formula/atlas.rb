@@ -1,19 +1,19 @@
 class Atlas < Formula
   desc "Database toolkit"
   homepage "https://atlasgo.io/"
-  url "https://github.com/ariga/atlas/archive/v0.9.1.tar.gz"
-  sha256 "de09659d7af004e4642be8391a237248f4c0b5e1db7e25d464aecae97b7aefe7"
+  url "https://github.com/ariga/atlas/archive/v0.10.1.tar.gz"
+  sha256 "388a63306e88dd07a8753b412ce4d59af1d9bc0403db87dce10eeffb68f18b81"
   license "Apache-2.0"
   head "https://github.com/ariga/atlas.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "0a78492f448316a4812a31fab420d034c54e0ad001abfc2d945c675ce0f83f8f"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "20fdc5afa49f9104d3e04e11c155718a1e0c3ebbb9ce55620f1dce92d98b596f"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "d27c720583f7816645806696ebdd18bcc8ab73e1a531cc9cef434e4357859985"
-    sha256 cellar: :any_skip_relocation, ventura:        "a9f48b6bf453e025f141c322ca506cb1b8fb69a8180cc3c4974d9c863f766358"
-    sha256 cellar: :any_skip_relocation, monterey:       "a6ec2af6e34ac7dcc35b3857233bef7e3791adadd55d732f6a2a0acb71e8d50a"
-    sha256 cellar: :any_skip_relocation, big_sur:        "020f67d492bb655d0303cbe39329282e16c00889e4714f6fcb2aa5fe35f3fa3b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b683944755a688921a95a16d5470c03ce4e94811ca1c2688b148621f21ecf932"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "19cf91c38e1f12a1b4f12ac6f6f7d2119fa917c5669b639770bf4284ccc75f61"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "f0db4e7a69473bd2b777fffe8b55ba7dc70ecc9b6ded71c17810fc9a3d622053"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "356cb673b5e68d34be020cb0927d7d4ef2037bc9e859eb7bb50fb3eedac625c8"
+    sha256 cellar: :any_skip_relocation, ventura:        "4f1460278bf4281e84d1df3d13a1ed33d17f620537ef7d62dfeb43552468a79b"
+    sha256 cellar: :any_skip_relocation, monterey:       "b7919f080ea70c28391029874b08dfd31c7f6073136f27e9eaace511aa93a1a6"
+    sha256 cellar: :any_skip_relocation, big_sur:        "663a44db2ff1b0658ab2b1633ffb5b3a51fedfb534f81c0af21cc40111070036"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "250b58d53fc4473fc7874c2607916d6a2a74e3bea703db9b13f7df5295c3ce43"
   end
 
   depends_on "go" => :build

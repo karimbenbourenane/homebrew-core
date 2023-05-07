@@ -1,18 +1,19 @@
 class Scrcpy < Formula
   desc "Display and control your Android device"
   homepage "https://github.com/Genymobile/scrcpy"
-  url "https://github.com/Genymobile/scrcpy/archive/v1.25.tar.gz"
-  sha256 "dfecc9dcffd45540bef88a7e346d37bead3665a5c868a5a95c5ec7bfed43ad07"
+  url "https://github.com/Genymobile/scrcpy/archive/v2.0.tar.gz"
+  sha256 "a256241dd178ab103e4a119d0387f348c10ac513f25a7ca4859bd53ca5e7d43f"
   license "Apache-2.0"
+  revision 1
 
   bottle do
-    sha256 arm64_ventura:  "2cc4c088a3947f8f5de8117c905dd930bb770ce1f57d3fae6341575a8f7f324e"
-    sha256 arm64_monterey: "56a8daf6290556a5d1f6a5e9fa3ed25a60b198e7141e7df58781b1387c35c44e"
-    sha256 arm64_big_sur:  "8a8c6f4013eecd32c0a7eef691f087f85e75df6e24768588ea59874ba4cb6686"
-    sha256 ventura:        "1c1502eb5267ac6d39c40e1f83ebe51dc797e3e9657dc8e88f39c4c5145ed08b"
-    sha256 monterey:       "9612404cadb3c56fb9e7c231b948eff51bcbe2947b0fd310c0bdd693dbbbd488"
-    sha256 big_sur:        "4a0e604cccb0fb270944747557056dcc5dc78a1304876b63c6b89dce085b3c5e"
-    sha256 x86_64_linux:   "d62deca07d0e14a8ee1126547735142f5766a9acf00383c1c2cdd6ae19017fff"
+    sha256 arm64_ventura:  "15119a8e2a59c8fb04ce9334213b78aac9543f899e368053f0654707b97c5a41"
+    sha256 arm64_monterey: "6fa648d71b58c7a80d6a9a1d66681aa3084e3637fe769fd837b943d32b8c1ab3"
+    sha256 arm64_big_sur:  "01d2f90f67c08551a98a33c08378ee0aea458cd47768a8b8a29bd5817c2afe9c"
+    sha256 ventura:        "684de832c6b10c40a02262b13bb4b63fe62e2503c9da6e1158bb442f848ae670"
+    sha256 monterey:       "8cde3cdba91d5f50e83e8d00453352acd5826480f3decbb30c69d6f8ef94c9b8"
+    sha256 big_sur:        "c47fc8cc7c266033531d9e6f33dbed9f648b55ddf1823b13022fae32acebb02e"
+    sha256 x86_64_linux:   "f5afb6970b1ea03e94e542c2c941e43befb73a2d98bb9d8637a1b2352a2b5c01"
   end
 
   depends_on "meson" => :build
@@ -25,8 +26,15 @@ class Scrcpy < Formula
   fails_with gcc: "5"
 
   resource "prebuilt-server" do
-    url "https://github.com/Genymobile/scrcpy/releases/download/v1.25/scrcpy-server-v1.25"
-    sha256 "ce0306c7bbd06ae72f6d06f7ec0ee33774995a65de71e0a83813ecb67aec9bdb"
+    url "https://github.com/Genymobile/scrcpy/releases/download/v2.0/scrcpy-server-v2.0"
+    sha256 "9e241615f578cd690bb43311000debdecf6a9c50a7082b001952f18f6f21ddc2"
+  end
+
+  # Fix an "expected expression" error.
+  # Remove when https://github.com/Genymobile/scrcpy/pull/3787 is merged.
+  patch do
+    url "https://github.com/Genymobile/scrcpy/commit/9ef5855cf2ce37708bb4e1eff21fd91027df95e9.patch?full_index=1"
+    sha256 "a4718fc0994dff0080dc0b3cafb949546df87a9197ba7306e9b41af5f3bc5155"
   end
 
   def install

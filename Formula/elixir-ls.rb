@@ -1,18 +1,18 @@
 class ElixirLs < Formula
   desc "Language Server and Debugger for Elixir"
   homepage "https://elixir-lsp.github.io/elixir-ls"
-  url "https://github.com/elixir-lsp/elixir-ls/archive/refs/tags/v0.13.0.tar.gz"
-  sha256 "cabfa1af4e95c7760c4caee390432bdc067fd7c237f7d6f77a19caf6c990a242"
+  url "https://github.com/elixir-lsp/elixir-ls/archive/refs/tags/v0.14.6.tar.gz"
+  sha256 "a048e8b2fa1fab1ec34d6d99ffd2295762f8c5c3f9fd0aa0aab916b0f2e99629"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "b6b35a51c6198747f576f107cc0df727f483199ffbc3cbfff5dc6a27e832a415"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "6a18074ef545d92de85e63c5d7a4bb42252529564201a594064e11dce77a954b"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "355685d7132e77bae6bb591d510c21f584b4e62c8543261973549d8d5fc21182"
-    sha256 cellar: :any_skip_relocation, ventura:        "88319f6ecd50b1657e0830e84cced36eb27e5c0d38d9fb61410ce3997660e8ac"
-    sha256 cellar: :any_skip_relocation, monterey:       "86aa8298d0643a6e06bb5e3c39c64ca19b61e716ee022ab08f4285328373ba75"
-    sha256 cellar: :any_skip_relocation, big_sur:        "42738b3f7b1309a4dfe4d697c32a3211d650dc5f2947f0ba64782a51923a2e6b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b6e8585693628a9b86a4f4de00734c7c0db5b09f9544a92b98f45cc6202d1a9b"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "2069fdc5e25396179c19442b5f304245900ae2fb7b989791c90dd31cbe4754c3"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "99dbd2f6f41a311bf18966975b237a4b7b81e0a56673d0dae7712bf11357e61e"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "c26ddadf443a6b6895502980a352885a84baf6573002b0f2a5cfdcf8cd44312e"
+    sha256 cellar: :any_skip_relocation, ventura:        "ea6ab54bcba99646091817396722075c6483c7ef7726ee8bd7e603f3f6c89faf"
+    sha256 cellar: :any_skip_relocation, monterey:       "1748f678fcf051bf1c0f29243793889147cf0e71a4e1a39b26bb7edfb3e8099b"
+    sha256 cellar: :any_skip_relocation, big_sur:        "c928d016abd6c3f31bc1965cf12626195a8c4883e591b15b4e094f733f08bca8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e5d3d6de1a797181fc980cb5e7bed7e473c79b13344a8f803c10f81829525f40"
   end
 
   depends_on "elixir"
@@ -31,6 +31,8 @@ class ElixirLs < Formula
 
   test do
     assert_predicate bin/"elixir-ls", :exist?
+    system "mix", "local.hex", "--force"
+
     input =
       "Content-Length: 152\r\n" \
       "\r\n" \

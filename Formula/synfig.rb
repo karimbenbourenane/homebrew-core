@@ -2,6 +2,7 @@ class Synfig < Formula
   desc "Command-line renderer"
   homepage "https://synfig.org/"
   license "GPL-3.0-or-later"
+  revision 2
 
   stable do
     url "https://downloads.sourceforge.net/project/synfig/development/1.5.1/synfig-1.5.1.tar.gz"
@@ -20,14 +21,13 @@ class Synfig < Formula
   end
 
   bottle do
-    sha256 arm64_ventura:  "4408911daf111c2cbf2aa10f4def2688b2b780435801a518b1cd6b5e2f7f4f9e"
-    sha256 arm64_monterey: "d6c3ff6f8ebaf3c51541374f0b002a7aa76276f654c2a1bfbb5832d1c58b23b7"
-    sha256 arm64_big_sur:  "129b75a9a6beea76d92b7b916f4a4353591abc1be63369e199fa80b8f626aff1"
-    sha256 ventura:        "24be7a2a17acd81188d5920da4af74e459ed95d531434e13c30aa1e0727c6b7e"
-    sha256 monterey:       "78df0036495eccaa6005cd853fa58ab48fd3027d866d7116295bb1b6d3be0391"
-    sha256 big_sur:        "117c2aaefa5db9dc9f8bb68e810aed6a83e19b6671c815d81d1cb8c9283aa2e8"
-    sha256 catalina:       "b78c0b2ff9a309a18e6220d15dc7b78642df81d1cd8f6e6a5331bee4af5448ef"
-    sha256 x86_64_linux:   "4563e1b18b9d2487a4286cf6dd2d1c41b2d837b76a01c1be7a950a93142b6aab"
+    sha256 arm64_ventura:  "aa6bb1f78a51526e1a4c6f4b1acdfdb4c9eaa27922e6ae74771867576d469354"
+    sha256 arm64_monterey: "d018bb41de37b7a41b495819122fe945ab5a1cf692b7fec179e25505525a5eca"
+    sha256 arm64_big_sur:  "8906fb56b4a7e8601b6ed9519b1aa40511cea0c745333018f20d2c72837b7778"
+    sha256 ventura:        "7f152dec709a4ff481ef779ecf1dd8befb420ff4a1ea2fb8bf1a9f7bdddc6846"
+    sha256 monterey:       "83d69ebabc81326fc732939610d55dac94ab44baee2f27ff4926daf1c49154aa"
+    sha256 big_sur:        "3cf1c48e78428abaefca955fd5b1f9136c8f443f27783803ea1bf9b20ec0464c"
+    sha256 x86_64_linux:   "01fea79db2a4183739e12fb0e08d6756aa67add95fac2d2352b025bf3eccdf3e"
   end
 
   head do
@@ -165,14 +165,14 @@ index 6baccb4..bea55cc 100644
  #	include <avformat.h>
 @@ -232,12 +233,14 @@ public:
  		close();
- 
+
  		if (!av_registered) {
 +#if LIBAVCODEC_VERSION_MAJOR < 59 // FFMPEG < 5.0
  			av_register_all();
 +#endif
  			av_registered = true;
  		}
- 
+
  		// guess format
 -		AVOutputFormat *format = av_guess_format(NULL, filename.c_str(), NULL);
 +		const AVOutputFormat *format = av_guess_format(NULL, filename.c_str(), NULL);
@@ -199,6 +199,6 @@ index 6baccb4..bea55cc 100644
 + 			return false;
 + 		}
 +#endif
- 
+
  		packet = av_packet_alloc();
  		assert(packet);

@@ -3,18 +3,18 @@ require "language/node"
 class Cdktf < Formula
   desc "Cloud Development Kit for Terraform"
   homepage "https://github.com/hashicorp/terraform-cdk"
-  url "https://registry.npmjs.org/cdktf-cli/-/cdktf-cli-0.15.5.tgz"
-  sha256 "ff6fd35c801d3944253c5c97eefcb996859271ea3a70df81fdb6bfdf2b2a23b1"
+  url "https://registry.npmjs.org/cdktf-cli/-/cdktf-cli-0.16.1.tgz"
+  sha256 "515a125cfb7a7c8732c51c110bd7e1178ffc297221165d1b1124d7707465ca42"
   license "MPL-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "95fcc41d2c4cacef93d0bd1c3ff87732077224104a1a8eb314130d342c73b0fa"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "95fcc41d2c4cacef93d0bd1c3ff87732077224104a1a8eb314130d342c73b0fa"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "95fcc41d2c4cacef93d0bd1c3ff87732077224104a1a8eb314130d342c73b0fa"
-    sha256 cellar: :any_skip_relocation, ventura:        "12d21f06642cc30c25e17d766f369228c3b67bd5d24b2c04adaa66a448e4d6c6"
-    sha256 cellar: :any_skip_relocation, monterey:       "12d21f06642cc30c25e17d766f369228c3b67bd5d24b2c04adaa66a448e4d6c6"
-    sha256 cellar: :any_skip_relocation, big_sur:        "12d21f06642cc30c25e17d766f369228c3b67bd5d24b2c04adaa66a448e4d6c6"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d015df7cc203b6a2b8e8a0db6872bbde3f47bb0d8365990fac90e51bb7004f7a"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "8248e64fd477cc42e721764494d1d7020350a235e7b45ac81e9f130f2d4c5e7f"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "8248e64fd477cc42e721764494d1d7020350a235e7b45ac81e9f130f2d4c5e7f"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "8248e64fd477cc42e721764494d1d7020350a235e7b45ac81e9f130f2d4c5e7f"
+    sha256 cellar: :any_skip_relocation, ventura:        "003a6266711a529ee76cc12d44dde12948ebf31172bcbe9787b3de0c511c7156"
+    sha256 cellar: :any_skip_relocation, monterey:       "003a6266711a529ee76cc12d44dde12948ebf31172bcbe9787b3de0c511c7156"
+    sha256 cellar: :any_skip_relocation, big_sur:        "003a6266711a529ee76cc12d44dde12948ebf31172bcbe9787b3de0c511c7156"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b6d854de17134a68c21ec24dfe4ff51237f52b2de0b054192118f6bb6f6fe3e4"
   end
 
   depends_on "node@18"

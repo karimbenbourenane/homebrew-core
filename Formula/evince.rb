@@ -1,20 +1,23 @@
 class Evince < Formula
   desc "GNOME document viewer"
   homepage "https://wiki.gnome.org/Apps/Evince"
-  url "https://download.gnome.org/sources/evince/43/evince-43.1.tar.xz"
-  sha256 "6d75ca62b73bfbb600f718a098103dc6b813f9050b9594be929e29b4589d2335"
+  url "https://download.gnome.org/sources/evince/44/evince-44.1.tar.xz"
+  sha256 "15afd3bb15ffb38fecab34c23350950ad270ab03a85b94e333d9dd7ee6a74314"
   license "GPL-2.0-or-later"
+  revision 1
 
   bottle do
-    sha256 arm64_ventura:  "4663c8637d9de02308b1e65a0f71570cf95883ae5c560374e44859e18a5a0f99"
-    sha256 arm64_monterey: "7675f40d279cf544e0df36155184b54d244f0c9cb8970a7a9f9e767d46f94f44"
-    sha256 arm64_big_sur:  "ca3a9d32aaf0765e6e941d336b602123c464086fd308f2fad8a5f53b094f8564"
-    sha256 ventura:        "f3c27dacdab6783fc06fad4cdbc548ffe8774e5671d2b557483574854f053f65"
-    sha256 monterey:       "ac1e5a9f93686eee264c0567fb477271b40f1b9d0043ac629b7b2407b92ba264"
-    sha256 big_sur:        "2d70f1a55d9d65e7309aea7986cb2ef66df699421461a254e650e000889a5684"
-    sha256 x86_64_linux:   "7424c6e6d75d8eeb2c9bf302d360bc35c3fea37aa0a535e5099fbb899309b91a"
+    sha256 arm64_ventura:  "8193e53fad0d662f805424ef2bfb4f7c57a189a104e0e288e8d2c92f970e6fa0"
+    sha256 arm64_monterey: "c15c434b824f495abef7be408c6c651aa68c031021c7c902e33c04f362db7a5c"
+    sha256 arm64_big_sur:  "e5b31ce5d617985ab0b009c4f0acb3e273683af4ae31e5347ae16260f86e3212"
+    sha256 ventura:        "ec9a88fc211c89eaa64d0e2cfd4b9a58e82e3d509d00ce934eab630559386c53"
+    sha256 monterey:       "147b610eeca29f147504fea46348600a6b3f6e4b47c4093a33271fb21d2483b5"
+    sha256 big_sur:        "d7521039359daaac103a4da9433927c431b918d1c9bcee1d367436904b9bdd14"
+    sha256 x86_64_linux:   "1b8553667efc9587fc98b8f646ee6dd98f493138b75eee475778c9ba26b5bc96"
   end
 
+  depends_on "desktop-file-utils" => :build # for update-desktop-database
+  depends_on "gettext" => :build # for msgfmt
   depends_on "gobject-introspection" => :build
   depends_on "itstool" => :build
   depends_on "meson" => :build

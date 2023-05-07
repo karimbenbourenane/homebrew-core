@@ -1,25 +1,25 @@
 class Jql < Formula
   desc "JSON query language CLI tool"
   homepage "https://github.com/yamafaktory/jql"
-  url "https://github.com/yamafaktory/jql/archive/v5.1.7.tar.gz"
-  sha256 "e0bb7e8ac8e8776adacca694603acd9efc35e76315c4aa6f35ba9641d3967a89"
-  license "MIT"
+  url "https://github.com/yamafaktory/jql/archive/refs/tags/jql-v6.0.6.tar.gz"
+  sha256 "a4907ecba6831ce9c3ac2708b1d1fdc08b8a65206a30148f81d6e551dd09c02e"
+  license any_of: ["Apache-2.0", "MIT"]
   head "https://github.com/yamafaktory/jql.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "18c564dde7d32a01a5fac141ba792fedd501b08e10f700be440ccd2d2783bb0d"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "59d2b1fe2a36cf590e05db2f60323afaf0e153232f72d7b0c93c43b98d3ae8b7"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "b5d6eb209472f1dc33208494e9385ae79713815a134592e9d543c3384e03d08b"
-    sha256 cellar: :any_skip_relocation, ventura:        "f7d583e0142b4196964f891adeef06fd5a314af511960d99383019e8b2a9d676"
-    sha256 cellar: :any_skip_relocation, monterey:       "7149d582a5c2c51ce910d4a4a878f5debaa17801f004c381b0e0cd6644a4ff7e"
-    sha256 cellar: :any_skip_relocation, big_sur:        "2b5afb9880e13abb95f9e272deedf09da688d08f34f66c94221a2c65d79a35f8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "093fe93d960d40f5af0c838ce26797dd88bb8ff3d3ce4028f2758c11a458cc58"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "ed0d13f03c68f31132d6c8c17e77b724dcec3ec088301992d56c86ad29a96613"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "1d608eb8aa307e9cee602157d51ef2e548499f3bd6235c3b0e716462c8cc4300"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "67d9089c23cb40239ba3fbeb0242cedb3263b7dde878a400b5ed8a0acc7e127b"
+    sha256 cellar: :any_skip_relocation, ventura:        "a39b13cdf44932a17f9445dd7cc6716cd751f7aa281fa5d8f666c2e75bcb3db4"
+    sha256 cellar: :any_skip_relocation, monterey:       "27ac4b0bcf619ed1622b2a852313c6bbea4d274b4131cdb8d520f4b33105fb13"
+    sha256 cellar: :any_skip_relocation, big_sur:        "df45583945d5483f06f51c28d4ddb838fa5de3b4ef11f7903e2f6ba55c97775c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "06eb8999180eea9b069cf12db0f8039983a0651f162f9f0c0c368fd46de57f74"
   end
 
   depends_on "rust" => :build
 
   def install
-    system "cargo", "install", *std_cargo_args
+    system "cargo", "install", *std_cargo_args(path: "crates/jql")
   end
 
   test do
@@ -28,7 +28,7 @@ class Jql < Formula
         "cats": [{ "first": "Pixie" }, { "second": "Kitkat" }, { "third": "Misty" }]
       }
     EOS
-    output = shell_output("#{bin}/jql --raw-output '\"cats\".[2:1].[0].\"third\"' example.json")
-    assert_equal "Misty\n", output
+    output = shell_output("#{bin}/jql --inline --raw-string '\"cats\" [2:1] [0]' example.json")
+    assert_equal '{"third":"Misty"}', output.chomp
   end
 end

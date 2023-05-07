@@ -4,7 +4,7 @@ class Exiftran < Formula
   url "https://www.kraxel.org/releases/fbida/fbida-2.14.tar.gz"
   sha256 "95b7c01556cb6ef9819f358b314ddfeb8a4cbe862b521a3ed62f03d163154438"
   license "GPL-2.0"
-  revision 1
+  revision 2
 
   livecheck do
     url "https://www.kraxel.org/releases/fbida/"
@@ -12,14 +12,14 @@ class Exiftran < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "501742a3d0ffef91bd7551c924f5073b0c001c8c8b7618e2a7db7d9ffdfdfd82"
-    sha256 cellar: :any,                 arm64_monterey: "cdbebc6e9ea054a40e6c9d9ecd8265d62dfff2b9da689748ff8a87fb8defb9b1"
-    sha256 cellar: :any,                 arm64_big_sur:  "e16c172257b1786e0d0186336c8c35b16efab57c919598df0bc920999c2905f1"
-    sha256 cellar: :any,                 ventura:        "d425c26a0bcc36d4427e9612f963755421676559ea3b5519294bfeadc7ac6f6d"
-    sha256 cellar: :any,                 monterey:       "af336311bf9e98d1d5569496463b9b0a7c4efc2e5aedf3f6778e71cf34e45349"
-    sha256 cellar: :any,                 big_sur:        "b8b303e6e7ae7ef407882e37bf67865253cce06924c4efe18b1a817dd1178ec4"
-    sha256 cellar: :any,                 catalina:       "3585d1c19e27eb8510476b8c89b2a97546071c817ab6dc5e1ec77a0f36bb4e6c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "068ea42ed133bda1659d3de1d61185616377568d8284bab223dcb0e023b2aba9"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_ventura:  "00bbfab43b25d8747630f7a724302fa81a0cf142872c015e5083b24773678cf2"
+    sha256 cellar: :any,                 arm64_monterey: "102fc92b15a47eaa70d675d6ab35dc54376dafa8f094acebc48178307f969064"
+    sha256 cellar: :any,                 arm64_big_sur:  "6d4edb4e74112bc2835d5a096a689e7cb556d9ef58f1169de616151aee9e69f3"
+    sha256 cellar: :any,                 ventura:        "5b325ba44ebed23f36442ac9379a33d4d71ca3a8f392997bfec59edd3b47660e"
+    sha256 cellar: :any,                 monterey:       "4f5803bd4cca5cca2fdaa1a60acd163e46bfc16eb311c562ed05d2c5d949197c"
+    sha256 cellar: :any,                 big_sur:        "64c65cb5b823a3b5b6d341a32bffee78a90d17dfbd1e07a9edef9df828025c63"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9d32a9b73cd9ea5dca9d5a34ce6e9b6c9684ae38617045fd87b172d5d9ac6a75"
   end
 
   depends_on "pkg-config" => :build
@@ -50,6 +50,10 @@ class Exiftran < Formula
   end
 
   def install
+    # Work around failure from GCC 10+ using default of `-fno-common`
+    # multiple definition of `...'; ....o:(.bss+0x0): first defined here
+    ENV.append_to_cflags "-fcommon" if OS.linux?
+
     system "make"
     system "make", "prefix=#{prefix}", "RESDIR=#{share}", "install"
   end

@@ -1,20 +1,19 @@
 class Coreutils < Formula
   desc "GNU File, Shell, and Text utilities"
   homepage "https://www.gnu.org/software/coreutils"
-  url "https://ftp.gnu.org/gnu/coreutils/coreutils-9.1.tar.xz"
-  mirror "https://ftpmirror.gnu.org/coreutils/coreutils-9.1.tar.xz"
-  sha256 "61a1f410d78ba7e7f37a5a4f50e6d1320aca33375484a3255eddf17a38580423"
+  url "https://ftp.gnu.org/gnu/coreutils/coreutils-9.3.tar.xz"
+  mirror "https://ftpmirror.gnu.org/coreutils/coreutils-9.3.tar.xz"
+  sha256 "adbcfcfe899235b71e8768dcf07cd532520b7f54f9a8064843f8d199a904bbaa"
   license "GPL-3.0-or-later"
 
   bottle do
-    sha256 arm64_ventura:  "ae9dc313da2a3971c8e633d9f3262fd1bd431c303207b3346924aed60bb0965d"
-    sha256 arm64_monterey: "6a9a4988eda436fb5bdb5969044579c2e618e21eee8c8bbe32614ad29fe56bd7"
-    sha256 arm64_big_sur:  "85ef910aa223d48c0e73fc187aba54b86930c86f906e3d079ed0b114762bb24e"
-    sha256 ventura:        "4564009003601fb30335e57453cee93deaeab1eadf4473050e9e70198c21c892"
-    sha256 monterey:       "7c9f988b4f9207415a5c96efd32376bc8cf2b280a7a36fbebb0b8fc334a14056"
-    sha256 big_sur:        "e446ef889d70bc377d67fa2d7f6a1fbc9faaee444a9e9086a1f5bd484069e5c0"
-    sha256 catalina:       "0d2117fa63dfcbb678c4e499f9ca0413c2c5bfa0a1bbdefde620434f2ead93a0"
-    sha256 x86_64_linux:   "3c2fbec99344b50d620695d16197eb112cb8bee6d3f9e47cb682484755b91f38"
+    sha256 arm64_ventura:  "cbc188426bc245864378bb96620243cfade681ebb64beb9149717bcb04a55b0a"
+    sha256 arm64_monterey: "2db183003c663554e8280280f64294f30d8d7819b1378914173236c2634aacc9"
+    sha256 arm64_big_sur:  "4a20d93169207bcb131c5cf8deebca08e75be30c042c7c13487a986d61bf3f16"
+    sha256 ventura:        "5461d665ee6121b4f9c42e17ac6441f77c5db156d3f7a6a6eab095773a2457f9"
+    sha256 monterey:       "a199c4d7b252b74fdcfb48dc9d9e39cfdbe3b88a9a2da0ce59dfb67d482b46a4"
+    sha256 big_sur:        "9786f8f2ae9fd345b401d089887d099c8145590934ca84d9850a3755be0b32a5"
+    sha256 x86_64_linux:   "376674abab0d5c19e3f3db5481a2604adac227f89036c4d58d62fc23f59076ab"
   end
 
   head do
@@ -44,6 +43,7 @@ class Coreutils < Formula
   conflicts_with "b2sum", because: "both install `b2sum` binaries"
   conflicts_with "ganglia", because: "both install `gstat` binaries"
   conflicts_with "gdu", because: "both install `gdu` binaries"
+  conflicts_with "gfold", because: "both install `gfold` binaries"
   conflicts_with "idutils", because: "both install `gid` and `gid.1`"
   conflicts_with "md5sha1sum", because: "both install `md5sum` and `sha1sum` binaries"
   conflicts_with "truncate", because: "both install `truncate` binaries"

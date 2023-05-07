@@ -1,8 +1,8 @@
 class Bazel < Formula
   desc "Google's own build tool"
   homepage "https://bazel.build/"
-  url "https://github.com/bazelbuild/bazel/releases/download/6.1.0/bazel-6.1.0-dist.zip"
-  sha256 "c4b85675541cf66ee7cb71514097fdd6c5fc0e02527243617a4f20ca6b4f2932"
+  url "https://github.com/bazelbuild/bazel/releases/download/6.1.1/bazel-6.1.1-dist.zip"
+  sha256 "6b900f26d676c7eca1d2e7dff9b71890dabd3ff59cab2a2d2178bc8a0395342a"
   license "Apache-2.0"
 
   livecheck do
@@ -11,12 +11,12 @@ class Bazel < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "cf296194c78d9492b0aae2c96cd29006ec117bb2a719e8bc15b4c46f9a9c1744"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "a032edbc8fd3eee5a7bc5d253584b96170c8f7a5ac7d3913485882447f005370"
-    sha256 cellar: :any_skip_relocation, ventura:        "9e47495b16033b80e251d5a074beee9977353f10e29d4474039b41ee81039cd7"
-    sha256 cellar: :any_skip_relocation, monterey:       "2e022e59b6699c4e0bdcdcfad8ffb8f0c3bcb5f338c39a9ef2a0ab1cd64686ab"
-    sha256 cellar: :any_skip_relocation, big_sur:        "64f2ca97758a56136362230f6c91d736a24a32b839679ad97bfd1c4eae7f65d5"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5926be4eac6720e401753a55753601aa234b943c074658f52ec358c3daef0ba8"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "d8171aa5399973ed34c96cae7ea923919c444db425fcfbf3f9b7a5d62d1b5dbc"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "516f80e177aa7302d0f6d78c77d571c89a28ef917460c8899658ba320ebebc10"
+    sha256 cellar: :any_skip_relocation, ventura:        "bb17f1a689e0d0616927653a9182651061db18d8ef4e3297141829a368f35f01"
+    sha256 cellar: :any_skip_relocation, monterey:       "d7153c428074e25c52bdb37a1a9d8933f3be2202329d84f4613311aa6e7a986e"
+    sha256 cellar: :any_skip_relocation, big_sur:        "e38c42d8aa2d36b4f39222a1f58b2287812666dd7da9a7f341d95a203da1dc3d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "3301579ae410a985a2f90a687565255f2272e9c8472fe5d19b7b514dcff379c9"
   end
 
   depends_on "python@3.11" => :build
@@ -56,7 +56,8 @@ class Bazel < Formula
       system "./output/bazel", "--output_user_root",
                                buildpath/"output_user_root",
                                "build",
-                               "scripts:bash_completion"
+                               "scripts:bash_completion",
+                               "scripts:fish_completion"
 
       bin.install "scripts/packages/bazel.sh" => "bazel"
       ln_s libexec/"bin/bazel-real", bin/"bazel-#{version}"
@@ -65,6 +66,7 @@ class Bazel < Formula
 
       bash_completion.install "bazel-bin/scripts/bazel-complete.bash"
       zsh_completion.install "scripts/zsh_completion/_bazel"
+      fish_completion.install "bazel-bin/scripts/bazel.fish"
     end
   end
 

@@ -1,12 +1,12 @@
 class Typedb < Formula
   desc "Strongly-typed database with a rich and logical type system"
   homepage "https://vaticle.com/"
-  url "https://github.com/vaticle/typedb/releases/download/2.15.0/typedb-all-mac-2.15.0.zip"
-  sha256 "d134d9253431ee105842b34445c8e9f311308cd6e44a20e1105a769654e87539"
+  url "https://github.com/vaticle/typedb/releases/download/2.17.0/typedb-all-mac-2.17.0.zip"
+  sha256 "c11fe0f9b175dc4bbec06e3d6a515aeb62b2adb70bcfc9fe038351efa9900423"
   license "AGPL-3.0-or-later"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "1b0110699bb56cbd4ea88c0bd7a611998bf4127836d4590ed5d13bf5ef67a282"
+    sha256 cellar: :any_skip_relocation, all: "f7366062f115d62aadde88364fb009189692df084f9fe50cfcacb870724ad011"
   end
 
   depends_on "openjdk"

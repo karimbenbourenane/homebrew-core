@@ -1,20 +1,11 @@
 class Haxe < Formula
   desc "Multi-platform programming language"
   homepage "https://haxe.org/"
+  url "https://github.com/HaxeFoundation/haxe.git",
+      tag:      "4.3.1",
+      revision: "964c84c817b3a73c49ee35207983d1c8cbca6eb8"
   license all_of: ["GPL-2.0-or-later", "MIT"]
   head "https://github.com/HaxeFoundation/haxe.git", branch: "development"
-
-  stable do
-    url "https://github.com/HaxeFoundation/haxe.git",
-        tag:      "4.2.5",
-        revision: "e5eec3122454bfc95412437d938d1d8d3e77ed68"
-
-    # Remove when campl5 dependency is bumped to 8.00 in a release
-    patch do
-      url "https://github.com/HaxeFoundation/haxe/commit/db72b31390c51c1627cf5658ca256aace41a81b0.patch?full_index=1"
-      sha256 "95a22f2cc227c4e6d066e60eb88b2a71ad6c278d6f38656fbd87ee905411918a"
-    end
-  end
 
   livecheck do
     url :stable
@@ -22,14 +13,13 @@ class Haxe < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "bd27b86c1bd31a6dffef92a4b91aa89c3b74d707934dcc6321e4315119bef982"
-    sha256 cellar: :any,                 arm64_monterey: "ebb6b5472bc7408ce268e357651c2b123abaa2f614260f88838a149289423499"
-    sha256 cellar: :any,                 arm64_big_sur:  "380f0f1f640c3f4919d272a4648b2d04fb3afd93820003cec19b9f54be1cba75"
-    sha256 cellar: :any,                 ventura:        "0a66202bcbbce78adb804699957df37b2e92ae5d287a038d4e7fba9be95bbf99"
-    sha256 cellar: :any,                 monterey:       "8cdccc4df05e252d1094ecad90a97ea898659a5017b9c61c6a157629887e68ad"
-    sha256 cellar: :any,                 big_sur:        "dcb8925b9b647939dbf5abbd2ba150f26f581a525fbf8e9c1ce369de58bb6adc"
-    sha256 cellar: :any,                 catalina:       "21ddb930758328523200f2ef95d7639bfe32ca1a94a9861972a721b0c96ab968"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "cce4723939b40c48dfb88f1ef06cf967aa5bb76a033a774eb207c72bb93abf12"
+    sha256 cellar: :any,                 arm64_ventura:  "5b61d09418723d0c1c75dd2828953d56e58f200722d95bd528c4810cf85d886f"
+    sha256 cellar: :any,                 arm64_monterey: "ea6632f240c3f0da51efe38536606725b80a450677a4e0ba7a9192297b72abe5"
+    sha256 cellar: :any,                 arm64_big_sur:  "211c87dc28b79502333c1fc840ed14d467a4a82e9e0bb784bf173d4e1b1e7723"
+    sha256 cellar: :any,                 ventura:        "593cda02dc39cfd7b1021994e620b0b52e01be3e7de9e741a4665942550fcb01"
+    sha256 cellar: :any,                 monterey:       "de0edbcf2078b34be085e5930083155143b5f6a4bac972c3c19e052617c83aeb"
+    sha256 cellar: :any,                 big_sur:        "8ed4a31c963d2cc82392ac09123513b44ce991b58ac881a95e35407b19f61c55"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "acf917c13efd8a10fe7c3b4566bd7e8db74d2064b33279723b8e5ad21fbc37a6"
   end
 
   depends_on "cmake" => :build
@@ -38,7 +28,7 @@ class Haxe < Formula
   depends_on "pkg-config" => :build
   depends_on "mbedtls@2"
   depends_on "neko"
-  depends_on "pcre"
+  depends_on "pcre2"
 
   uses_from_macos "m4" => :build
   uses_from_macos "perl" => :build

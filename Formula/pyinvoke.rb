@@ -3,19 +3,19 @@ class Pyinvoke < Formula
 
   desc "Pythonic task management & command execution"
   homepage "https://www.pyinvoke.org/"
-  url "https://files.pythonhosted.org/packages/43/59/42a4d8336c01a8df19e62b25949b551f9d3dc0d4292eea25eddacc9e329e/invoke-2.0.0.tar.gz"
-  sha256 "7ab5dd9cd76b787d560a78b1a9810d252367ab595985c50612702be21d671dd7"
+  url "https://files.pythonhosted.org/packages/fc/ed/75616c70c3e96bdfec93f6a171e87f0463d9da21b061ff8af8ae7ecda17e/invoke-2.1.1.tar.gz"
+  sha256 "7dcf054c4626b89713da650635c29e9dfeb8a1dd0a14edc60bd3e16f751292ff"
   license "BSD-2-Clause"
   head "https://github.com/pyinvoke/invoke.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "09b53320771acc6b8d031a903e844aedab84556dbfc1cd3b7d09481778f8da98"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "09b53320771acc6b8d031a903e844aedab84556dbfc1cd3b7d09481778f8da98"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "09b53320771acc6b8d031a903e844aedab84556dbfc1cd3b7d09481778f8da98"
-    sha256 cellar: :any_skip_relocation, ventura:        "bb3a3b00a3ca790c0bc8012e4f7a584b0a65452e513148f283d36b89df9bd6d1"
-    sha256 cellar: :any_skip_relocation, monterey:       "bb3a3b00a3ca790c0bc8012e4f7a584b0a65452e513148f283d36b89df9bd6d1"
-    sha256 cellar: :any_skip_relocation, big_sur:        "bb3a3b00a3ca790c0bc8012e4f7a584b0a65452e513148f283d36b89df9bd6d1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "40b169dcb888dd73ba6d3da2fc7fa871e215afa18157ddbd2029542f171af602"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "bde544c9795184edb956c25c6dd27bd3670845047134b3b64d0ee3ea2c9f2762"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "99812af5d223d1cba41a459b1de86ca092c3772e534610b3efbfae82bd44dd6b"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "2293519b23f9a6a51857e0c18eee6f401b891908c7b5f5e21e7804d368fcf804"
+    sha256 cellar: :any_skip_relocation, ventura:        "cb8aadb52284feaf01f5e1cb714cefeee1fcdfc90c315affb24cf8c570d05788"
+    sha256 cellar: :any_skip_relocation, monterey:       "fe302608600c7b0be7c07bfb5383c2a529229fba7a3cf720b893bc448ee6a2e8"
+    sha256 cellar: :any_skip_relocation, big_sur:        "380ee73ee999d8c7f89530a02132f81d21ec82dea8fa7f7a81bf359c2398f0c7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "695fb3fc23b3abf68e018e558648faa515691772228de63db66e3328147e4c21"
   end
 
   depends_on "python@3.11"

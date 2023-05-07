@@ -2,9 +2,9 @@ class Php < Formula
   desc "General-purpose scripting language"
   homepage "https://www.php.net/"
   # Should only be updated if the new version is announced on the homepage, https://www.php.net/
-  url "https://www.php.net/distributions/php-8.2.3.tar.xz"
-  mirror "https://fossies.org/linux/www/php-8.2.3.tar.xz"
-  sha256 "b9b566686e351125d67568a33291650eb8dfa26614d205d70d82e6e92613d457"
+  url "https://www.php.net/distributions/php-8.2.5.tar.xz"
+  mirror "https://fossies.org/linux/www/php-8.2.5.tar.xz"
+  sha256 "800738c359b7f1e67e40c22713d2d90276bc85ba1c21b43d99edd43c254c5f76"
   license "PHP-3.01"
 
   livecheck do
@@ -13,13 +13,13 @@ class Php < Formula
   end
 
   bottle do
-    sha256 arm64_ventura:  "6b6e08ce673598dff946cfe49d5c9020c84cdfb731a66016d11d01b459f2d3de"
-    sha256 arm64_monterey: "5b0e2af510e09f75225342116ace301689edc13578b242f045e862e4df012aa4"
-    sha256 arm64_big_sur:  "ac70300d7e6c5916d6c0aff5adcd92d2610cb43f51dbdeff91a8ead6998053fb"
-    sha256 ventura:        "150b42f609f8cea7e474f99af64897a1f400c74edf0725d6aa03607a3e691186"
-    sha256 monterey:       "d687c9db80341af5876cf74d3066a2eaf6201c2b4639cff4de9c678148ec5119"
-    sha256 big_sur:        "f04bcff9af793b3ff237bc140f1b10e79540cf1181b8fc4c251efd764d6aac0a"
-    sha256 x86_64_linux:   "b154f5712d282e68684581b52bbe0c3df6b02bca711a2439d37c5c254cc8c223"
+    sha256 arm64_ventura:  "5b2c7080edae36ab713edeab3cc73ba9d9119303f7931f238ab1b5e70c17406b"
+    sha256 arm64_monterey: "7be2bd1996264229a051a250f64814d6645b4d16bbef6d342af54699e918cb09"
+    sha256 arm64_big_sur:  "aa4b9f7028919a9b9c890de5758409208242521fe2cde57d9ac070656cfa6c38"
+    sha256 ventura:        "1f9f40495f3589d64ac64d0431d4e09fdbe0fc60f9039d458eeca12fd0568ffd"
+    sha256 monterey:       "84ebbcec5c19baa72b549f48c082002c322fee656a9b806c86d593f2a71a9387"
+    sha256 big_sur:        "9f998c5396b2078685724eedfb2b64673d903fa90522cc176524dedc8e23bc33"
+    sha256 x86_64_linux:   "5ac59438244e514ea4876e3af00ef8777ec6edbfcde0431f1a0c1436655fd38c"
   end
 
   head do
@@ -64,7 +64,7 @@ class Php < Formula
 
   on_macos do
     # PHP build system incorrectly links system libraries
-    # see https://github.com/php/php-src/pull/3472
+    # see https://github.com/php/php-src/issues/10680
     patch :DATA
   end
 

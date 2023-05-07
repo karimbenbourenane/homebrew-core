@@ -2,7 +2,7 @@ class Ctl < Formula
   desc "Programming language for digital color management"
   homepage "https://github.com/ampas/CTL"
   license "AMPAS"
-  revision 8
+  revision 10
   head "https://github.com/ampas/CTL.git", branch: "master"
 
   stable do
@@ -27,13 +27,13 @@ class Ctl < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "768159ee7fa6cf3997c3b671f48ad51e7ce991642c28f89d6c8af79393b97d7a"
-    sha256 cellar: :any,                 arm64_monterey: "e1476e5c6e33dbbae9ff08f061fdadce75976b91fa380636c024eff784370ca4"
-    sha256 cellar: :any,                 arm64_big_sur:  "722893ea7b81ba66f4c8cd2fb8b00f012327c598d00d0f0231deb9443276ab35"
-    sha256 cellar: :any,                 ventura:        "784f5bf53366b9affe8986d94e973da22d6b6922e6d84f68d01febb5a45f2064"
-    sha256 cellar: :any,                 monterey:       "e83fc22e7d97d41d51782b7eacec690c22dabea019759d43efb27fdca0ea8b7e"
-    sha256 cellar: :any,                 big_sur:        "358b2c880804cce08fedd64bc741f55e0bee6dce2287a3f9e350d65f66ca431e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "396500334794365ca00c69d561bb1458aec5b6d695ad627fea79b815fa67b89d"
+    sha256 cellar: :any,                 arm64_ventura:  "fe479d769b76d72d7cdcadfe4c9b99caa251b93204927d3f71bd1bec237466c7"
+    sha256 cellar: :any,                 arm64_monterey: "5ef0d21e45ca055e30b1ee1c6c78f16a749f1eb80a9a2b62a0997489e1010934"
+    sha256 cellar: :any,                 arm64_big_sur:  "26c518d64d04dbb3064aad30c7690c93322d2b3707279d2d067cc675f1d18c19"
+    sha256 cellar: :any,                 ventura:        "b96b52997cc38a4ca4acb6fba602debb1ddea7d3739c8a6311285622ec0bc71d"
+    sha256 cellar: :any,                 monterey:       "a4d8980a501c5ba01d6eeb0ce99b1decdf3f66c24dd68024d50e1dbf3fc07a80"
+    sha256 cellar: :any,                 big_sur:        "bb0fa672be164a10f03eabd6853a0a4a281d5941e85da93a31d6475da216ecc7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a38d6e4ffb580fc7925f4bced13cc7d55cde1b9b184484686d324b0630783efc"
   end
 
   depends_on "cmake" => :build

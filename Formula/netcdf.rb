@@ -1,9 +1,10 @@
 class Netcdf < Formula
   desc "Libraries and data formats for array-oriented scientific data"
   homepage "https://www.unidata.ucar.edu/software/netcdf/"
-  url "https://github.com/Unidata/netcdf-c/archive/refs/tags/v4.9.0.tar.gz"
-  sha256 "9f4cb864f3ab54adb75409984c6202323d2fc66c003e5308f3cdf224ed41c0a6"
+  url "https://github.com/Unidata/netcdf-c/archive/refs/tags/v4.9.2.tar.gz"
+  sha256 "bc104d101278c68b303359b3dc4192f81592ae8640f1aee486921138f7f88cb7"
   license "BSD-3-Clause"
+  revision 1
   head "https://github.com/Unidata/netcdf-c.git", branch: "main"
 
   livecheck do
@@ -12,40 +13,33 @@ class Netcdf < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "a0fb1e37c4197b13313819b2e8816bb7deefde46a7821ed0bdf0f809196a20e6"
-    sha256 cellar: :any,                 arm64_monterey: "f4a3da85ae0c0534fbdc08b93a2aafd9f68db08d8678081474cd7a8285fa8818"
-    sha256 cellar: :any,                 arm64_big_sur:  "6877b01444394bd8e0f3956cf57934bc88de9678c10a4ad446f1650c4485d341"
-    sha256 cellar: :any,                 ventura:        "54e566667d21075327d07074018ad198a63be635d30987d85204a32d97a00612"
-    sha256 cellar: :any,                 monterey:       "9742b36dc484608a41ebfda6ca28f20a218039ab8de7f25b4c4a19e2f3cb1568"
-    sha256 cellar: :any,                 big_sur:        "8702e95b84806410b6375099286d4a1e6172eeb1e835a29a7ae460f05208ca61"
-    sha256 cellar: :any,                 catalina:       "c23ce8a3b89ce90d50b8858a7af8e48096280b6b0b90961f95ae25963325807e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "747caad2209fb946ba62db15f64ee73e55bf1db6f2620a688f8e0be850d58792"
+    sha256 cellar: :any,                 arm64_ventura:  "cbb92b7e255f0e91be5a329c3dc512841003d4246b4d390850ce24ecd782aab3"
+    sha256 cellar: :any,                 arm64_monterey: "785772ae3a29c723c9c574794dd33eff744ce91e22ea212183b299a5083e442c"
+    sha256 cellar: :any,                 arm64_big_sur:  "bf70180d4cc7b917c969d6616d946dd4e8c3ba7d657599ae528efa6023ff1858"
+    sha256 cellar: :any,                 ventura:        "731dc8e39faaa4f0a9a0f04c351361850f6881a51ff90d31bc6f238677ff2e2e"
+    sha256 cellar: :any,                 monterey:       "74818d4e93793cfcbc11bc9abbe6dd6db6477f826fa4b588dedebf25dbdde6c5"
+    sha256 cellar: :any,                 big_sur:        "17e88d132cb7705347a2a43921893de7ca1c1020734fdf66886f35e2eb751e13"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "56154fb4f179e5c3fa2db54a2949f3842e629e2aaa293f9e2a20176bc5de7583"
   end
 
   depends_on "cmake" => :build
   depends_on "hdf5"
 
+  uses_from_macos "m4" => :build
+  uses_from_macos "bzip2"
   uses_from_macos "curl"
   uses_from_macos "libxml2"
-
-  # Patch for JSON collision. Remove in 4.9.1
-  patch do
-    url "https://raw.githubusercontent.com/Homebrew/formula-patches/1383fd8c15feb09c942665601d58fba3d6d5348f/netcdf/netcdf-json.diff"
-    sha256 "6a5183dc734509986713a00451d7f98c5ab2e00ab0df749027067b0880fa9e92"
-  end
+  uses_from_macos "zlib"
 
   def install
-    # Remove when this is resolved: https://github.com/Unidata/netcdf-c/issues/2390
-    inreplace "CMakeLists.txt", "SET(netCDF_LIB_VERSION 19})", "SET(netCDF_LIB_VERSION 19)"
-
-    args = std_cmake_args + %w[-DBUILD_TESTING=OFF -DENABLE_TESTS=OFF -DENABLE_NETCDF_4=ON -DENABLE_DOXYGEN=OFF]
+    args = %w[-DENABLE_TESTS=OFF -DENABLE_NETCDF_4=ON -DENABLE_DOXYGEN=OFF]
     # Fixes "relocation R_X86_64_PC32 against symbol `stderr@@GLIBC_2.2.5' can not be used" on Linux
     args << "-DCMAKE_POSITION_INDEPENDENT_CODE=ON" if OS.linux?
 
-    system "cmake", "-S", ".", "-B", "build_shared", *args, "-DBUILD_SHARED_LIBS=ON"
+    system "cmake", "-S", ".", "-B", "build_shared", *args, "-DBUILD_SHARED_LIBS=ON", *std_cmake_args
     system "cmake", "--build", "build_shared"
     system "cmake", "--install", "build_shared"
-    system "cmake", "-S", ".", "-B", "build_static", *args, "-DBUILD_SHARED_LIBS=OFF"
+    system "cmake", "-S", ".", "-B", "build_static", *args, "-DBUILD_SHARED_LIBS=OFF", *std_cmake_args
     system "cmake", "--build", "build_static"
     lib.install "build_static/liblib/libnetcdf.a"
 

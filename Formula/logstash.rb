@@ -1,8 +1,8 @@
 class Logstash < Formula
   desc "Tool for managing events and logs"
   homepage "https://www.elastic.co/products/logstash"
-  url "https://github.com/elastic/logstash/archive/v8.6.1.tar.gz"
-  sha256 "cde9743f311bfafe2b816e9c4d6bb5c12dbfde07545ecf0b641e1ae47facc888"
+  url "https://github.com/elastic/logstash/archive/v8.7.1.tar.gz"
+  sha256 "08a78cb60ce77bd68496acf64e490ef198bcd7a1d5bcf8bad9dab61c7c15738b"
   license "Apache-2.0"
   version_scheme 1
   head "https://github.com/elastic/logstash.git", branch: "main"
@@ -13,13 +13,13 @@ class Logstash < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "1cfedbd506877a19f10fb8b61e106bc69e6b23f9118c8b8382bcfe8f5f5eec61"
-    sha256 cellar: :any,                 arm64_monterey: "7cd5824518bbbcc86fb48d1464faa65b234df33f05c97c5425bd93d9191ed9d7"
-    sha256 cellar: :any,                 arm64_big_sur:  "5884c4bfc8c7fc705d1805d7464a94a4ed9345b8eafdd6cc7bbf8267f54cc534"
-    sha256 cellar: :any,                 ventura:        "676f3a933e53d26425693547fce45ef935cb470e90d7d45d3e61f2a956e4f265"
-    sha256 cellar: :any,                 monterey:       "be7960fbc343b439cee138943a5cee47d8f5172844c8bc3ae0d967603901c96c"
-    sha256 cellar: :any,                 big_sur:        "fb10797f071a004a684edf4c3030609211a45199f160b9d283d720933277f8db"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "10be251cc931dbcc1368de32e653207a0d4086c7d7f39c592c0fb7a03f148a8c"
+    sha256 cellar: :any,                 arm64_ventura:  "efd58a072a8c79e7f07abc8009fb3fb5aad52232fa748ed2180c786f0bbf066c"
+    sha256 cellar: :any,                 arm64_monterey: "a7d6af2917061b020ade9deb3fc687d0e24843ddb98428a673cedd7958e779f2"
+    sha256 cellar: :any,                 arm64_big_sur:  "e720d26536598fba5a4b309f454e82cc14d282f11fb9da2690724b247194d566"
+    sha256 cellar: :any,                 ventura:        "04176362e112c844bb7cb8e4964353e48977accd0435f75eeac28d46a8fc19a7"
+    sha256 cellar: :any,                 monterey:       "2268b220d03dabb8e074a61220ad1a5eb80cbc97ae852f81e3ca341e366e5cb5"
+    sha256 cellar: :any,                 big_sur:        "9d267f8598a9c31f5d7ce9581a9de53fb6f3a28dc7495e4f34ea4666f2a30922"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8de93ef7acdff39f28c7e9d6e9b2fafe7660efbba67e4b49946bc20905b0b8dd"
   end
 
   depends_on "openjdk@17"
@@ -60,7 +60,7 @@ class Logstash < Formula
     # Delete Windows and other Arch/OS files
     paths_to_keep = OS.linux? ? "#{Hardware::CPU.arch}-#{OS.kernel_name}" : OS.kernel_name
     rm Dir["bin/*.bat"]
-    Dir["vendor/jruby/lib/jni/*"].each do |path|
+    Dir["vendor/jruby/tmp/lib/jni/*"].each do |path|
       rm_r path unless path.include? paths_to_keep
     end
 

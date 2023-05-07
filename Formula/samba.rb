@@ -4,8 +4,8 @@ class Samba < Formula
   # option. The shared folder appears in the guest as "\\10.0.2.4\qemu".
   desc "SMB/CIFS file, print, and login server for UNIX"
   homepage "https://www.samba.org/"
-  url "https://download.samba.org/pub/samba/stable/samba-4.17.5.tar.gz"
-  sha256 "ebb7880d474ffc09d73b5fc77bcbd657f6235910337331a9c24d7f69ca11442b"
+  url "https://download.samba.org/pub/samba/stable/samba-4.18.2.tar.gz"
+  sha256 "5bf87e179616cd12a52d85fb8b26eec709f13709a2b67fe42b1fb0213f7e8106"
   license "GPL-3.0-or-later"
 
   livecheck do
@@ -14,13 +14,13 @@ class Samba < Formula
   end
 
   bottle do
-    sha256 arm64_ventura:  "ae780732fbc32f18ea37295cc73690f34fb98b5fc096e9fcb497eb1b5f517827"
-    sha256 arm64_monterey: "a2a864f496652c20ab8c2cd29f89b0a78e2f66aa1e160e7d4367f0a6437e321c"
-    sha256 arm64_big_sur:  "5702ae2153853898f0878d19d08b5a1d3746a036989c64f1ab242085a418a200"
-    sha256 ventura:        "d983e59c4ebcd5f081b53cb8ada52d04ee6decb38a8956144fc30a582a6aa848"
-    sha256 monterey:       "164ee45cb4ebf7477f5e1f8340bd7e62bae9ecea1a241fd24095e490db20faf7"
-    sha256 big_sur:        "b7c5061522b090260543b019f0a3147ffb1639a07108a9b1d920cd881c458caa"
-    sha256 x86_64_linux:   "ae5884ceb943a05ce280cc15177eb3f3ca1c22ef198a1b21b3712bc2683b59c2"
+    sha256 arm64_ventura:  "8ad81ff5be975230a6675f636e17c23fc7aaef39090b9045967e13b4e09e5f10"
+    sha256 arm64_monterey: "92bb070c609a87071475d8202479a4793fd6166417426a6163c3d513de52b77f"
+    sha256 arm64_big_sur:  "4f11ce82cde327cbe02b9c37a3f41b2ffb4ba1492d87ef86e0300e2031407896"
+    sha256 ventura:        "b55899edafe599587dae9ca6a3f56055376beb13bbeda7ec328bef7ca94ac9bd"
+    sha256 monterey:       "c44b3784852aca65f2a720175e4cc2b258cda675ee9de700e415d8f4b90a6666"
+    sha256 big_sur:        "ea22d671341f4520900817836019bb3fc2346f7ff27300310d630aa00e774348"
+    sha256 x86_64_linux:   "f3410b49bb529332bab1cbeac1d39a4c689dea59ec82510b9605e49d946370b1"
   end
 
   depends_on "cmocka" => :build
@@ -161,7 +161,7 @@ class Samba < Formula
 
     sleep 5
     mkdir_p "got"
-    system "smbclient", "-p", port.to_s, "-N", "//127.0.0.1/test", "-c", "get hello #{testpath}/got/hello"
+    system bin/"smbclient", "-p", port.to_s, "-N", "//127.0.0.1/test", "-c", "get hello #{testpath}/got/hello"
     assert_equal "hello", (testpath/"got/hello").read
   end
 end

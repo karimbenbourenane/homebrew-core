@@ -1,19 +1,18 @@
 class Libsoup < Formula
   desc "HTTP client/server library for GNOME"
   homepage "https://wiki.gnome.org/Projects/libsoup"
-  url "https://download.gnome.org/sources/libsoup/3.2/libsoup-3.2.2.tar.xz"
-  sha256 "83673c685b910fb7d39f1f28eee5afbefb71c05798fc350ac3bf1b885e1efaa1"
+  url "https://download.gnome.org/sources/libsoup/3.4/libsoup-3.4.2.tar.xz"
+  sha256 "78c8fa37cb152d40ec8c4a148d6155e2f6947f3f1602a7cda3a31ad40f5ee2f3"
   license "LGPL-2.0-or-later"
 
   bottle do
-    sha256 arm64_ventura:  "c571c60ad09c0c6e6c272c5ddcfdabf85ea3e3bbce93161100d6c71e446f5aee"
-    sha256 arm64_monterey: "b22b09d52e079b8d0e2325d54add7724a9f2cf218357b08b426983906cf22d5d"
-    sha256 arm64_big_sur:  "a9695ff8bdf87ff6bfe9836cf8732c414b46b5c1006b4510a78a7e880313609a"
-    sha256 ventura:        "8367c6b317f10c9c1c5958c50b70a5c0e54347b15758a684e3f722d40d18d3ca"
-    sha256 monterey:       "d3c9776e1c362071d86696f7b4b56edd03f2a010dfbe30ca22f38fa240133ccc"
-    sha256 big_sur:        "55c7ef19cad510057eae06943c05f5f918b4c42618e203c54ee6b39d4da10819"
-    sha256 catalina:       "6affbc54541538fa0e5192a9f99f6cda86f66e2f8c2fd0ac2e69fdae8dacae6c"
-    sha256 x86_64_linux:   "4939236918b6c980016d721e4156e33bbe5bc3a8cb76b37751ad73c99d75776e"
+    sha256 arm64_ventura:  "7364c4e47eea24b6ea67db78d83815ae4c9e2f8bdea0e8d4a0dea40350e0245c"
+    sha256 arm64_monterey: "bdb31462cdf23d34daeada8ccc6e1edbd5c4836ac7daab0e93b8a060643e6a45"
+    sha256 arm64_big_sur:  "67ec4c878265ca35fa502455625450b25a19a862993de656ad156b6c7ba1192f"
+    sha256 ventura:        "1f3458517efe283f12cb59cc30ade2aa3c9d725774c53354c61f273f57d3cd33"
+    sha256 monterey:       "518ca7b67460550fd71f19c1f0cf52e3524c4dc4d6b14830ab0127c7db665bfd"
+    sha256 big_sur:        "8592dfba0eea66d9c36bea2e73f0cdf3ee53b909fa8e1681db8c18b3dd9eab42"
+    sha256 x86_64_linux:   "d4475a310a89f648f50a4eaee7fcd451115fcbb97c41cf95f20d262bc6cf97fb"
   end
 
   depends_on "gobject-introspection" => :build
@@ -31,11 +30,9 @@ class Libsoup < Formula
   uses_from_macos "sqlite"
 
   def install
-    mkdir "build" do
-      system "meson", *std_meson_args, ".."
-      system "ninja", "-v"
-      system "ninja", "install", "-v"
-    end
+    system "meson", "setup", "build", *std_meson_args
+    system "meson", "compile", "-C", "build", "--verbose"
+    system "meson", "install", "-C", "build"
   end
 
   test do

@@ -1,39 +1,38 @@
 class Juju < Formula
   desc "DevOps management tool"
   homepage "https://juju.is/"
-  url "https://github.com/juju/juju.git",
-      tag:      "juju-3.1.0",
-      revision: "924c9e190eb56d9a9324d9cc0dd9dd663c501ac4"
+  url "https://launchpad.net/juju/3.1/3.1.2/+download/juju-core_3.1.2.tar.gz"
+  sha256 "14970a2b1fb5099a72786dda183a3a03b9b798875e7c49df9060e35d31d6e7b2"
   license "AGPL-3.0-only"
   version_scheme 1
   head "https://github.com/juju/juju.git", branch: "develop"
 
+  # We check the Launchpad download page for Juju because the latest version
+  # listed on the main project page isn't always a stable version.
   livecheck do
-    url :stable
-    regex(/^juju[._-]v?(\d+(?:\.\d+)+)$/i)
+    url "https://launchpad.net/juju/+download"
+    regex(/href=.*?juju-core[._-]v?(\d+(?:\.\d+)+)\.t/i)
+    strategy :page_match
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "21fa811589d1c26a6350b8153c93bcdb4e1ce0f4dd3dfdccfe754da9eb6c377c"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "9f8449ea7f25780e131f3b2cb559b970bbab57df0ec97103962f3003346b2d40"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "fc8106863cbca607c0a77dc20a8e2276c00b3ede6afc79a14187c4294d40fe08"
-    sha256 cellar: :any_skip_relocation, ventura:        "ac115e1ad5d1f206df3cf26af966a0dfcd9381846bfbf79eaf81d90f82636876"
-    sha256 cellar: :any_skip_relocation, monterey:       "f2f5abb915c21cac222ea0e16b1d1ab3c0108acf001bf36e990285da3aa5575d"
-    sha256 cellar: :any_skip_relocation, big_sur:        "cb256c37847820b0bdc81f053dc71e9f6a7157a7cded4700e8d166557bac9836"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "920443adb51bd358e5d6ca4edb79c049e0982a2ab8615f5c4781f0ff12b65280"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "256c97d382e1727a548cfff3181abeddde011166be653368b6be94c5936a133e"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "96878067b70952cf63696e559a13d4d739ba213b3bde5ed13eaa0758c91d0197"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "35701ad59cbf27075a4c3ed017fb2468924a8b141ae9dd09e76f7b5f6f18b114"
+    sha256 cellar: :any_skip_relocation, ventura:        "18af8fe9f68359314f926338ed9cef444caeb3982f0849f064064290cff65b91"
+    sha256 cellar: :any_skip_relocation, monterey:       "17d5d200edfb9d2f063374b240ce3430e0570a5c19a3278d6453d2c61364418b"
+    sha256 cellar: :any_skip_relocation, big_sur:        "560aa4fd5714dde822a8cd654eeafc592b417b514b02a9395d6e48086675e917"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "93ddb005bda3a2603d15b330b850f975e113e7ffa8634b7a976f4bce2a51e355"
   end
 
   depends_on "go" => :build
 
   def install
-    ld_flags = %W[
-      -s -w
-      -X version.GitCommit=#{Utils.git_head}
-      -X version.GitTreeState=clean
-    ]
-    system "go", "build", *std_go_args(ldflags: ld_flags), "./cmd/juju"
-    system "go", "build", *std_go_args(output: bin/"juju-metadata", ldflags: ld_flags), "./cmd/plugins/juju-metadata"
-    bash_completion.install "etc/bash_completion.d/juju"
+    cd "src/github.com/juju/juju" do
+      system "go", "build", *std_go_args(ldflags: "-s -w"), "./cmd/juju"
+      system "go", "build", *std_go_args(output: bin/"juju-metadata", ldflags: "-s -w"), "./cmd/plugins/juju-metadata"
+      bash_completion.install "etc/bash_completion.d/juju"
+    end
   end
 
   test do

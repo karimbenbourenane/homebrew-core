@@ -1,8 +1,8 @@
 class Liquibase < Formula
   desc "Library for database change tracking"
   homepage "https://www.liquibase.org/"
-  url "https://github.com/liquibase/liquibase/releases/download/v4.19.1/liquibase-4.19.1.tar.gz"
-  sha256 "8717278fead471222fe503dfe71756eda31ea4d0b494182819bad14dcd9bc333"
+  url "https://github.com/liquibase/liquibase/releases/download/v4.21.1/liquibase-4.21.1.tar.gz"
+  sha256 "c04542865e5ece8b7b1ee9bd6beaefc5315e350620288d6ac1a2d32c3b1f7d8b"
   license "Apache-2.0"
 
   livecheck do
@@ -11,13 +11,13 @@ class Liquibase < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "d8b89758abdf0d7169ba86b4730b6ad0bdc5e50926dc77913aa9e20a801a3ac6"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "d8b89758abdf0d7169ba86b4730b6ad0bdc5e50926dc77913aa9e20a801a3ac6"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "d8b89758abdf0d7169ba86b4730b6ad0bdc5e50926dc77913aa9e20a801a3ac6"
-    sha256 cellar: :any_skip_relocation, ventura:        "52ccecc762116648a6973ac8fd4b9f62203d59115f07cc51dc8a87e5e711951c"
-    sha256 cellar: :any_skip_relocation, monterey:       "52ccecc762116648a6973ac8fd4b9f62203d59115f07cc51dc8a87e5e711951c"
-    sha256 cellar: :any_skip_relocation, big_sur:        "52ccecc762116648a6973ac8fd4b9f62203d59115f07cc51dc8a87e5e711951c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d8b89758abdf0d7169ba86b4730b6ad0bdc5e50926dc77913aa9e20a801a3ac6"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "7cef9cc52068e44e05ffcca395937af36a0ea52c12174116dc2bbd7b6664f90a"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "7cef9cc52068e44e05ffcca395937af36a0ea52c12174116dc2bbd7b6664f90a"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "7cef9cc52068e44e05ffcca395937af36a0ea52c12174116dc2bbd7b6664f90a"
+    sha256 cellar: :any_skip_relocation, ventura:        "9855ba5b50cb011bde1381f0fcff30b9e8c46a5a1d838896f6f2701aba26b707"
+    sha256 cellar: :any_skip_relocation, monterey:       "9855ba5b50cb011bde1381f0fcff30b9e8c46a5a1d838896f6f2701aba26b707"
+    sha256 cellar: :any_skip_relocation, big_sur:        "9855ba5b50cb011bde1381f0fcff30b9e8c46a5a1d838896f6f2701aba26b707"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7cef9cc52068e44e05ffcca395937af36a0ea52c12174116dc2bbd7b6664f90a"
   end
 
   depends_on "openjdk"

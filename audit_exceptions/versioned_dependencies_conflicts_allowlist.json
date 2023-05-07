@@ -1,4 +1,6 @@
 [
+  "cargo-edit",
+  "cargo-outdated",
   "couchdb-lucene",
   "dasht",
   "hive",
@@ -7,6 +9,7 @@
   "mikutter",
   "opendht",
   "predictionio",
+  "qca",
   "sqoop",
   "swtpm",
   "synergy-core",

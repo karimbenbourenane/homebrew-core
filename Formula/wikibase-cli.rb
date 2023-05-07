@@ -3,18 +3,18 @@ require "language/node"
 class WikibaseCli < Formula
   desc "Command-line interface to Wikibase"
   homepage "https://github.com/maxlath/wikibase-cli#readme"
-  url "https://registry.npmjs.org/wikibase-cli/-/wikibase-cli-16.3.0.tgz"
-  sha256 "fda5164d7e96cfa1c2f96dfc2e6ba439907138bfc0c354e6fe50ad763d64c914"
+  url "https://registry.npmjs.org/wikibase-cli/-/wikibase-cli-16.3.2.tgz"
+  sha256 "fb37f93eb5a08352fd9b6a0b1643532d52b85517e0d20073bf084b6969cf79f8"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "c188b14b9da086097207f7325b99d1948aa87ed920d6e6b96cf1972fe711d88d"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "c188b14b9da086097207f7325b99d1948aa87ed920d6e6b96cf1972fe711d88d"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "c188b14b9da086097207f7325b99d1948aa87ed920d6e6b96cf1972fe711d88d"
-    sha256 cellar: :any_skip_relocation, ventura:        "d9c256d851bd335acea7a843ef9614e3cec0f08b2357bdc68fcdc5a45e0cd3ac"
-    sha256 cellar: :any_skip_relocation, monterey:       "d9c256d851bd335acea7a843ef9614e3cec0f08b2357bdc68fcdc5a45e0cd3ac"
-    sha256 cellar: :any_skip_relocation, big_sur:        "d9c256d851bd335acea7a843ef9614e3cec0f08b2357bdc68fcdc5a45e0cd3ac"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c188b14b9da086097207f7325b99d1948aa87ed920d6e6b96cf1972fe711d88d"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "afb9733a63ff3044aecd917d89847a92ff774cc7b320e22b5a2c55814a84383b"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "afb9733a63ff3044aecd917d89847a92ff774cc7b320e22b5a2c55814a84383b"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "afb9733a63ff3044aecd917d89847a92ff774cc7b320e22b5a2c55814a84383b"
+    sha256 cellar: :any_skip_relocation, ventura:        "9c7b1ab36fd1ad23fa0c508069ec061b498331b45c82135da681b10ba77c5211"
+    sha256 cellar: :any_skip_relocation, monterey:       "9c7b1ab36fd1ad23fa0c508069ec061b498331b45c82135da681b10ba77c5211"
+    sha256 cellar: :any_skip_relocation, big_sur:        "9c7b1ab36fd1ad23fa0c508069ec061b498331b45c82135da681b10ba77c5211"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "afb9733a63ff3044aecd917d89847a92ff774cc7b320e22b5a2c55814a84383b"
   end
 
   depends_on "node"

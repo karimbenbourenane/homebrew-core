@@ -1,19 +1,19 @@
 class Lefthook < Formula
   desc "Fast and powerful Git hooks manager for any type of projects"
   homepage "https://github.com/evilmartians/lefthook"
-  url "https://github.com/evilmartians/lefthook/archive/refs/tags/v1.3.3.tar.gz"
-  sha256 "c66a7845d4c47485994ae5e0688317fc804c8f3fb6e7cf8d30025ba80b41ccb5"
+  url "https://github.com/evilmartians/lefthook/archive/refs/tags/v1.3.12.tar.gz"
+  sha256 "6a61365663ca2be5d4b89fdcd0ecb93be9a19eeedc26b48512cef43dadb769f9"
   license "MIT"
   head "https://github.com/evilmartians/lefthook.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "afb091afe7791214e26a19dc638961ab9aa1a45c87778ba32e9ed66d29c82447"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "afb091afe7791214e26a19dc638961ab9aa1a45c87778ba32e9ed66d29c82447"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "afb091afe7791214e26a19dc638961ab9aa1a45c87778ba32e9ed66d29c82447"
-    sha256 cellar: :any_skip_relocation, ventura:        "6d892710b84f1f216018a4d5adf0455afc68c9980624b922f59122832ce34168"
-    sha256 cellar: :any_skip_relocation, monterey:       "6d892710b84f1f216018a4d5adf0455afc68c9980624b922f59122832ce34168"
-    sha256 cellar: :any_skip_relocation, big_sur:        "6d892710b84f1f216018a4d5adf0455afc68c9980624b922f59122832ce34168"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f7c24328e4f4568dd63db3055bc49b9440974a46ae27eeb1fffaee6e8c6dc22e"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "2a16003a2b06a2cda35590f4175fd23a4b30cdf7eb09e5236e4ce7d39a217022"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "2a16003a2b06a2cda35590f4175fd23a4b30cdf7eb09e5236e4ce7d39a217022"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "2a16003a2b06a2cda35590f4175fd23a4b30cdf7eb09e5236e4ce7d39a217022"
+    sha256 cellar: :any_skip_relocation, ventura:        "5b7021ed6c0b0d429ed013a1fb9e9348e26f42070e19855bc496ab65e8e12f76"
+    sha256 cellar: :any_skip_relocation, monterey:       "5b7021ed6c0b0d429ed013a1fb9e9348e26f42070e19855bc496ab65e8e12f76"
+    sha256 cellar: :any_skip_relocation, big_sur:        "5b7021ed6c0b0d429ed013a1fb9e9348e26f42070e19855bc496ab65e8e12f76"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "0dec6807e9b64b91f8d51eccf12b9cbeaf7d30b24b8c18ba96decb42d66d3ad5"
   end
 
   depends_on "go" => :build

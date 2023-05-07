@@ -4,8 +4,8 @@ class AwscliAT1 < Formula
   desc "Official Amazon AWS command-line interface"
   homepage "https://aws.amazon.com/cli/"
   # awscli should only be updated every 10 releases on multiples of 10
-  url "https://files.pythonhosted.org/packages/80/e5/ba2049da5880fc52dce8bcaf288a42f955d51b359f6158e3b1c55fb5bb86/awscli-1.27.80.tar.gz"
-  sha256 "12658973345dfe17f81f1a9e60e45c170200935a4a743ac0e5d16f8477657371"
+  url "https://files.pythonhosted.org/packages/d2/c2/6f69eae34e0beaea5db1dbfcdf3198b50ce9ccd7f25d980776f20c1b26c6/awscli-1.27.120.tar.gz"
+  sha256 "9d91193e85ab56f2f21b06da84223007d5dc6e2b81f907292473419e377e2200"
   license "Apache-2.0"
 
   livecheck do
@@ -14,13 +14,13 @@ class AwscliAT1 < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "685adaacbb349ec61cf374d35b21730cc909bb9bb1233b9fdc74518ceafc9b47"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "cedf58946ec8ae93b51798bec47e5cf148e69130c861a4936babab37a843a36c"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "293d3a7773512d6c8faf805c45041d50e3825b117f48d420f2806e8afdd12cc4"
-    sha256 cellar: :any_skip_relocation, ventura:        "74a81f122e76792ca83f134935b1da811c434d0e52f4e00c08abc1151f009938"
-    sha256 cellar: :any_skip_relocation, monterey:       "973ed923fd9a34630136e151cae2a9d582729a1adf8e6f132c6ffbd05372cd5d"
-    sha256 cellar: :any_skip_relocation, big_sur:        "64e8f1f9a41fba70e0a745abbd1ef9d7441b143106458114c84293481d2096fb"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9050957a8173ede739d5c398e67869250673b40eafab803b15923178bd9ae1dc"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "d46e88c0583c1d2444966cf0e79ab02cd76e62ded69af7c2d6b7e6db6e8a62d7"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "66ae93e655c0cd791db3a4a25c379d65b53861aef1cc07e1a199991cfafc1c95"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "0bb3ce8c8b4a8b20515b699912b54f290ffe1f34101ccd70b164f55721be56d2"
+    sha256 cellar: :any_skip_relocation, ventura:        "cf64b0de778078842bb7c2da4132fc6adaa1125867b553b43ce4754884b65fe0"
+    sha256 cellar: :any_skip_relocation, monterey:       "46f80d2e60e604c2e08bffc861de1ac7a9d6735be3bd991f28c4a4cff5c5fd96"
+    sha256 cellar: :any_skip_relocation, big_sur:        "8404f5bccd678b22a052a2d1b480e4b35bb8dfaecb9959ef9531d8d631bf862c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "aa2de5ded203d326e10cef0d839c9c64f5e8f74f116fecd608b0ce3bf4c94be7"
   end
 
   keg_only :versioned_formula
@@ -33,8 +33,8 @@ class AwscliAT1 < Formula
   uses_from_macos "mandoc"
 
   resource "botocore" do
-    url "https://files.pythonhosted.org/packages/ca/f6/119e2a57ebb28fc8b6d860b211d539a4525b36ff3b9904e198609d7bb15f/botocore-1.29.80.tar.gz"
-    sha256 "19d4cadc79f75b31ffa78b5e750833d53e0edfe414d308b6788382ad32d23e12"
+    url "https://files.pythonhosted.org/packages/ba/d0/680c56d416eb3f6801a729f0ff26fb7776b2ad34cb34f3433c3cf9c612d5/botocore-1.29.120.tar.gz"
+    sha256 "82de714c06fcefbcf2f3854b81c51bf0c529ec902c6e927156ff47988aaeeb7a"
   end
 
   resource "colorama" do
@@ -48,8 +48,8 @@ class AwscliAT1 < Formula
   end
 
   resource "pyasn1" do
-    url "https://files.pythonhosted.org/packages/a4/db/fffec68299e6d7bad3d504147f9094830b704527a7fc098b721d38cc7fa7/pyasn1-0.4.8.tar.gz"
-    sha256 "aef77c9fb94a3ac588e87841208bdec464471d9871bd5050a287cc9a475cd0ba"
+    url "https://files.pythonhosted.org/packages/61/ef/945a8bcda7895717c8ba4688c08a11ef6454f32b8e5cb6e352a9004ee89d/pyasn1-0.5.0.tar.gz"
+    sha256 "97b7290ca68e62a832558ec3976f15cbf911bf5d7c7039d8b861c2a0ece69fde"
   end
 
   resource "python-dateutil" do
@@ -68,8 +68,8 @@ class AwscliAT1 < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/c5/52/fe421fb7364aa738b3506a2d99e4f3a56e079c0a798e9f4fa5e14c60922f/urllib3-1.26.14.tar.gz"
-    sha256 "076907bf8fd355cde77728471316625a4d2f7e713c125f51953bb5b3eecf4f72"
+    url "https://files.pythonhosted.org/packages/21/79/6372d8c0d0641b4072889f3ff84f279b738cd8595b64c8e0496d4e848122/urllib3-1.26.15.tar.gz"
+    sha256 "8a388717b9476f934a21484e8c8e61875ab60644d29b9b39e11e4b9dc1c6b305"
   end
 
   def install

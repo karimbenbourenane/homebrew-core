@@ -1,12 +1,12 @@
 class Deployer < Formula
   desc "Deployment tool written in PHP with support for popular frameworks"
   homepage "https://deployer.org/"
-  url "https://github.com/deployphp/deployer/releases/download/v7.2.1/deployer.phar"
-  sha256 "91240458dc4ba1ee8a29e68918b235fc70cba7a3fae24593a062c3d4ca0628f7"
+  url "https://github.com/deployphp/deployer/releases/download/v7.3.1/deployer.phar"
+  sha256 "5ffe5db394fee893ab562382a11a3c14604e90272825c41348d3928da5f1ae9d"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "c43026461f8befa76e1f93ef35595737987c3d433d84b2b251d560215a02d23c"
+    sha256 cellar: :any_skip_relocation, all: "9d3a0df77b981e45f88dbd2feccf62a4a19178818dcd160c652a2cffec282d64"
   end
 
   depends_on "php"

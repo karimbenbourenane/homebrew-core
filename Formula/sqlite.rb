@@ -1,9 +1,9 @@
 class Sqlite < Formula
   desc "Command-line interface for SQLite"
   homepage "https://sqlite.org/index.html"
-  url "https://www.sqlite.org/2023/sqlite-autoconf-3410000.tar.gz"
-  version "3.41.0"
-  sha256 "49f77ac53fd9aa5d7395f2499cb816410e5621984a121b858ccca05310b05c70"
+  url "https://www.sqlite.org/2023/sqlite-autoconf-3410200.tar.gz"
+  version "3.41.2"
+  sha256 "e98c100dd1da4e30fa460761dab7c0b91a50b785e167f8c57acc46514fae9499"
   license "blessing"
 
   livecheck do
@@ -15,13 +15,13 @@ class Sqlite < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "72073c161c9ee425437a6017ea334ce86d8151c214dbd3607ebf8bfd85038995"
-    sha256 cellar: :any,                 arm64_monterey: "85b3532c30cdb3640a0d9066141a16ab84df6f803d4330f1134f8943a9e42f08"
-    sha256 cellar: :any,                 arm64_big_sur:  "3ade7ae815b207b3588ff97940df261b45352af07a2c7630797a810e859708c0"
-    sha256 cellar: :any,                 ventura:        "d8059dda928619bf5c0a3e5fe4762472afa36433fc9d0f961a4b6ad9da480fb7"
-    sha256 cellar: :any,                 monterey:       "6d67a64201a6a5a5550938a6979ba1f6c00e385123e3b76dd996526a223de4c2"
-    sha256 cellar: :any,                 big_sur:        "7810110320523ecb1afb35a2830cbe363cbc1a3b1bd07c9dec60871617134880"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "1a62e7b7e603287959e00b45e032d7c0a8de5d46a6acd40680ca575f91df0098"
+    sha256 cellar: :any,                 arm64_ventura:  "2a77f2ddcf124d8704c299572c4dc55517996d796011545852e362c6e2a2a2ea"
+    sha256 cellar: :any,                 arm64_monterey: "9cf3cb233b600ac26cd090a475dfebc99cfe25620ad2b76fadb3c81c01038fe3"
+    sha256 cellar: :any,                 arm64_big_sur:  "78d4c5470ab9287a5abc1f3d8bafe92d6d416ec375cbd3650ecb26ff1b0531ae"
+    sha256 cellar: :any,                 ventura:        "1d86064177dc844cfa23ddf9c857c4f8171bc6c232ba494e02df3b0ddddf4f07"
+    sha256 cellar: :any,                 monterey:       "a4f10bac36c302931738f59315eac2bb068c8e35066dc23ba5b47141779751cd"
+    sha256 cellar: :any,                 big_sur:        "5fb0686e712e6623bee8bc1ef2cac08585fba4a6e5b3d5962b4a8f1f22c11edd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e14436989a1cf1a51b5122c9499c8730713757225ef4ac1916d6ec508caa8dda"
   end
 
   keg_only :provided_by_macos
@@ -50,6 +50,9 @@ class Sqlite < Formula
 
     system "./configure", *args
     system "make", "install"
+
+    # Avoid rebuilds of dependants that hardcode this path.
+    inreplace lib/"pkgconfig/sqlite3.pc", prefix, opt_prefix
   end
 
   test do

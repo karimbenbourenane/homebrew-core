@@ -1,9 +1,10 @@
 class Gegl < Formula
   desc "Graph based image processing framework"
   homepage "https://www.gegl.org/"
-  url "https://download.gimp.org/pub/gegl/0.4/gegl-0.4.42.tar.xz"
-  sha256 "aba83a0cbaa6c56edc29ea22f2e8172950a53b96daa51592083d59222bdde02d"
+  url "https://download.gimp.org/pub/gegl/0.4/gegl-0.4.44.tar.xz"
+  sha256 "0a4cdb41635e406a0849cd0d3f03caf7d97cab8aa13d28707d532d0089d56126"
   license all_of: ["LGPL-3.0-or-later", "GPL-3.0-or-later", "BSD-3-Clause", "MIT"]
+  revision 1
   head "https://gitlab.gnome.org/GNOME/gegl.git", branch: "master"
 
   livecheck do
@@ -12,13 +13,14 @@ class Gegl < Formula
   end
 
   bottle do
-    sha256 arm64_ventura:  "bcdfeedb7a207307f6aa5a020a88ad074c23c4d7aa730fa3721b5caa46265dbc"
-    sha256 arm64_monterey: "0a743cf58b1f6be5b11854c8813a1354c50d284f2ea77883d35ed43c07cd1e55"
-    sha256 arm64_big_sur:  "593117443e80ef49af158abf3984b9ef4516b796d98e733a335145b54c2ddc25"
-    sha256 ventura:        "55012dd581675488ad651c9d8d6fab11911d1512ad927ff00a179243a2ecd7cc"
-    sha256 monterey:       "dde0419be53714acbf79b3f34b0a509244e959367664f01c2d42e5de92411268"
-    sha256 big_sur:        "2fd9f8aeeee3333420b8ddb4118600c8e67b1ea6158d0c325f5c285cb68a68b1"
-    sha256 x86_64_linux:   "0b170ac8cb5cb501062f1a39eb2cf6842a750d03e4a0fa4153799d7203e11060"
+    rebuild 1
+    sha256 arm64_ventura:  "6798a639e63b3e609631ef1d252f7a275d3eb99c9f2a024c6e584170ebd08127"
+    sha256 arm64_monterey: "62603414a7f4763475dc6fda87437e062271bf46e285c7f74e88a078386e6c4e"
+    sha256 arm64_big_sur:  "08f3c21fa28b0fd57adc795c56a0ff1383ac57bf495e08a3ad813ddd41d3d04b"
+    sha256 ventura:        "41352847b91a36d1e1bf2bc3a249c102173ca098a782e450893616f9f5bb3282"
+    sha256 monterey:       "92c2b18e7bc6fa8abaa4203a70d8ab5041683f71b1b0ecd999861128767392c7"
+    sha256 big_sur:        "6b73bac09505dc9790a5667ab2cda5980048c7695c6a09110c10b9b2b0dcedbf"
+    sha256 x86_64_linux:   "430ca21b53a615a2c053f24194155b03654773b1df8dd7b272616baa99024faf"
   end
 
   depends_on "gobject-introspection" => :build
@@ -35,6 +37,7 @@ class Gegl < Formula
 
   on_linux do
     depends_on "cairo"
+    depends_on "poppler"
   end
 
   def install

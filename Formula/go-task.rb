@@ -1,19 +1,19 @@
 class GoTask < Formula
   desc "Task is a task runner/build tool that aims to be simpler and easier to use"
   homepage "https://taskfile.dev/"
-  url "https://github.com/go-task/task/archive/refs/tags/v3.21.0.tar.gz"
-  sha256 "34b0d1ca1ef8b34246e9b3f9632635ae26fe294eb123a2d11c048a91a6401749"
+  url "https://github.com/go-task/task/archive/refs/tags/v3.24.0.tar.gz"
+  sha256 "e1ab3c92299ad5741b8b0e9dc18593db80efaca449b8ccc318a6ff1848b44338"
   license "MIT"
-  head "https://github.com/go-task/task.git", branch: "master"
+  head "https://github.com/go-task/task.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "f9cfeb174ed3a4322c6a299a6b52b11b0e629ed8917f38b7bbad74abf8d0e3a7"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "f9cfeb174ed3a4322c6a299a6b52b11b0e629ed8917f38b7bbad74abf8d0e3a7"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "f9cfeb174ed3a4322c6a299a6b52b11b0e629ed8917f38b7bbad74abf8d0e3a7"
-    sha256 cellar: :any_skip_relocation, ventura:        "4d9f1f7094e0a3e250169c20439083c9df1b79a3bf187f05d6738e736c518d15"
-    sha256 cellar: :any_skip_relocation, monterey:       "4d9f1f7094e0a3e250169c20439083c9df1b79a3bf187f05d6738e736c518d15"
-    sha256 cellar: :any_skip_relocation, big_sur:        "4d9f1f7094e0a3e250169c20439083c9df1b79a3bf187f05d6738e736c518d15"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "aa176bf03b18ad00e45f463534442987c4ee748b6d2f842d67b11fc75699274d"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "39c8d378bf5e276e1961a5c7f4b2a11aecacac49fa65c1fb969a32b19beb0480"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "39c8d378bf5e276e1961a5c7f4b2a11aecacac49fa65c1fb969a32b19beb0480"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "39c8d378bf5e276e1961a5c7f4b2a11aecacac49fa65c1fb969a32b19beb0480"
+    sha256 cellar: :any_skip_relocation, ventura:        "8c5a3dc463f0eb345e1b980360533fdd2ab7e1d6da2efd5c29d6523a389529bf"
+    sha256 cellar: :any_skip_relocation, monterey:       "8c5a3dc463f0eb345e1b980360533fdd2ab7e1d6da2efd5c29d6523a389529bf"
+    sha256 cellar: :any_skip_relocation, big_sur:        "8c5a3dc463f0eb345e1b980360533fdd2ab7e1d6da2efd5c29d6523a389529bf"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "db2ac2f9469b3913f762f59bfedb1a833f541822010e1d3ce0025bf5ea27cc05"
   end
 
   depends_on "go" => :build

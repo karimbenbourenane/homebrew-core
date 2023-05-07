@@ -1,8 +1,8 @@
 class Less < Formula
   desc "Pager program similar to more"
   homepage "https://www.greenwoodsoftware.com/less/index.html"
-  url "https://www.greenwoodsoftware.com/less/less-608.tar.gz"
-  sha256 "a69abe2e0a126777e021d3b73aa3222e1b261f10e64624d41ec079685a6ac209"
+  url "https://www.greenwoodsoftware.com/less/less-633.tar.gz"
+  sha256 "2f201d64b828b88af36dfe6cfdba3e0819ece2e446ebe6224813209aaefed04f"
   license "GPL-3.0-or-later"
 
   livecheck do
@@ -11,19 +11,19 @@ class Less < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "390f1b4652817cd10840047fced9f4accc4854ac1b4c8eaf70edcf7a63f291e5"
-    sha256 cellar: :any,                 arm64_monterey: "0c111d7d5f231c4b409d4e6441ebb1cfc40bdf440c1bd7d6fff11b1e16adfc31"
-    sha256 cellar: :any,                 arm64_big_sur:  "ecc9669f294fd8d3826f3c513590387a2dd37a248d4bd827c8301d857bf6cfa4"
-    sha256 cellar: :any,                 ventura:        "031ad93faffc4dad178a2708c638f6bf1c22609669006b06705221c75a152022"
-    sha256 cellar: :any,                 monterey:       "b5cf2d6c6e1a6c23d9086323c4363a022e1e2264dd4f0e1a287396beb88edced"
-    sha256 cellar: :any,                 big_sur:        "2d40fdc792b4aee7bc4016cb1daf3c14708c7f90f464fb49a5dd6f6f659809e8"
-    sha256 cellar: :any,                 catalina:       "5a785fbf1ac017df8814d9b86cd0fcdbacfdc4159e80da7ea738b1944cd1e9d6"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "98769ef6e7ed3f87c9d90bf73666693fea66ebd91434a7e5b2982f7b8ef55244"
+    sha256 cellar: :any,                 arm64_ventura:  "18200ddc7610677aa54a248eeeeae3e3589b5dc47680a111d17d9c0aee4ebaf0"
+    sha256 cellar: :any,                 arm64_monterey: "b3b72d134f0d1815b9ccd5d5b56ce1f2b610bc6049351a4d37f7f33ef3241948"
+    sha256 cellar: :any,                 arm64_big_sur:  "2d48868d85ad94041b6ddd5f9f1d1f51616ad63ee5488714c48e2bc18b339c0f"
+    sha256 cellar: :any,                 ventura:        "6bac7585569ea82cf336fda7696865dd7d9bfb13d988d6a93a1fb9e68e79e4d6"
+    sha256 cellar: :any,                 monterey:       "5ed83764c8d4af1cb98ff2f30f1341d95945d19c71316e21013b73a8920a0eb5"
+    sha256 cellar: :any,                 big_sur:        "9d8193d570bf6c90b88c352e49c82a5eec076d2764a73712b74b52e851d564c5"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "75223e3c687bffe70af4ae6fea19e327dc573a4d6e7df625bf670238d228ad45"
   end
 
   head do
     url "https://github.com/gwsw/less.git", branch: "master"
     depends_on "autoconf" => :build
+    depends_on "groff" => :build
     uses_from_macos "perl" => :build
   end
 

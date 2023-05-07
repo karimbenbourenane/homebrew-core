@@ -3,26 +3,28 @@ class Netpbm < Formula
   homepage "https://netpbm.sourceforge.io/"
   # Maintainers: Look at https://sourceforge.net/p/netpbm/code/HEAD/tree/
   # for stable versions and matching revisions.
-  url "https://svn.code.sf.net/p/netpbm/code/stable", revision: "4482"
-  version "10.86.37"
+  url "https://svn.code.sf.net/p/netpbm/code/stable", revision: "4534"
+  version "10.86.38"
   license "GPL-3.0-or-later"
+  revision 1
   version_scheme 1
   head "https://svn.code.sf.net/p/netpbm/code/trunk"
 
   livecheck do
     url "https://sourceforge.net/p/netpbm/code/HEAD/tree/stable/"
-    strategy :page_match
     regex(/Release v?(\d+(?:\.\d+)+)/i)
+    strategy :page_match
   end
 
   bottle do
-    sha256 arm64_ventura:  "56ff56d19bc7d7295f3476d7b175c19cecc0ad1eb66eda08676e2861c60d0367"
-    sha256 arm64_monterey: "29d7bdf2039aa7b7e272763ed16b35775d5029ab1eea09960e48d66f0eaeaf72"
-    sha256 arm64_big_sur:  "264bce0bc44a6ab6284139a74cae82533609bda99c148e92a7056c422d612341"
-    sha256 ventura:        "214e48fc8d774da41402f33372a5960b7e58aab4d7e3878411582ab0843ca156"
-    sha256 monterey:       "d9e210cc4ab4238aec0da59b967c9be1dc96fdafa2c82270e14b64814a7e6f7c"
-    sha256 big_sur:        "de1cabe00a181bcd8fb35408df3ecd89bdf0a698990995768d06acd1fd18b9cb"
-    sha256 x86_64_linux:   "065a106d58725f57fe502c87f25e0267b53073d2595430163b27f6ceed6a4570"
+    rebuild 1
+    sha256 arm64_ventura:  "9ff16b71c6348e3942f637886f45e5b07b27357056d587b4d2484380d90fdd97"
+    sha256 arm64_monterey: "1d68b2864f75de77f1acee7cb97445ee175115cc6d03164d09381b184bb61e16"
+    sha256 arm64_big_sur:  "e5f94b26bd98fc1777d791044b0cfe8fe15d251f89d5c21a6a126617c8d25af7"
+    sha256 ventura:        "23182fe0629870931c9ef21421a30896ed42c9b1300696779d9ec415977dcb41"
+    sha256 monterey:       "99818b30ee4b6ed3f70b2a6d5a3e11082a5f4ebd196c9aeb45c54ada94bc1702"
+    sha256 big_sur:        "68867880d23ac8fec178025a70390c43aafb1db7d8d4af782e0cff3686d724d6"
+    sha256 x86_64_linux:   "fdf9b76989406e9a48304722230113c69d8a1b7ec6c0843d0ef6adea18ceafde"
   end
 
   depends_on "jasper"
@@ -60,6 +62,7 @@ class Netpbm < Formula
     end
 
     ENV.deparallelize
+    ENV.append_to_cflags "-Wno-implicit-function-declaration" # Workaround for Xcode 14.3.
     system "make"
     system "make", "package", "pkgdir=#{buildpath}/stage"
 
@@ -74,6 +77,11 @@ class Netpbm < Formula
       lib.install buildpath.glob("staticlink/*.a"), buildpath.glob("sharedlink/#{shared_library("*")}")
       (lib/"pkgconfig").install "pkgconfig_template" => "netpbm.pc"
     end
+
+    # We don't run `make install`, so an unversioned library symlink is never generated.
+    # FIXME: Check whether we can call `make install` instead of creating this manually.
+    libnetpbm = lib.glob(shared_library("libnetpbm", "*")).reject(&:symlink?).first.basename
+    lib.install_symlink libnetpbm => shared_library("libnetpbm")
   end
 
   test do

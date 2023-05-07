@@ -1,10 +1,9 @@
 class MingwW64 < Formula
   desc "Minimalist GNU for Windows and GCC cross-compilers"
   homepage "https://sourceforge.net/projects/mingw-w64/"
-  url "https://downloads.sourceforge.net/project/mingw-w64/mingw-w64/mingw-w64-release/mingw-w64-v10.0.0.tar.bz2"
-  sha256 "ba6b430aed72c63a3768531f6a3ffc2b0fde2c57a3b251450dcf489a894f0894"
+  url "https://downloads.sourceforge.net/project/mingw-w64/mingw-w64/mingw-w64-release/mingw-w64-v11.0.0.tar.bz2"
+  sha256 "bd0ea1633bd830204cc23a696889335e9d4a32b8619439ee17f22188695fcc5f"
   license "ZPL-2.1"
-  revision 4
 
   livecheck do
     url :stable
@@ -12,13 +11,13 @@ class MingwW64 < Formula
   end
 
   bottle do
-    sha256 arm64_ventura:  "39b804fa198652bd2e9d473565c56a046277900d461ae3655c0c8b682883af6d"
-    sha256 arm64_monterey: "0521776568eb0e9679786f018d039d34812707e612dd7e9c4386b68dd9795719"
-    sha256 arm64_big_sur:  "a79dd245e41408d99c8c56058abc92dff217226c75f7a295487f4f8decdb32b2"
-    sha256 ventura:        "6428be6af902e84e7140e14ac3b0c8020e9cf1a4fc5d3d1572b71cfcf4d9c6a5"
-    sha256 monterey:       "74ba47e2c89fa34b659c5de15c043f4d351614b31aa521087319cc45e5cb18f0"
-    sha256 big_sur:        "aaca080d095b87555a9e6112704ac9185ef50ef8b7f44e636cb7c1b78a4222df"
-    sha256 x86_64_linux:   "c0537e835211b32f2744d62f103aff2793eaaf59028e6ef3920819c48bfdc9d5"
+    sha256 arm64_ventura:  "8dbb584293d0a96282c1f061b746817c857aeadbfd21e8e9925a87397a993b74"
+    sha256 arm64_monterey: "f8cd3096f2944bac0ff2c1e1f2d8761811b3167dfda449f12798f35ce555c557"
+    sha256 arm64_big_sur:  "1c28c4f22f13d037ba6c450ffbe778c75f7e2e7a3415178d06a00865b0c3d2a6"
+    sha256 ventura:        "bc21617fdc0a06a58d3e9bf7b7477e41d45d22084acf14d55d560e3a096acf9e"
+    sha256 monterey:       "ad5683e6294f4987a6449060119975d44fc3552db646d4299cb73aa5880b8116"
+    sha256 big_sur:        "3b116e27e63fceac65715c861676bd7bff76fe650afcbf1537ab03b6a2ed2bd0"
+    sha256 x86_64_linux:   "7c09f410c628293c420d818814c33e9c5a265982c3dbe1ccedae4f9232ec5aa2"
   end
 
   # Apple's makeinfo is old and has bugs
@@ -33,12 +32,20 @@ class MingwW64 < Formula
     url "https://ftp.gnu.org/gnu/binutils/binutils-2.40.tar.xz"
     mirror "https://ftpmirror.gnu.org/binutils/binutils-2.40.tar.xz"
     sha256 "0f8a4c272d7f17f369ded10a4aca28b8e304828e95526da482b0ccc4dfc9d8e1"
+
+    # Fix linking failures in ld against import lib. Fixed upstream but still
+    # present in 2.40. Can remove this once 2.41 is released.
+    # https://sourceware.org/bugzilla/show_bug.cgi?id=30079
+    patch do
+      url "https://sourceware.org/git/?p=binutils-gdb.git;a=commitdiff_plain;h=b7eab2a9d4f4e92692daf14b09fc95ca11b72e30;hp=0d2f72332c7606fa3181b54dceef82d1af403624"
+      sha256 "99e943c9ea549c0a815493ea54f73e1af005224faa042bf2a4fa459325006c1b"
+    end
   end
 
   resource "gcc" do
-    url "https://ftp.gnu.org/gnu/gcc/gcc-12.2.0/gcc-12.2.0.tar.xz"
-    mirror "https://ftpmirror.gnu.org/gcc/gcc-12.2.0/gcc-12.2.0.tar.xz"
-    sha256 "e549cf9cf3594a00e27b6589d4322d70e0720cdd213f39beb4181e06926230ff"
+    url "https://ftp.gnu.org/gnu/gcc/gcc-13.1.0/gcc-13.1.0.tar.xz"
+    mirror "https://ftpmirror.gnu.org/gcc/gcc-13.1.0/gcc-13.1.0.tar.xz"
+    sha256 "61d684f0aa5e76ac6585ad8898a2427aade8979ed5e7f85492286c4dfc13ee86"
   end
 
   def target_archs

@@ -1,8 +1,8 @@
 class Librdkafka < Formula
   desc "Apache Kafka C/C++ library"
   homepage "https://github.com/edenhill/librdkafka"
-  url "https://github.com/edenhill/librdkafka/archive/refs/tags/v2.0.2.tar.gz"
-  sha256 "f321bcb1e015a34114c83cf1aa7b99ee260236aab096b85c003170c90a47ca9d"
+  url "https://github.com/edenhill/librdkafka/archive/refs/tags/v2.1.1.tar.gz"
+  sha256 "7be1fc37ab10ebdc037d5c5a9b35b48931edafffae054b488faaff99e60e0108"
   license "BSD-2-Clause"
   head "https://github.com/edenhill/librdkafka.git", branch: "master"
 
@@ -12,13 +12,13 @@ class Librdkafka < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "086f392afe735419313bfa2ff5d43fb0cee93a646e8fe9693a99f4b9b65bd6da"
-    sha256 cellar: :any,                 arm64_monterey: "84902ffb318dc778fddfaa97cc6083659be8de469e5e9f3efc71579a0a240667"
-    sha256 cellar: :any,                 arm64_big_sur:  "3ad3d82ce088464c7932fc79a54cfb8b01fb4b8e813a8f5b6b3f446dc417950f"
-    sha256                               ventura:        "51d853afb8c8cbaf269d9758d7d3f2be498f03ca19eeeb7a28bef487db34079f"
-    sha256                               monterey:       "b29f37dfdda86629d1b912f922adc413bac458c8d8b025be2e7267bbb55ca6cf"
-    sha256                               big_sur:        "12e5f6d2cbb0f39cd45f0d1cc25cc62ab38f44d2bcaacc7ad833e74e23590cb0"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "47ac99e8d522316918ff5ebdd3449dc1f02f5ee4111557ffbb8efda04f49bc9b"
+    sha256 cellar: :any,                 arm64_ventura:  "c2c2b9a45368d7bcda651b619ebe2cfcbe68358fb0fdda7e5f419d8f2d11a4ac"
+    sha256 cellar: :any,                 arm64_monterey: "4b6b59aa0113e3d102f61131093e0b869f7d47179890610f8fa2f6fb566bf6f2"
+    sha256 cellar: :any,                 arm64_big_sur:  "6f2517df4b4f9b6dd5c8810c3d498ed13c58f74c54ecae7185d9f8b0355825c8"
+    sha256                               ventura:        "270a111b7c2f9f55ba30ca04ef601cf4777caa5a422e8f636e0277647a183bc9"
+    sha256                               monterey:       "6b0482bee2c64846346fc449d944b810f662e1a71b90edcae870920b120bff15"
+    sha256                               big_sur:        "b373c974475fd282fbc88448fd106553ed70ab3c48f57a851f3b8a047aa8d4ec"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b39c1f148e2399a5b9f59c310b169e055afa662d1214be2c560bf0c077da6506"
   end
 
   depends_on "pkg-config" => :build

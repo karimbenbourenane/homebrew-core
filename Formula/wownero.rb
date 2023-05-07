@@ -2,8 +2,8 @@ class Wownero < Formula
   desc "Official wallet and node software for the Wownero cryptocurrency"
   homepage "https://wownero.org"
   url "https://git.wownero.com/wownero/wownero.git",
-      tag:      "v0.11",
-      revision: "6b28de1cdc020493dee2bf20b62c6d9227140ef2"
+      tag:      "v0.11.0.3",
+      revision: "e921c3b8a35bc497ef92c4735e778e918b4c4f99"
   license "BSD-3-Clause"
 
   # The `strategy` code below can be removed if/when this software exceeds
@@ -23,13 +23,13 @@ class Wownero < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "e51edda9a4e99b86db62f75f34a13a63298d67eba666d5236b00d3d9a8e34a00"
-    sha256 cellar: :any,                 arm64_monterey: "99020211fdfc9418d549db6d01e04cea5d7c81c14ab91908acc3c27b9aefcb97"
-    sha256 cellar: :any,                 arm64_big_sur:  "7a87c7cccf3f20b832b9adbc2dc1c6954f799b5ddb21b6810c0b8b191cf4c8a8"
-    sha256 cellar: :any,                 ventura:        "cfbe64894310128c156a8c6238bcd5bf7672e510648fd3ce03132402cde34332"
-    sha256 cellar: :any,                 monterey:       "8870663fb1727385e2c3f44732a5f165e91bb986694510c017f22d6046ce7055"
-    sha256 cellar: :any,                 big_sur:        "0333fc125862694ef21877f86a719526b90b1e41ca1175f19d4a86af5644f338"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ea5fa75bd9971927f759140c85657a2f4c0ca26d27ea8e3678d545bb5191a351"
+    sha256 cellar: :any,                 arm64_ventura:  "f8f3c23fb5186a037c01c9f4d82742b4d3098d7dd9349949d9f001fab182746d"
+    sha256 cellar: :any,                 arm64_monterey: "bbb5a81c9ab36cc09cf1c0cad43110da66a6c0cd9ade96647041172e7285829d"
+    sha256 cellar: :any,                 arm64_big_sur:  "6e9eba687f435c197c4c0bd7d2c045091ef80e1eba8c29866e357bd83e7befdd"
+    sha256 cellar: :any,                 ventura:        "9dfd70c7f9af50e125581d3f5bda6247b20966c05ec91b587a3e8db3b70c5b55"
+    sha256 cellar: :any,                 monterey:       "894e203b6cfe46ae4cd8d3755311da1fe871939152960b997e77a573fd5ad8be"
+    sha256 cellar: :any,                 big_sur:        "212b37c687062e20c8e6cf6058b82faf0958b89b322763f30d32fb5ec3c02d39"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "47eedd4c62b8c3c0f0a18f3080a82691d9becab292588658d76fcacd1b2ef65d"
   end
 
   depends_on "cmake" => :build

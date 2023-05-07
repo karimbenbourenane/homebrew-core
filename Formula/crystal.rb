@@ -4,12 +4,12 @@ class Crystal < Formula
   license "Apache-2.0"
 
   stable do
-    url "https://github.com/crystal-lang/crystal/archive/1.7.2.tar.gz"
-    sha256 "614844c9cfc8306dbff15637beaa02647d2a2deacecefe37c1ff833e0047e4a4"
+    url "https://github.com/crystal-lang/crystal/archive/1.8.1.tar.gz"
+    sha256 "0c1b40487e2748ed5b273b4ac27966f4733120b0f1bbe0b011751aae329e5866"
 
     resource "shards" do
-      url "https://github.com/crystal-lang/shards/archive/v0.17.2.tar.gz"
-      sha256 "ca3963512db8316b3624c0fba57f803419d67502416fe44938a27aa616cf9d70"
+      url "https://github.com/crystal-lang/shards/archive/v0.17.3.tar.gz"
+      sha256 "6512ff51bd69057f4da4783eb6b14c29d9a88b97d35985356d1dc644a08424c7"
     end
   end
 
@@ -19,37 +19,33 @@ class Crystal < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "274534ae4389c910f927eaab8a7979636f2863854e01e7151ec122d360ed43c4"
-    sha256 cellar: :any,                 arm64_monterey: "13724112a3908292332583738389b2ad7d56648e53bf618642d29521e6015713"
-    sha256 cellar: :any,                 arm64_big_sur:  "db429fa8128c29c8f8d1cbdd2db50a65cf16b3a5cc52f0602c28649e2065cafd"
-    sha256 cellar: :any,                 ventura:        "cc7ac8bf9cbf203f74202a80536e42fe2af3e5532e84affbe8d447c4038ddb89"
-    sha256 cellar: :any,                 monterey:       "1b9b246cd0b096c13b9190d8fbb8c6f8d3c264245751da6e3b152cf7f836c54d"
-    sha256 cellar: :any,                 big_sur:        "3fba8467361f08f1a8064732877eee3feb8bbf574ff6453e7645237d4fb63853"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "944fe92a0b62465bcad51e7dd50aa540ac6747add3deaf8b70fd473bb7f5a2ec"
+    sha256 cellar: :any,                 arm64_ventura:  "4287b075a971f4e958f8f5496e2e2f9344e908ec1d20e46b50f551fccee34d9e"
+    sha256 cellar: :any,                 arm64_monterey: "90212c2796e9f16d6c2745867a8077ab87a09d04f60a8dbbd7eca5e7df8b27e4"
+    sha256 cellar: :any,                 arm64_big_sur:  "90bc35890f9a0c66f887eeacc07e0bce71161bea316942139bc63772b2415776"
+    sha256 cellar: :any,                 ventura:        "f27e821c6d420c78f774fecb32d10daf23d53038440b34cb34b871f513c2024a"
+    sha256 cellar: :any,                 monterey:       "69d031746bc73f4838d2dc4e5163a77244e1bce656421e843a4f14826dcf40da"
+    sha256 cellar: :any,                 big_sur:        "0b059a3b6ca273b75d2113ca670a58e9a904c77b38766733cacc10a3d6a75ea5"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "523be59acf4a706a0da64c13c3432f9ec396aaacefd6d1eec30f96e85ba380bb"
   end
 
   head do
     url "https://github.com/crystal-lang/crystal.git", branch: "master"
 
+    uses_from_macos "libffi"  # for the interpreter
+
     resource "shards" do
       url "https://github.com/crystal-lang/shards.git", branch: "master"
     end
-
-    uses_from_macos "libffi" # for the interpreter
   end
 
   depends_on "bdw-gc"
   depends_on "gmp" # std uses it but it's not linked
   depends_on "libevent"
   depends_on "libyaml"
-  depends_on "llvm@14"
+  depends_on "llvm@15"
   depends_on "openssl@1.1" # std uses it but it's not linked
-  depends_on "pcre"
+  depends_on "pcre2"
   depends_on "pkg-config" # @[Link] will use pkg-config if available
-
-  on_linux do
-    depends_on arch: :x86_64
-  end
 
   fails_with gcc: "5"
 
@@ -126,10 +122,12 @@ class Crystal < Formula
 
     # Build shards (with recently built crystal)
     resource("shards").stage do
+      require "yaml"
+
       shard_lock = YAML.load_file("shard.lock")
       required_molinillo_version = shard_lock.dig("shards", "molinillo", "version")
       available_molinillo_version = resource("molinillo").version.to_s
-      odie "`molinillo` resource is outdated!" unless required_molinillo_version == available_molinillo_version
+      odie "`molinillo` resource is outdated!" if required_molinillo_version != available_molinillo_version
 
       resource("molinillo").stage "lib/molinillo"
 

@@ -1,20 +1,20 @@
 class Alembic < Formula
   desc "Open computer graphics interchange framework"
   homepage "http://alembic.io"
-  url "https://github.com/alembic/alembic/archive/1.8.4.tar.gz"
-  sha256 "e0fe1e16e6ec9a699b5f016f9e0ed31a384a008cfd9184f31253e2e096b1afda"
+  url "https://github.com/alembic/alembic/archive/1.8.5.tar.gz"
+  sha256 "180a12f08d391cd89f021f279dbe3b5423b1db751a9898540c8059a45825c2e9"
   license "BSD-3-Clause"
+  revision 1
   head "https://github.com/alembic/alembic.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "03703f33440ab833d334aaf2b01190d65512efdc13461228ed55fd0f9fcfcfe7"
-    sha256 cellar: :any,                 arm64_monterey: "09d1cab851add8faa5c79dbafafb6844bbc67dc089cee801a3dfd165ba0ba37a"
-    sha256 cellar: :any,                 arm64_big_sur:  "096dcbb5da9dc5e4083185dab94de7da70437e1482934f02d3d91bd3cbea84a9"
-    sha256 cellar: :any,                 ventura:        "09dc0d2bbf92b5ae6a102e3e77de63e0883b11deef3492ac27df272e8f7fb281"
-    sha256 cellar: :any,                 monterey:       "cca80eefc7f37e286b2a8636170756accd85a639a93251760c49fbf49a9a4886"
-    sha256 cellar: :any,                 big_sur:        "e48d101f4d7e434e9f6b0f5aadc08887d901a58a2ff40603f77a7e8adca4e035"
-    sha256 cellar: :any,                 catalina:       "ff5263fd1a8c9e937e657a7ec3b8a736ea26e0d34edfec57a090602ab154f3f8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "bade8c0ff094e72a2bd34eb13201cd63ac6d6756b766366d2a1a1411f4085bed"
+    sha256 cellar: :any,                 arm64_ventura:  "65c61ae643350f1650ec46f993bbdb2274aebc0244255ca61ab333988600477c"
+    sha256 cellar: :any,                 arm64_monterey: "4329cf18add1c25e5f644c3a320f1c1225351997849babee871e6d0e1b7d3ce0"
+    sha256 cellar: :any,                 arm64_big_sur:  "d2771244f164932b8f2179e5005ee66b70a8bd716983cf216a5f8ed19f219c28"
+    sha256 cellar: :any,                 ventura:        "877b5b92f82f91b2f24beb7e90df3a948c2b378d5b6f59832b1bed2705563bc7"
+    sha256 cellar: :any,                 monterey:       "31b3e429d4da1f9f368b446ecc7c1444b8fddd9ba7fa87a554146ef61993bcb1"
+    sha256 cellar: :any,                 big_sur:        "3512b654aa6eb2396c19796d903422458c7f86d8ee857afb76abb8cc83d8a4b3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "eed637a411ef960d275d05237c079889ebf0240b38d30f6488a0f9fce007a6a9"
   end
 
   depends_on "cmake" => :build

@@ -1,22 +1,23 @@
 class Sniffnet < Formula
   desc "Cross-platform application to monitor your network traffic"
   homepage "https://github.com/GyulyVGC/sniffnet"
-  url "https://github.com/GyulyVGC/sniffnet/archive/refs/tags/v1.1.1.tar.gz"
-  sha256 "0e2752afca87164171b5309f0785458f097d6a6db74dac270c6a3e393cbf6cfd"
+  url "https://github.com/GyulyVGC/sniffnet/archive/refs/tags/v1.1.4.tar.gz"
+  sha256 "ca236168b2ddee9e3fe056e0aa56fd961931e099919d2af250c23c73b8415f97"
   license any_of: ["Apache-2.0", "MIT"]
   head "https://github.com/GyulyVGC/sniffnet.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "0beeb2c4e30cc02009119cbaa50485805b74335ef76fe2e486f895ef1491391c"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "a59e5892e2e4ba6a4307625ca7c497a23d9bfa213f7eaf9b458ac690183e05ed"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "908d6e4b4ac80bcbe175653196463f09a90c8e4d00da74dc7df6d6ea9adeb96a"
-    sha256 cellar: :any_skip_relocation, ventura:        "f4f2f31f3f84bf9b10dd077fd8e68a6154bc66771e9fa853186a3939539d3a32"
-    sha256 cellar: :any_skip_relocation, monterey:       "8d0515688ecb8577fcd17ac3f932d95d1a1f1874cae6ffcf11ef9f82b611154e"
-    sha256 cellar: :any_skip_relocation, big_sur:        "9c10a9818a2ffb1c862076ffe9aa08ac20fa5c453f9b27cd9851add474ae177f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "21ac4a339460d1e4b3ab6dceac0d926d001d2e8a600bce0e2ba0b7a693ba95bc"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "ebb8ccd6710967a053627bc18e4a4102681b1e80c9e47e7528c50a4248abe6c4"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "01663e12d09adb69e474e81c6db36fe159706fee1a9bf3c80db1b1611cea92ad"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "3de12e68efff5222bd23bd7ad3fbb1435d5c088917dd55010c4b958e6e47a8e4"
+    sha256 cellar: :any_skip_relocation, ventura:        "883e85e7531d9e51564ddca542367a97f430173a072633cb68e903c20112f600"
+    sha256 cellar: :any_skip_relocation, monterey:       "47bc7b9ab69be1471861ab473b546ad26960c9dc4bf19a4d793cc8cf28dce867"
+    sha256 cellar: :any_skip_relocation, big_sur:        "5cb828d74ac50d663112daa627c0c4e71576476e088a923d49b9f8616a82663f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5c90cd39dc95219fcb61177a720c79ce3a769603372e9144eb846ac2e93d6629"
   end
 
   depends_on "rust" => :build
+  depends_on "openssl@3"
 
   uses_from_macos "libpcap"
 

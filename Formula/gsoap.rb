@@ -1,8 +1,8 @@
 class Gsoap < Formula
   desc "SOAP stub and skeleton compiler for C and C++"
   homepage "https://www.genivia.com/products.html"
-  url "https://downloads.sourceforge.net/project/gsoap2/gsoap_2.8.125.zip"
-  sha256 "d7f5c71bda7e032c1819b53daa7d8bb531f9275aee1851ccb9a89f27e29e300f"
+  url "https://downloads.sourceforge.net/project/gsoap2/gsoap_2.8.127.zip"
+  sha256 "25ecad1bbc363494eb7ea95a68508e4c93cc20596fad9ebc196c6572bbbd3c08"
   # Parts of the software are alternatively licensed under gSOAP-1.3b, but this
   # license is considered non-free by Debian and Fedora due to section 3.2:
   #
@@ -19,13 +19,13 @@ class Gsoap < Formula
   end
 
   bottle do
-    sha256 arm64_ventura:  "ad567dacc24fe56c847641ee12778a750f606142d7cb0909eb5cdb28e9dd74be"
-    sha256 arm64_monterey: "61bf675a7481497f9bcc7ce9ad0d902dc80f819498edb94cbdafd4f52d30b6a2"
-    sha256 arm64_big_sur:  "6f6298244fccb9cb0fc17ffd001a560ec1dfd607dee10ceaee343d84dfccb75e"
-    sha256 ventura:        "d1b3a80e867849b049ca8b617b977effa5e33a34fae0e30f926567288acd1ae5"
-    sha256 monterey:       "be56aaf5a9f8ebadf22c9cae37f4c6752948df8b46c676241d634fda6e7664aa"
-    sha256 big_sur:        "aefd17440ba3a368c7b16632f962ed68c34e62a8fa7ab7d025fce640b3e85c7f"
-    sha256 x86_64_linux:   "7530059c686521d89b7c19552efb6e48c9581fe4d80f3751b8bd9fa03309e4b3"
+    sha256 arm64_ventura:  "bdcbf84d17d9d78e392957d9b68c464826fbafdfa09dfe7b0503357d9bec0e34"
+    sha256 arm64_monterey: "742210934076cf4dc291fb6b12a8af2f5ee4581ec80e6f3d4758ffd68204a57b"
+    sha256 arm64_big_sur:  "c7e41edb56326a6551768c3868a51a29f5121f0fc7a7643abe501be9bc7f0f7d"
+    sha256 ventura:        "1a0d9c676c02c2f9e9ef40500409626ff3fa33f5c473f02dc393f5346a90c342"
+    sha256 monterey:       "891d92d63d6d172fc0c2b620c97788791e38e23876cb78c01e29c015111e3eb3"
+    sha256 big_sur:        "af29247b1ca088e9b9c6a2b8e50e97100c3e0384191a1414188619ab90f92456"
+    sha256 x86_64_linux:   "ff119d4896411a7584d9f375c4bc6df00aedbc3d2daedbe40d31ed568385386a"
   end
 
   depends_on "autoconf" => :build

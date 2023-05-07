@@ -1,8 +1,8 @@
 class TransmissionCli < Formula
   desc "Lightweight BitTorrent client"
   homepage "https://www.transmissionbt.com/"
-  url "https://github.com/transmission/transmission/releases/download/4.0.1/transmission-4.0.1.tar.xz"
-  sha256 "8fc5aef23638c983406f6a3ee9918369e4cdc84e3228bd2fb3d01dd55cdad900"
+  url "https://github.com/transmission/transmission/releases/download/4.0.3/transmission-4.0.3.tar.xz"
+  sha256 "b6b01fd58e42bb14f7aba0253db932ced050fcd2bba5d9f8469d77ddd8ad545a"
   license any_of: ["GPL-2.0-only", "GPL-3.0-only"]
 
   livecheck do
@@ -11,13 +11,13 @@ class TransmissionCli < Formula
   end
 
   bottle do
-    sha256 arm64_ventura:  "98802b194c66798d671f9bca130fe68e29bfa6f100af050cf8c42b7abc31d557"
-    sha256 arm64_monterey: "2226b75355904336981e73bb27bd6ee188599881a9b5dda270508bdcfb90f675"
-    sha256 arm64_big_sur:  "7c157dce0f5339e4317b2727929f5e6370ceb95e38ea6eca1d48e9fef4433dd0"
-    sha256 ventura:        "816a1d500c494ec4254b52a66bfcd7396c6087eef95bd6fa7c1e2f2224f7e6c9"
-    sha256 monterey:       "bdfa6a52225c03bab3cca6679ca9402d6b1e06595610cf1f4d1fa68fef6c94a2"
-    sha256 big_sur:        "50707dba2364185f0707fcfd61aef888a9d85f5cd1abc66335aedda7402b984e"
-    sha256 x86_64_linux:   "86f5b5d6520beb7297fe400b5f2c412b4cd54435f5692d06155a7fef67e829d7"
+    sha256 arm64_ventura:  "3c86f43d0a7ed493583a9e02991cdf797ccb95b2427dd6e220ab19189e628795"
+    sha256 arm64_monterey: "2d9e2b36c818bbb771e5d3a16bf97688766f2af0f6f4a2b54d9c056e99d80bdd"
+    sha256 arm64_big_sur:  "5c4174d5fcba66fc24e5db9519a2a71c32046a221d4bcfe11744d2faceb6dcc0"
+    sha256 ventura:        "86f5a1daacc2da1a0dc0a84856a2dd39abb6af0a1764ecf320e96fab5fdbd8fc"
+    sha256 monterey:       "f95f169b4f5207d352fa7a9b0ab3c74010a624846e7568f2000f7249235766d4"
+    sha256 big_sur:        "0659655e456ffa00d68cea154f38c2821f058c3ef896725856c7742eb69f8ea4"
+    sha256 x86_64_linux:   "4a7775ae15acbcf3c612da6222021b54834a2ce5b753ed117e17de6406882c4d"
   end
 
   depends_on "cmake" => :build

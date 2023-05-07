@@ -1,28 +1,20 @@
 class Octave < Formula
   desc "High-level interpreted language for numerical computing"
   homepage "https://www.gnu.org/software/octave/index.html"
+  url "https://ftp.gnu.org/gnu/octave/octave-8.2.0.tar.xz"
+  mirror "https://ftpmirror.gnu.org/octave/octave-8.2.0.tar.xz"
+  sha256 "b7b9d6e5004ff039450cfedd2a59ddbe2a3c22296df927a8af994182eb2670de"
   license "GPL-3.0-or-later"
   revision 3
 
-  stable do
-    url "https://ftp.gnu.org/gnu/octave/octave-7.3.0.tar.xz"
-    mirror "https://ftpmirror.gnu.org/octave/octave-7.3.0.tar.xz"
-    sha256 "a508ee6aebccfa68967c9e7e0a08793c4ca8e4ddace723aabdb8f71ad34d57f1"
-
-    # patch to support SuiteSparse 7.0.0 or newer
-    # upstream commit ref, https://hg.savannah.gnu.org/hgweb/octave/rev/aaffac4fbe30
-    # remove in next release
-    patch :DATA
-  end
-
   bottle do
-    sha256 arm64_ventura:  "5e3a2ba3770b465bfcbb8884f2edc0bdcd61cef2df1d4b27d0c583a88003dc21"
-    sha256 arm64_monterey: "eec6637b967d6d187fb422f309d89419e81e173ed16595ccd5a3d3ef2484e925"
-    sha256 arm64_big_sur:  "a65b92d702025ce26455354c6b6a099cd08f9c5fad925b9fb3953c84fcbb2be1"
-    sha256 ventura:        "f9355b23a9b858d1a1ccdcbf4ab47803ff0bc27d7baf9a78bce472dc1bc3aebc"
-    sha256 monterey:       "02bdc29f8ad12b4a24ac06b2611369fa3c5cf741ba83b03f9183a2d4ad725881"
-    sha256 big_sur:        "0619a9a8e7f2f5d94f3dddf3b6d4e7ca607c9a54c1a72c83ecfec121d1d5d67f"
-    sha256 x86_64_linux:   "a1a6ad850ca769177f879d97caf08157517a3e58fd674193672554ec0b8d4ed9"
+    sha256 arm64_ventura:  "8c87a7d72e3a385863b8ded569079d98ec18dcdbe7d2d05579a4fd24d10398dd"
+    sha256 arm64_monterey: "c239d96652d68188de1aa1c2e8e21b98dac2f7064f0e80171ccba54f8a35a5b2"
+    sha256 arm64_big_sur:  "38be821f47d4f25d91c51ee1c70061da19d2eaf91ca5533429cfa05069c3e7ee"
+    sha256 ventura:        "6c6d289b84c745d092d1aab59b4da4ea24ae659013955edd88147ea73658cd62"
+    sha256 monterey:       "3543fbe4d8270d793858ff5a5f49ea554e06c415e26a0a0edafad00b17c84e9c"
+    sha256 big_sur:        "77ba47e85bee07b3c2f971838cfd5338c66d97d6643572324ff6b07a55cf02d1"
+    sha256 x86_64_linux:   "1ddeaa480ce73b11541291ad0314c6a6f6449ac10082fc8bf8f07ffb6dee7578"
   end
 
   head do
@@ -56,7 +48,7 @@ class Octave < Formula
   depends_on "libsndfile"
   depends_on "libtool"
   depends_on "openblas"
-  depends_on "pcre"
+  depends_on "pcre2"
   depends_on "portaudio"
   depends_on "pstoedit"
   depends_on "qhull"
@@ -173,42 +165,3 @@ class Octave < Formula
     EOS
   end
 end
-
-__END__
-diff --git a/liboctave/util/oct-sparse.h b/liboctave/util/oct-sparse.h
-index 088554e..83a6930 100644
---- a/liboctave/util/oct-sparse.h
-+++ b/liboctave/util/oct-sparse.h
-@@ -89,16 +89,27 @@
- #  include <SuiteSparseQR.hpp>
- #endif
-
--// Cope with new SuiteSparse versions
-+// Cope with API differences between SuiteSparse versions
-
- #if defined (SUITESPARSE_VERSION)
--#  if (SUITESPARSE_VERSION >= SUITESPARSE_VER_CODE (4, 3))
-+#  if (SUITESPARSE_VERSION >= SUITESPARSE_VER_CODE (7, 0))
- #    define SUITESPARSE_NAME(name) SuiteSparse_ ## name
--#    define SUITESPARSE_ASSIGN_FPTR(f_name, f_var, f_assign) (SuiteSparse_config.f_name = f_assign)
--#    define SUITESPARSE_ASSIGN_FPTR2(f_name, f_var, f_assign) (SuiteSparse_config.f_name = SUITESPARSE_NAME (f_assign))
-+#    define SUITESPARSE_SET_FCN(name) SuiteSparse_config_ ## name ## _set
-+#    define SUITESPARSE_ASSIGN_FPTR(f_name, f_var, f_assign) \
-+       SUITESPARSE_SET_FCN(f_name) (f_assign)
-+#    define SUITESPARSE_ASSIGN_FPTR2(f_name, f_var, f_assign) \
-+       SUITESPARSE_SET_FCN(f_name) (SUITESPARSE_NAME (f_assign))
-+#  elif (SUITESPARSE_VERSION >= SUITESPARSE_VER_CODE (4, 3))
-+#    define SUITESPARSE_NAME(name) SuiteSparse_ ## name
-+#    define SUITESPARSE_ASSIGN_FPTR(f_name, f_var, f_assign) \
-+       (SuiteSparse_config.f_name = f_assign)
-+#    define SUITESPARSE_ASSIGN_FPTR2(f_name, f_var, f_assign) \
-+       (SuiteSparse_config.f_name = SUITESPARSE_NAME (f_assign))
- #  else
--#    define SUITESPARSE_ASSIGN_FPTR(f_name, f_var, f_assign) (f_var = f_assign)
--#    define SUITESPARSE_ASSIGN_FPTR2(f_name, f_var, f_assign) (f_var = CHOLMOD_NAME (f_assign))
-+#    define SUITESPARSE_ASSIGN_FPTR(f_name, f_var, f_assign) \
-+       (f_var = f_assign)
-+#    define SUITESPARSE_ASSIGN_FPTR2(f_name, f_var, f_assign) \
-+       (f_var = CHOLMOD_NAME (f_assign))
- #  endif
- #endif

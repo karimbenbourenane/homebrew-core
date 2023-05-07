@@ -1,19 +1,19 @@
 class Abseil < Formula
   desc "C++ Common Libraries"
   homepage "https://abseil.io"
-  url "https://github.com/abseil/abseil-cpp/archive/refs/tags/20230125.1.tar.gz"
-  sha256 "81311c17599b3712069ded20cca09a62ab0bf2a89dfa16993786c8782b7ed145"
+  url "https://github.com/abseil/abseil-cpp/archive/refs/tags/20230125.3.tar.gz"
+  sha256 "5366d7e7fa7ba0d915014d387b66d0d002c03236448e1ba9ef98122c13b35c36"
   license "Apache-2.0"
   head "https://github.com/abseil/abseil-cpp.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "fa0b75319f9699720edd3f7ab18ab3106dfd28f82739e22c0f0d9e25faaeb32d"
-    sha256 cellar: :any,                 arm64_monterey: "e5bb53ed283a441548331d3de02d0258359a4b89fe36b8aa945923307fd53f1b"
-    sha256 cellar: :any,                 arm64_big_sur:  "abf21c9625cbd42535ed005de64be2c2d6ac534e0de7c7f7d4c5bcdde1625b02"
-    sha256 cellar: :any,                 ventura:        "306df33feb8d35d0ac341db33c4c9ac36ca8886de300cf3e34551140d5fede5b"
-    sha256 cellar: :any,                 monterey:       "b368a41757d986a2ed34f55ac80555445a7c0d35b5f55ba26ec8cfb242eeb20f"
-    sha256 cellar: :any,                 big_sur:        "6a80a4248e7e9c0491c1d06d0e2ff1b6224f9dabbe6f1c31e2f3bbbc215b9ee0"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "722649548a9d355499bc452c95bdfa71809b1f84df048776537dde787e771709"
+    sha256 cellar: :any,                 arm64_ventura:  "7c99fd26deff5a50c803f83454533f0123601f407dea0870c15250ec1666c78d"
+    sha256 cellar: :any,                 arm64_monterey: "936ca2256b49815907e28351765ea3959ca3793fcc19747cf8a3fdd054b3fc03"
+    sha256 cellar: :any,                 arm64_big_sur:  "09a43c1db5c5149754bd4a2d8f5e6444a529f7a8234bd17c313d2c1acec8ea09"
+    sha256 cellar: :any,                 ventura:        "66f8baa97cc8c3a7eb3fff989e02cdd13898f61c1e3b113ad59d7ad2c084738d"
+    sha256 cellar: :any,                 monterey:       "18410e6d4a3ae40b8e226207525f1284c21cff84eb8c3fcdf93f33ebb7aac22c"
+    sha256 cellar: :any,                 big_sur:        "91b4acd428a79cfb9f67858cb20f3ab285825b05d2f49528ddbd168e9b199810"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fc93de4047461611e6b0f73dc32eed30e9698ef13830e91eb0f7e475c5843951"
   end
 
   depends_on "cmake" => :build

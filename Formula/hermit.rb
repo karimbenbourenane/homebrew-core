@@ -1,18 +1,18 @@
 class Hermit < Formula
   desc "Manages isolated, self-bootstrapping sets of tools in software projects"
   homepage "https://cashapp.github.io/hermit"
-  url "https://github.com/cashapp/hermit/archive/refs/tags/v0.33.0.tar.gz"
-  sha256 "4a50bf5baa5727bee1c5176b252eb4b713af3e3926031838527f26ec40f2403b"
+  url "https://github.com/cashapp/hermit/archive/refs/tags/v0.35.0.tar.gz"
+  sha256 "ca85d0ee0fb71491aecb68cd2b12db465a2903fb940ac8744005cc5ec6c409f4"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "85564f8f873119cdb49cb98b84f600fa9fc092564bd041a9cf5b2d91550241c3"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "54d681a763cbb21784b22cfb309bb4c0f2d6b4a96e1a0bd260c0068b2f55764e"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "d0922bd4bb417ed11179b6fd7e88565c72c9068d7355df3f307518bb4b27840d"
-    sha256 cellar: :any_skip_relocation, ventura:        "120ee4a7991ce92e5cb09c5a29e59734a094d2a03ff3bd296359a42720b7ec01"
-    sha256 cellar: :any_skip_relocation, monterey:       "dfea45aa8cf19572c4236e6b1b24b559eced6e65f432e9f3af712e4249122bac"
-    sha256 cellar: :any_skip_relocation, big_sur:        "f2308fb0661e4b3ab821a45d6e52b6eef4d05022cf5aea18dc9edb8f239a55af"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ff1595f6723098d9a4fa32e9f1bfd3bc114c940cf7b1d65025001b8e02b887f5"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "2c1ae234c673a9ab866248e747ac4975fdc9e7fbf15edc70bf4cb5c30b9c812f"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "c8b3f4abbdb472f1707f508ee8ce14e615ef471c5e4d0f157026d2b4e236b08a"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "f7fc21b0ebbdacd7879699928706407a292b6029adb79409fdb7f8a3a02281b4"
+    sha256 cellar: :any_skip_relocation, ventura:        "95cd8f50159428ab9c4c8e4ede3f1d7bc413fa80ca50b55456e60b472800eee8"
+    sha256 cellar: :any_skip_relocation, monterey:       "ff69d56d56e38c0201ce1f23ea8c7357e8b9850621c1a5d7baa5f77b1a735c9c"
+    sha256 cellar: :any_skip_relocation, big_sur:        "5cf58b67cb1fcf806eb044bcb9a9b7ef8d5e1f142657062dcc2cd7b8273e9d82"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "060f6d363373f9c8e6be1854cbbef3f4941d10e6e79430cabba28cdac4b7d1a9"
   end
 
   depends_on "go" => :build

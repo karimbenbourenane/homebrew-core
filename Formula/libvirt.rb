@@ -1,24 +1,24 @@
 class Libvirt < Formula
   desc "C virtualization API"
   homepage "https://libvirt.org/"
-  url "https://libvirt.org/sources/libvirt-9.1.0.tar.xz"
-  sha256 "defebea252a24c1800fbf484b14018b6261192acbac5bda8395e47eba2a14d6a"
+  url "https://download.libvirt.org/libvirt-9.3.0.tar.xz"
+  sha256 "751179b08e5a73b6cfd93200d110df199eaa3973f3554ba2ebcbd71e272bebe1"
   license all_of: ["LGPL-2.1-or-later", "GPL-2.0-or-later"]
   head "https://gitlab.com/libvirt/libvirt.git", branch: "master"
 
   livecheck do
-    url "https://libvirt.org/sources/"
+    url "https://download.libvirt.org"
     regex(/href=.*?libvirt[._-]v?(\d+(?:\.\d+)+)\.t/i)
   end
 
   bottle do
-    sha256 arm64_ventura:  "a0ad1459d0cd11d37810d873eb1c2fba2ad167a0b4ab5ebe538ed8b44495e413"
-    sha256 arm64_monterey: "f0f153f7d349657a44b8177df87f519ed54ea6d3c95ade7f3c61e6de28728c5c"
-    sha256 arm64_big_sur:  "220969ba84fcac799a45ed3a4f145ad7dde85a560b5c9d8fbaa84302de9a027b"
-    sha256 ventura:        "7c7c79718b8eb242cb398fea929629b476d012bfcfb2bbf548866e0cbce1a3eb"
-    sha256 monterey:       "92a10075ddec2c0565e621fa0d3104add7b0da3b2babe78205f9d8662317d69a"
-    sha256 big_sur:        "91fd6fb6464237ea7848dd3a7fd87c74deec4c25d7208e88f53d8a858570a253"
-    sha256 x86_64_linux:   "6a7c8079937edc6b31676e8285f24fb046721c95185b1ab160540b996368410f"
+    sha256 arm64_ventura:  "7b1b9039529dd54dec14cead702f333b1a35a41f7060a7dca60b8d32108d09e9"
+    sha256 arm64_monterey: "bfceb9ea6aad02b655d628a727d4f6a8f181b0710b8a9d78f1780b421b45f5e6"
+    sha256 arm64_big_sur:  "8619fb5aba79ac4914979188828d82c195e658d80ac44f11d8523bc7c3a7164c"
+    sha256 ventura:        "658c4805d58382b02b4d7a56cd34d7105eab1589cc0f3c29918243147a627429"
+    sha256 monterey:       "42a337ca3eccc6484943177baf09e80bdf7a1773925245a42cb2cd0d1a20d39e"
+    sha256 big_sur:        "8007e9b5ad7af9ce00c9a81eb986a708575bbdc21bb18509cf6fac535e967065"
+    sha256 x86_64_linux:   "5d94bab6e111b9cdce66f5c1063b75cce78341b211055d1561c080698e1f9d61"
   end
 
   depends_on "docutils" => :build

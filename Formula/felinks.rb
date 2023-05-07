@@ -1,34 +1,29 @@
 class Felinks < Formula
   desc "Text mode browser and Gemini, NNTP, FTP, Gopher, Finger, and BitTorrent client"
   homepage "https://github.com/rkd77/elinks#readme"
+  url "https://github.com/rkd77/elinks/releases/download/v0.16.1.1/elinks-0.16.1.1.tar.xz"
+  sha256 "303c6f830b98658dcb813b68432ecde27d3857ccf1e765109fb6b0edb89f5095"
   license "GPL-2.0-only"
 
-  # TODO: Switch to `libidn2` on next release and remove stable block
-  stable do
-    url "https://github.com/rkd77/elinks/releases/download/v0.16.0/elinks-0.16.0.tar.xz"
-    sha256 "4d65b78563af39ba1d0a9ab1c081e129ef2ed541009e6ff11c465ba9d8f0f234"
-    depends_on "libidn"
-  end
-
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "161812829640eb38d7b3cc8745a357dde5c5504d5c275b024a39c7d765cbf6ac"
-    sha256 cellar: :any,                 arm64_monterey: "a0f23116d119af283254276777bc0e15a212ff734ea62162638f5f90a9c693e9"
-    sha256 cellar: :any,                 arm64_big_sur:  "a019ea4cddf3176b28231e2fed2618a0dcd0ebbaebe11a51cdb764871e311011"
-    sha256 cellar: :any,                 ventura:        "6b26c82e2c6caa670821b65f559e717cc07a509baf7097d7cb8805cdb3c7dc31"
-    sha256 cellar: :any,                 monterey:       "6e9bf6181366d6326f086453fae724f0f22c0ea72d6efac56c00e928a7e61760"
-    sha256 cellar: :any,                 big_sur:        "bdd387e06cfefa3f3990fd59b08c8d94ca9a5b48ef9cd19876d3db1ff976fe0f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "065972f98316dabbeb4f753183a4b3a0e7915f5f9168389282e19bc453b4626e"
+    sha256 cellar: :any,                 arm64_ventura:  "a6115add8e76c8dacc68deb68ca62f97a491d42eec37c325555e4b928cf9f571"
+    sha256 cellar: :any,                 arm64_monterey: "7022a233634adae1b93d4e6d8796dff37666ae11a6cd01d1e2fca859090822aa"
+    sha256 cellar: :any,                 arm64_big_sur:  "a7d6126a3fb6fa700cefc46ba323b94bcc93ad479a59e7dc41deedbad3c35130"
+    sha256 cellar: :any,                 ventura:        "0834b3a35b8f5a8c1760f0d63cc2bf3bd2ae49c9c8da68320df8486e0c34a34e"
+    sha256 cellar: :any,                 monterey:       "830cc73a8e8dfad7aaae3271636f1646d60292b0e42ee398d59944d20e61add2"
+    sha256 cellar: :any,                 big_sur:        "2e48a8a05c023118d94094dfa8e3c0065fe51746e54fa16cb182a88be269ff90"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b3f9f998591f4be38178e2fc160a43192e5b369c16628269f281a2e66bf76a59"
   end
 
   head do
     url "https://github.com/rkd77/elinks.git", branch: "master"
     depends_on "autoconf" => :build
     depends_on "automake" => :build
-    depends_on "libidn2"
   end
 
   depends_on "pkg-config" => :build
   depends_on "brotli"
+  depends_on "libidn2"
   depends_on "openssl@3"
   depends_on "tre"
   depends_on "zstd"

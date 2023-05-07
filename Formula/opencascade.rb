@@ -1,11 +1,10 @@
 class Opencascade < Formula
   desc "3D modeling and numerical simulation software for CAD/CAM/CAE"
   homepage "https://dev.opencascade.org/"
-  url "https://git.dev.opencascade.org/gitweb/?p=occt.git;a=snapshot;h=refs/tags/V7_6_3;sf=tgz"
-  version "7.6.3"
-  sha256 "baae5b3a7a38825396fc45ef9d170db406339f5eeec62e21b21036afeda31200"
+  url "https://git.dev.opencascade.org/gitweb/?p=occt.git;a=snapshot;h=refs/tags/V7_7_0;sf=tgz"
+  version "7.7.0"
+  sha256 "075ca1dddd9646fcf331a809904925055747a951a6afd07a463369b9b441b445"
   license "LGPL-2.1-only"
-  revision 1
 
   # The first-party download page (https://dev.opencascade.org/release)
   # references version 7.5.0 and hasn't been updated for later maintenance
@@ -21,17 +20,17 @@ class Opencascade < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "ee40f04033b6e18e85244585165ae9fe4f607819f90832b987c33ec7dcc0bcf7"
-    sha256 cellar: :any,                 arm64_monterey: "3a0ea3b12845cac63ec0adde1f3af3bb079dbde60c37b184fd3b2e00c1c24d32"
-    sha256 cellar: :any,                 arm64_big_sur:  "9f50bbcd16fd80e9da21a2eacc995baa8ec45875a3f2a07dfe9cfb12c26c6cdc"
-    sha256 cellar: :any,                 ventura:        "48de264e07506765c06e625955b9e399e5537c5b6328e24130c51700c6a4849d"
-    sha256 cellar: :any,                 monterey:       "0ee55bb56dbc02c26f0d6321737ced2ede197f210fc796dc4bfa99c1d422b7ac"
-    sha256 cellar: :any,                 big_sur:        "e8c67ba581ab52d35d11c6f7f93fdd582ef3f5185ace8da4b5afd6af743831a4"
-    sha256 cellar: :any,                 catalina:       "9b6224a6ccd3484fb4e2b9cd14bfdd3e46ad1b555641f001422fc42cd00eb8be"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b28effcc715e0a7aaeb02ae137536f3326fb540e6115e32602c63cf2a4fd5682"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_ventura:  "0162e3ca23a6a457c27758d74d9d381977ce440db5b73691b9c64c9853ddeb9c"
+    sha256 cellar: :any,                 arm64_monterey: "ea1fb9ba90f1f21e154831a34753c1224eb2fce1d28c8c6cd6327d8b6542167e"
+    sha256 cellar: :any,                 arm64_big_sur:  "85e47fb1a77014a39be4883157c00a4c1396e15fc77fab2daacf9399885be447"
+    sha256 cellar: :any,                 ventura:        "dcf19a023624080c74694edd1e8c0004726789711a5965b809ad09afee215a33"
+    sha256 cellar: :any,                 monterey:       "8c4e6f43b96a47c0f150e2dc9f0a1d20f79036cff1ff84a2feebb054c15c040b"
+    sha256 cellar: :any,                 big_sur:        "75ab9f445fd48c02bf5b0f4318337bcbd3a51d9d87ee0dcf1d4094a5c9efdc14"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "83f337ba6677432b4380ea30745a7b3eb5d343c24cf1fcb82c7387ee04b8d357"
   end
 
-  depends_on "cmake" => :build
+  depends_on "cmake" => [:build, :test]
   depends_on "doxygen" => :build
   depends_on "rapidjson" => :build
   depends_on "fontconfig"
@@ -44,11 +43,10 @@ class Opencascade < Formula
     depends_on "mesa" # For OpenGL
   end
 
-  # Fix compilation errors with oneTBB 2021
-  # Issue ref: https://tracker.dev.opencascade.org/view.php?id=0032697
+  # Fix a missing <limits> header. Try removing on next release.
   patch do
-    url "https://git.dev.opencascade.org/gitweb/?p=occt.git;a=patch;h=740833a6a88e481f474783c426b6f6311ed586d3"
-    sha256 "04932bf0674906dbc8f9c4ff0702aad3147c5db9abd0262973e18a1e4cd73976"
+    url "https://git.dev.opencascade.org/gitweb/?p=occt.git;a=patch;h=2a8c5ad46cfef8114b13c3a33dcd88a81e522c1e;hp=7ea3eff4f88640ca23e5b1a6dad82ab4fda4a8c6"
+    sha256 "3aff4835faf75d7d48aaa53db88e00df527b65b0a930746e1b8d1534c9b368b1"
   end
 
   def install
@@ -69,8 +67,8 @@ class Opencascade < Formula
                     "-D3RDPARTY_TBB_DIR=#{Formula["tbb"].opt_prefix}",
                     "-D3RDPARTY_TCL_DIR:PATH=#{tcltk.opt_prefix}",
                     "-D3RDPARTY_TK_DIR:PATH=#{tcltk.opt_prefix}",
-                    "-D3RDPARTY_TCL_INCLUDE_DIR:PATH=#{tcltk.opt_include}",
-                    "-D3RDPARTY_TK_INCLUDE_DIR:PATH=#{tcltk.opt_include}",
+                    "-D3RDPARTY_TCL_INCLUDE_DIR:PATH=#{tcltk.opt_include}/tcl-tk",
+                    "-D3RDPARTY_TK_INCLUDE_DIR:PATH=#{tcltk.opt_include}/tcl-tk",
                     "-D3RDPARTY_TCL_LIBRARY_DIR:PATH=#{tcltk.opt_lib}",
                     "-D3RDPARTY_TK_LIBRARY_DIR:PATH=#{tcltk.opt_lib}",
                     "-D3RDPARTY_TCL_LIBRARY:FILEPATH=#{libtcl}",
@@ -91,5 +89,33 @@ class Opencascade < Formula
 
     # Discard the first line ("DRAW is running in batch mode"), and check that the second line is "1"
     assert_equal "1", output.split(/\n/, 2)[1].chomp
+
+    # Make sure hardcoded library name references in our CMake config files are valid.
+    # https://github.com/Homebrew/homebrew-core/issues/129111
+    # https://dev.opencascade.org/content/cmake-files-macos-link-non-existent-libtbb128dylib
+    (testpath/"CMakeLists.txt").write <<~CMAKE
+      cmake_minimum_required(VERSION 3.5)
+      project(test LANGUAGES CXX)
+      find_package(OpenCASCADE REQUIRED)
+      add_executable(test main.cpp)
+      target_include_directories(test SYSTEM PRIVATE "${OpenCASCADE_INCLUDE_DIR}")
+      target_link_libraries(test PRIVATE TKernel)
+    CMAKE
+
+    (testpath/"main.cpp").write <<~CPP
+      #include <Quantity_Color.hxx>
+      #include <Standard_Version.hxx>
+      #include <iostream>
+      int main() {
+        Quantity_Color c;
+        std::cout << "OCCT Version: " << OCC_VERSION_COMPLETE << std::endl;
+        return 0;
+      }
+    CPP
+
+    system "cmake", "-S", ".", "-B", "build"
+    system "cmake", "--build", "build"
+    ENV.append_path "LD_LIBRARY_PATH", lib if OS.linux?
+    assert_equal "OCCT Version: #{version}", shell_output("./build/test").chomp
   end
 end

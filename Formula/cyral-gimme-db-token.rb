@@ -3,19 +3,18 @@ class CyralGimmeDbToken < Formula
 
   desc "Eases using Cyral for SSO login to databases"
   homepage "https://cyral.com/docs/connect/repo-connect/#cli-token-retriever-for-sso"
-  url "https://files.pythonhosted.org/packages/96/44/1810cb177f63217550a1cb0f38adf5652636167062e78dd6b1fb3207faf5/cyral-gimme-db-token-0.8.1.tar.gz"
-  sha256 "7f49ac2410870b895118f39051264ac047d9f6537d7cbdd8828a7627681c8857"
+  url "https://files.pythonhosted.org/packages/2d/a4/89c570d7939cf4560ee49017ba1dfe5e0174f15d18f60e532fbb2586d65d/cyral-gimme-db-token-0.8.2.tar.gz"
+  sha256 "ba2e8258e231324f76bdf34dabce41f75dbef67b7246cbe1db030ca75e65bed8"
   license "Apache-2.0"
 
   bottle do
-    rebuild 5
-    sha256 cellar: :any,                 arm64_ventura:  "81bfb30f7bcd25c4d00f026162d661e4a8fb7b136ba34d3f06144a408960c6c8"
-    sha256 cellar: :any,                 arm64_monterey: "75f1d9ecf4e20d058a99f17cc956c114f19d15be37312c1e5800ee180309967b"
-    sha256 cellar: :any,                 arm64_big_sur:  "1eafce8aac303b114a6dcf81487c33600b35a549fe71d6638ba3a2e05204341a"
-    sha256 cellar: :any,                 ventura:        "c20a5a5e8d436eb1c9971a86caa4a69cfeee46dc5d389382ac66d801a3830036"
-    sha256 cellar: :any,                 monterey:       "35d12f35587eb6bb604c66876b20f995bbc2ab4722a6d334801e521080a0a384"
-    sha256 cellar: :any,                 big_sur:        "beda33066823eddc0b541961f0acfbe209b09aebc68157cb3097ea230ac40475"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a6ee1093d99dc2d1fdfac0c2f18590dcfdf44bf3fdd655761da5e17281c096ce"
+    sha256 cellar: :any,                 arm64_ventura:  "9e9021e5c05e9990270b4037be273de8a53102869e3c74cef11809a18d8cee53"
+    sha256 cellar: :any,                 arm64_monterey: "639872db8cb4b62482872ecc97a3090150ea7f02a912d0af816d2aa6512a4872"
+    sha256 cellar: :any,                 arm64_big_sur:  "53d9bcee3b002f984b9bd22c9198872b46427211aebb14495ff7b84dd8563b3e"
+    sha256 cellar: :any,                 ventura:        "2f86a2b049a321038b82ec7fc400c65d35c34aafdcf685e197c1c0fed474ab41"
+    sha256 cellar: :any,                 monterey:       "91f5229fc4195e193b6268c4e5537ed9a26f4e656da0b36d4a7a1725b5c67b6d"
+    sha256 cellar: :any,                 big_sur:        "c9f848e6b1be82a004bfb137fbfa192ced6ad99f8144a0a906f842232bb82469"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "3b7a1232edff2dc566c1f1a63a8ec1a5bb0bd8cb9de7e71b2822d22b26dcc685"
   end
 
   depends_on "rust" => :build # for cryptography
@@ -30,13 +29,13 @@ class CyralGimmeDbToken < Formula
   end
 
   resource "awscli" do
-    url "https://files.pythonhosted.org/packages/f0/83/23008808deafef9fe0d1d09a9a61d0a2811c04bacfc6eae0a90d885c9af4/awscli-1.27.69.tar.gz"
-    sha256 "2a8e646277d762f47b150ad7e71dfa88867411658a4943b416f35d9be7be4dd8"
+    url "https://files.pythonhosted.org/packages/ff/cc/a07ca67ea894ab556d4b705d584163aa3c046c96f4899762ac9d8ee80386/awscli-1.27.125.tar.gz"
+    sha256 "4ef04564a4f6d10e9f2c07bb485a482183b6a2aabb7f7797b61b64159b340672"
   end
 
   resource "botocore" do
-    url "https://files.pythonhosted.org/packages/db/31/720ac07bd096fdd24fbeb42111638b41fd220e618790b94ada77a6bd1f3e/botocore-1.29.69.tar.gz"
-    sha256 "7e1bebca013544fbc298cb58603bfccd5f71b49c720a5c33c07cf5dfc8145a1f"
+    url "https://files.pythonhosted.org/packages/81/f9/31fd079836f54470e5aa7c53f8487653d0720304b592e168f51c516a08b9/botocore-1.29.125.tar.gz"
+    sha256 "3005a7ffee083315e69938acdf1bfeaf9e21fe1fe1643d6573ee817721f4ffcd"
   end
 
   resource "certifi" do
@@ -50,8 +49,8 @@ class CyralGimmeDbToken < Formula
   end
 
   resource "charset-normalizer" do
-    url "https://files.pythonhosted.org/packages/96/d7/1675d9089a1f4677df5eb29c3f8b064aa1e70c1251a0a8a127803158942d/charset-normalizer-3.0.1.tar.gz"
-    sha256 "ebea339af930f8ca5d7a699b921106c6e29c617fe9606fa7baa043c1cdae326f"
+    url "https://files.pythonhosted.org/packages/ff/d7/8d757f8bd45be079d76309248845a04f09619a7b17d6dfc8c9ff6433cac2/charset-normalizer-3.1.0.tar.gz"
+    sha256 "34e0a2f9c370eb95597aae63bf85eb5e96826d81e3dcf88b8886012906f509b5"
   end
 
   resource "click" do
@@ -65,8 +64,8 @@ class CyralGimmeDbToken < Formula
   end
 
   resource "cryptography" do
-    url "https://files.pythonhosted.org/packages/10/a7/51953e73828deef2b58ba1604de9167843ee9cd4185d8aaffcb45dd1932d/cryptography-36.0.2.tar.gz"
-    sha256 "70f8f4f7bb2ac9f340655cbac89d68c527af5bb4387522a8413e841e3e6628c9"
+    url "https://files.pythonhosted.org/packages/fa/f3/f4b8c175ea9a1de650b0085858059050b7953a93d66c97ed89b93b232996/cryptography-39.0.2.tar.gz"
+    sha256 "bc5b871e977c8ee5a1bbc42fa8d19bcc08baf0c51cbf1586b0e87a2694dde42f"
   end
 
   resource "docutils" do
@@ -85,8 +84,8 @@ class CyralGimmeDbToken < Formula
   end
 
   resource "pyasn1" do
-    url "https://files.pythonhosted.org/packages/a4/db/fffec68299e6d7bad3d504147f9094830b704527a7fc098b721d38cc7fa7/pyasn1-0.4.8.tar.gz"
-    sha256 "aef77c9fb94a3ac588e87841208bdec464471d9871bd5050a287cc9a475cd0ba"
+    url "https://files.pythonhosted.org/packages/61/ef/945a8bcda7895717c8ba4688c08a11ef6454f32b8e5cb6e352a9004ee89d/pyasn1-0.5.0.tar.gz"
+    sha256 "97b7290ca68e62a832558ec3976f15cbf911bf5d7c7039d8b861c2a0ece69fde"
   end
 
   resource "pycparser" do
@@ -99,14 +98,14 @@ class CyralGimmeDbToken < Formula
     sha256 "0123cacc1627ae19ddf3c27a5de5bd67ee4586fbdd6440d9748f8abb483d3e86"
   end
 
-  resource "PyYAML" do
+  resource "pyyaml" do
     url "https://files.pythonhosted.org/packages/a0/a4/d63f2d7597e1a4b55aa3b4d6c5b029991d3b824b5bd331af8d4ab1ed687d/PyYAML-5.4.1.tar.gz"
     sha256 "607774cbba28732bfa802b54baa7484215f530991055bb562efbed5b2f20a45e"
   end
 
   resource "requests" do
-    url "https://files.pythonhosted.org/packages/9d/ee/391076f5937f0a8cdf5e53b701ffc91753e87b07d66bae4a09aa671897bf/requests-2.28.2.tar.gz"
-    sha256 "98b1b2782e3c6c4904938b84c0eb932721069dfdb9134313beff7c83c2df24bf"
+    url "https://files.pythonhosted.org/packages/4c/d2/70fc708727b62d55bc24e43cc85f073039023212d482553d853c44e57bdb/requests-2.29.0.tar.gz"
+    sha256 "f2e34a75f4749019bb0e3effb66683630e4ffeaf75819fb51bebef1bf5aef059"
   end
 
   resource "rsa" do
@@ -120,8 +119,8 @@ class CyralGimmeDbToken < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/c5/52/fe421fb7364aa738b3506a2d99e4f3a56e079c0a798e9f4fa5e14c60922f/urllib3-1.26.14.tar.gz"
-    sha256 "076907bf8fd355cde77728471316625a4d2f7e713c125f51953bb5b3eecf4f72"
+    url "https://files.pythonhosted.org/packages/21/79/6372d8c0d0641b4072889f3ff84f279b738cd8595b64c8e0496d4e848122/urllib3-1.26.15.tar.gz"
+    sha256 "8a388717b9476f934a21484e8c8e61875ab60644d29b9b39e11e4b9dc1c6b305"
   end
 
   # patch to use latest poetry_core to fix build

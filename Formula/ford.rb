@@ -3,31 +3,31 @@ class Ford < Formula
 
   desc "Automatic documentation generator for modern Fortran programs"
   homepage "https://github.com/Fortran-FOSS-Programmers/ford"
-  url "https://files.pythonhosted.org/packages/14/89/156df5d59836a39a5d11d65f81135d0338a33023188ff8aa5e7b29764919/FORD-6.1.17.tar.gz"
-  sha256 "10f8cc19517ea6b8308251e59286a793c9bc47098c33da3528aca16a08143908"
+  url "https://files.pythonhosted.org/packages/7f/19/60e91b8fb3fba9ab3a3fc21d69e90e328349492eecaefa15e589e3aed843/FORD-6.2.5.tar.gz"
+  sha256 "5fc8570804244feebbf6ae7102f8fd7e5b4c9f41e4c2173ba7558e49e1df3ab6"
   license "GPL-3.0-or-later"
   head "https://github.com/Fortran-FOSS-Programmers/ford.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "293fa584b1cb58340f1eedf51ec8bed77cde2ee1510b0e033172f4e8a5ac059b"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "17223b93b09b2c55907b63f0bf10ecbcbe3c8c8eb3ad3f613a8900ef7786c95a"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "36fe3fc113050595e8aec53cf4af937b4bfdb4bda034492b34e6eb51126c0ede"
-    sha256 cellar: :any_skip_relocation, ventura:        "cf807db6995c308a486aefdfee4ed1b712b9af63f654ee8e47799dd324587f02"
-    sha256 cellar: :any_skip_relocation, monterey:       "75687c3aa866ec1c93119ac3a4279fc5e5ec7dc136688d6f1d9d8eb73d0dd21d"
-    sha256 cellar: :any_skip_relocation, big_sur:        "28c8d7b6db281d2f4c7870567226d15ac71d48df3fa91fa298eb1d4ca6f5fa9a"
-    sha256 cellar: :any_skip_relocation, catalina:       "f5d1c31c54375c2d48ae50310e1fa87850732fad5bd7e77c255a966c6710a04f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "19504bb39904011a6d09d4cef63c810ead970f458aa22a2b4c82a12abc4db809"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "8948ca52f3af0b56e558b409e482b4677a586d7c9bd52951b5cc517ce94d578b"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "5b728acd2e5faff1e19e8a3ed27a93a5c8d74cb9f50499e432d2b2448a8b941a"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "9a04cc0ba94e82dc320f8f2aaab1f90ee09984ec7cb1b7513267387990484daa"
+    sha256 cellar: :any_skip_relocation, ventura:        "c069a3f2ba3f9f00e1d562ec2b9dc3c363fad14badc0fbfe129c3875ce602334"
+    sha256 cellar: :any_skip_relocation, monterey:       "52d1f4ef76fca496c73599dade40d4fd97d2f0f223320fe511bccd2ccb439c23"
+    sha256 cellar: :any_skip_relocation, big_sur:        "f94d3c0f8b7f6626a2e232617ba906748d7ca1fea1245bcb803f1bfd4afc2bc1"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "893e1dc1a61555955610fba040b79d4ddc5b851fd9622663dc38173e02dfe2e8"
   end
 
   depends_on "graphviz"
+  depends_on "pygments"
   depends_on "python@3.11"
 
   uses_from_macos "libxml2"
   uses_from_macos "libxslt"
 
   resource "beautifulsoup4" do
-    url "https://files.pythonhosted.org/packages/e8/b0/cd2b968000577ec5ce6c741a54d846dfa402372369b8b6861720aa9ecea7/beautifulsoup4-4.11.1.tar.gz"
-    sha256 "ad9aa55b65ef2808eb405f46cf74df7fcb7044d5cbc26487f96eb2ef2e436693"
+    url "https://files.pythonhosted.org/packages/af/0b/44c39cf3b18a9280950ad63a579ce395dda4c32193ee9da7ff0aed547094/beautifulsoup4-4.12.2.tar.gz"
+    sha256 "492bbc69dca35d12daac71c4db1bfff0c876c00ef4a2ffacce226d4638eb72da"
   end
 
   resource "graphviz" do
@@ -35,30 +35,24 @@ class Ford < Formula
     sha256 "8c58f14adaa3b947daf26c19bc1e98c4e0702cdc31cf99153e6f06904d492bf8"
   end
 
-  resource "Jinja2" do
+  resource "jinja2" do
     url "https://files.pythonhosted.org/packages/7a/ff/75c28576a1d900e87eb6335b063fab47a8ef3c8b4d88524c4bf78f670cce/Jinja2-3.1.2.tar.gz"
     sha256 "31351a702a408a9e7595a8fc6150fc3f43bb6bf7e319770cbc0db9df9437e852"
   end
 
-  resource "Markdown" do
-    url "https://files.pythonhosted.org/packages/85/7e/133e943e97a943d2f1d8bae0c5060f8ac50e6691754eb9dbe036b047a9bb/Markdown-3.4.1.tar.gz"
-    sha256 "3b809086bb6efad416156e00a0da66fe47618a5d6918dd688f53f40c8e4cfeff"
+  resource "markdown" do
+    url "https://files.pythonhosted.org/packages/9d/80/cc67bfb7deb973d5ae662ee6454d2dafaa8f7c106feafd0d1572666ebde5/Markdown-3.4.3.tar.gz"
+    sha256 "8bf101198e004dc93e84a12a7395e31aac6a9c9942848ae1d99b9d72cf9b3520"
   end
 
-  # upstream issue with pypi artifact, https://github.com/cmacmackin/markdown-include/issues/35
   resource "markdown-include" do
-    url "https://github.com/cmacmackin/markdown-include/archive/refs/tags/v0.7.0.tar.gz"
-    sha256 "5944cac326e3f071188ce902c6edeacbf5ae7c33273875594debf93e5d850a72"
+    url "https://files.pythonhosted.org/packages/5d/9c/7f53ad33ec7b7243910f8a5c3335c895fb070dc21b2e38b5a38d6a966c0c/markdown-include-0.7.2.tar.gz"
+    sha256 "84070d0244367f99bdf9bbdd49ff7b9f51517bbee7582ad7aa8ff363e30d8157"
   end
 
-  resource "MarkupSafe" do
-    url "https://files.pythonhosted.org/packages/1d/97/2288fe498044284f39ab8950703e88abbac2abbdf65524d576157af70556/MarkupSafe-2.1.1.tar.gz"
-    sha256 "7f91197cc9e48f989d12e4e6fbc46495c446636dfc81b9ccf50bb0ec74b91d4b"
-  end
-
-  resource "Pygments" do
-    url "https://files.pythonhosted.org/packages/59/0f/eb10576eb73b5857bc22610cdfc59e424ced4004fe7132c8f2af2cc168d3/Pygments-2.12.0.tar.gz"
-    sha256 "5eb116118f9612ff1ee89ac96437bb6b49e8f04d8a13b514ba26f620208e26eb"
+  resource "markupsafe" do
+    url "https://files.pythonhosted.org/packages/95/7e/68018b70268fb4a2a605e2be44ab7b4dd7ce7808adae6c5ef32e34f4b55a/MarkupSafe-2.1.2.tar.gz"
+    sha256 "abcabc8c2b26036d62d4c746381a6f7cf60aafcc653198ad678306986b09450d"
   end
 
   resource "python-markdown-math" do
@@ -67,8 +61,8 @@ class Ford < Formula
   end
 
   resource "soupsieve" do
-    url "https://files.pythonhosted.org/packages/f3/03/bac179d539362319b4779a00764e95f7542f4920084163db6b0fd4742d38/soupsieve-2.3.2.post1.tar.gz"
-    sha256 "fc53893b3da2c33de295667a0e19f078c14bf86544af307354de5fcf12a3f30d"
+    url "https://files.pythonhosted.org/packages/47/9e/780779233a615777fbdf75a4dee2af7a345f4bf74b42d4a5f836800b9d91/soupsieve-2.4.1.tar.gz"
+    sha256 "89d12b2d5dfcd2c9e8c22326da9d9aa9cb3dfab0a83a024f05704076ee8d35ea"
   end
 
   resource "toposort" do

@@ -1,8 +1,8 @@
 class Terraform < Formula
   desc "Tool to build, change, and version infrastructure"
   homepage "https://www.terraform.io/"
-  url "https://github.com/hashicorp/terraform/archive/v1.3.9.tar.gz"
-  sha256 "243fcc54910a41b58a1c7a9be1d0f875100a68f51fb64fbe499d9003c44fbf73"
+  url "https://github.com/hashicorp/terraform/archive/v1.4.6.tar.gz"
+  sha256 "6c3e538f8c2ebaf1d5ac1f929753c4fabddb8b3af638829212df494c569a8d02"
   license "MPL-2.0"
   head "https://github.com/hashicorp/terraform.git", branch: "main"
 
@@ -12,13 +12,13 @@ class Terraform < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "981152529294c111d8e9374e2bbe8d9cf330dedae306005d69dfc72f6652e3b3"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "be0f11caec4c8b00aa5fab878a3656ecc8c67177ce3ea8570eee0198983fa05e"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "5715ffb9afd2256fd75dd35e05335bf770bc8697f5bbc6973c21c7a10c0d90dc"
-    sha256 cellar: :any_skip_relocation, ventura:        "e60a6bdff7e63d995729ddd2162ce55f3b4064e4f540181f2ac2355ee0ca77c2"
-    sha256 cellar: :any_skip_relocation, monterey:       "109cd562e856890f51e250d3dce76d0b0991c76047db8b092821f3806953ed5c"
-    sha256 cellar: :any_skip_relocation, big_sur:        "fb5ad5ce90982eeb4f4adf983b5b413ac2245e82599527000bd43818064b4d94"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "472fb3d3d1c245f395184b45ec2640ec9052c72fe5bf838cd70fd6beaf4b483e"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "bd665df406311a275e5618f11c0d20035e12c2293aca093d544e331884f3f41b"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "bd665df406311a275e5618f11c0d20035e12c2293aca093d544e331884f3f41b"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "bd665df406311a275e5618f11c0d20035e12c2293aca093d544e331884f3f41b"
+    sha256 cellar: :any_skip_relocation, ventura:        "b10120c9205cab71c80f95e0dae6e2725b3a359125944653c0d8b51c314a7cc6"
+    sha256 cellar: :any_skip_relocation, monterey:       "b10120c9205cab71c80f95e0dae6e2725b3a359125944653c0d8b51c314a7cc6"
+    sha256 cellar: :any_skip_relocation, big_sur:        "b10120c9205cab71c80f95e0dae6e2725b3a359125944653c0d8b51c314a7cc6"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "cc1134117c0e19a6865965f397787084086ea1af1e5682d5ac20287d1b94a831"
   end
 
   depends_on "go" => :build
@@ -30,14 +30,6 @@ class Terraform < Formula
   fails_with gcc: "5"
 
   def install
-    # v0.6.12 - source contains tests which fail if these environment variables are set locally.
-    ENV.delete "AWS_ACCESS_KEY"
-    ENV.delete "AWS_SECRET_KEY"
-
-    # resolves issues fetching providers while on a VPN that uses /etc/resolv.conf
-    # https://github.com/hashicorp/terraform/issues/26532#issuecomment-720570774
-    ENV["CGO_ENABLED"] = "1"
-
     system "go", "build", *std_go_args(ldflags: "-s -w")
   end
 

@@ -1,8 +1,8 @@
 class PopplerQt5 < Formula
   desc "PDF rendering library (based on the xpdf-3.0 code base)"
   homepage "https://poppler.freedesktop.org/"
-  url "https://poppler.freedesktop.org/poppler-23.03.0.tar.xz"
-  sha256 "b04148bf849c1965ada7eff6be4685130e3a18a84e0cce73bf9bc472ec32f2b4"
+  url "https://poppler.freedesktop.org/poppler-23.05.0.tar.xz"
+  sha256 "38294de7149ebe458191a6e6d0e2837da7dba8683900a635252f6d0ee235f990"
   license "GPL-2.0-only"
   head "https://gitlab.freedesktop.org/poppler/poppler.git", branch: "master"
 
@@ -11,13 +11,13 @@ class PopplerQt5 < Formula
   end
 
   bottle do
-    sha256 arm64_ventura:  "2094ead0ecb063c41b03e7587ce78bea693bacc3d33f379c7969684a1cf6cc18"
-    sha256 arm64_monterey: "d1511c5ffea8356ffe3e087aa4520a093148170ee154145dfa21523efa5c10ed"
-    sha256 arm64_big_sur:  "fef4bdc8612d30d589855c0905d43b6e5b231bd72ce46c050ed6f8bc154f6e06"
-    sha256 ventura:        "39a3cb851e29ea6e22f53334d2ce640da0e4e77a564276df2efbd8473ebe3532"
-    sha256 monterey:       "f3fd4a4da6a47ca130e576c37da5cd3be719285f9969998e1dcffa9caa545601"
-    sha256 big_sur:        "5f6e81697a244f2267a4d44a53cef8e660449b326acc87cb1b15d7cc5150ccff"
-    sha256 x86_64_linux:   "d20e8e6b23e4219c7894eb8bd3971a817cb34cabfbcb539f1815690fb30cb784"
+    sha256                               arm64_ventura:  "55a708e667644f66ae6a99c83f22578d666296504ea76503ccf906fca2d88176"
+    sha256                               arm64_monterey: "2e895db73feaa568c4bcf20bff337b02e453c4686d88e1de60abbd09edc8ec9f"
+    sha256                               arm64_big_sur:  "5a5b4ff2b34f1c86f627339db7fa7292bf10609fc75f7f8a55bdcaf4071812a1"
+    sha256                               ventura:        "97c72a0fb11a16c906defaef329db8a08e5541f304804a78d0c9a6eec7a8405f"
+    sha256                               monterey:       "effc8e0f9542efab2c1cbbddea9d18f98d5a240ea9338acb3e11a79544e8318f"
+    sha256                               big_sur:        "7b2fc317cc1986e2c2a63f2adf9146463d42acf3cdf3aecf7d1f97c9031eb545"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c4a726550c3bdefff507522cdfdd0437db967b83d026c26e41a441633858c4dc"
   end
 
   keg_only "it conflicts with poppler"
@@ -44,8 +44,8 @@ class PopplerQt5 < Formula
   fails_with gcc: "5"
 
   resource "font-data" do
-    url "https://poppler.freedesktop.org/poppler-data-0.4.11.tar.gz"
-    sha256 "2cec05cd1bb03af98a8b06a1e22f6e6e1a65b1e2f3816cb3069bb0874825f08c"
+    url "https://poppler.freedesktop.org/poppler-data-0.4.12.tar.gz"
+    sha256 "c835b640a40ce357e1b83666aabd95edffa24ddddd49b8daff63adb851cdab74"
   end
 
   def install

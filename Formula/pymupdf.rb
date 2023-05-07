@@ -1,18 +1,18 @@
 class Pymupdf < Formula
   desc "Python bindings for the PDF toolkit and renderer MuPDF"
   homepage "https://github.com/pymupdf/PyMuPDF"
-  url "https://files.pythonhosted.org/packages/30/44/9fce79689e5df7deebe2d17cb2b9b2a6b888439c241e71296e732aefa649/PyMuPDF-1.21.1.tar.gz"
-  sha256 "f815741a435c62a0036bbcbf5fa6c533567bd69c5338d413714fc57b22db93e0"
+  url "https://files.pythonhosted.org/packages/d3/bb/643ea6171d681bf3b2cefa89db9ef8917d5f50497a4bb4ed4e8515855b8d/PyMuPDF-1.22.2.tar.gz"
+  sha256 "179fb3cb69de9727f73b5ff1745c91819da73ba2304791d198cde11495beb712"
   license "AGPL-3.0-only"
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "8bc9eba5fb8bb3f3d10950518bf7e59128a0055fc54ce1d44e4217a96d2c4de4"
-    sha256 cellar: :any,                 arm64_monterey: "b5ddcc91c1a7f61f4892a0faedf8705a40e964c21768f5a003d20c3ea6fd5883"
-    sha256 cellar: :any,                 arm64_big_sur:  "8f9397042a6c515b13167dacc98d120db10bb927414b44f939fadac0cb1c4fcf"
-    sha256 cellar: :any,                 ventura:        "6dfbc154a712d4bc577dd75ca54d93d8c26f521bd3cf4359847ba8dcabb71c5f"
-    sha256 cellar: :any,                 monterey:       "511cb6b6318808f17c5e7b2d0193787cab690988ae71f11468bc95d160a02016"
-    sha256 cellar: :any,                 big_sur:        "6147f4ce4ac89f2f490715e1be1767119bcb5f61f7235b9bc0d6b87d3d5cc06a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8a28c16eb94fae965241b3adbb2d55de329edbdcb4becd2ac35f925f7c9b9cca"
+    sha256 cellar: :any,                 arm64_ventura:  "a2cd7daf01a6300b08f67918173ec0f34e2fb94f97ac69ec30cb7db2d41f212a"
+    sha256 cellar: :any,                 arm64_monterey: "562b328e760185a632d00c0d0d8a4cf26a6f1d80ccf285e79d92fca506052d03"
+    sha256 cellar: :any,                 arm64_big_sur:  "1a1db7c33d70248cfa3b6374000d2fdbed22a8aa7bf63e91addc09fe65c9a416"
+    sha256 cellar: :any,                 ventura:        "452646c94ea804ddbf9e0ad30d4d613940a5d83601bc4d77caad604f3b0ebba3"
+    sha256 cellar: :any,                 monterey:       "cfc9b3da10fb695d90d519f4da263a43a69842cc3f142175fca38fbdfb498740"
+    sha256 cellar: :any,                 big_sur:        "c25c41efb545f69f6cd1789105e5ec491699ed707ef9a13f0ad2d26416518420"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "43224782dc88424f1d444374583e10b990579fd27e4a1a08fcca63c7fce91218"
   end
 
   depends_on "freetype" => :build
@@ -34,9 +34,10 @@ class Pymupdf < Formula
   end
 
   def install
-    if OS.linux?
-      ENV.append_path "CPATH", Formula["mupdf"].include/"mupdf"
-      ENV.append_path "CPATH", Formula["freetype2"].include/"freetype2"
+    # Fix hardcoded paths so they work on Linux and non-default prefixes.
+    inreplace "setup.py" do |s|
+      s.gsub! "/usr/local", HOMEBREW_PREFIX
+      s.gsub! %r{/usr(?!/local)}, HOMEBREW_PREFIX
     end
 
     # Makes setup skip build stage for mupdf

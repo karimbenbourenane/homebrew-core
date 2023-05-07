@@ -1,8 +1,8 @@
 class Consul < Formula
   desc "Tool for service discovery, monitoring and configuration"
   homepage "https://www.consul.io"
-  url "https://github.com/hashicorp/consul/archive/refs/tags/v1.15.0.tar.gz"
-  sha256 "392fd9b02a9306b4a8540f6e933b0f9028256cd49dba247f4c277e7abb7ce57f"
+  url "https://github.com/hashicorp/consul/archive/refs/tags/v1.15.2.tar.gz"
+  sha256 "ce5e6666c9bd3ee8dcd60b2ed6e082ab9893fda3c0a2218add649c197f34f2f3"
   license "MPL-2.0"
   head "https://github.com/hashicorp/consul.git", branch: "main"
 
@@ -12,13 +12,13 @@ class Consul < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "08f1c669520487fa699302cbde84458d5926efc4eae18334767935307e148fbb"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "6617af364cafa7e51be6beea3bb84dedbf6d28dd63278686c29706007d44af7a"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "7a3dc37b98bddc5bd412ef60917f4ebde636c1134bdbe6c885aa165d392c0a09"
-    sha256 cellar: :any_skip_relocation, ventura:        "e3a5443a6f2cee78eab874bb960d5c1d78967031dd1fb41b8bacc7e5c5aad4a8"
-    sha256 cellar: :any_skip_relocation, monterey:       "3cfc75764affe8c64a6d6336e6476fd9b3c6e72e5db695f1cb5b4cdd4d50d30a"
-    sha256 cellar: :any_skip_relocation, big_sur:        "f735be5ff363a474febe71d3bcdeba292c203c7f158bdad6f1cbdae89c2b5dc7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "bac4e1e8e2cec6c5d2f6bb07ecdc334c80f5f85b454a997c27cf4594c758c18e"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "ec49635056c1b199dd1d78841f39da706f6099df5f65267f5ce61df97b11b070"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "805349e6eeb5cdb1892b1d68ae438c8c045dcd252873d13ea1fdfab527fd16c1"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "c70bd3e75d4c9102664870fa20c77cea97a6ef816d045c170254d42befce6773"
+    sha256 cellar: :any_skip_relocation, ventura:        "a733a7305168457948c5dee53058b72ff2ca2100e575a7ad5944ea3f80dc7cc7"
+    sha256 cellar: :any_skip_relocation, monterey:       "b8ffd436a13526201f813c8ae0d1edef328718d2dc4cfb859a8c060301bb3fd0"
+    sha256 cellar: :any_skip_relocation, big_sur:        "83f750c982b5847de776f377b9f47bf619dd2239f0d22fe452db73c6b01d228b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "77d9ad6713af388ae988ab56e60466606181be0407f8a27927d3b33a30adfc78"
   end
 
   depends_on "go" => :build

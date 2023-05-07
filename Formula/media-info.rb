@@ -1,8 +1,8 @@
 class MediaInfo < Formula
   desc "Unified display of technical and tag data for audio/video"
   homepage "https://mediaarea.net/"
-  url "https://mediaarea.net/download/binary/mediainfo/22.12/MediaInfo_CLI_22.12_GNU_FromSource.tar.bz2"
-  sha256 "4d3a644e35244343235be938b29c9fee71e2ee3887dd7cc67f91ee15918536a2"
+  url "https://mediaarea.net/download/binary/mediainfo/23.04/MediaInfo_CLI_23.04_GNU_FromSource.tar.bz2"
+  sha256 "bc7da8717ff74d89d1d69d886af812f5c47b1e502c1a4e05360e41c47450ff30"
   license "BSD-2-Clause"
 
   livecheck do
@@ -11,13 +11,13 @@ class MediaInfo < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "61c281c738f13c73bad9458efb84dd91771706ee65c9d84828d09fd5e7ec463d"
-    sha256 cellar: :any,                 arm64_monterey: "2f8b05e4974b67f49903b1bb17fc34f0491823fb5b1ae24a4efc89443712f3d1"
-    sha256 cellar: :any,                 arm64_big_sur:  "149d52775924c650d45d61fab27bae6705ec0fbbeaff426029c256b39538cfef"
-    sha256 cellar: :any,                 ventura:        "e6f01f02a711dd1ccc45d51d3757098024680a60d4315fba0263b6118fe29bcc"
-    sha256 cellar: :any,                 monterey:       "aec450e24ff0ec5ef010738e92c76dad4f249208aa29c45faae6821390b998d3"
-    sha256 cellar: :any,                 big_sur:        "5d32cd688703465beaeccc29f0afbefbd218cfd418e9d9ba1230710179ebda6c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "85c942dc97bb60c1867093010429b88c24809e8ef667782a0821bc0f480066a8"
+    sha256 cellar: :any,                 arm64_ventura:  "3cda0010ca68f8ee4e5e7e671897027ecb8118c8362f25d5bd5e3ef2dd5e4135"
+    sha256 cellar: :any,                 arm64_monterey: "ea8bb90ba43169f0cd833a64a8f8a645a08377dc55b942a37412379a1c739806"
+    sha256 cellar: :any,                 arm64_big_sur:  "6c4a763a1e646998fa0e70a284d2013ac81f496ff7ae4265075385aa1a4c5a78"
+    sha256 cellar: :any,                 ventura:        "1512a405e65e09586056aa13736a3ec96fdc5837e23455cde23a735ec8180dae"
+    sha256 cellar: :any,                 monterey:       "9a3fd29a9e87f89de0ad9715d84a098518427266ba9362978de3f20d8b871438"
+    sha256 cellar: :any,                 big_sur:        "4a8a02a4a5b915232da4d21436048fcee7ff1bce62e66a4c00528be79f719e75"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d894f130fbf00c6c6f6526c5d7c46593a3ce19f2d3dc2e70a4bad1388917997f"
   end
 
   depends_on "pkg-config" => :build

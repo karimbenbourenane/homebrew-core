@@ -1,8 +1,8 @@
 class NodeAT18 < Formula
   desc "Platform built on V8 to build network applications"
   homepage "https://nodejs.org/"
-  url "https://nodejs.org/dist/v18.14.2/node-v18.14.2.tar.xz"
-  sha256 "fbc364dd25fee2cacc0f2033db2d86115fc07575310ea0e64408b8170d09c685"
+  url "https://nodejs.org/dist/v18.16.0/node-v18.16.0.tar.xz"
+  sha256 "33d81a233e235a509adda4a4f2209008d04591979de6b3f0f67c1c906093f118"
   license "MIT"
 
   livecheck do
@@ -11,13 +11,13 @@ class NodeAT18 < Formula
   end
 
   bottle do
-    sha256 arm64_ventura:  "dfe797dfc6822856d2be5c01e1b06c2a6e277c5da1d9a8393e112efa823a9f4e"
-    sha256 arm64_monterey: "d549a0ef29f080fdba77252902e8bbff235470bae1dd5cc3c229b016138778c5"
-    sha256 arm64_big_sur:  "c8e5fd9e42b38a2bcabe91bcf193c7346dc299bf87b11031f866b0977117513c"
-    sha256 ventura:        "504f2256f9326b9124f4e25ff9a060438c7388dd08f26f747e7a7bb447f1e47e"
-    sha256 monterey:       "076a43fb6a1cc1d74981a0def7a73535aac804083a6c1dbac853a336704eb2ca"
-    sha256 big_sur:        "09c1de140b4506b708ac0b9ad88d700cdb9e6309781060b4ac97e0b67bee4647"
-    sha256 x86_64_linux:   "4a7740c45d26df65134670a22fa9170bd58034e875318cad85996a5858ca18bb"
+    sha256 arm64_ventura:  "de8b39f3a1337558a379beac1768be1194afa24b81bcfdc73747f14808afff5a"
+    sha256 arm64_monterey: "ba7f2a747e3dce218a24605952c6c0dbc26174eae7d5a9cfc2a28f95f9726839"
+    sha256 arm64_big_sur:  "1799093b447b8e1bb5e1d471d7a1de3b8e700dbe719a85a4363a49f9f7f12ba0"
+    sha256 ventura:        "ea4da1eead7a582c6e632f1bffbb91ca3e7a76fe260ebb2c387a0f9fcb2cd355"
+    sha256 monterey:       "8cc983557c07993ecf389ad1131d23b0f6ba5a54ad3adca01a83b3cf80119809"
+    sha256 big_sur:        "a1ad2c10f55c0ef0e1ed32f63635acd4555881bed95899a757b569ae48e6f184"
+    sha256 x86_64_linux:   "1c1e59fd3092eb69ebd5c6e14a3da6b33a16329f605aeda2abeaa98571e85ed4"
   end
 
   keg_only :versioned_formula
@@ -55,7 +55,7 @@ class NodeAT18 < Formula
     ENV.llvm_clang if OS.mac? && (DevelopmentTools.clang_build_version <= 1100)
 
     # make sure subprocesses spawned by make are using our Python 3
-    ENV["PYTHON"] = which("python3.10")
+    ENV["PYTHON"] = which("python3.11")
 
     args = %W[
       --prefix=#{prefix}

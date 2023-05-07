@@ -1,13 +1,14 @@
 class Transcrypt < Formula
   desc "Configure transparent encryption of files in a Git repo"
   homepage "https://github.com/elasticdog/transcrypt"
-  url "https://github.com/elasticdog/transcrypt/archive/v2.2.2.tar.gz"
-  sha256 "76d9693ca7238e94107fe67f9e3a229bf59f8be498a7a06a52084468298e0b26"
+  url "https://github.com/elasticdog/transcrypt/archive/v2.2.3.tar.gz"
+  sha256 "69cf95b2a4d7e89c1f5c84bc4c32aa35f78d08b8f457a003ab9e8be7361a24e5"
   license "MIT"
   head "https://github.com/elasticdog/transcrypt.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "52e3de191dff4ec2618e1e84c1c5a619f014d1b78dffc9d236cfa6d41fe6db49"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, all: "9225e648b7de3cb419e614fba90da064d60da9e980d1e85556fe4a4985fc3e69"
   end
 
   on_linux do
@@ -17,7 +18,7 @@ class Transcrypt < Formula
 
   def install
     bin.install "transcrypt"
-    man.install "man/transcrypt.1"
+    man1.install "man/transcrypt.1"
     bash_completion.install "contrib/bash/transcrypt"
     zsh_completion.install "contrib/zsh/_transcrypt"
   end

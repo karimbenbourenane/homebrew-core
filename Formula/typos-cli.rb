@@ -1,8 +1,8 @@
 class TyposCli < Formula
   desc "Source code spell checker"
   homepage "https://github.com/crate-ci/typos"
-  url "https://github.com/crate-ci/typos/archive/refs/tags/v1.13.18.tar.gz"
-  sha256 "51eb1cb1481c117561844dfb4950c9e419f68e713111d4bfb4a787f917376f94"
+  url "https://github.com/crate-ci/typos/archive/refs/tags/v1.14.9.tar.gz"
+  sha256 "d4b3bb692edd86f6d01efb5e3c6f1db1882470e2f6ab5f45245c131077b42397"
   license any_of: ["Apache-2.0", "MIT"]
 
   livecheck do
@@ -11,19 +11,19 @@ class TyposCli < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "53c0cdef9062e8cfd398316b65461eed0d3966f2bc3851c21aaeddcdcebf0750"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "ba7b6558f0409c1563e8098d811d3e590b64e35e6039f3033657335de0346a6f"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "460e1e8785a9df282472b35d1fe04518c6dcee5ce5f90f1b3bafffdcffd0fe4c"
-    sha256 cellar: :any_skip_relocation, ventura:        "0801d509443a75b7f4e187bdc846f59a53e2ff601f0eacea363830f1a25b7184"
-    sha256 cellar: :any_skip_relocation, monterey:       "d64487907dff2a68b7cc8ae935974a1f0e0d0489656c5bb9a843ac339d7707e0"
-    sha256 cellar: :any_skip_relocation, big_sur:        "9352c6c38adb4f35170a322c71952dcdd9dd0181dfbe9ee8a384ec8715805599"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a7e2abca73c9e5e2b8bc326d498c1698965495162bbf5dfbe71205f0d54b33ca"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "7230df2216090002732ba79484cdd1194d3330cef530f58612fe2803e7c63c3c"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "35db05636933886ec1d3f60c9b2dc148f1555cf2933a466e941e9b3b6996c521"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "c3d3da5ca65acce5d5463a2f94b1afbed7a5754f8753bb7afe958582803e0338"
+    sha256 cellar: :any_skip_relocation, ventura:        "136f8e51cfb2c0d452bfcee45bf41325e281c0fb8c1e5d7cdc00ab97b241ca9c"
+    sha256 cellar: :any_skip_relocation, monterey:       "c51d7dc448411229853a7ca35029c342a83c93cfe14e5831a303dfbda4b0a76f"
+    sha256 cellar: :any_skip_relocation, big_sur:        "6b99f4fb17858a34b39d77096aa6cb5c00532fd436b52c0389ba6aa4a8d8ffbb"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6405f77bb941a2e7a8889867cb510c21ff949919c0cc9367a41f128c0408484f"
   end
 
   depends_on "rust" => :build
 
   def install
-    system "cargo", "install", *std_cargo_args
+    system "cargo", "install", *std_cargo_args(path: "crates/typos-cli")
   end
 
   test do

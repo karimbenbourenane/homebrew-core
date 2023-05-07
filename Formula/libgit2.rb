@@ -1,8 +1,8 @@
 class Libgit2 < Formula
   desc "C library of Git core methods that is re-entrant and linkable"
   homepage "https://libgit2.github.com/"
-  url "https://github.com/libgit2/libgit2/archive/v1.5.2.tar.gz"
-  sha256 "57638ac0e319078f56a7e17570be754515e5b1276d3750904b4214c92e8fa196"
+  url "https://github.com/libgit2/libgit2/archive/v1.6.4.tar.gz"
+  sha256 "d25866a4ee275a64f65be2d9a663680a5cf1ed87b7ee4c534997562c828e500d"
   license "GPL-2.0-only" => { with: "GCC-exception-2.0" }
   head "https://github.com/libgit2/libgit2.git", branch: "main"
 
@@ -12,13 +12,13 @@ class Libgit2 < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "8b38c1a0bf3ea37fa8c9c4ae08fa2d88adfc1be486c10bc58e1ff194281c703b"
-    sha256 cellar: :any,                 arm64_monterey: "99d59aff461775cd6af4d771e9cf1a35631d0ab80e87848474dd9005da5325fc"
-    sha256 cellar: :any,                 arm64_big_sur:  "295f4a95636a2c67dc88124c676afac753a43a24780b7fa7d7d453b38a7150c8"
-    sha256 cellar: :any,                 ventura:        "7623ae483c5e375a19c3728fe12d2ff53c6a138ddf7151956a4a6ec67c58f92e"
-    sha256 cellar: :any,                 monterey:       "3da6ef728dbc67482868f24f6023b78aec73cb9d350cf7043ee0e57772f7d28f"
-    sha256 cellar: :any,                 big_sur:        "0820189ba200513d3855a9c49ea9236edfeb7e285f63fda267f8387da32c20b0"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "016e41900dd2630bd8573c00a2fd4e268d0c9064e772c53588d45bcc7e2557b6"
+    sha256 cellar: :any,                 arm64_ventura:  "a4fe32eb5c124ff3de7175ada725fa5f79e6eb565135a68e460e5cc5b8e8c3d1"
+    sha256 cellar: :any,                 arm64_monterey: "85b4e126e155ea395e1a9f75bb9beb157739c28255e32ffbeb21a488fcf46fac"
+    sha256 cellar: :any,                 arm64_big_sur:  "6783efc1c351b475a3f6a01d17cc1c44dbb5d187fa0b35e0808dfa316937a6d4"
+    sha256 cellar: :any,                 ventura:        "feb4cf7c15be1d00fbe832fa759bb7b204d186576ad7b97449f30088411a7554"
+    sha256 cellar: :any,                 monterey:       "7527a7793167c87d83564f22acebcdb7b82a0a6dc1d203d978ce21a2186d8541"
+    sha256 cellar: :any,                 big_sur:        "8d126f48f163fd729c73dca2309c502f790b81fd0f908de368a0e8d58b02b774"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d66f66487f9ce0597a357f8a099c0578d9954100825761db6720bf8c099a53e9"
   end
 
   depends_on "cmake" => :build
@@ -26,22 +26,15 @@ class Libgit2 < Formula
   depends_on "libssh2"
 
   def install
-    args = std_cmake_args
-    args << "-DBUILD_EXAMPLES=YES"
-    args << "-DBUILD_TESTS=OFF" # Don't build tests.
-    args << "-DUSE_SSH=YES"
+    args = %w[-DBUILD_EXAMPLES=OFF -DBUILD_TESTS=OFF -DUSE_SSH=ON]
 
-    mkdir "build" do
-      system "cmake", "..", *args
-      system "make", "install"
-      cd "examples" do
-        (pkgshare/"examples").install "lg2"
-      end
-      system "make", "clean"
-      system "cmake", "..", "-DBUILD_SHARED_LIBS=OFF", *args
-      system "make"
-      lib.install "libgit2.a"
-    end
+    system "cmake", "-S", ".", "-B", "build", "-DBUILD_SHARED_LIBS=ON", *args, *std_cmake_args
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
+
+    system "cmake", "-S", ".", "-B", "build-static", "-DBUILD_SHARED_LIBS=OFF", *args, *std_cmake_args
+    system "cmake", "--build", "build-static"
+    lib.install "build-static/libgit2.a"
   end
 
   test do

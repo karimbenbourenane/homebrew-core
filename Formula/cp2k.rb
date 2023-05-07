@@ -1,20 +1,19 @@
 class Cp2k < Formula
   desc "Quantum chemistry and solid state physics software package"
   homepage "https://www.cp2k.org/"
-  url "https://github.com/cp2k/cp2k/releases/download/v2022.2/cp2k-2022.2.tar.bz2"
-  sha256 "1a473dea512fe264bb45419f83de432d441f90404f829d89cbc3a03f723b8354"
+  url "https://github.com/cp2k/cp2k/releases/download/v2023.1/cp2k-2023.1.tar.bz2"
+  sha256 "dff343b4a80c3a79363b805429bdb3320d3e1db48e0ff7d20a3dfd1c946a51ce"
   license "GPL-2.0-or-later"
-  revision 1
 
   bottle do
-    sha256 cellar: :any, arm64_ventura:  "ac8479eb5320bbf18b04b45b098cce5800f0f14f80866f5f4fac601f0f48bc82"
-    sha256 cellar: :any, arm64_monterey: "1e61b286d38435d6e0b171bc4720ed1b5259abafc46478c70260303aa7a04972"
-    sha256 cellar: :any, arm64_big_sur:  "77b3b54d1c2f15a60c6eba44c172b7ef412be2842fa29e5932a9832220b31791"
-    sha256 cellar: :any, ventura:        "f780fc04170f374c8a5f8910bd27a991152c3a5273666604f450a328999f5d0a"
-    sha256 cellar: :any, monterey:       "cb16c0faf926a4ff2a4945edc5e93d25e11188851a77483097ce4f3758f2ef3a"
-    sha256 cellar: :any, big_sur:        "86790d9de17ae60219970440993760076df2d266fde4fd488ae5b1881f11647d"
-    sha256 cellar: :any, catalina:       "aff5ebf8a1f0b663f02f1377a1cc0f3ad8fdf34e6e855a955f91c7740daa9da3"
-    sha256               x86_64_linux:   "5473c1cb1fd3041e69e80bdff319c5955b9aac6759ccacfa082b10ea199f417f"
+    rebuild 1
+    sha256 cellar: :any, arm64_ventura:  "7cb2ff0601ec794fa7fe2b4f1638883e603d923822054fae3ee54ca97bf0fa94"
+    sha256 cellar: :any, arm64_monterey: "e66d5e5ee6a010c5f21442736f6dbeb0b5d25133d58cc6b6c638ce2cc5ea2b0d"
+    sha256 cellar: :any, arm64_big_sur:  "29d16acb0942e7ceb572b899bc43c0f228d2cc8ce5355e3afbafb1e090ec26b3"
+    sha256 cellar: :any, ventura:        "fac9295d0bd37e1945d0c3ced2f6f1366610c6ab3c173eb753a7bda974c9997d"
+    sha256 cellar: :any, monterey:       "2e8898638d1324fd9554b447122c36e301b47d1d4d4c8dc11cb9bad20ad0ad95"
+    sha256 cellar: :any, big_sur:        "7257ec9b90345e1d2150e149c40ca86315bff5dd1aeffffe34f61ef68e94512e"
+    sha256               x86_64_linux:   "775c9fde68c9eaeb47f29dfae76625884b0cbb0e66ee2f5b2983b72d509a461d"
   end
 
   depends_on "python@3.11" => :build
@@ -109,7 +108,7 @@ class Cp2k < Formula
         --with-cosma=no
         --with-libvori=no
       ]
-      args << "--generic" if build.bottle?
+      args << "--target-cpu=generic" if build.bottle?
 
       cd "tools/toolchain" do
         # Need OpenBLAS source to get proc arch info in scripts/get_openblas_arch.sh
@@ -127,11 +126,11 @@ class Cp2k < Formula
       bin.install "exe/#{arch}/cp2k_shell.#{exe}"
     end
 
-    (pkgshare/"tests").install "tests/Fist/water512.inp"
+    (pkgshare/"tests").install "tests/Fist/water.inp"
   end
 
   test do
-    system bin/"cp2k.ssmp", pkgshare/"tests/water512.inp"
-    system "mpirun", bin/"cp2k.psmp", pkgshare/"tests/water512.inp"
+    system bin/"cp2k.ssmp", pkgshare/"tests/water.inp"
+    system "mpirun", bin/"cp2k.psmp", pkgshare/"tests/water.inp"
   end
 end

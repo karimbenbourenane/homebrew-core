@@ -1,19 +1,19 @@
 class Deno < Formula
   desc "Secure runtime for JavaScript and TypeScript"
   homepage "https://deno.land/"
-  url "https://github.com/denoland/deno/releases/download/v1.31.1/deno_src.tar.gz"
-  sha256 "d39666180142d936e187c9eb9e2037e1db246c387b0d50ad2d7fed37271856ba"
+  url "https://github.com/denoland/deno/releases/download/v1.33.2/deno_src.tar.gz"
+  sha256 "fdb13159aaf8915610ece90d024ccd0af4c36f23fabcefe8dd86f4b1fb3e2aa5"
   license "MIT"
   head "https://github.com/denoland/deno.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "44ef5aa97de2c15ff84acd11fdc26757e7cdf85add89cf24f62f77baab22c2b9"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "b8e132732de9d39bea44ba45d1a62431ca2670bbe419df91517c5ce117947523"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "d024586fd5acf202c7ebad04cecaa578044fbc985b47006f7b3fe995e4c1e2ef"
-    sha256 cellar: :any_skip_relocation, ventura:        "83f603ab32b29f88531e0efb74b477771af8853352ffd23ab006546c5099e61c"
-    sha256 cellar: :any_skip_relocation, monterey:       "44296854e2c31e9863faa533aca442a93a18a64ce85c1eaf4b0ab04812d0c535"
-    sha256 cellar: :any_skip_relocation, big_sur:        "62da1c5fae6fa0942ff13c03185abd14812c034be77b2f16cf99d84fd24e194c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "90bc33e668e3c95139d414c05c162ef3ed7a2b56c404c08b8f74c87017e2ece7"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "29099ebbcec92f0755a4e1aff00037ec689b92f955b3efd3f485f42cf28dcf38"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "131f6de125642e450091495527bac482c6c4c376e36b8d767945fcfc48c5a353"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "3a80983956fbf0327a62e2dc1d045ea3b2f09cfcc7cd72bec7a84d576e7fcf8d"
+    sha256 cellar: :any_skip_relocation, ventura:        "79f225ad974f48eb35bd0222fb590bca90b0c9be43f7983ce61f8f6cdb0145b2"
+    sha256 cellar: :any_skip_relocation, monterey:       "4c1efb375fda9a352e590ba53cff41a0e9cef82599d132ae4172744a747b838a"
+    sha256 cellar: :any_skip_relocation, big_sur:        "0bbed0ebef9f92ecf478810fa6a37f35136dcedee0d1a12aba5f336d214d8a73"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9478df82176a31a0d13cc41c10be0568e9c5d3147566452de8758afdcc31883d"
   end
 
   depends_on "llvm" => :build
@@ -38,18 +38,20 @@ class Deno < Formula
   # We use the crate as GitHub tarball lacks submodules and this allows us to avoid git overhead.
   # TODO: Remove this and `v8` resource when https://github.com/denoland/rusty_v8/issues/1065 is resolved
   resource "rusty-v8" do
-    url "https://static.crates.io/crates/v8/v8-0.63.0.crate"
-    sha256 "547e58962ac268fe0b1fbfb653ed341a08e3953994f7f7c978e46ec30afdf8f0"
+    url "https://static.crates.io/crates/v8/v8-0.71.0.crate"
+    sha256 "51a173a437bebab13d587a4aaf0a1e7a49433226538c9a78ca3b4ce3b8c6aeb6"
   end
 
+  # Use the latest tagged revision in https://github.com/denoland/v8/tags.
   resource "v8" do
-    url "https://github.com/denoland/v8/archive/d2bc1d933bfcbb9f0641b8cfd4a38692e4f005bc.tar.gz"
-    sha256 "6aabe19d3181504fc55339a0072c214b8053c1405a8ee621be9a268ac309f503"
+    url "https://github.com/denoland/v8/archive/refs/tags/11.4.183.6-denoland-768874361e5884e9eab3.tar.gz"
+    sha256 "5d8b8276da6ef4c64c57383b33ada66d9df40a7244bdcb2eff8ec9e0174ebacc"
   end
 
   # To find the version of gn used:
-  # 1. Find v8 version: https://github.com/denoland/deno/blob/v#{version}/Cargo.toml#L43
-  # 2. Find ninja_gn_binaries tag: https://github.com/denoland/rusty_v8/tree/v#{v8_version}/tools/ninja_gn_binaries.py
+  # 1. Find v8 version: https://github.com/denoland/deno/blob/v#{version}/Cargo.toml#L44
+  #    1.1. Update `rusty-v8` resource to use this version.
+  # 2. Find ninja_gn_binaries tag: https://github.com/denoland/rusty_v8/blob/v#{v8_version}/tools/ninja_gn_binaries.py#L21
   # 3. Find short gn commit hash from commit message: https://github.com/denoland/ninja_gn_binaries/tree/#{ninja_gn_binaries_tag}
   # 4. Find full gn commit hash: https://gn.googlesource.com/gn.git/+/#{gn_commit}
   resource "gn" do

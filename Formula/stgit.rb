@@ -3,19 +3,19 @@ class Stgit < Formula
 
   desc "Manage Git commits as a stack of patches"
   homepage "https://stacked-git.github.io"
-  url "https://github.com/stacked-git/stgit/releases/download/v2.2.0/stgit-2.2.0.tar.gz"
-  sha256 "9366a77f20ca02cd4ac1d520b9adafe4f16452d901d3dfa6cd9a59e10ffa20ae"
+  url "https://github.com/stacked-git/stgit/releases/download/v2.2.3/stgit-2.2.3.tar.gz"
+  sha256 "4f182007e658258e2dffffe0d01582f3c7e21e524eee04fb29153cdf38b0f6af"
   license "GPL-2.0-only"
   head "https://github.com/stacked-git/stgit.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "5e129387f3c550e5e104823d897ecca99ddaf243e2118919ba521d3c126c55c1"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "f6692ddf2dacf561fb9566cee7a2e9bfdbf5cd95b1b9432eca27141d94f85883"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "fa1c8142780d5277f49a2759405945079bc37f70f237eafbfa75227db7423763"
-    sha256 cellar: :any_skip_relocation, ventura:        "d1f59cccb1baf9d0e8ca4854c96712bc167ccc9157cd33d5e65157075fe88be9"
-    sha256 cellar: :any_skip_relocation, monterey:       "f1684ceebec41a45bd6f6ffcbd48ded63e67cfab408f177a71f9e1f2712dec0b"
-    sha256 cellar: :any_skip_relocation, big_sur:        "9782b653a9a7ac614c2d09274a78f87e1f41983d59296c29e19347e8ea6d1bdf"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6d09b7a11d1e2b179e5b445d0025d6e87d6cbd490117e10384587f4dc5b37cac"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "c65aa9fb7bad5b0bc56641c43cac65af5d1c16c94ceb5922aa0bb72fb23c1e8d"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "1bc2326a25ec083c35cdd1963d86b691e126894db2b4ab4702e6211122743eaf"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "264d83c21c10068e3ef1408cd53eda6db70b1d2b27913a4b420d64a73044d624"
+    sha256 cellar: :any_skip_relocation, ventura:        "1eb6ab42f7b11866598a1bf0a3829f7c82763b9e64c242d7a8f5ae318a5688f2"
+    sha256 cellar: :any_skip_relocation, monterey:       "875e772f351f0020fa915b54a9b5008332b89b69e723b7afe360a24311e76165"
+    sha256 cellar: :any_skip_relocation, big_sur:        "43247b80c16d4b493728a8f949e37f24535c34a70f8b05ddcfd188522958232f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "1e6554884a5f8c21bb49444f04bd95a8b341c73d495be23fff995c20b9fe1a9d"
   end
 
   depends_on "rust" => :build

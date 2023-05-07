@@ -21,14 +21,14 @@ class Protobuf < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 arm64_ventura:  "3c5d748539ceda50335ecea31041934e3b4d3d927c10ee1f3996db6fac79fb2e"
-    sha256 cellar: :any,                 arm64_monterey: "fdc3ded19005c755de4a5c29aa23c868cf24f45623b49587dda98a93d2fe0f70"
-    sha256 cellar: :any,                 arm64_big_sur:  "d70aa6ab732457192ec4e4b3c7ad27e4b378c5c450221f0d608b98d38e52596d"
-    sha256 cellar: :any,                 ventura:        "fc99214087c90571c8d9dd7d36e30af49a89beb996359b3b234f31002e4b0c00"
-    sha256 cellar: :any,                 monterey:       "44db5f3a73f9e3d9725e90e8fcaa73b1929be24f04efb20b79e1b288ef7d704e"
-    sha256 cellar: :any,                 big_sur:        "d64e264d07b331a8043c35d608de0871e9df4f9a9b208d5d8060b956f110baed"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b24e37fc94949837ae10ab0dff5caf1af2022b3b3ec9b918789478ff4bf6f686"
+    rebuild 3
+    sha256 cellar: :any,                 arm64_ventura:  "1f239e8ef2f5a5e28123ab34e9d8fb909f7a0495f296a7fbdd734751afb5150b"
+    sha256 cellar: :any,                 arm64_monterey: "8cf9ff7c773a6bcf16a18328c5337d0488795b292d24bdc3e2d7d3313d988c27"
+    sha256 cellar: :any,                 arm64_big_sur:  "dbbfa2c402ab0551e6d7adc70be7e600e44b104db1453a8d9031bb7045ff6193"
+    sha256 cellar: :any,                 ventura:        "a36fb3face5989e81d7385f7e6099dcf21a6f3aa85bab22d7427849f36484a31"
+    sha256 cellar: :any,                 monterey:       "0443caf078d379396097e5f9786dab3da5b925fb5ec02da68e5383fda7dcc155"
+    sha256 cellar: :any,                 big_sur:        "6ac6c0e00be578a155a05cdce3c9afc206e7b2a418c61ec9caa80ceb2d61f8c6"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b915e53de62350858e1aa087cbf753a01655704b1e2991ec8098fc4c017be9f7"
   end
 
   depends_on "cmake" => :build
@@ -46,12 +46,11 @@ class Protobuf < Formula
   def install
     cmake_args = %w[
       -Dprotobuf_BUILD_LIBPROTOC=ON
-      -Dprotobuf_BUILD_SHARED_LIBS=ON
       -Dprotobuf_INSTALL_EXAMPLES=ON
       -Dprotobuf_BUILD_TESTS=OFF
     ] + std_cmake_args
 
-    system "cmake", "-S", ".", "-B", "build", *cmake_args
+    system "cmake", "-S", ".", "-B", "build", "-Dprotobuf_BUILD_SHARED_LIBS=ON", *cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
 
@@ -64,9 +63,20 @@ class Protobuf < Formula
 
     cd "python" do
       pythons.each do |python|
-        system python, *Language::Python.setup_install_args(prefix, python), "--cpp_implementation"
+        pyext_dir = prefix/Language::Python.site_packages(python)/"google/protobuf/pyext"
+        with_env(LDFLAGS: "-Wl,-rpath,#{rpath(source: pyext_dir)} #{ENV.ldflags}".strip) do
+          system python, *Language::Python.setup_install_args(prefix, python), "--cpp_implementation"
+        end
       end
     end
+
+    system "cmake", "-S", ".", "-B", "static",
+                    "-Dprotobuf_BUILD_SHARED_LIBS=OFF",
+                    "-DCMAKE_POSITION_INDEPENDENT_CODE=ON",
+                    "-DWITH_PROTOC=#{bin}/protoc",
+                    *cmake_args
+    system "cmake", "--build", "static"
+    lib.install buildpath.glob("static/*.a")
   end
 
   test do

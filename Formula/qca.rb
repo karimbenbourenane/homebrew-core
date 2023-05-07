@@ -1,8 +1,8 @@
 class Qca < Formula
   desc "Qt Cryptographic Architecture (QCA)"
   homepage "https://userbase.kde.org/QCA"
-  url "https://download.kde.org/stable/qca/2.3.5/qca-2.3.5.tar.xz"
-  sha256 "91f7d916ab3692bf5991f0a553bf8153161bfdda14bd005d480a2b4e384362e8"
+  url "https://download.kde.org/stable/qca/2.3.6/qca-2.3.6.tar.xz"
+  sha256 "ee59d531d4b82fb1685f4d8d74c2caa0777f501800f7426eaa372109a4305249"
   license "LGPL-2.1-or-later"
   head "https://invent.kde.org/libraries/qca.git", branch: "master"
 
@@ -12,14 +12,13 @@ class Qca < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "67d5097b20c620a623943308de5f36121a03b5a1c8c337a0f13d845d5a97f4a4"
-    sha256 cellar: :any,                 arm64_monterey: "72c68247c8a7073dd64124a693f5ed7322ad2814864d400318538032b9914a77"
-    sha256 cellar: :any,                 arm64_big_sur:  "3f5be21bda3c7d6c83de3a970d8973fa72de6e9e59a8a4147f943dced7205784"
-    sha256 cellar: :any,                 ventura:        "aa9f0abfbd15d417c8c0330d7691478222c414ad12395ad2e93e8bcc5e2a3f34"
-    sha256 cellar: :any,                 monterey:       "daf1cd48fba9f474cd6ff76965d3b7fc7147a2ea070a07a116f698dbc9add316"
-    sha256 cellar: :any,                 big_sur:        "d3941047481b3790b96c631c18693c5e81e15ba74478f2c242df01bd43b1ea95"
-    sha256 cellar: :any,                 catalina:       "ddfac4f0f08816d6c2f0f10b9b1b22001e21f18cf9a952852d9b8caf6511e0e8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f89b94e7bbf13f16553a66aa0e054782d8002b2315315c2fa11e29d20d15ea45"
+    sha256 cellar: :any,                 arm64_ventura:  "1ff65b5d3d3f160e001f1627be59bd075f53decddb467ab3f15ba434c71bbf87"
+    sha256 cellar: :any,                 arm64_monterey: "1a6052b3caef256e2263278d89a915f716c6c8f04668e0080013d74112995722"
+    sha256 cellar: :any,                 arm64_big_sur:  "2b2a7f272d61f10d263af3e33ac6b2f1c7ee4dba521d21ada0355d3f1416c4c2"
+    sha256 cellar: :any,                 ventura:        "f34d1eb8064200969a6e65a4fe91b941b6c856204fdd2df114ae2c5b3abf6609"
+    sha256 cellar: :any,                 monterey:       "42840a223240c8319029eb28554ce7b79caa442e76de760b099f777cf978f7f8"
+    sha256 cellar: :any,                 big_sur:        "2cba7631886149287044b14e2c38b24a229577c4888d8b1db1fb035e4a363c20"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "35887790df6b8b5f6550dab9a212f5a0395dd04da45187179cd9e7065cc0dc27"
   end
 
   depends_on "cmake" => :build
@@ -28,32 +27,35 @@ class Qca < Formula
   depends_on "gnupg"
   depends_on "libgcrypt"
   depends_on "nss"
-  depends_on "openssl@1.1"
+  depends_on "openssl@3"
   depends_on "pkcs11-helper"
   depends_on "qt@5"
 
   fails_with gcc: "5"
 
   def install
-    args = std_cmake_args
-    args << "-DBUILD_TESTS=OFF"
-    args << "-DQCA_PLUGINS_INSTALL_DIR=#{lib}/qt5/plugins"
+    # Make sure we link with OpenSSL 3 and not OpenSSL 1.1.
+    openssl11 = Formula["openssl@1.1"]
+    ENV.remove "CMAKE_PREFIX_PATH", openssl11.opt_prefix
+    ENV.remove ["CMAKE_INCLUDE_PATH", "HOMEBREW_INCLUDE_PATHS"], openssl11.opt_include
+    ENV.remove ["CMAKE_LIBRARY_PATH", "HOMEBREW_LIBRARY_PATHS"], openssl11.opt_lib
+
+    args = %W[-DBUILD_TESTS=OFF -DQCA_PLUGINS_INSTALL_DIR=#{lib}/qt5/plugins]
 
     # Disable some plugins. qca-ossl, qca-cyrus-sasl, qca-logger,
     # qca-softstore are always built.
-    args << "-DWITH_botan_PLUGIN=ON"
-    args << "-DWITH_gcrypt_PLUGIN=ON"
-    args << "-DWITH_gnupg_PLUGIN=ON"
-    args << "-DWITH_nss_PLUGIN=ON"
-    args << "-DWITH_pkcs11_PLUGIN=ON"
+    %w[botan gcrypt gnupg nss pkcs11].each do |plugin|
+      args << "-DWITH_#{plugin}_PLUGIN=ON"
+    end
 
     # ensure opt_lib for framework install name and linking (can't be done via CMake configure)
     inreplace "src/CMakeLists.txt",
               /^(\s+)(INSTALL_NAME_DIR )("\$\{QCA_LIBRARY_INSTALL_DIR\}")$/,
              "\\1\\2\"#{opt_lib}\""
 
-    system "cmake", ".", *args
-    system "make", "install"
+    system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
   end
 
   test do

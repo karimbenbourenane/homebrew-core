@@ -2,17 +2,25 @@ class Sysdig < Formula
   desc "System-level exploration and troubleshooting tool"
   homepage "https://sysdig.com/"
   license "Apache-2.0"
-  revision 9
+  revision 1
 
   stable do
-    url "https://github.com/draios/sysdig/archive/0.29.3.tar.gz"
-    sha256 "6b96797859002ab69a2bed4fdba1c7fe8064ecf8661621ae7d8fbf8599ffa636"
+    url "https://github.com/draios/sysdig/archive/refs/tags/0.31.5.tar.gz"
+    sha256 "9af98cae7c38273f7429ba0df628c9745bd92c949f444e180b9dd800af14c6dd"
 
     # Update to value of FALCOSECURITY_LIBS_VERSION found in
     # https://github.com/draios/sysdig/blob/#{version}/cmake/modules/falcosecurity-libs.cmake
     resource "falcosecurity-libs" do
-      url "https://github.com/falcosecurity/libs/archive/e5c53d648f3c4694385bbe488e7d47eaa36c229a.tar.gz"
-      sha256 "80903bc57b7f9c5f24298ecf1531cf66ef571681b4bd1e05f6e4db704ffb380b"
+      url "https://github.com/falcosecurity/libs/archive/refs/tags/0.10.5.tar.gz"
+      sha256 "2a4b37c08bec4ba81326314831f341385aff267062e8d4483437958689662936"
+
+      # Fix 'file INSTALL cannot make directory "/sysdig/userspace/libscap"'.
+      # Reported upstream at https://github.com/falcosecurity/libs/issues/995.
+      # Remove when `falcosecurity-libs` is upgraded to 0.11.0 or newer.
+      patch do
+        url "https://github.com/falcosecurity/libs/commit/73020ac4fdd1ba84b53f431e1c069049828480e9.patch?full_index=1"
+        sha256 "97fde5e4aa8e20e91ffaaca4020b7a38751d1ad95d69db02bf10c82588c6595b"
+      end
     end
   end
 
@@ -22,12 +30,13 @@ class Sysdig < Formula
   end
 
   bottle do
-    sha256 arm64_ventura:  "25d9766a9870e4d5696f2ed126c4d1fbecd2761446a8f3fe5c4c08586ad19a0f"
-    sha256 arm64_monterey: "e5e391dc281e5e0e25956eb063882383268bd17aad46adf4b52c2fed01cdad9a"
-    sha256 arm64_big_sur:  "47a7283c72b2986715910f9fc97831a4f3a76502c66efda9b8ffeff407a3a262"
-    sha256 ventura:        "f0eec8a21aac55fe9a9bcc420a66dbe605a16393fb28e023343d5e0268271260"
-    sha256 monterey:       "012c921f362759cd62668245a5a7626ff2402b980da1c628e2811e0c0128f8fb"
-    sha256 big_sur:        "3ea079c0f1aa61de2372e5788bffcf150fda93fad184b8852695f2a414cc17f5"
+    sha256                               arm64_ventura:  "a7dbbaaa73d3e72c849a0d1c600db4af64c32efd50e72a92be91f1dc841d5541"
+    sha256                               arm64_monterey: "c4e71ab34ad98f927b5b2adddce3b607758fecb63a6a8d2b8e6eab740bd2f00f"
+    sha256                               arm64_big_sur:  "039d010b447f0a330f84a041fb5c5293c42d12a9933d0ffacce1f209c0d63ddd"
+    sha256                               ventura:        "3b7cf7c8297294d080205ffa4a23311ea7110acd592a3451eb33a1e91a94d203"
+    sha256                               monterey:       "a7eecbb515fe22f8cdabf452195a5bc49dd7bab1302335c992d74aa863c413d0"
+    sha256                               big_sur:        "f0fb5a56fcc9cb39f965b7ff17f9aa9b84b84cbbcfb274420b7260c5f3d23a34"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "60a0b84ad26f9af2cffccd12bc5800f657ce27b699ccfc9c8c18d641cb7a0262"
   end
 
   head do
@@ -44,7 +53,9 @@ class Sysdig < Formula
   depends_on "jsoncpp"
   depends_on "luajit"
   depends_on "openssl@1.1"
+  depends_on "re2"
   depends_on "tbb"
+  depends_on "valijson"
   depends_on "yaml-cpp"
 
   uses_from_macos "curl"
@@ -76,11 +87,10 @@ class Sysdig < Formula
     # ld: unaligned pointer(s) for architecture arm64
     inreplace "falcosecurity-libs/driver/ppm_events_public.h", " __attribute__((packed))", "" if Hardware::CPU.arm?
 
-    # These flags are not needed for LuaJIT 2.1 (Ref: https://luajit.org/install.html).
-    # On Apple ARM, the flags results in broken binaries and need to be removed.
+    # Override hardcoded C++ standard settings.
     inreplace %w[CMakeLists.txt falcosecurity-libs/cmake/modules/CompilerFlags.cmake],
-              "set(CMAKE_EXE_LINKER_FLAGS \"-pagezero_size 10000 -image_base 100000000\")",
-              ""
+              /set\(CMAKE_CXX_FLAGS "(.*) -std=c\+\+0x"\)/,
+              'set(CMAKE_CXX_FLAGS "\\1")'
 
     # Keep C++ standard in sync with `abseil.rb`.
     args = %W[
@@ -90,11 +100,11 @@ class Sysdig < Formula
       -DBUILD_LIBSCAP_EXAMPLES=OFF
       -DDIR_ETC=#{etc}
       -DFALCOSECURITY_LIBS_SOURCE_DIR=#{buildpath}/falcosecurity-libs
-      -DCMAKE_CXX_STANDARD=17
+      -DCMAKE_CXX_FLAGS=-std=c++17
     ]
 
     # `USE_BUNDLED_*=OFF` flags are implied by `USE_BUNDLED_DEPS=OFF`, but let's be explicit.
-    %w[LUAJIT JSONCPP ZLIB TBB JQ NCURSES B64 OPENSSL CURL CARES PROTOBUF GRPC].each do |dep|
+    %w[CARES JSONCPP LUAJIT OPENSSL RE2 TBB VALIJSON CURL NCURSES ZLIB B64 GRPC JQ PROTOBUF].each do |dep|
       args << "-DUSE_BUNDLED_#{dep}=OFF"
     end
 

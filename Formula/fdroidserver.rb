@@ -3,18 +3,19 @@ class Fdroidserver < Formula
 
   desc "Create and manage Android app repositories for F-Droid"
   homepage "https://f-droid.org"
-  url "https://files.pythonhosted.org/packages/31/e0/8068b4def4b69bb5ab9e71374b97358ec23562a7f0c62d542858b0796068/fdroidserver-2.2.0.tar.gz"
-  sha256 "18af655cf4a8d7b9cf621968f02196dda8931ed776186b0797b137900b59bd18"
+  url "https://files.pythonhosted.org/packages/75/72/ea1e1e9d7d0ade051279b8676e6025f8c14dd64a5edeb76f2208e23c7720/fdroidserver-2.2.1.tar.gz"
+  sha256 "6dcba0b747bfc9ebe4d441c56cf0c8aeab70a58cd0d1248462892e933a382302"
   license "AGPL-3.0-or-later"
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "65c083f35537cfaa95d0c890506c44fa9022ee07a27cf534556edfec07b7c5b7"
-    sha256 cellar: :any,                 arm64_monterey: "d65197e45610d275fead2f02cf519bb617588fbb8154011f150c6b4cacb5c75a"
-    sha256 cellar: :any,                 arm64_big_sur:  "22af3327d4d43ac49108d8e60a015959e43ececf1f0fb0fbe838622e997969d7"
-    sha256 cellar: :any,                 ventura:        "4043063d7d8dae6665279286311886b8f74771e4cfa941625765bda3d635ecbb"
-    sha256 cellar: :any,                 monterey:       "cf13c51bba206b22b100bb39f96e194dd7cb2c81036156759fa17bfa36b2a29d"
-    sha256 cellar: :any,                 big_sur:        "c5c6f00c85a5b252ae32429ee5c1bd6fe24097a23fb7b77f0a9a4336e209f0cf"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e8db2ff92ba31e3edfd79fddfde015f8fd93be73374e99e89173ac410e180648"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_ventura:  "935e42e3ed2f8d83f5039deb3cc935c223bf034187b0224b3a1e2a56f41628af"
+    sha256 cellar: :any,                 arm64_monterey: "5abf98afd49ed6ed99f30e8477c5806f71c8714d1d6062b603f24be2c627950a"
+    sha256 cellar: :any,                 arm64_big_sur:  "7c7f3be23cc9d40dacfdb813cfe28ee1de1bef2980b4cbb8797bb12f44883d16"
+    sha256 cellar: :any,                 ventura:        "952cbee02b6ebcb28cc950b25126a63653148f2a2ad9c02eb999adf3a4b3dc1a"
+    sha256 cellar: :any,                 monterey:       "eb293c1404481aa748a640f0b7a9aba3999af8ca377b28df44a4116929f91283"
+    sha256 cellar: :any,                 big_sur:        "b989fc28601e4d2d1803df438f8ea34e66e75d7274b6d14133df3e1fd4c3a83e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a5af6197d91865e442d73f5bd9b7d39e04bb29acc176f58519640181a5a7453e"
   end
 
   depends_on "pkg-config" => :build
@@ -25,6 +26,7 @@ class Fdroidserver < Formula
   depends_on "openssl@1.1"
   depends_on "pillow"
   depends_on "pygments"
+  depends_on "python-typing-extensions"
   depends_on "python@3.11"
   depends_on "pyyaml"
   depends_on "s3cmd"
@@ -71,8 +73,8 @@ class Fdroidserver < Formula
   end
 
   resource "charset-normalizer" do
-    url "https://files.pythonhosted.org/packages/96/d7/1675d9089a1f4677df5eb29c3f8b064aa1e70c1251a0a8a127803158942d/charset-normalizer-3.0.1.tar.gz"
-    sha256 "ebea339af930f8ca5d7a699b921106c6e29c617fe9606fa7baa043c1cdae326f"
+    url "https://files.pythonhosted.org/packages/ff/d7/8d757f8bd45be079d76309248845a04f09619a7b17d6dfc8c9ff6433cac2/charset-normalizer-3.1.0.tar.gz"
+    sha256 "34e0a2f9c370eb95597aae63bf85eb5e96826d81e3dcf88b8886012906f509b5"
   end
 
   resource "click" do
@@ -96,8 +98,8 @@ class Fdroidserver < Formula
   end
 
   resource "cryptography" do
-    url "https://files.pythonhosted.org/packages/6a/f5/a729774d087e50fffd1438b3877a91e9281294f985bda0fd15bf99016c78/cryptography-39.0.1.tar.gz"
-    sha256 "d1f6198ee6d9148405e49887803907fe8962a23e6c6f83ea7d98f1c0de375695"
+    url "https://files.pythonhosted.org/packages/fa/f3/f4b8c175ea9a1de650b0085858059050b7953a93d66c97ed89b93b232996/cryptography-39.0.2.tar.gz"
+    sha256 "bc5b871e977c8ee5a1bbc42fa8d19bcc08baf0c51cbf1586b0e87a2694dde42f"
   end
 
   resource "cycler" do
@@ -136,8 +138,8 @@ class Fdroidserver < Formula
   end
 
   resource "matplotlib" do
-    url "https://files.pythonhosted.org/packages/65/c2/34158ff731a12802228434e8d17d2ebb5097394ab9d065205cc262cf2a6f/matplotlib-3.7.0.tar.gz"
-    sha256 "8f6efd313430d7ef70a38a3276281cb2e8646b3a22b3b21eb227da20e15e6813"
+    url "https://files.pythonhosted.org/packages/b7/65/d6e00376dbdb6c227d79a2d6ec32f66cfb163f0cd924090e3133a4f85a11/matplotlib-3.7.1.tar.gz"
+    sha256 "7b73305f25eab4541bd7ee0b96d87e53ae9c9f1823be5659b806cd85786fe882"
   end
 
   resource "networkx" do
@@ -220,11 +222,6 @@ class Fdroidserver < Formula
     sha256 "c840e62059cd3be204b0c9c9f74be2c09d5648eddd4580d9314c3ecde0b30936"
   end
 
-  resource "typing-extensions" do
-    url "https://files.pythonhosted.org/packages/d3/20/06270dac7316220643c32ae61694e451c98f8caf4c8eab3aa80a2bedf0df/typing_extensions-4.5.0.tar.gz"
-    sha256 "5cb5f4a79139d699607b3ef622a1dedafa84e115ab0024e0d9c044a9479ca7cb"
-  end
-
   resource "urllib3" do
     url "https://files.pythonhosted.org/packages/c5/52/fe421fb7364aa738b3506a2d99e4f3a56e079c0a798e9f4fa5e14c60922f/urllib3-1.26.14.tar.gz"
     sha256 "076907bf8fd355cde77728471316625a4d2f7e713c125f51953bb5b3eecf4f72"
@@ -242,7 +239,7 @@ class Fdroidserver < Formula
     venv.pip_install resource("cffi") # or bcrypt fails to build
     venv.pip_install resource("wheel") # or kiwisolver fails to build
 
-    res = resources.map(&:name).to_set - %w[cffi lxml ptyprocess wheel]
+    res = resources.to_set(&:name) - %w[cffi lxml ptyprocess wheel]
 
     res.each do |r|
       venv.pip_install resource(r)

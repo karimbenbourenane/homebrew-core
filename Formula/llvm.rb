@@ -1,12 +1,10 @@
 class Llvm < Formula
   desc "Next-gen compiler infrastructure"
   homepage "https://llvm.org/"
-  # NOTE: `ccls` will need rebuilding on every version bump.
-  url "https://github.com/llvm/llvm-project/releases/download/llvmorg-15.0.7/llvm-project-15.0.7.src.tar.xz"
-  sha256 "8b5fcb24b4128cf04df1b0b9410ce8b1a729cb3c544e6da885d234280dedeac6"
+  url "https://github.com/llvm/llvm-project/releases/download/llvmorg-16.0.3/llvm-project-16.0.3.src.tar.xz"
+  sha256 "3b12e35332e10cf650578ae18247b91b04926d5427e1a6ae9a51d170a47cfbb2"
   # The LLVM Project is under the Apache License v2.0 with LLVM Exceptions
   license "Apache-2.0" => { with: "LLVM-exception" }
-  revision 1
   head "https://github.com/llvm/llvm-project.git", branch: "main"
 
   livecheck do
@@ -15,13 +13,13 @@ class Llvm < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "a6f590fc4700b0c4ad9bc47e1abfe5c75afb84cfc927d4423563326c622a589c"
-    sha256 cellar: :any,                 arm64_monterey: "5a34739a35635f6eabaacbf60e303fd69df42552d33f0ea7c91342253c740d11"
-    sha256 cellar: :any,                 arm64_big_sur:  "75a1e34702c35fe0fa8364ed64cf22a6a0a17ad08c4d7ef96cab19c839b08f18"
-    sha256 cellar: :any,                 ventura:        "32b9be5b4e724395cf6110b911a0ba8baec439f9088c09343d3ed9a8802d481d"
-    sha256 cellar: :any,                 monterey:       "f86bf3f4832260d7010d3a4f57cc8dca44ecf43353787556fe1cd1d97a8b64cf"
-    sha256 cellar: :any,                 big_sur:        "864c9f90f1d2e2ba53565d5cde32eeac65251316e9f047b25b84b31411a75a02"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "303e3cdd27ea04b32002b74a52ca10902381b93d6576fa2488d83c059ee0122c"
+    sha256 cellar: :any,                 arm64_ventura:  "d86c9a5f16c9526b5a8032c0bb676964c3821da5ed99791a25cbd0bcbcdddc1a"
+    sha256 cellar: :any,                 arm64_monterey: "5b34a61a9ce8b53d13cd78a785e7754ef8c1faad1ca85b69ba334973efd3b460"
+    sha256 cellar: :any,                 arm64_big_sur:  "587225eeef07a223983de05d22647e106c6bf13f73515ff7dd99ada7daebe687"
+    sha256 cellar: :any,                 ventura:        "50bdd4c47c72bd6ec19d114e98634ab209e48dc51107ed439aef13be4b36fb01"
+    sha256 cellar: :any,                 monterey:       "b8cde6f3261831849e703946c5cae563010ab9bed81f5bc619c5a57a824aa7b9"
+    sha256 cellar: :any,                 big_sur:        "fca30f2d1bc045f51312e1169b2a158761b43b29b5814df40f5bc4c4e9b28af8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "588b2a4572d138f0d36513caec66c7cdafdde7067879f8111bf3fd1103619fde"
   end
 
   # Clang cannot find system headers if Xcode CLT is not installed
@@ -122,7 +120,6 @@ class Llvm < Formula
       -DLLDB_ENABLE_LZMA=ON
       -DLLDB_USE_SYSTEM_SIX=ON
       -DLLDB_PYTHON_RELATIVE_PATH=libexec/#{site_packages}
-      -DLLDB_PYTHON_EXE_RELATIVE_PATH=#{which(python3).relative_path_from(prefix)}
       -DLIBOMP_INSTALL_ALIASES=OFF
       -DCLANG_PYTHON_BINDINGS_VERSIONS=#{python_versions.join(";")}
       -DLLVM_CREATE_XCODE_TOOLCHAIN=OFF
@@ -325,8 +322,8 @@ class Llvm < Formula
         # https://reviews.llvm.org/D92669, https://reviews.llvm.org/D93281
         # Without this, the build produces many warnings of the form
         # LLVM Profile Warning: Unable to track new values: Running out of static counters.
-        instrumented_cflags = cflags + ["-Xclang -mllvm -Xclang -vp-counters-per-site=6"]
-        instrumented_cxxflags = cxxflags + ["-Xclang -mllvm -Xclang -vp-counters-per-site=6"]
+        instrumented_cflags = cflags + %w[-Xclang -mllvm -Xclang -vp-counters-per-site=6]
+        instrumented_cxxflags = cxxflags + %w[-Xclang -mllvm -Xclang -vp-counters-per-site=6]
         instrumented_extra_args = extra_args.reject { |s| s[/CMAKE_C(XX)?_FLAGS/] }
 
         system "cmake", "-G", "Unix Makefiles", "..",
@@ -446,8 +443,8 @@ class Llvm < Formula
         rebuilt_files = []
 
         Pathname.glob("*.o").each do |bc_file|
-          file_type = Utils.safe_popen_read("file", bc_file)
-          next unless file_type.match?("LLVM bitcode")
+          file_type = Utils.safe_popen_read("file", "--brief", bc_file)
+          next unless file_type.match?(/^LLVM (IR )?bitcode/)
 
           rebuilt_files << bc_file
           system bin/"clang", "-fno-lto", "-Wno-unused-command-line-argument",
@@ -493,7 +490,7 @@ class Llvm < Formula
     EOS
 
     system "#{bin}/clang", "-L#{lib}", "-fopenmp", "-nobuiltininc",
-                           "-I#{lib}/clang/#{llvm_version.major_minor_patch}/include",
+                           "-I#{lib}/clang/#{llvm_version.major}/include",
                            "omptest.c", "-o", "omptest"
     testresult = shell_output("./omptest")
 
@@ -531,6 +528,18 @@ class Llvm < Formula
     assert_equal "Hello World!", shell_output("./test++").chomp
     system "#{bin}/clang", "-v", "test.c", "-o", "test"
     assert_equal "Hello World!", shell_output("./test").chomp
+
+    # To test `lld`, we mock a broken `ld` to make sure it's not what's being used.
+    (testpath/"fake_ld.c").write <<~EOS
+      int main() { return 1; }
+    EOS
+    (testpath/"bin").mkpath
+    system ENV.cc, "-v", "fake_ld.c", "-o", "bin/ld"
+    with_env(PATH: "#{testpath}/bin:#{ENV["PATH"]}") do
+      # Our fake `ld` will produce a compilation error if it is used instead of `lld`.
+      system "#{bin}/clang", "-v", "test.c", "-o", "test_lld", "-fuse-ld=lld"
+    end
+    assert_equal "Hello World!", shell_output("./test_lld").chomp
 
     # Testing Command Line Tools
     if MacOS::CLT.installed?
@@ -690,6 +699,12 @@ class Llvm < Formula
     # Check that lldb can use Python
     lldb_script_interpreter_info = JSON.parse(shell_output("#{bin}/lldb --print-script-interpreter-info"))
     assert_equal "python", lldb_script_interpreter_info["language"]
+    python_test_cmd = "import sys; print(sys.prefix)"
+    assert_match shell_output("#{python3} -c '#{python_test_cmd}'"),
+                 pipe_output("#{bin}/lldb", <<~EOS)
+                   script
+                   #{python_test_cmd}
+                 EOS
 
     # Ensure LLVM did not regress output of `llvm-config --system-libs` which for a time
     # was known to output incorrect linker flags; e.g., `-llibxml2.tbd` instead of `-lxml2`.

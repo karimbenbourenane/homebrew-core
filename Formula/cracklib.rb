@@ -1,9 +1,9 @@
 class Cracklib < Formula
   desc "LibCrack password checking library"
   homepage "https://github.com/cracklib/cracklib"
-  url "https://github.com/cracklib/cracklib/releases/download/v2.9.8/cracklib-2.9.8.tar.bz2"
-  sha256 "1f9d34385ea3aa7cd7c07fa388dc25810aea9d3c33e260c713a3a5873d70e386"
-  license "LGPL-2.1"
+  url "https://github.com/cracklib/cracklib/releases/download/v2.9.11/cracklib-2.9.11.tar.bz2"
+  sha256 "ca8b049a3c2d3b2225a1e8d15d613798ebc748e3950388eda2694de507ba6020"
+  license "LGPL-2.1-only"
 
   livecheck do
     url :stable
@@ -11,20 +11,19 @@ class Cracklib < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "a0d1701b52f2e2909fa56d2e8b3ac130574f8e5e3b3a3384d40a285d9a5a3a2a"
-    sha256 cellar: :any,                 arm64_monterey: "37e11c7758cab905a8fd3d6ac8ea2e42e76a0781eab77b1876c54158acd1a220"
-    sha256 cellar: :any,                 arm64_big_sur:  "9c00da21b9605563490fa418eb694b90b41dcdd112a6cfdf2994911b5488ffd6"
-    sha256 cellar: :any,                 ventura:        "9a4724bc32453adfbd8a2ad0389244762f54c8096d87ec5c1696ac84475bada2"
-    sha256 cellar: :any,                 monterey:       "406463c04be8c31174159aba08a888858467f973dc6e7ac9a13616446116fded"
-    sha256 cellar: :any,                 big_sur:        "58e11929dc53ac1a420b4c532f17ff57c16f7af59d848d7a24b2637351e375f5"
-    sha256 cellar: :any,                 catalina:       "03d86f4ec7debecabbe347eac8d5969dd483862134957ff55d84988bf1abe683"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c419da2984ccf5a47fdc40448d58e0a824fd4675b3cce6d152282962abf6d621"
+    sha256 arm64_ventura:  "6a3a072cf106fde02db24ad3024d75795afd6fcd8595a50e569f9eafa0b8f849"
+    sha256 arm64_monterey: "366eea9cce24cf4353676bfd54bef63596fd678992b138c81606e6083526f5fe"
+    sha256 arm64_big_sur:  "fa8e46c43b097175d54821836f5e41edff34dbad7b3a8f40e581141903111e67"
+    sha256 ventura:        "f7aed3f2bd1d5ff0c0da5f42e443b239fb126bd3f0ec72db65c581a30fb84bcc"
+    sha256 monterey:       "5b2918b1e6b0e356b3c1039498d7ff241f5d339a1a8e685bd63ae64aee4180da"
+    sha256 big_sur:        "ed0830783c21bfb87f7c9f3a3775806cc5be421ff34d5e82749ebc3e1c9e8af0"
+    sha256 x86_64_linux:   "c0c98e94bf0217fd21363d1543d51c13a86c83c56039e2f7ce128b30bbaed5a2"
   end
 
   depends_on "gettext"
 
   resource "cracklib-words" do
-    url "https://github.com/cracklib/cracklib/releases/download/v2.9.8/cracklib-words-2.9.8.bz2"
+    url "https://github.com/cracklib/cracklib/releases/download/v2.9.11/cracklib-words-2.9.11.bz2"
     sha256 "ec25ac4a474588c58d901715512d8902b276542b27b8dd197e9c2ad373739ec4"
   end
 
@@ -35,9 +34,8 @@ class Cracklib < Formula
   end
 
   def install
-    system "./configure", "--disable-dependency-tracking",
+    system "./configure", *std_configure_args,
                           "--disable-silent-rules",
-                          "--prefix=#{prefix}",
                           "--sbindir=#{bin}",
                           "--without-python",
                           "--with-default-dict=#{var}/cracklib/cracklib-words"

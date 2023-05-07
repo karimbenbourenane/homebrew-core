@@ -1,8 +1,8 @@
 class Openjdk < Formula
   desc "Development kit for the Java programming language"
   homepage "https://openjdk.java.net/"
-  url "https://github.com/openjdk/jdk19u/archive/refs/tags/jdk-19.0.2-ga.tar.gz"
-  sha256 "c297c9d0a09721e84c420e7893ff9ba2e0c4e27370507dec4b356b59e6c8e7a2"
+  url "https://github.com/openjdk/jdk20u/archive/refs/tags/jdk-20.0.1-ga.tar.gz"
+  sha256 "ced1915490f6831cd53bbf84281e8bd6b0c5e3fe6ab7c04e3428df1f32343a1e"
   license "GPL-2.0-only" => { with: "Classpath-exception-2.0" }
 
   livecheck do
@@ -11,13 +11,13 @@ class Openjdk < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_ventura:  "c576dc5ee012c98010595cecfd9373050e9a48000291201c9f057cb0fa7eaf43"
-    sha256 cellar: :any, arm64_monterey: "f0d33cdc95ee66471146865dd98092c92b0ef97598fe1ea57d4cb31f859851b5"
-    sha256 cellar: :any, arm64_big_sur:  "05f317a736e6d6e2d4d20cc39cabbc69708d45b77ead5767ed082a3ead23aa89"
-    sha256 cellar: :any, ventura:        "de86351713f22cf37148d2def9002e8126a60d2f37540da28ea7c6a0edb8ff46"
-    sha256 cellar: :any, monterey:       "77f0d28cc4f5c8bd5907b5080fd760930326f1b12e7afbf2361b2527f960d6e9"
-    sha256 cellar: :any, big_sur:        "826d60202fa869103d4b35312555da0ccee5247f3875423836cc70ef93b46cd0"
-    sha256               x86_64_linux:   "46f18654dc8f56ea1a5b2d17e973d76faf517f394758c79b6e87a0b2ecaada6a"
+    sha256 cellar: :any, arm64_ventura:  "f1f57bfbc1a34a0262afaee9b46311631f801e5fde7881483e5fef3d3c50c39d"
+    sha256 cellar: :any, arm64_monterey: "cd7740408b565bc5cf65623212d9de741bde4ebda65bc8ce697af71d7d79dcd4"
+    sha256 cellar: :any, arm64_big_sur:  "575b22d9e6189d0cad3bc0c5aac99e22d3b542de9ef846a8b74521d96b800fba"
+    sha256 cellar: :any, ventura:        "c20be81e70ccea53ece81cd8e2fbf8829eecffcdfeb6ab4395f9808cc664ee95"
+    sha256 cellar: :any, monterey:       "12ab1b2e4022ee37f354ba0a0180e652a96b8bda45cb4212f71731e4c5f0a57a"
+    sha256 cellar: :any, big_sur:        "0c0f98e27bd0a59acbcd04097fdeb798327d99db24ee5b16e4928be7fa5e87ca"
+    sha256               x86_64_linux:   "ed436706aaa8c5d8221d7a0b386d24d0b004a5bcadadb9f8e040998450caf081"
   end
 
   keg_only :shadowed_by_macos
@@ -55,22 +55,22 @@ class Openjdk < Formula
   resource "boot-jdk" do
     on_macos do
       on_arm do
-        url "https://download.java.net/java/GA/jdk18.0.2.1/db379da656dc47308e138f21b33976fa/1/GPL/openjdk-18.0.2.1_macos-aarch64_bin.tar.gz"
-        sha256 "c05aec589f55517b8bedd01463deeba80f666da3fb193be024490c9d293097a8"
+        url "https://download.java.net/java/GA/jdk19.0.1/afdd2e245b014143b62ccb916125e3ce/10/GPL/openjdk-19.0.1_macos-aarch64_bin.tar.gz"
+        sha256 "915054b18fc17216410cea7aba2321c55b82bd414e1ef3c7e1bafc7beb6856c8"
       end
       on_intel do
-        url "https://download.java.net/java/GA/jdk18.0.2.1/db379da656dc47308e138f21b33976fa/1/GPL/openjdk-18.0.2.1_macos-x64_bin.tar.gz"
-        sha256 "604ba4b3ccb594973a3a73779a367363c53dd91e5a9de743f4fbfae89798f93a"
+        url "https://download.java.net/java/GA/jdk19.0.1/afdd2e245b014143b62ccb916125e3ce/10/GPL/openjdk-19.0.1_macos-x64_bin.tar.gz"
+        sha256 "469af195906979f96c1dc862c2f539a5e280d0daece493a95ebeb91962512161"
       end
     end
     on_linux do
       on_arm do
-        url "https://download.java.net/java/GA/jdk18.0.2.1/db379da656dc47308e138f21b33976fa/1/GPL/openjdk-18.0.2.1_linux-aarch64_bin.tar.gz"
-        sha256 "79900237a5912045f8c9f1065b5204a474803cbbb4d075ab9620650fb75dfc1b"
+        url "https://download.java.net/java/GA/jdk19.0.1/afdd2e245b014143b62ccb916125e3ce/10/GPL/openjdk-19.0.1_linux-aarch64_bin.tar.gz"
+        sha256 "88cadc91d5c7c540ea9df5d23678bb65dc2092fe4e00650b39d87f24f2328e17"
       end
       on_intel do
-        url "https://download.java.net/java/GA/jdk18.0.2.1/db379da656dc47308e138f21b33976fa/1/GPL/openjdk-18.0.2.1_linux-x64_bin.tar.gz"
-        sha256 "3bfdb59fc38884672677cebca9a216902d87fe867563182ae8bc3373a65a2ebd"
+        url "https://download.java.net/java/GA/jdk19.0.1/afdd2e245b014143b62ccb916125e3ce/10/GPL/openjdk-19.0.1_linux-x64_bin.tar.gz"
+        sha256 "7a466882c7adfa369319fe4adeb197ee5d7f79e75d641e9ef94abee1fc22b1fa"
       end
     end
   end

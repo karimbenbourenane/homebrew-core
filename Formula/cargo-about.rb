@@ -1,19 +1,19 @@
 class CargoAbout < Formula
   desc "Cargo plugin to generate list of all licenses for a crate"
   homepage "https://github.com/EmbarkStudios/cargo-about"
-  url "https://github.com/EmbarkStudios/cargo-about/archive/refs/tags/0.5.4.tar.gz"
-  sha256 "3ad7c295a57da252433a1dd4ef277add2f1842e7c9554341a31a2c3daab82c33"
+  url "https://github.com/EmbarkStudios/cargo-about/archive/refs/tags/0.5.6.tar.gz"
+  sha256 "4f4115abc4e7ec12a70acd3a8821a069dada63f29c4a3808d2a55fc5e7770dff"
   license any_of: ["Apache-2.0", "MIT"]
   head "https://github.com/EmbarkStudios/cargo-about.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "1a37a22fa843c840f168b172584aabde00335f37e4afb7c7060d7cac9fbe3d2d"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "f93a9d8e541c20c4b611e51ab16954b239243a04ccd0a9203250b67c0d107f27"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "2984e82e6f5314ec2455a579b4edea21568fe44e675978ccb952de6f9c9a8ea1"
-    sha256 cellar: :any_skip_relocation, ventura:        "28a0656929e072e84ebd2605b04723f3ebd7ab3d4e503973cd4bf55d2ec049ce"
-    sha256 cellar: :any_skip_relocation, monterey:       "91875552c725e48a71005d07c34caa4e7bb832b738a5a7b893ea46964266a615"
-    sha256 cellar: :any_skip_relocation, big_sur:        "cea1d58aeae6ac4fcdacd5e10261ce0cd5afe1fca7603811a2140d66a4c9cd79"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7e0ac09af4b4ad1db5116e76fcb094f2ec535c446b6374261a6fbc12da00b3f2"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "3eaa8f43ac9f0734530c692d1462003aee56015775b46084fbc48fbaa161dda1"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "71e2265d82f33cded2d4b67241f87b90da678398bdc3e68344f1656f59706969"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "2bb52672f2c7125ae1b07348174b3b79b412b2f06c7467a965780555dc4dbcb0"
+    sha256 cellar: :any_skip_relocation, ventura:        "5408f23f9e85bd8ab7aa1679a2c0fc32b5a6ed110de9046e49adbd5607462916"
+    sha256 cellar: :any_skip_relocation, monterey:       "7b1adbb0f1fa4afb1c90ddcb2c7543e7e8d69c90a391a7f0042f9a88d25d5ce0"
+    sha256 cellar: :any_skip_relocation, big_sur:        "79cf310b2d44a3fa9fd6561dc22e255948e74971d28456909313d63489a72704"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "89a4332e514b820eef4087bcd2d985d17f633f03d35c97b2ffda12cf82368f34"
   end
 
   depends_on "rust" # uses `cargo` at runtime

@@ -1,8 +1,8 @@
 class Algol68g < Formula
   desc "Algol 68 compiler-interpreter"
   homepage "https://jmvdveer.home.xs4all.nl/algol.html"
-  url "https://jmvdveer.home.xs4all.nl/algol68g-3.1.2.tar.gz"
-  sha256 "bcac9a5e20ef14c8c693ef418988cb056e76c290fc9d6fa1f6564231dc78261d"
+  url "https://jmvdveer.home.xs4all.nl/algol68g-3.1.9.tar.gz"
+  sha256 "6705656c29283ae2fc34276b1e628882e66ee0b982c30c19023427d0333f10fb"
   license "GPL-3.0-or-later"
 
   livecheck do
@@ -11,13 +11,13 @@ class Algol68g < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "5e3c1b6022f9c95d43ac177889330b2aeab5cc4c75bec0d9c81e6bc3a4e52bad"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "f37748c1160655c380dc27e2b6702f4c1ddf822eeb4efae01218d05b22e82985"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "3d4ba4e02d88e183fb54a96e1702e229b930e603c11fbdd20071c7e4931a0076"
-    sha256                               ventura:        "922c5dfa253374741d669ae51d9a525670f1b797ed302520963ad1d8cf76cf7d"
-    sha256                               monterey:       "0d3222188e840cdea444f4da1c40fc3737c7dfa8f8463c7b7adc08726224b002"
-    sha256                               big_sur:        "7044219f656b07cf34c3e96a429cb51aa6eb5c0e7d86441201c342e350afbda6"
-    sha256                               x86_64_linux:   "92de0b7334e0346c309dfa18e2d930e8b58ad111bd3d30a91bcbe25bdfd45f46"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "fd7c88a33670574b1037655110476b2f5e84df039b5f95b385986d1b3f82df9d"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "ad8d3605623805841721590b578f54bc37f5dad2340c0461dd957bb51b2d9a7e"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "c10e338e9fc88fa84893605c3ecdec7f6dfd71559b130716e7900adea0811de8"
+    sha256 cellar: :any_skip_relocation, ventura:        "6dff2f48a323d8d85eda3fc1513efe94b469d28eced8ac9618dc4ec914b14ed9"
+    sha256 cellar: :any_skip_relocation, monterey:       "e6e31034dc790a2d03806e10300fabe67c5405176d6da447d665d002dd7570b8"
+    sha256 cellar: :any_skip_relocation, big_sur:        "7e33b5e52bac1290eac5ad02397c3391e6306c5c8fb7b4600b092b727ed41392"
+    sha256                               x86_64_linux:   "6a759343024e419a055d0dc73dea4b9dcc7874638a3207af2551449359c4813c"
   end
 
   on_linux do
@@ -25,6 +25,8 @@ class Algol68g < Formula
   end
 
   def install
+    # Workaround for Xcode 14.3.
+    ENV.append_to_cflags "-Wno-implicit-function-declaration"
     system "./configure", "--prefix=#{prefix}"
     system "make", "install"
   end

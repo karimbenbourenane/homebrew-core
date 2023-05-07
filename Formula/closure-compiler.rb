@@ -1,8 +1,8 @@
 class ClosureCompiler < Formula
   desc "JavaScript optimizing compiler"
   homepage "https://developers.google.com/closure/compiler"
-  url "https://search.maven.org/remotecontent?filepath=com/google/javascript/closure-compiler/v20230228/closure-compiler-v20230228.jar"
-  sha256 "8fa53351d2b7e9769697fed4e323fac2fd216e02d95136ed0f8a1d357f9bc307"
+  url "https://search.maven.org/remotecontent?filepath=com/google/javascript/closure-compiler/v20230502/closure-compiler-v20230502.jar"
+  sha256 "87f90a557e3d2ae8af430ac6f4a42becf1b453485e890999777a52c90bda9d22"
   license "Apache-2.0"
 
   livecheck do
@@ -11,13 +11,13 @@ class ClosureCompiler < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "8b4d8a76512026d3c59aec84ed9b8986eb9825548616e14725895fde20fe87a0"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "8b4d8a76512026d3c59aec84ed9b8986eb9825548616e14725895fde20fe87a0"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "8b4d8a76512026d3c59aec84ed9b8986eb9825548616e14725895fde20fe87a0"
-    sha256 cellar: :any_skip_relocation, ventura:        "8b4d8a76512026d3c59aec84ed9b8986eb9825548616e14725895fde20fe87a0"
-    sha256 cellar: :any_skip_relocation, monterey:       "8b4d8a76512026d3c59aec84ed9b8986eb9825548616e14725895fde20fe87a0"
-    sha256 cellar: :any_skip_relocation, big_sur:        "8b4d8a76512026d3c59aec84ed9b8986eb9825548616e14725895fde20fe87a0"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e113b3243041ff959f785c31e26efb8a6813a6c6e93ff624c74a85afd378f252"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "ac4a390a67013f890c4ce007ccd40b0492adef1cc0e6415f52407b3954c1a63f"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "ac4a390a67013f890c4ce007ccd40b0492adef1cc0e6415f52407b3954c1a63f"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "ac4a390a67013f890c4ce007ccd40b0492adef1cc0e6415f52407b3954c1a63f"
+    sha256 cellar: :any_skip_relocation, ventura:        "ac4a390a67013f890c4ce007ccd40b0492adef1cc0e6415f52407b3954c1a63f"
+    sha256 cellar: :any_skip_relocation, monterey:       "ac4a390a67013f890c4ce007ccd40b0492adef1cc0e6415f52407b3954c1a63f"
+    sha256 cellar: :any_skip_relocation, big_sur:        "ac4a390a67013f890c4ce007ccd40b0492adef1cc0e6415f52407b3954c1a63f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7dac41e1d0eadbef230b6c8209b0ed93861f8bc5630a97231c329a3648fdbb9b"
   end
 
   depends_on "openjdk"

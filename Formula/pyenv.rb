@@ -1,8 +1,8 @@
 class Pyenv < Formula
   desc "Python version management"
   homepage "https://github.com/pyenv/pyenv"
-  url "https://github.com/pyenv/pyenv/archive/refs/tags/v2.3.14.tar.gz"
-  sha256 "54ffb70dd26169bcbc2abe761e4bb563e209f1ccd71b5f6737f82e82a7fc3d95"
+  url "https://github.com/pyenv/pyenv/archive/refs/tags/v2.3.17.tar.gz"
+  sha256 "bffe53bcbb5e40515385a94410e2dbda3af644e6d94d2daddd5c5a136b6eb5df"
   license "MIT"
   version_scheme 1
   head "https://github.com/pyenv/pyenv.git", branch: "master"
@@ -13,13 +13,13 @@ class Pyenv < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "1a231740a15dc54da9b480eecf4f46732339e69aa75f599632cfe5e2c2bf0168"
-    sha256 cellar: :any,                 arm64_monterey: "8d3e9eed7c4ee1cf151b0a8b91ada2f336b2359f51c6ae5fe40790f8d21eb0b5"
-    sha256 cellar: :any,                 arm64_big_sur:  "b402ab24f893a012a8eacb2737b23705dd1701fb6786b801e26f769188ee1ba7"
-    sha256 cellar: :any,                 ventura:        "80451e5241aa88a0ea7fc7456028245e03cd63c6ea20b044b2dc1b477f973ceb"
-    sha256 cellar: :any,                 monterey:       "7fd01985fb3c3083be931e1fb54305e0d0b5a504ff0be68bddb1a2f376ca2fc9"
-    sha256 cellar: :any,                 big_sur:        "c1db02100e601b82b4fcc03ceccaf2da2ea77feb9b120d27b307a0e27fe50d3e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "291a825e68feaa753f4ade7f1fbd00f3a42126af88f44e967af75aea2deceb43"
+    sha256 cellar: :any,                 arm64_ventura:  "252cbdec73fd36d36154565b163e7e483daa47f03caea969a35564cd037c4fba"
+    sha256 cellar: :any,                 arm64_monterey: "fd02f2762eb920b724f9e7fb4d62d50cdccf13add045cb50c038aeefb0fe6f5b"
+    sha256 cellar: :any,                 arm64_big_sur:  "24a000901c6fd2b98f67a0b6c92b2a0b61529298420eff04b8529520d4f5933b"
+    sha256 cellar: :any,                 ventura:        "9139171688871f7d292fe18e17308463b1def90e0879d702f7173d2fb627e2cd"
+    sha256 cellar: :any,                 monterey:       "86090438471b2fd52d9b953c934fd06dccac8ce87a90859b238ad2c99a590f7a"
+    sha256 cellar: :any,                 big_sur:        "219425b6f81f8202c92af558d7af80cfb0ddcfb95c49dc5dc412d1005b6495cd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "0588e3066df3c716828255535a01103ad56c3c072dfe9b08a3646998e4685c47"
   end
 
   depends_on "autoconf"
@@ -50,8 +50,8 @@ class Pyenv < Formula
     share.install prefix/"man"
 
     # Do not manually install shell completions. See:
-    #   - pyenv/pyenv#1056#issuecomment-356818337
-    #   - Homebrew/homebrew-core#22727
+    #   - https://github.com/pyenv/pyenv/issues/1056#issuecomment-356818337
+    #   - https://github.com/Homebrew/homebrew-core/pull/22727
   end
 
   test do

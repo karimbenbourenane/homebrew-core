@@ -1,8 +1,8 @@
 class Ldc < Formula
   desc "Portable D programming language compiler"
   homepage "https://wiki.dlang.org/LDC"
-  url "https://github.com/ldc-developers/ldc/releases/download/v1.31.0/ldc-1.31.0-src.tar.gz"
-  sha256 "f1c8ece9e1e35806c3441bf24fbe666cddd8eef375592c19cd8fee4701cd5458"
+  url "https://github.com/ldc-developers/ldc/releases/download/v1.32.1/ldc-1.32.1-src.tar.gz"
+  sha256 "b3553bfaa89524317ecd21eb2c63c6ea0f9a7080a16275e46fda7e3ab357ea0f"
   license "BSD-3-Clause"
   head "https://github.com/ldc-developers/ldc.git", branch: "master"
 
@@ -12,19 +12,21 @@ class Ldc < Formula
   end
 
   bottle do
-    sha256                               arm64_ventura:  "4e7fbf9856f9c0e18d22adb2aaafd58bc014c1dd0224c724ac4bbd9edfcb1e61"
-    sha256                               arm64_monterey: "40e61a7c3999a205cda234f83b6cc2fa89d56bc03e634bfebc5694aa9a2dbd24"
-    sha256                               arm64_big_sur:  "5da4191fe6a028b6449105261fb1373c49b38a612b17b89fac0323c988ddd02b"
-    sha256                               ventura:        "87b923166a2ca3bf2cabffac9d4f1be5859d5d9d49a5b681a87d201f31ae440e"
-    sha256                               monterey:       "40b012c3abb7d359d4f3f618231e365487cb6671827a9e43d278fdd52c1d2c8a"
-    sha256                               big_sur:        "3a5f121ac59dae6657ebec206dd486ff1e5f3d919362fce1116043d8bdb8c22d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "616506d79bd4adc591bf729fc8937adb1efd0be81346a48ca163cb458950646e"
+    sha256                               arm64_ventura:  "884908eb524e1534d052f9b3ba27e2ff4e83a3c9438ae7ad1881b37c23d51d1d"
+    sha256                               arm64_monterey: "ae960c4056c9961c181642fc5ca91d0827c6bb832f96eccfdcba40ab6a106212"
+    sha256                               arm64_big_sur:  "0340604e18d4844af7505abeb7af95fb6b82f8ab2b1a907dce4ae72a73a4503c"
+    sha256                               ventura:        "549887c31dd69502f6986f13d7e3fe1b70afdbd1f81c97699559db0cb04e3cb9"
+    sha256                               monterey:       "0220d5ee25de7ad87fe05dec8a4adbe0c867bdfda1ff1b7f7f36595f1409f99b"
+    sha256                               big_sur:        "3d09f7d504d54ef85657862b0e72b2a035112b2af8e5a3ca2c3366c2f329ddbd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "afbc4ea70ed42df80401245c9105ccc5c4e16e16232c2d3f5837c54d4f3e0a8c"
   end
 
   depends_on "cmake" => :build
   depends_on "libconfig" => :build
   depends_on "pkg-config" => :build
-  depends_on "llvm@14" # LLVM 15 issue: https://github.com/ldc-developers/ldc/issues/4042
+  # TODO: Check if the latest `llvm` can be used:
+  #   https://github.com/ldc-developers/ldc/blob/v#{version}/cmake/Modules/FindLLVM.cmake
+  depends_on "llvm@15"
 
   uses_from_macos "libxml2" => :build
 

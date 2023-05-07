@@ -1,18 +1,18 @@
 class Ncspot < Formula
   desc "Cross-platform ncurses Spotify client written in Rust"
   homepage "https://github.com/hrkfdn/ncspot"
-  url "https://github.com/hrkfdn/ncspot/archive/v0.12.0.tar.gz"
-  sha256 "9623bc4cf9be4340a7b4de809889a515553da82d3d6b98b13e0646c60c124a44"
+  url "https://github.com/hrkfdn/ncspot/archive/v0.13.2.tar.gz"
+  sha256 "c329fc3fe229c47c2b3490555b4c8df550a3e2bbe3d0ade4e07f59434fa14e77"
   license "BSD-2-Clause"
 
   bottle do
-    sha256 cellar: :any,                 arm64_ventura:  "3d9c8a4808d2d2da26f423896ad2ab3e0de7293cb9abb83194a90fb84dc1ee89"
-    sha256 cellar: :any,                 arm64_monterey: "73ccc7eb333caccbe1681898af604e1a2971f14af34a86f512e601e8f60d1a9f"
-    sha256 cellar: :any,                 arm64_big_sur:  "b2c803b0b9cb40f62929b42fe3298b6f984a5c4122d6df758150250847ee317e"
-    sha256 cellar: :any,                 ventura:        "34298445ec0ff4ee3c6f5df02a4e630e1982aa78c47c1102fcaba37ecbee5e8c"
-    sha256 cellar: :any,                 monterey:       "59e8716b36d9674065376bdb3a49d44fa3965ac2ed37eb4c5a393b1fdf66c1f5"
-    sha256 cellar: :any,                 big_sur:        "1cf70a6db828b3409e71366fad4ddcf525ed1a7ea1c808a91335a5db53245810"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "dd178707299119b0cc56f0f7cceb5b3ce8d37fe91a5c76df744692d6737f413d"
+    sha256 cellar: :any,                 arm64_ventura:  "83d6c93fba14b46a2f947e0a7710da83a5032954b1047ff8283550a8da1cd702"
+    sha256 cellar: :any,                 arm64_monterey: "d7a8f525e2cea94ed97102f562e518bacbc1fa47a288588da9f5ddc195fe6262"
+    sha256 cellar: :any,                 arm64_big_sur:  "82ed36e353fa98b8adeb5c0d69e0d6f90662fff63818719cbe9a01fcafc3eb27"
+    sha256 cellar: :any,                 ventura:        "6239dd2705b6cc7d678c0ef53d6e1d16aab0b38654b652d34d06b8deb23a3476"
+    sha256 cellar: :any,                 monterey:       "96ee0df948f7dbec0a05fe9d05c1a6f164f35479a6d4b6b16cda6b78c72b1761"
+    sha256 cellar: :any,                 big_sur:        "a6c63558a72c602eca2373a8d2ec715ed4403bd98c0a46d01ec8dc2ac97ab9c6"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e209ce05d46f7a533d15c115e4d1c8f0e26f3dc14c3ef6d5f77ef8783b2e4414"
   end
 
   depends_on "python@3.11" => :build

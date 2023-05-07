@@ -1,19 +1,19 @@
 class Rtx < Formula
   desc "Polyglot runtime manager (asdf rust clone)"
   homepage "https://github.com/jdxcode/rtx"
-  url "https://github.com/jdxcode/rtx/archive/refs/tags/v1.22.5.tar.gz"
-  sha256 "df75447e8face2aae14bf3c06311b68c2f0ab1d1c6a313fd40fc174c0cb4fb7f"
+  url "https://github.com/jdxcode/rtx/archive/refs/tags/v1.29.5.tar.gz"
+  sha256 "4cc2ea7505c3d715898d54e466aaf1bb76976826c0223d4ad270e01b5b137b40"
   license "MIT"
   head "https://github.com/jdxcode/rtx.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "4ff6deb2eeae9bd6702d69df34ddd7207ad76d38239310ce80889a1cc9526324"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "c5f3d2bd46c61b280c354074475ab55286681042016983ceebb021c019dd3afc"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "11eda94f3f7b5e146de8539209bd9125eaef11a9650356e4ed3a5b9d2bfe2096"
-    sha256 cellar: :any_skip_relocation, ventura:        "e3e7c17b21e33b2199f2fa8c854381a0a4a21fd487435838e6be05fd3ff7eb8b"
-    sha256 cellar: :any_skip_relocation, monterey:       "e3ad1202a322ddb6dee12f303640bf1e67c37446bcf1525091812b00ac6892b0"
-    sha256 cellar: :any_skip_relocation, big_sur:        "063a30d258d792956dd12a8a32f51e722d427e2d478b616df65333a9683c8f7f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d1c0fa1180b2f55cfeea890a7f0832475cc515bcd73c8e61f095453c24d09093"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "a1712780702cc27fcf0becd3cfd3c8bcd10afb62f595a878602c330df7bfcff0"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "57fa9cf68b2d46b12ca3ca4dd4e13cd00edad759c79d22032ec91a0c5fac7008"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "3dd17fa824edc2d4cde48a6bc5e7aa47d886750560f3b0cc1cdc6bec09a3f437"
+    sha256 cellar: :any_skip_relocation, ventura:        "9ecfd02b4b0b90cec68411af00528d0e0cd0e09b98858d114fad15a0bd470bfe"
+    sha256 cellar: :any_skip_relocation, monterey:       "e2542a3cb68259497bab41297f37a33b76a455107c253ca251bdd9c21bd35e9c"
+    sha256 cellar: :any_skip_relocation, big_sur:        "6788b393522c3aff33084b1f2f23c579fbf46938274e043a81e91e68ea19a82a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "86a06a8f5b1ac3369b05ce4f0c1ffcbdc7fe1b91c72144d9bc7869a0e897425e"
   end
 
   depends_on "rust" => :build
@@ -21,7 +21,7 @@ class Rtx < Formula
   def install
     system "cargo", "install", "--features=brew", *std_cargo_args
     man1.install "man/man1/rtx.1"
-    generate_completions_from_executable(bin/"rtx", "complete", "--shell")
+    generate_completions_from_executable(bin/"rtx", "completion")
   end
 
   test do

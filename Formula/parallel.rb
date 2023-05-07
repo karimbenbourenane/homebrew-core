@@ -1,9 +1,9 @@
 class Parallel < Formula
   desc "Shell command parallelization utility"
   homepage "https://savannah.gnu.org/projects/parallel/"
-  url "https://ftp.gnu.org/gnu/parallel/parallel-20230222.tar.bz2"
-  mirror "https://ftpmirror.gnu.org/parallel/parallel-20230222.tar.bz2"
-  sha256 "6d36a5ea097668ddb780e74e2ff00252da163995a4b1e96ef633a99b209c980e"
+  url "https://ftp.gnu.org/gnu/parallel/parallel-20230422.tar.bz2"
+  mirror "https://ftpmirror.gnu.org/parallel/parallel-20230422.tar.bz2"
+  sha256 "9106593d09dc4de0e094b7b14390a309d8fcb1d27104a53814d16937dcbae3c2"
   license "GPL-3.0-or-later"
   version_scheme 1
   head "https://git.savannah.gnu.org/git/parallel.git", branch: "master"
@@ -14,7 +14,7 @@ class Parallel < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "417abfe68208313ad050ec50e63c7123e0b2c323a7a269adae225cb69577079b"
+    sha256 cellar: :any_skip_relocation, all: "d18ae8ae414b84338e507360c9af39bdec393b923133681ebbced21bd9c44a38"
   end
 
   conflicts_with "moreutils", because: "both install a `parallel` executable"
@@ -24,6 +24,7 @@ class Parallel < Formula
 
     system "./configure", "--prefix=#{prefix}"
     system "make", "install"
+    bash_completion.install share/"bash-completion/completions/parallel"
 
     inreplace_files = [
       bin/"parallel",

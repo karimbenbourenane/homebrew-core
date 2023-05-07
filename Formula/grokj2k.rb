@@ -1,9 +1,10 @@
 class Grokj2k < Formula
   desc "JPEG 2000 Library"
   homepage "https://github.com/GrokImageCompression/grok"
-  url "https://github.com/GrokImageCompression/grok/archive/refs/tags/v10.0.5.tar.gz"
-  sha256 "3ce11361d41c4c6ff17c197f47cf224511969a4f2df8d87d1afe883d8e469baf"
+  url "https://github.com/GrokImageCompression/grok/archive/refs/tags/v10.0.6.tar.gz"
+  sha256 "968bd7aad7315c9a389fcec56ab611f1c8724083d4e0838d095992f555087906"
   license "AGPL-3.0-or-later"
+  revision 1
   head "https://github.com/GrokImageCompression/grok.git", branch: "master"
 
   livecheck do
@@ -12,14 +13,13 @@ class Grokj2k < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 arm64_ventura:  "a98af03e2dc6ac9bedac0534bc1cfdeca345dd08d537a1ac3d9de73176062f49"
-    sha256 cellar: :any,                 arm64_monterey: "5ccfc443cdd51d734cfae2c3080cb1b425d494b98733e97c5be64ca9b44f1151"
-    sha256 cellar: :any,                 arm64_big_sur:  "eb08b3c5ab932a75713a8aa75ef4bd3df0b121c06b72d96e8d66d97e040f2e6e"
-    sha256 cellar: :any,                 ventura:        "39f00bbdd8501ea98ce88564998a69d8fb8459a3684abb629cdabe067a9e4e58"
-    sha256 cellar: :any,                 monterey:       "31153e09c6aae5882bc884c625e62e489644d5b45f12e459ccc92979425a5055"
-    sha256 cellar: :any,                 big_sur:        "f08a8d27e024c3ea67acedfe47c2e24f775b9d1df614a069d5da156d2ef76952"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "77e81ec5562c2e151e1b6999ef2e797ad77204cbb7cfca4a2799b2546ac29b56"
+    sha256 cellar: :any,                 arm64_ventura:  "dff25f6869c43ed992c8f5dc192a6629402f1b5f61b5f70623e21e98b23cdc07"
+    sha256 cellar: :any,                 arm64_monterey: "484b206aaf9ac0078a80cd12a5dc3fb8bc3da3faa4b274ac23d429b9b7969d6b"
+    sha256 cellar: :any,                 arm64_big_sur:  "bf308e06a66b24a0fb3538764cf997c8ea6b63f6fa20a43b6694db66c84d40ef"
+    sha256 cellar: :any,                 ventura:        "1ec22371f30be23d38f25a4fa3027a72d5eeefb911020953775fb27c8fa96842"
+    sha256 cellar: :any,                 monterey:       "960bb9d6f65b30fa7aa5ac40e298c519cef77de75acd093010d5525a711cfbd0"
+    sha256 cellar: :any,                 big_sur:        "c09c6752b7a2f978abcbca19727b631c383d6b27a8298fd8b4cc1606c4d4cd92"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b804cbbacedacc080295e09bf56740983eb197e7e875c94603d02dc2a573388e"
   end
 
   depends_on "cmake" => :build
@@ -106,7 +106,7 @@ class Grokj2k < Formula
         const GRK_COLOR_SPACE color_space = GRK_CLRSPC_GRAY;
 
         grk_image *image;
-        image = grk_image_new(1, &cmptparm, color_space);
+        image = grk_image_new(1, &cmptparm, color_space, true);
 
         grk_object_unref(&image->obj);
         return 0;

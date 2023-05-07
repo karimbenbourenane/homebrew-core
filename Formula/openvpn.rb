@@ -1,9 +1,9 @@
 class Openvpn < Formula
   desc "SSL/TLS VPN implementing OSI layer 2 or 3 secure network extension"
   homepage "https://openvpn.net/community/"
-  url "https://swupdate.openvpn.org/community/releases/openvpn-2.6.0.tar.gz"
-  mirror "https://build.openvpn.net/downloads/releases/openvpn-2.6.0.tar.gz"
-  sha256 "ebec933263c9850ef6f7ce125e2f22214be60b1cbb8ccff18892643fe083ae8f"
+  url "https://swupdate.openvpn.org/community/releases/openvpn-2.6.3.tar.gz"
+  mirror "https://build.openvpn.net/downloads/releases/openvpn-2.6.3.tar.gz"
+  sha256 "13b207a376d8880507c74ff78aabc3778a9da47c89f1e247dcee3c7237138ff6"
   license "GPL-2.0-only" => { with: "openvpn-openssl-exception" }
 
   livecheck do
@@ -12,23 +12,24 @@ class Openvpn < Formula
   end
 
   bottle do
-    sha256 arm64_ventura:  "69dc018b3a179e25733e578f8b0e5ef739276735f8ac7ffda18ce5cc5e8e1656"
-    sha256 arm64_monterey: "bde1352f1d7b7f5e4994423e19e831fa70ccb7f49ebd9b1a017d7a1f8c65b18f"
-    sha256 arm64_big_sur:  "2b48cf1ad09c2f244221cfedf9e20d9b78dd2203ddf1846f0202d35eba197af8"
-    sha256 ventura:        "a87aa6cb0582f1c92c767f5fab8571c25a3e8fa395e84beebce7fca05c9579fe"
-    sha256 monterey:       "cd79db428eca07fcd1c2ac05065652e8218548b1284d92f0f56a50409919e0db"
-    sha256 big_sur:        "7a57fde7f9e9c031ece4e08ed8a5ac305798df02777f087806a3edea8a621414"
-    sha256 x86_64_linux:   "161f111c6e1f900058dbc640d5b2dede54bfbb07b4ee0db0551df40ea08dd376"
+    sha256 arm64_ventura:  "ff1ebfbf786de0ebe2be96087213a69508d3b606df61b6865a88eb6c0b4a054c"
+    sha256 arm64_monterey: "6021779f46cf630f18789de57c61721bb6e4510e5ee4065ca2415978d2f36439"
+    sha256 arm64_big_sur:  "47e1ebd23648c186a0591f9d50d78c5f334b4c7e1ee93e97a3552f2171054d82"
+    sha256 ventura:        "dc594adad058abafb74513e20a09a7ca264ec307ba11528e6ec2acfe5a6e9875"
+    sha256 monterey:       "0bdad52e9e4cd5d91c88a09a8830db0850753a02f4d7fe92e5b459af78a6afe3"
+    sha256 big_sur:        "5fb8556e6501159242a97b6d26f1a68f889c3c489f726a40ccd016fbf3eceb90"
+    sha256 x86_64_linux:   "7f55d33157e4e865e7c20234cea31a0ab5a9d676b600088797664b4e25da8e9d"
   end
 
   depends_on "pkg-config" => :build
   depends_on "lz4"
   depends_on "lzo"
-  depends_on "openssl@1.1"
+  depends_on "openssl@3"
   depends_on "pkcs11-helper"
 
   on_linux do
     depends_on "libcap-ng"
+    depends_on "libnl"
     depends_on "linux-pam"
     depends_on "net-tools"
   end

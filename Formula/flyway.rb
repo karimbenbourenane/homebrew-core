@@ -1,8 +1,8 @@
 class Flyway < Formula
   desc "Database version control to control migrations"
   homepage "https://flywaydb.org/"
-  url "https://search.maven.org/remotecontent?filepath=org/flywaydb/flyway-commandline/9.15.2/flyway-commandline-9.15.2.tar.gz"
-  sha256 "c352d16a8ed81273e64a959503434efc4f5a042cd0b2c7fd78f9d432d6c47f18"
+  url "https://search.maven.org/remotecontent?filepath=org/flywaydb/flyway-commandline/9.17.0/flyway-commandline-9.17.0.tar.gz"
+  sha256 "e22a01b717a4f65c3ab175def87905c973e2b05dc9976ac70982681e385e77ee"
   license "Apache-2.0"
 
   livecheck do
@@ -11,7 +11,7 @@ class Flyway < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "1296fd79ab45043b65a4adf46f3cc35f81d40f2214c8009c9cec2b1166af82d2"
+    sha256 cellar: :any_skip_relocation, all: "e0bfd00ce21e5627250e38f45f98ef4071a36024c2342b60d36bb1fbe0f26870"
   end
 
   depends_on "openjdk"
@@ -20,7 +20,7 @@ class Flyway < Formula
     rm Dir["*.cmd"]
     chmod "g+x", "flyway"
     libexec.install Dir["*"]
-    (bin/"flyway").write_env_script libexec/"flyway", JAVA_HOME: Formula["openjdk"].opt_prefix
+    (bin/"flyway").write_env_script libexec/"flyway", Language::Java.overridable_java_home_env
   end
 
   test do

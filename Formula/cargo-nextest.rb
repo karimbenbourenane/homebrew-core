@@ -1,8 +1,8 @@
 class CargoNextest < Formula
   desc "Next-generation test runner for Rust"
   homepage "https://nexte.st"
-  url "https://github.com/nextest-rs/nextest/archive/refs/tags/cargo-nextest-0.9.49.tar.gz"
-  sha256 "da22ed44da58441e9a32a105f9786c3d2989360fe7aeab17745506ed008d6f9b"
+  url "https://github.com/nextest-rs/nextest/archive/refs/tags/cargo-nextest-0.9.52.tar.gz"
+  sha256 "bf1726e5a57d734093abca10e26f1c9201ff606f8f35b294f644efa42a07c74b"
   license "Apache-2.0"
 
   livecheck do
@@ -11,22 +11,18 @@ class CargoNextest < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "84dca32212ef4ac31f7e173df0f952376213d3b0be4785d9519c11bb7fa8dcda"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "98460b4fad62b8f7e65c24f816e1a0a9351d2c3b0f520ca933c8ce3f1712190a"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "fad3ac172ca35188dd11c09aa9b46d1247706e481ea29dcbace3c9fe2368c8a3"
-    sha256 cellar: :any_skip_relocation, ventura:        "e45ea216cd5851a77e7970ecbab136a15808ec6e0c2d9c791ed50e6ba679478d"
-    sha256 cellar: :any_skip_relocation, monterey:       "da39055291de849e06ace3ad8205742fca043843452aae8e480c7a1d7d460c9c"
-    sha256 cellar: :any_skip_relocation, big_sur:        "5ed52d353cdf7a7182f47d5316b9e48d8787fe73e810d7b7590539dff55af23c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "3aeea0ec1cae5647658267ea88ba92e4bda8de700d4b10bdf11642a0d025200d"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "fd89ebdc86737fa61c2d323b04719f3530ff8b37fc45e4d75c043f59e0f70b5c"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "9ae43252828223141dc6ab8b8ac1b70115c8e6a783df981b544443cb51585b92"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "83e7f281cabb0a07374e0ce83e97aff30051548ec307070ee931b07b1e72b7f0"
+    sha256 cellar: :any_skip_relocation, ventura:        "9e0da6b6769ca22a1566940f0f7282bd3fc0c7df0b1c304abfa8d46c0be498e6"
+    sha256 cellar: :any_skip_relocation, monterey:       "8d3851924d7a439d4937910d9f4fedc220aef932411dde833f413341aa160f87"
+    sha256 cellar: :any_skip_relocation, big_sur:        "11b9c92f21d6b8274cf2fc429454918397afd149e7f695e7006ef36e9bc2a034"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "31bda36e096999edfaf3c0b25bb7aba407beadad626b076542af3e1dac7f1d8f"
   end
 
   depends_on "rust" # uses `cargo` at runtime
 
   def install
-    # Fix a performance regression. This can be removed once Rust 1.64 is stable.
-    # See https://github.com/nextest-rs/nextest/releases/tag/cargo-nextest-0.9.30
-    ENV["RUSTC_BOOTSTRAP"] = "1"
-    ENV["RUSTFLAGS"] = "--cfg process_group --cfg process_group_bootstrap_hack"
     system "cargo", "install", "--no-default-features", "--features", "default-no-update",
                     *std_cargo_args(path: "cargo-nextest")
   end

@@ -1,8 +1,8 @@
 class Poppler < Formula
   desc "PDF rendering library (based on the xpdf-3.0 code base)"
   homepage "https://poppler.freedesktop.org/"
-  url "https://poppler.freedesktop.org/poppler-23.03.0.tar.xz"
-  sha256 "b04148bf849c1965ada7eff6be4685130e3a18a84e0cce73bf9bc472ec32f2b4"
+  url "https://poppler.freedesktop.org/poppler-23.05.0.tar.xz"
+  sha256 "38294de7149ebe458191a6e6d0e2837da7dba8683900a635252f6d0ee235f990"
   license "GPL-2.0-only"
   head "https://gitlab.freedesktop.org/poppler/poppler.git", branch: "master"
 
@@ -12,13 +12,13 @@ class Poppler < Formula
   end
 
   bottle do
-    sha256 arm64_ventura:  "0b39cb117ad8f7ee8416f0b0c9671e542912ec979e4925d8a5e627cf06701c49"
-    sha256 arm64_monterey: "412b01c8032746c38dd6ae78691c5a250bc0b672a8ea8cdb218f22c2168e9a6f"
-    sha256 arm64_big_sur:  "f82a04933f3de9c8fc61a7c36ae1775c8369235c9be5a73b96f656529527fc90"
-    sha256 ventura:        "5477b1ff0bc18e060cbc14142171d383674f624f45492e4ba615ef09060ff4fa"
-    sha256 monterey:       "3790b27eb424edf5c8839e7d697425ec2c8ba2f813d8b80f7bf1b8b7f3bd43ae"
-    sha256 big_sur:        "07634a63c2ccc0ca444e73739ff8cb7f050c7a150caea05248c9a9e6b15d9aa9"
-    sha256 x86_64_linux:   "0379f7c2715cc2435f9611b3b6133109cab07b7656149f1110ab307c859bb67d"
+    sha256 arm64_ventura:  "db62977ce7e73c39f491bb6d1b6d51015d5815b9222b5432907aab3fffa5ed4e"
+    sha256 arm64_monterey: "e5bad31967ff0571b0250c98fe2bf6e15c0f3dbd3d65c04b0b02c595585d8035"
+    sha256 arm64_big_sur:  "8111f495f16c1e23c4251ec0e66ce13adbd8f278cf3c9b737b00b0b5ef26e531"
+    sha256 ventura:        "9973f3f0481934577532c351ec5a81bc3b1e31eb825b72c386bc1eab8baa9c1f"
+    sha256 monterey:       "1bd59ca31513626b067f07d8a3a122bf0de66087ed154cd91e88ed1f50703df0"
+    sha256 big_sur:        "0bb96041155aa830a040c53ba6e7adb4f1b1843cd6b18d5547423b89e3feff63"
+    sha256 x86_64_linux:   "387b59e04d59c801c2aeb20e7cf10fd0b9410c51a6a3172835ffe128c3ac6317"
   end
 
   depends_on "cmake" => :build
@@ -47,8 +47,8 @@ class Poppler < Formula
   fails_with gcc: "5"
 
   resource "font-data" do
-    url "https://poppler.freedesktop.org/poppler-data-0.4.11.tar.gz"
-    sha256 "2cec05cd1bb03af98a8b06a1e22f6e6e1a65b1e2f3816cb3069bb0874825f08c"
+    url "https://poppler.freedesktop.org/poppler-data-0.4.12.tar.gz"
+    sha256 "c835b640a40ce357e1b83666aabd95edffa24ddddd49b8daff63adb851cdab74"
   end
 
   def install

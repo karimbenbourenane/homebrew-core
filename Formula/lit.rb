@@ -3,12 +3,12 @@ class Lit < Formula
 
   desc "Portable tool for LLVM- and Clang-style test suites"
   homepage "https://llvm.org"
-  url "https://files.pythonhosted.org/packages/2f/5e/8b27ba3715becd8ee26f1f0c2ef9d18fa425a9f6bbf535573b90c08171b4/lit-15.0.7.tar.gz"
-  sha256 "ed08ac55afe714a193653df293ae8a6ee6c45d6fb11eeca72ce347d99b88ecc8"
+  url "https://files.pythonhosted.org/packages/75/e8/6deb4cc017266af4b8c5d370de340d917b0bbcbce3cbaf4ec1cfba7b0ca7/lit-16.0.3.tar.gz"
+  sha256 "25524fe51fa3261212cfd86a8891429ed0460e247384c5a2001612d08e362e00"
   license "Apache-2.0" => { with: "LLVM-exception" }
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "5c7c112e869db56f5f1c798beaab397a789710d2ac650ccefb8c2ce4c960968e"
+    sha256 cellar: :any_skip_relocation, all: "63660ab39b4316c0c9845533720e8890aaf49bd2c97288f0d6a49fe0c0ca2053"
   end
 
   depends_on "llvm" => :test

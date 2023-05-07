@@ -1,20 +1,26 @@
 class Sapling < Formula
   desc "Source control client"
   homepage "https://sapling-scm.com"
-  url "https://github.com/facebook/sapling/archive/refs/tags/0.2.20230228-144002-h9440b05e.tar.gz"
-  sha256 "70483afad6d0b437cb755447120a34b1996ec09a7e835b40ac8cccdfe44e4b90"
+  url "https://github.com/facebook/sapling/archive/refs/tags/0.2.20230426-145232+7ea1f245.tar.gz"
+  version "0.2.20230426-145232+7ea1f245"
+  sha256 "5295cfbc7428f4cd88c722108fa75737b73e01a1cdbf79df236c0513b5c374cd"
   license "GPL-2.0-or-later"
   head "https://github.com/facebook/sapling.git", branch: "main"
 
+  livecheck do
+    url :stable
+    regex(%r{href=["']?[^"' >]*?/tag/([^"' >]+?)["' >]}i)
+    strategy :github_latest
+  end
+
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 arm64_ventura:  "b9aee4101baae22fe8b0e32a8eb9f086f63967851a9410960e36d3541c98845e"
-    sha256 cellar: :any,                 arm64_monterey: "bcaa04164fc08e79065d1899e8ade085047090b40c63174fb81fa02ac8437646"
-    sha256 cellar: :any,                 arm64_big_sur:  "5a0d6120c941935d1d0159b76b967968ca3421ec7f61fedb8d3bf0a6804589c5"
-    sha256 cellar: :any,                 ventura:        "e90c415a3327d7e0823c5b4e31b3d84514bc19f25687d5e9a5c231d686a07c7e"
-    sha256 cellar: :any,                 monterey:       "484be2fe2b901132f7c9cecb918dae45c7f43518a6ce2d2b57b816aeb536a7ac"
-    sha256 cellar: :any,                 big_sur:        "bf39795492d13fa68e0a247982b913031d1ea873543c548c8aa790250b32ba60"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "993b6d4628338f297b17eb1be68ffbea8bba85f54c76659e1db38d53b22974b1"
+    sha256 cellar: :any,                 arm64_ventura:  "23f9df5b51fcbff877a9763ebfc48f279ba9b681eb33139027c8eb871b474ade"
+    sha256 cellar: :any,                 arm64_monterey: "6737b2d5219471f4c1528f3409fccaf93ec2c7a98ea76a128a2110c8acd88067"
+    sha256 cellar: :any,                 arm64_big_sur:  "7dc454c4bd45caafab1b2a2216496941b5a2a195d1e9043ffc2c668cafe90d6d"
+    sha256 cellar: :any,                 ventura:        "755c4086562cd478bf7f81e0e8d73d6536f359d7ca43353ef9c4595edd648305"
+    sha256 cellar: :any,                 monterey:       "37b789ce002119d865b08cc73e504f749ccda80fbfbb4478768a973a9675d863"
+    sha256 cellar: :any,                 big_sur:        "daa873c477eb67b67f6d29e0558d21bda3b88e3878668c3624ff3571b310886a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "427769aec56eac325a01f3610b4d89d83c624b8a60296abd44de2f0b026dd573"
   end
 
   depends_on "cmake" => :build
@@ -25,11 +31,26 @@ class Sapling < Formula
   depends_on "openssl@1.1"
   depends_on "python@3.11"
 
+  # `setuptools` 66.0.0+ only supports PEP 440 conforming version strings.
+  # Modify the version string to make `setuptools` happy.
+  def modified_version
+    # If installing through `brew install sapling --HEAD`, version will be HEAD-<hash>, which
+    # still doesn't make `setuptools` happy. However, since installing through this method
+    # will get a git repo, we can use the ci/tag-name.sh script for determining the version no.
+    build_version = if version.to_s.start_with?("HEAD")
+      Utils.safe_popen_read("ci/tag-name.sh").chomp + ".dev"
+    else
+      version
+    end
+    segments = build_version.to_s.split(/[-+]/)
+    "#{segments.take(2).join("-")}+#{segments.last}"
+  end
+
   def install
     python3 = "python3.11"
 
     ENV["OPENSSL_DIR"] = Formula["openssl@1.1"].opt_prefix
-    ENV["SAPLING_VERSION"] = version.to_s
+    ENV["SAPLING_VERSION"] = modified_version
 
     # Don't allow the build to break our shim configuration.
     inreplace "eden/scm/distutils_rust/__init__.py", '"HOMEBREW_CCCFG"', '"NONEXISTENT"'
@@ -37,7 +58,7 @@ class Sapling < Formula
   end
 
   test do
-    assert_equal("Sapling #{version}", shell_output("#{bin}/sl --version").chomp)
+    assert_equal("Sapling #{modified_version}", shell_output("#{bin}/sl --version").chomp)
     system "#{bin}/sl", "config", "--user", "ui.username", "Sapling <sapling@sapling-scm.com>"
     system "#{bin}/sl", "init", "--git", "foobarbaz"
     cd "foobarbaz" do

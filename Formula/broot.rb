@@ -1,19 +1,19 @@
 class Broot < Formula
   desc "New way to see and navigate directory trees"
   homepage "https://dystroy.org/broot/"
-  url "https://github.com/Canop/broot/archive/v1.20.2.tar.gz"
-  sha256 "372623ac1affc2473bcf75ce6be2862d8cc61ac4372a622a599b4c7f2ea06161"
+  url "https://github.com/Canop/broot/archive/v1.21.3.tar.gz"
+  sha256 "6c612c596e467e610c7a80b4f086d9443e2b5040edcfa1bdda129aa715bb64d9"
   license "MIT"
   head "https://github.com/Canop/broot.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "4010080fb4ff71edd20719f13139f142aa45cdf7a1a70e696914e6b2cde4cace"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "982b9a0dcdc6c0825a16c2fc700e4ce39f9fc35bd02b3592797d7fcc50b95670"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "f8e6e44a9e25e4e2c6433b62d5578489784c1640846fd1d8f51b26b38a4fe386"
-    sha256 cellar: :any_skip_relocation, ventura:        "9ea28975dc5ca2dbf6fdd8d3e37c71528ad694c82804d2826b49a199a4a1099d"
-    sha256 cellar: :any_skip_relocation, monterey:       "85849c8d56aaa4d83dbc9228cd1f14e24b45c8379e6ea2c4646e6f32e8e9c0da"
-    sha256 cellar: :any_skip_relocation, big_sur:        "76f00e14b79306d14ec7b59a1e7a29162af662527f50d8ef79cdb1c25dd28ec1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7d42af15a31134838b324ed933dacb1ad43960234fa6c2b3f8236cf56d59654c"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "29131b7c6c0f1704da9eb80f1b2fc5319209f96f1bde8f9270b7704d0bae0a85"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "215c8f0199add65b8adc5a3c615e4cfd0a12357105529c23853fbb5c1f09520c"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "9a60e06cedbd497460bcc524dd64dcc4ab816ee216d9ef77306812f654c281ea"
+    sha256 cellar: :any_skip_relocation, ventura:        "e087a69c3206edd45125d6ba3b3f2bfa0bfe09a3e6f8e86b62d7a0d625482a23"
+    sha256 cellar: :any_skip_relocation, monterey:       "46322de7eedaacc64b89a8907c773be005e80c3e11d2623f6dfb1a1ae19559d4"
+    sha256 cellar: :any_skip_relocation, big_sur:        "77164ca2efd15f9fe64e27bfed7e799a78c2ca36cba34fce606060d261987b3a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "4f8f5bf2b13c251e41511200685c5d55738cd4140b1f6f6be00da0e7d827f21e"
   end
 
   depends_on "rust" => :build
